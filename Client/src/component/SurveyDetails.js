@@ -6,7 +6,7 @@ import RaisedButton from 'material-ui/RaisedButton';
 const style = {
   textAlign: 'center',
   display: 'inline-block',
-  marginLeft:'30%',
+  marginLeft:'20%',
   marginTop:'10%',
   width:'40%',
   height:'50%',
