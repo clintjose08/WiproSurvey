@@ -1,5 +1,4 @@
 import React,{Component} from 'react';
-import './App.css';
 import Paper from 'material-ui/Paper';
 import RaisedButton from 'material-ui/RaisedButton';
 import {IndexLink, Link} from 'react-router';

@@ -1,10 +1,9 @@
 import React from 'react';
 import App from './App';
-import './index.css';
 import ReactDOM from 'react-dom';
-import Login from './Login';
-import SurveyDetails from './SurveyDetails';
-import CreateSurvey from './CreateSurvey';
+import Login from './component/Login';
+import SurveyDetails from './component/SurveyDetails';
+import CreateSurvey from './component/CreateSurvey';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import {Router, Route, IndexRoute, hashHistory} from 'react-router';
 import injectTapEventPlugin from 'react-tap-event-plugin';

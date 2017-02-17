@@ -1,5 +1,4 @@
 import React,{Component} from 'react';
-import './App.css';
 import Paper from 'material-ui/Paper';
 import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
 import TextField from 'material-ui/TextField';
@@ -7,7 +6,7 @@ import RaisedButton from 'material-ui/RaisedButton';
 const style = {
   textAlign: 'center',
   display: 'inline-block',
-  margin:'auto',
+  marginLeft:'30%',
   marginTop:'10%',
   width:'40%',
   height:'50%',

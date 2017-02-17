@@ -1,5 +1,4 @@
 import React,{Component} from 'react';
-import './App.css';
 import Paper from 'material-ui/Paper';
 import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
 import {IndexLink, Link} from 'react-router';
