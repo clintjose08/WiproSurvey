@@ -33,7 +33,7 @@ class Login extends Component{
           <TextField
             hintText="Password"
           /><br />
-          <Link to="/CreateSurvey" activeClassName="active">
+          <Link to="Home/CreateSurvey" activeClassName="active">
             <RaisedButton label="Submit" backgroundColor="#004D40" labelColor='white'/>
           </Link>
         </CardText>

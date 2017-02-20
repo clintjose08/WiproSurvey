@@ -8,14 +8,29 @@ import CreateSurvey from './component/CreateSurvey';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import {Router, Route, IndexRoute, hashHistory} from 'react-router';
 import injectTapEventPlugin from 'react-tap-event-plugin';
+import AddQuestion from './component/AddQuestion';
+import Dropdown from './component/Dropdown';
+import StarRatings from './component/StarRatings';
+import Slider from './component/Slider';
+import SingleText from './component/SingleText';
+import MultiChoice from './component/MultiChoice';
+
 injectTapEventPlugin();
 ReactDOM.render(
  <MuiThemeProvider>
  <Router history={hashHistory}>
      <Route path="/" component={Login}/>
-     <Route path="CreateSurvey" component={CreateSurvey}/>
-     <Route path="SurveyDetails" component={SurveyDetails}/>
-     <Route path="Comments" component={Comments}/>
+     <Route path="/Home" component={App}>
+       <Route path="CreateSurvey" component={CreateSurvey}/>
+       <Route path="SurveyDetails" component={SurveyDetails}/>
+       <Route path="Comments" component={Comments}/>
+       <Route path="AddQuestion" component={AddQuestion}/>
+       <Route path="Dropdown" component={Dropdown}/>
+       <Route path="StarRatings" component={StarRatings}/>
+       <Route path="Slider" component={Slider}/>
+       <Route path="SingleText" component={SingleText}/>
+       <Route path="MultiChoice" component={MultiChoice}/>
+    </Route>
   </Router>
   </MuiThemeProvider>,
   document.getElementById('root')

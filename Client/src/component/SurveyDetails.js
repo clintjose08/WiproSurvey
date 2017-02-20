@@ -33,10 +33,10 @@ class SurveyDetails extends Component{
           <TextField
             hintText="Description about the survey" multiLine={true} rows={2}
           /><br />
-          <Link to="" activeClassName="active">
+          <Link to="Home/AddQuestion" activeClassName="active">
             <RaisedButton label="Submit" backgroundColor="#004D40" labelColor='white'/>
           </Link>
-          <Link to="/Comments" activeClassName="active">
+          <Link to="Home/CreateSurvey" activeClassName="active">
             <RaisedButton label="Cancel" style={buttonStye}/>
           </Link>
         </CardText>
