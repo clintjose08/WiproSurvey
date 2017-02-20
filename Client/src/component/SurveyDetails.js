@@ -2,6 +2,7 @@ import React,{Component} from 'react';
 import Paper from 'material-ui/Paper';
 import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
 import TextField from 'material-ui/TextField';
+import {IndexLink, Link} from 'react-router';
 import RaisedButton from 'material-ui/RaisedButton';
 const style = {
   textAlign: 'center',
@@ -32,8 +33,12 @@ class SurveyDetails extends Component{
           <TextField
             hintText="Description about the survey" multiLine={true} rows={2}
           /><br />
-          <RaisedButton label="Submit" backgroundColor="#004D40" labelColor='white'/>
-          <RaisedButton label="Cancel" disabled={true} style={buttonStye}/>
+          <Link to="" activeClassName="active">
+            <RaisedButton label="Submit" backgroundColor="#004D40" labelColor='white'/>
+          </Link>
+          <Link to="/Comments" activeClassName="active">
+            <RaisedButton label="Cancel" style={buttonStye}/>
+          </Link>
         </CardText>
       </Card>
       </Paper>
