@@ -7,7 +7,9 @@ import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
 import {List, ListItem} from 'material-ui/List';
 import Divider from 'material-ui/Divider';
-import Checkbox from 'material-ui/Checkbox'
+import Checkbox from 'material-ui/Checkbox';
+import {IndexLink, Link} from 'react-router';
+
 
 const cardheadstyle={
   background:'black',
@@ -20,7 +22,7 @@ const buttonStye={
 const style = {
   textAlign: 'center',
   display: 'inline-block',
-  margin:'auto',
+  marginLeft:'30%',
   marginTop:'10%',
   width:'40%',
   height:'50%',
@@ -30,7 +32,7 @@ const textStyle={
   margin:15
 }
 
-class StarRateQuestions extends Component
+class StarRatings extends Component
 {
   state = {
     value: 0,
@@ -91,6 +93,29 @@ class StarRateQuestions extends Component
               style={textStyle}
             /><br />
             <Divider/>
+            <SelectField
+              floatingLabelText="Question Type"
+              value={this.state.value}
+              onChange={this.handleChange}
+            >
+            <MenuItem value={1} primaryText="Multiple Choice" />
+            <Link to="Home/Dropdown" activeClassName="active">
+               <MenuItem value={2} primaryText="Dropdown" />
+            </Link>
+            <Link to="Home/StarRatings" activeClassName="active">
+               <MenuItem value={3} primaryText="Star Ratings" />
+            </Link>
+            <Link to="Home/Slider" activeClassName="active">
+               <MenuItem value={4} primaryText="Slider" />
+            </Link>
+            <Link to="Home/SingleText" activeClassName="active">
+               <MenuItem value={5} primaryText="Single Textbox" />
+            </Link>
+            <Link to="Home/Comments" activeClassName="active">
+               <MenuItem value={5} primaryText="Comments" />
+           </Link>
+             </SelectField>
+              <br /><br />
             <span><h3>Select scale</h3>
             <SelectField
               hintText="Select Scale"
@@ -114,4 +139,4 @@ class StarRateQuestions extends Component
   }
 }
 
-export default StarRateQuestions;
+export default StarRatings;
