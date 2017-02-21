@@ -4,6 +4,8 @@ import Paper from 'material-ui/Paper';
 import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
+import {IndexLink, Link} from 'react-router';
+
 const style = {
   textAlign: 'center',
   display: 'inline-block',
@@ -33,7 +35,9 @@ class SurveyDetails extends Component{
           <TextField
             hintText="Description about the survey" multiLine={true} rows={2}
           /><br />
+          <Link to="/StarRateQuestions" activeClassName="active">
           <RaisedButton label="Submit" backgroundColor="#004D40" labelColor='white'/>
+          </Link>
           <RaisedButton label="Cancel" disabled={true} style={buttonStye}/>
         </CardText>
       </Card>
