@@ -29,7 +29,7 @@ const buttonStye={
 class Comments extends Component{
   constructor(props) {
    super(props);
-   this.state = {value: 5};
+   this.state = {value: 6};
  }
 
  handleChange = (event, index, value) => this.setState({value});
@@ -58,11 +58,11 @@ class Comments extends Component{
         <Link to="Home/SingleText" activeClassName="active">
            <MenuItem value={5} primaryText="Single Textbox" />
         </Link>
-           <MenuItem value={5} primaryText="Comments" />
+           <MenuItem value={6} primaryText="Comments" />
          </SelectField>
           <br /><br />
           <TextField
-            hintText="Type your Questions/Comments"
+            hintText="Overall Comments"
             fullWidth={true}
           /><br /><br />
           <Link to="Home/AddQuestion" activeClassName="active">

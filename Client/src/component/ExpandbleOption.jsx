@@ -6,7 +6,6 @@ import MenuItem from 'material-ui/MenuItem';
 import {IndexLink, Link} from 'react-router';
 import Dialog from 'material-ui/Dialog';
 import TextField from 'material-ui/TextField';
-import Divider from 'material-ui/Divider';
 import RaisedButton from 'material-ui/RaisedButton';
 const style = {
   textAlign: 'center',
@@ -27,10 +26,10 @@ const cardTextStyle={
 const buttonStye={
   marginLeft:30,
 }
-class Slider extends Component{
+class ExpandableOption extends Component{
   constructor(props) {
    super(props);
-   this.state = {value: 4};
+   this.state = {value: 7};
  }
 
  handleChange = (event, index, value) => this.setState({value});
@@ -53,31 +52,22 @@ class Slider extends Component{
         <Link to="Home/StarRatings" activeClassName="active">
            <MenuItem value={3} primaryText="Star Ratings" />
         </Link>
-       	<MenuItem value={4} primaryText="Slider" />
+        <Link to="Home/Slider" activeClassName="active">
+           <MenuItem value={4} primaryText="Slider" />
+        </Link>
         <Link to="Home/SingleText" activeClassName="active">
            <MenuItem value={5} primaryText="Single Textbox" />
         </Link>
-				<Link to="Home/Comments" activeClassName="active">
-           <MenuItem value={6} primaryText="Comments" />
-				</Link>
+        <Link to="Home/Comments" activeClassName="active">
+          <MenuItem value={6} primaryText="Comments" />
+        </Link>
+        <MenuItem value={7} primaryText="ExpandableOption" />
          </SelectField>
           <br /><br />
           <TextField
-            hintText="Question"
+            hintText="Type your Questions/Comments"
             fullWidth={true}
           /><br /><br />
-					<Divider />
-					<br />
-					<label>Scale Range</label><br />
-					<TextField
-            hintText="Left Side Value"
-          /><br />
-          <TextField
-            hintText="Center Value"
-          /><br />
-					<TextField
-            hintText="Right Side Value"
-          /><br />
           <Link to="Home/AddQuestion" activeClassName="active">
             <RaisedButton label="Submit" backgroundColor="#004D40" labelColor='white'/>
           </Link>
@@ -90,4 +80,4 @@ class Slider extends Component{
 		</div>);
 	}
  }
- export default Slider;
+ export default ExpandableOption;

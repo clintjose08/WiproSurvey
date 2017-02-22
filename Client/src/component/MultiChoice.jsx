@@ -88,7 +88,7 @@ handleChange = (event, index, value) => this.setState({value});
 	            <MenuItem value={5} primaryText="Single Textbox" />
 	         </Link>
 					 <Link to="Home/Comments" activeClassName="active">
-	            <MenuItem value={5} primaryText="Comments" />
+	            <MenuItem value={6} primaryText="Comments" />
 					</Link>
 	          </SelectField>
 	           <br /><br />
