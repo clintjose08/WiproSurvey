@@ -13,6 +13,7 @@ import StarRate from 'material-ui/svg-icons/toggle/star-border';
 import Comment from 'material-ui/svg-icons/communication/comment';
 import DropDown from 'material-ui/svg-icons/navigation/arrow-drop-down-circle';
 import Slide from 'material-ui/svg-icons/content/remove';
+import { Grid,Col,Row} from 'react-flexbox-grid';
 
 const cardheadstyle={
 background:'black',
