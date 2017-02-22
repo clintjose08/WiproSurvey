@@ -1,6 +1,7 @@
 import React from 'react';
 import App from './App';
 import ReactDOM from 'react-dom';
+
 import Login from './component/Login';
 import Comments from './component/Comments';
 import SurveyDetails from './component/SurveyDetails';
@@ -14,12 +15,13 @@ import StarRatings from './component/StarRatings';
 import Slider from './component/Slider';
 import SingleText from './component/SingleText';
 import MultiChoice from './component/MultiChoice';
-
 injectTapEventPlugin();
+
 ReactDOM.render(
  <MuiThemeProvider>
  <Router history={hashHistory}>
      <Route path="/" component={Login}/>
+
      <Route path="/Home" component={App}>
        <Route path="CreateSurvey" component={CreateSurvey}/>
        <Route path="SurveyDetails" component={SurveyDetails}/>
