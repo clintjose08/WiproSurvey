@@ -1,14 +1,15 @@
 import React,{Component} from 'react';
+import './App.css';
 import Paper from 'material-ui/Paper';
 import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
+import {IndexLink, Link} from 'react-router';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
-import {IndexLink, Link} from 'react-router';
-
 const style = {
   textAlign: 'center',
   display: 'inline-block',
-  left:'100',
+  marginLeft:'30%',
+  marginTop:'10%',
   width:'40%',
   height:'50%',
 };
@@ -17,28 +18,24 @@ const cardheadstyle={
   textAlign:'center',
 }
 const buttonStye={
-  marginLeft:30,
+  color:'white',
 }
 
 
-class SurveyDetails extends Component{
+class Login extends Component{
 	render(){
 		return(<div><Paper style={style}>
       <Card>
-        <CardHeader title="Create Survey" style={cardheadstyle} titleColor='white'/>
+        <CardHeader title="Sign in to your account" style={cardheadstyle} titleColor='white'/>
         <CardText>
           <TextField
-            hintText="Name of the survey"
+            hintText="Username"
           /><br />
           <TextField
-            hintText="Description about the survey" multiLine={true} rows={2}
+            hintText="Password"
           /><br />
-
-          <Link to="Home/AddQuestion" activeClassName="active">
+          <Link to="/CreateSurvey" activeClassName="active">
             <RaisedButton label="Submit" backgroundColor="#004D40" labelColor='white'/>
-          </Link>
-          <Link to="Home/CreateSurvey" activeClassName="active">
-            <RaisedButton label="Cancel" style={buttonStye}/>
           </Link>
         </CardText>
       </Card>
@@ -46,4 +43,4 @@ class SurveyDetails extends Component{
 		</div>);
 	}
  }
- export default SurveyDetails;
+ export default Login;

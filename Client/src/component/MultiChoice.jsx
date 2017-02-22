@@ -47,20 +47,26 @@ handleChange = (event, index, value) => this.setState({value});
     optionArr:arr
   })
  }
- removeOptions(e)
+ removeOptions=(index)=>
  {
   var arr=this.state.optionArr;
-  arr.pop();
+  arr.splice(index,1);
   this.setState({
     optionArr:arr
   })
  }
-
+changeOptions=(index,value)=>
+{
+  var arr=this.state.optionArr;
+  arr[index]=value;
+  this.setState({
+  optionArr:arr
+  })
+}
  render() {
    const options=this.state.optionArr.map((value,index) => {
-
      return (
-     <AddOptions addoptions={this.addOptions.bind(this)} removeoptions={this.removeOptions.bind(this)}/>
+     <AddOptions addoptions={this.addOptions.bind(this)} index={index} value={value} removeoptions={this.removeOptions.bind(this)} changeoptions={this.changeOptions.bind(this)}/>
      );
    });
    return (
@@ -75,7 +81,7 @@ handleChange = (event, index, value) => this.setState({value});
 	           onChange={this.handleChange}
 	         >
 	         <MenuItem value={1} primaryText="Multiple Choice" />
-	         <Link to="Home/Dropdown" activeClassName="active">
+	         <Link to="Home/MultiChoice" activeClassName="active">
 	            <MenuItem value={2} primaryText="Dropdown" />
 	         </Link>
 	         <Link to="Home/StarRatings" activeClassName="active">

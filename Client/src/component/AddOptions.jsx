@@ -14,12 +14,16 @@ class AddOptions extends Component {
  }
  removeClicked(e)
  {
-   this.props.removeoptions(e);
+   this.props.removeoptions(this.props.index);
+ }
+ changeOptions(e)
+ {
+ this.props.changeoptions(this.props.index,e.target.value);
  }
  render()
  {
    return(<div>
-     <TextField floatingLabelText="Add options"/>
+     <TextField floatingLabelText="Add options" value={this.props.value} onChange={this.changeOptions.bind(this)}/>
      <FloatingActionButton mini={true} style={floatStyle} backgroundColor="green" onClick={this.addClicked.bind(this)}>
      <ContentAdd />
    </FloatingActionButton>
