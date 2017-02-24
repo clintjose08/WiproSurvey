@@ -10,6 +10,8 @@ import {Table, TableBody, TableFooter, TableHeader, TableHeaderColumn, TableRow,
 import background from '../../images/banner.png';
 import {IndexLink, Link} from 'react-router';
 
+import Create from 'material-ui/svg-icons/content/create';
+
 class CreateSurvey extends Component {
 
 
@@ -19,20 +21,17 @@ class CreateSurvey extends Component {
 <div>
     <div>
     <Paper  style={{width: '98%', marginTop: 0,marginLeft:15,textAlign:'center'}}>
+         <Card style={{background:'#E5E4E2'}}>
 
-         <Card>
-
-            <CardMedia
-              overlay={<CardTitle title="All Survey Details" subtitle="subtitle" />}
-
-            >
+            <CardMedia>
              <img src={background} style={{width:'auto',height:'15%'}} />
             </CardMedia>
             <CardActions>
             <Link to="Home/SurveyDetails" activeClassName="active">
               <RaisedButton label="Create New Survey"
-               backgroundColor="#41C80A"
-               labelStyle={{color:'white',fontSize:15,fontWeight: 'bold'}}
+                icon={<Create />}
+                backgroundColor='#1C6D03 '
+                labelStyle={{color:'#FFFFFF ',fontWeight:'bold',marginTop:'4%'}}
               style={{textAlign:'center',width:'25%',marginTop:'2%',marginBottom:'1%',padding:'0px'}} />
               </Link>
             </CardActions>
@@ -42,24 +41,26 @@ class CreateSurvey extends Component {
     </div>
 
     <div>
-    <Paper  style={{width: '98%', marginTop: 0,marginLeft:15}}>
+    <Paper  style={{width: '98%', marginTop: 0,marginLeft:15,background:'#E5E4E2'}}>
          <div>
          <h1 style={{textAlign: 'center', margin:'10',padding:'10'}}>Your All Surveys</h1>
          <Divider/>
          </div>
-         <div  >
+         <div style={{marginLeft:'4%'}} >
          <TableRowColumn>
          <Card >
 
          <CardText>
          <h1 style={{fontSize:200,color:'#2C9707',textAlign: 'center',marginTop:'0px',marginBottom:'0px'}}>0</h1>
           <h5 style={{fontSize:15,marginTop:'0px',marginBottom:'0px'}}>Your active surveys are here Click below to get details</h5>
-          </CardText >
+          </CardText>
            <CardActions>
             <FlatButton
             backgroundColor="C4C4C4"
+
             style={{width:'100%' ,textAlign: 'center',fontWeight: 'bold',marginTop:'0px',marginBottom:'0px'}}
-            label="Running" />
+            label="Running"
+            labelStyle={{fontSize:'125%',fontWeight:'bold'}}/>
            </CardActions>
 
          </Card>
@@ -71,12 +72,14 @@ class CreateSurvey extends Component {
          <CardText>
          <h1 style={{fontSize:200,color:'#D80202',textAlign: 'center',marginTop:'0px',marginBottom:'0px',}}>2</h1>
           <h5 style={{fontSize:15,marginTop:'0px',marginBottom:'0px'}}>Already closed surveys are here Click below to get details</h5>
-          </CardText >
+          </CardText>
            <CardActions>
             <FlatButton
             backgroundColor="C4C4C4"
             style={{width:'100%' ,textAlign: 'center',marginTop:'0px',fontWeight: 'bold',marginBottom:'0px'}}
-            label="Closed" />
+            label="Closed"
+            labelStyle={{fontSize:'125%',fontWeight:'bold'}}/>  />
+
            </CardActions>
 
          </Card>
@@ -88,12 +91,14 @@ class CreateSurvey extends Component {
          <CardText>
          <h1 style={{fontSize:200,color:'#C1D100',textAlign: 'center',marginTop:'0px',marginBottom:'0px',}}>2</h1>
           <h5 style={{fontSize:15,marginTop:'0px',marginBottom:'0px'}}>Your all draft surveys are here Click below to get details</h5>
-          </CardText >
+          </CardText>
            <CardActions>
             <FlatButton
             backgroundColor="C4C4C4"
+
             style={{width:'100%' ,textAlign: 'center',fontWeight: 'bold',marginTop:'0px',marginBottom:'0px'}}
-            label="Drafts" />
+            label="Drafts"
+            labelStyle={{fontSize:'125%',fontWeight:'bold'}}/> />
            </CardActions>
 
          </Card>

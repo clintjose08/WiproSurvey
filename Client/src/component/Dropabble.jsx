@@ -7,77 +7,67 @@ import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'mat
 
 
 const welcomeStyle={
-background:'#C9FDC1 ',
+background:'#2F3A30',
 textAlign:'center',
-height:'15%',
-textAlign: 'center',
 marginTop:0,
-marginTop:'3%',
+marginLeft:0,
+marginRight:0,
+height:"20%"
 }
 
 const questionStyle={
-background:'#E8E8E8 ',
+background:'#FFFFFF',
 textAlign:'center',
-height:'70%',
-textAlign: 'center',
-marginTop:'3%',
+marginTop:'10%',
+marginBottom:'10%',
+marginLeft:0,
+marginRight:0,
+height:'50%'
 }
 
 const thanksStyle={
-background:'#D0FEFE ',
+background:'#2F3A30',
 textAlign:'center',
-height:'15%',
-textAlign:'center',
-marginTop:'3%',
-marginBottom:'3%'
+marginTop:'1%',
+marginBottom:'0%',
+marginLeft:0,
+marginRight:0,
+height:"40%"
+
 }
 
 const style = {
 textAlign: 'center',
-display: 'inline-block',
+height:'85%',
 width:'100%',
-height:'100%',
-
+margin:'0%',
 };
 
 
 
 class Dropabble  extends Component {
-
-
-
-
-render() {
-
-
-  return(
-  <Paper  style={style}>
-  <Card style={welcomeStyle}>
-  <CardHeader
-    title="Your Welcome Mesage Comes Here..."
-    titleColor='#818181'
-  />
-
-  </Card>
-  <Divider />
-  <Card style={questionStyle}>
-  <CardHeader
-    title="Your Questions Comes Here..."
-    titleColor='#818181'
-    titlePosition='center'
-  />
-  </Card>
-  <Divider />
-  <Card style={thanksStyle}>
-  <CardHeader
-    title="Your Thank You Mesage Comes Here..."
-    titleColor='#818181'
-  />
-  </Card>
-  </Paper>
- );
-
-  }
+ render() {
+   return(
+     <div style={{height:'100%'}}>
+      <h2 style={{fontWeight:'bold',textAlign:'center'}}>Your Templete</h2>
+      <Paper  style={style}>
+        <Card style={welcomeStyle}>
+          <h3 style={{marginTop:'2%',marginBottom:'2%',color:'#FFFFFF',fontSize:'150%'}}> [Title comes Here]</h3>
+          <Divider/>
+          <h4 style={{marginTop:'1%',marginLeft:'1%',color:'#DAF7A6  ',textAlign:'left'}}>[ Description ]</h4>
+        </Card>
+        <h3 style={{marginTop:'5%',marginBottom:'5%',color:'#818181',height:'50%'}}>[ Questions comes Here ]</h3>
+        <Card style={thanksStyle}>
+          <h3 style={{marginTop:'2%',marginBottom:'2%',color:'#FFFFFF'}}> [Thank You Mesage comes Here]</h3>
+          <Divider/>
+          <h4 style={{marginTop:'1%',marginLeft:'1%',color:'#DAF7A6  ',textAlign:'left'}}>[ Craeter Name ]</h4>
+          <h4 style={{marginTop:0,marginLeft:'1%',color:'#DAF7A6  ',textAlign:'left'}}>[ Craeter Contact Number ]</h4>
+          <h4 style={{marginTop:0,marginLeft:'1%',color:'#DAF7A6  ',textAlign:'left'}}>[ Craeter E-mail ]</h4>
+        </Card>
+      </Paper>
+    </div>
+  );
+ }
 }
 
 export default Dropabble;
