@@ -26,8 +26,7 @@ injectTapEventPlugin();
 ReactDOM.render(
  <MuiThemeProvider>
  <Router history={hashHistory}>
-     <Route path="/" component={AddQuestion}/>
-
+     <Route path="/" component={Login}/>
      <Route path="/Home" component={App}>
        <Route path="CreateSurvey" component={CreateSurvey}/>
        <Route path="AddQuestion" component={AddQuestion}/>

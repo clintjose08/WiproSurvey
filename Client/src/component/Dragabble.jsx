@@ -23,8 +23,9 @@ import {Table, TableBody, TableFooter, TableHeader, TableHeaderColumn, TableRow,
   }
 class Dragabble extends Component{
 	render(){
-		return(
-        <div style={{backgroundColor:'#E0E0E0',marginTop:'5%'}}>
+		return(<div>
+      <h2>TooLkit</h2>
+        <div style={{backgroundColor:'#E0E0E0'}}>
 
             <Row style={{marginLeft:'1%',marginRight:'1%'}}>
               <Col xs={12} style={{marginTop:'10%'}}>
@@ -95,7 +96,7 @@ class Dragabble extends Component{
                 </Link>
               </Col>
             </Row>
-
+          </div>
         </div>
     );
 	}
