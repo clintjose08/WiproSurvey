@@ -10,6 +10,7 @@ import CreateSurvey from './component/CreateSurvey';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import {Router, Route, IndexRoute, hashHistory} from 'react-router';
 import injectTapEventPlugin from 'react-tap-event-plugin';
+
 import AddQuestion from './view/AddQuestion';
 import Dropdown from './view/Dropdown';
 import StarRatings from './view/StarRatings';
@@ -19,6 +20,7 @@ import MultiChoice from './view/MultiChoice';
 import Qgroup from './view/Qgroup';
 import CheckBox from './view/CheckBox';
 import YesOrNo from './view/YesOrNo';
+
 injectTapEventPlugin();
 
 ReactDOM.render(
@@ -36,7 +38,6 @@ ReactDOM.render(
        <Route path="StarRatings" component={StarRatings}/>
        <Route path="Slider" component={Slider}/>
        <Route path="SingleText" component={SingleText}/>
-       <Route path="MultiChoice" component={MultiChoice}/>
        <Route path="MultiChoice" component={MultiChoice}/>
        <Route path="Qgroup" component={Qgroup}/>
        <Route path="YesOrNo" component={YesOrNo}/>

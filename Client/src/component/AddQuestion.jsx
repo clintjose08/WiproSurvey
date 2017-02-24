@@ -57,14 +57,13 @@ class AddQuestion  extends Component {
 
    <h2 style={{fontWeight:'bold',textAlign:'center'}}>Your Templete</h2>
    <Paper  style={style}>
-
    <Card style={welcomeStyle}>
       <h3 style={{marginTop:'2%',marginBottom:'2%',color:'#FFFFFF',fontSize:'150%'}}> [Title comes Here]</h3>
       <Divider/>
      <h4 style={{marginTop:'1%',marginLeft:'1%',color:'#DAF7A6  ',textAlign:'left'}}>[ Description ]</h4>
    </Card>
-   
-      
+
+
       <h3 style={{marginTop:'5%',marginBottom:'5%',color:'#818181'}}>[ Questions comes Here ]</h3>
 
    <Card style={thanksStyle}>
@@ -75,7 +74,7 @@ class AddQuestion  extends Component {
      <h4 style={{marginTop:0,marginLeft:'1%',color:'#DAF7A6  ',textAlign:'left'}}>[ Craeter E-mail ]</h4>
    </Card>
    </Paper>
-   
+
 
 
 
