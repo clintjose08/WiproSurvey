@@ -55,8 +55,8 @@ class SurveyBar extends Component {
      <div>
 
        <AppBar
-         title="Survey"
-
+         title="Wipro Survey"
+         style={{background:'#001811',marginTop:0,marginLeft:0,marginRight:0}}
          iconElementRight={this.state.logged ? <Logged /> : <Login />}
        />
      </div>

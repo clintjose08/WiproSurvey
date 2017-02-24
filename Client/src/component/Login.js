@@ -12,10 +12,15 @@ const style = {
   height:'50%',
 };
 const cardheadstyle={
-  background:'black',
-  textAlign:'center',
+  background:'#242323',
+  textAlign:'center'
 
-}
+};
+const cardTitleStyle={
+   color:'#FFFFFF',
+   fontSize:'125%',
+   fontWeight:'bold'
+};
 const buttonStye={
   color:'white',
 }
@@ -25,20 +30,26 @@ class Login extends Component{
 	render(){
 		return(<div  style={{textAlign:'center',marginTop:"7%"}}>
       <img src= {survey} style={{postion:'fixed',margin:'auto',width:400,height:'auto'}}/>
-      <h1 >Survey Test</h1>
+      <h1 style={{fontWeight:'bold'}}>Wipro Survey</h1>
       <Paper style={style}>
       
-      <Card>
-        <CardHeader title="Please sign in to your account" style={cardheadstyle} titleStyle={{fontWeight:'bold',fontSize:20,textAlign:'left'}} titleColor='white'/>
+      <Card style={{background:'#E5E4E2'}}>
+        <CardHeader title="Please sign in to your account" style={cardheadstyle} titleStyle={cardTitleStyle} />
         <CardText>
           <TextField
-            hintText="Username"
+            hintText="Enter your Emp-ID"
+           hintStyle={{fontWeight:'bold'}} 
+           underlineStyle={{borderColor:'#37861E'}}
+           
           /><br />
           <TextField
-            hintText="Password"
+           hintText="Enter your Password"
+           hintStyle={{fontWeight:'bold'}} 
+           underlineStyle={{borderColor:'#37861E'}}
+           
           /><br />
           <Link to="Home/CreateSurvey" activeClassName="active">
-            <RaisedButton label="Submit" backgroundColor="#004D40" labelColor='white'/>
+            <RaisedButton label="Submit" backgroundColor='#1C6D03 ' labelStyle={{color:'#FFFFFF ',fontWeight:'bold'}}/>
           </Link>
         </CardText>
       </Card>

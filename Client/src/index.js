@@ -10,6 +10,8 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import {Router, Route, IndexRoute, hashHistory} from 'react-router';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 import AddQuestion from './component/AddQuestion';
+import WelcomeScreen from './component/welcomeScreen';
+import ThanksScreen from './component/thanksScreen'
 import Dropdown from './component/Dropdown';
 import StarRatings from './component/StarRatings';
 import Slider from './component/Slider';
@@ -20,7 +22,7 @@ injectTapEventPlugin();
 ReactDOM.render(
  <MuiThemeProvider>
  <Router history={hashHistory}>
-     <Route path="/" component={Login}/>
+     <Route path="/" component={AddQuestion}/>
 
      <Route path="/Home" component={App}>
        <Route path="CreateSurvey" component={CreateSurvey}/>
