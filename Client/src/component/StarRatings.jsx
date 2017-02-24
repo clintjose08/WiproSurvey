@@ -9,23 +9,17 @@ import {List, ListItem} from 'material-ui/List';
 import Divider from 'material-ui/Divider';
 import Checkbox from 'material-ui/Checkbox';
 import {IndexLink, Link} from 'react-router';
-
+import { Grid,Col,Row} from 'react-flexbox-grid';
+import {blueGrey500,white} from 'material-ui/styles/colors';
+import Subheader from 'material-ui/Subheader';
 
 const cardheadstyle={
-  background:'black',
+  background:"#242323",
   textAlign:'center',
-}
-const buttonStye={
-  marginLeft:30,
 }
 
 const style = {
-  textAlign: 'center',
-  display: 'inline-block',
-  marginLeft:'30%',
-  marginTop:'10%',
-  width:'40%',
-  height:'50%',
+marginTop:30
 };
 
 const textStyle={
@@ -84,26 +78,29 @@ class StarRatings extends Component
     }
 
     return(<div>
-      <Paper style={style}>
-        <Card>
-          <CardHeader title="Create Star Rate Questions"  style={cardheadstyle} titleColor='white'/>
-          <CardText>
-            <TextField
-              hintText="Question"
-              style={textStyle}
-            /><br />
-            <Divider/>
+      <Grid>
+          <Row>
+            <Col xs={12}>
+            <Paper style={{marginTop:'3%'}}>
+        <Card style={{background:' #E5E4E2 '}}>
+          <CardHeader title="Create Star Rate Questions"  style={cardheadstyle} titleColor='white' titleStyle={{fontWeight:'bold'}}/>
+          <CardText style={{background:"#E5E4E2"}}>
+          <Subheader style={{fontSize:'125%',color:'#1C6D03 '}}>Select the question type</Subheader>
             <SelectField
+              iconStyle={{background:'#607D8B'}}
               floatingLabelText="Question Type"
               value={this.state.value}
               onChange={this.handleChange}
+              underlineStyle={{borderColor:blueGrey500}} floatingLabelStyle={{color:blueGrey500}}
             >
-            <MenuItem value={1} primaryText="Multiple Choice" />
+              <Link to="Home/StarRatings" activeClassName="active">
+            <MenuItem value={1} primaryText="Star Ratings" />
+            </Link>
             <Link to="Home/Dropdown" activeClassName="active">
                <MenuItem value={2} primaryText="Dropdown" />
             </Link>
-            <Link to="Home/StarRatings" activeClassName="active">
-               <MenuItem value={3} primaryText="Star Ratings" />
+            <Link to="Home/MultiChoice" activeClassName="active">
+               <MenuItem value={3} primaryText="Multiple Choice" />
             </Link>
             <Link to="Home/Slider" activeClassName="active">
                <MenuItem value={4} primaryText="Slider" />
@@ -114,27 +111,45 @@ class StarRatings extends Component
             <Link to="Home/Comments" activeClassName="active">
                <MenuItem value={5} primaryText="Comments" />
            </Link>
+
              </SelectField>
               <br /><br />
-            <span><h3>Select scale</h3>
+
+              <Subheader style={{fontSize:'125%',color:'#1C6D03 '}}>Enter the question</Subheader>
+              <TextField
+                floatingLabelText="Question"
+                value=" "
+                underlineStyle={{borderColor:blueGrey500}} floatingLabelStyle={{color:blueGrey500}}
+              /><br />
+              <Divider style={{background:blueGrey500}}/>
+              <Subheader style={{fontSize:'125%',color:'#1C6D03 '}}>Select Scale</Subheader>
             <SelectField
-              hintText="Select Scale"
+              floatingLabelText="Select Scale"
               value={this.state.value}
               onChange={this.handleChange}
               maxHeight={200}
+              underlineStyle={{borderColor:blueGrey500}} floatingLabelStyle={{color:blueGrey500}}
             >
               {items}
-            </SelectField></span>
-            <Checkbox label="Add Rating Value" checked={this.state.addValue} onCheck={this.onChangeCheck.bind(this)}/>
+            </SelectField>
+            <Checkbox label="Add Rating Value" iconStyle={{borderColor:blueGrey500}} labelStyle={{marginRight:1000,color:blueGrey500}} checked={this.state.addValue} onCheck={this.onChangeCheck.bind(this)}/>
+
             <List>
             {this.state.listOptions}
             </List>
             <br />
-            <RaisedButton label="Submit" backgroundColor="#004D40" labelColor='white'/>
-            <RaisedButton label="Cancel" disabled={true} style={buttonStye}/>
+
           </CardText>
+          <Divider style={{background:blueGrey500}}/>
+          <CardActions >
+          <RaisedButton label="Cancel" labelStyle={{fontWeight:'bold'}} />
+          <RaisedButton label="Submit" backgroundColor='#1C6D03 ' labelStyle={{color:'#FFFFFF ',fontWeight:'bold'}} />
+          </CardActions>
         </Card>
-      </Paper>
+        </Paper>
+        </Col>
+        </Row>
+    </Grid>
     </div>);
   }
 }

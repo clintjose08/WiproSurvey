@@ -15,6 +15,7 @@ import StarRatings from './component/StarRatings';
 import Slider from './component/Slider';
 import SingleText from './component/SingleText';
 import MultiChoice from './component/MultiChoice';
+import Checkbox from './component/Checkbox';
 injectTapEventPlugin();
 
 ReactDOM.render(
@@ -32,6 +33,7 @@ ReactDOM.render(
        <Route path="Slider" component={Slider}/>
        <Route path="SingleText" component={SingleText}/>
        <Route path="MultiChoice" component={MultiChoice}/>
+       <Route path="Checkbox" component={Checkbox}/>
     </Route>
   </Router>
   </MuiThemeProvider>,

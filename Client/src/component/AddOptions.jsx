@@ -3,6 +3,7 @@ import TextField from 'material-ui/TextField';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import ContentAdd from 'material-ui/svg-icons/content/add';
 import ContentRemove from 'material-ui/svg-icons/content/remove';
+import {blueGrey500} from 'material-ui/styles/colors';
 
 const floatStyle={
  margin:10
@@ -23,7 +24,7 @@ class AddOptions extends Component {
  render()
  {
    return(<div>
-     <TextField floatingLabelText="Add options" value={this.props.value} onChange={this.changeOptions.bind(this)}/>
+     <TextField floatingLabelText="Add options" value={this.props.value} onChange={this.changeOptions.bind(this)} underlineStyle={{borderColor:blueGrey500}} floatingLabelStyle={{color:blueGrey500}}/>
      <FloatingActionButton mini={true} style={floatStyle} backgroundColor="green" onClick={this.addClicked.bind(this)}>
      <ContentAdd />
    </FloatingActionButton>

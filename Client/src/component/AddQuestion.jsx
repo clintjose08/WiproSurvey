@@ -116,6 +116,9 @@ const actions = [
           <Link to="Home/Slider" activeClassName="active">
             <MenuItem primaryText="Slider" leftIcon={<Slide />} />
           </Link>
+          <Link to="Home/Checkbox" activeClassName="active">
+             <MenuItem value={5} primaryText="Checkbox" />
+         </Link>
         </List>
        </Dialog>
      </div>

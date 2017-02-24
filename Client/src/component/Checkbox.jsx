@@ -18,6 +18,10 @@ marginTop:40,
 width:'100%'
 }
 
+const buttonStye={
+
+}
+
 const cardStyle={
 
 }
@@ -73,7 +77,7 @@ changeOptions=(index,value)=>
                 <Paper style={compStyle}>
                 <Card style={cardStyle} style={{background:"#E5E4E2"}}>
                 <CardHeader
-                  title="Create Multiple Choice Questions" style={{background:"#242323",}} titleStyle={{fontWeight:'bold',color:'#FFFFFF',marginLeft:'20%'}}
+                  title="Create Checkbox Questions" style={{background:"#242323",}} titleStyle={{fontWeight:'bold',color:'#FFFFFF',marginLeft:'20%'}}
                 />
                 <CardText >
                 <Subheader style={{fontSize:'125%',color:'#1C6D03 '}}>Select the question type</Subheader>
@@ -116,13 +120,12 @@ changeOptions=(index,value)=>
                 </CardText>
                   <Divider style={{background:blueGrey500}}/>
                 <CardActions>
-
-  	           <Link to="Home/AddQuestion" activeClassName="active">
-  	             <RaisedButton label="Cancel" labelStyle={{fontWeight:'bold'}} />
-  	           </Link>
-               <Link to="Home/AddQuestion" activeClassName="active">
-                 <RaisedButton label="Submit" backgroundColor='#1C6D03 ' labelStyle={{color:'#FFFFFF ',fontWeight:'bold'}}/>
-              </Link>
+                <Link to="Home/AddQuestion" activeClassName="active">
+                  <RaisedButton label="Cancel" labelStyle={{fontWeight:'bold'}} />
+                </Link>
+                <Link to="Home/AddQuestion" activeClassName="active">
+                  <RaisedButton label="Submit" backgroundColor='#1C6D03 ' labelStyle={{color:'#FFFFFF ',fontWeight:'bold'}}/>
+                </Link>
               </CardActions>
                </Card>
                </Paper>

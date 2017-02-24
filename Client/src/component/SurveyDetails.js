@@ -20,7 +20,6 @@ const buttonStye={
   marginLeft:30,
 }
 
-
 class SurveyDetails extends Component{
 	render(){
 		return(<div><Paper style={style}>
