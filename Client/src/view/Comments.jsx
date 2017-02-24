@@ -1,10 +1,13 @@
 import React,{Component} from 'react';
 import Paper from 'material-ui/Paper';
 import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
+import SelectField from 'material-ui/SelectField';
+import MenuItem from 'material-ui/MenuItem';
+import {IndexLink, Link} from 'react-router';
+import Dialog from 'material-ui/Dialog';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
-import {IndexLink, Link} from 'react-router';
-
+import QuestionType from '../component/QuestionType';
 const style = {
   textAlign: 'center',
   display: 'inline-block',
@@ -15,30 +18,37 @@ const style = {
 };
 const cardheadstyle={
   background:'black',
-  textAlign:'center',
+  textAlign:'left',
+}
+const cardTextStyle={
+  width:'90%',
+  textAlign:'left'
 }
 const buttonStye={
   marginLeft:30,
 }
+class Comments extends Component{
+  constructor(props) {
+   super(props);
+   this.state = {value: 6};
+ }
 
-
-class SurveyDetails extends Component{
+ handleChange = (event, index, value) => this.setState({value});
 	render(){
 		return(<div><Paper style={style}>
       <Card>
-        <CardHeader title="Create Survey" style={cardheadstyle} titleColor='white'/>
-        <CardText>
+        <CardHeader title="Comments" style={cardheadstyle} titleColor='white'/>
+        <CardText style={cardTextStyle}>
+        <QuestionType />
+          <br /><br />
           <TextField
-            hintText="Name of the survey"
-          /><br />
-          <TextField
-            hintText="Description about the survey" multiLine={true} rows={2}
-          /><br />
-
+            hintText="Overall Comments"
+            fullWidth={true}
+          /><br /><br />
           <Link to="Home/AddQuestion" activeClassName="active">
             <RaisedButton label="Submit" backgroundColor="#004D40" labelColor='white'/>
           </Link>
-          <Link to="Home/CreateSurvey" activeClassName="active">
+          <Link to="Home/AddQuestion" activeClassName="active">
             <RaisedButton label="Cancel" style={buttonStye}/>
           </Link>
         </CardText>
@@ -47,4 +57,4 @@ class SurveyDetails extends Component{
 		</div>);
 	}
  }
- export default SurveyDetails;
+ export default Comments;
