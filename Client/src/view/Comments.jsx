@@ -7,54 +7,85 @@ import {IndexLink, Link} from 'react-router';
 import Dialog from 'material-ui/Dialog';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
-import QuestionType from '../component/QuestionType';
-const style = {
-  textAlign: 'center',
-  display: 'inline-block',
-  marginLeft:'30%',
-  marginTop:'10%',
-  width:'40%',
-  height:'50%',
-};
+import Subheader from 'material-ui/Subheader';
+import Divider from 'material-ui/Divider';
+
 const cardheadstyle={
-  background:'black',
-  textAlign:'left',
+ background:'#242323',
+ textAlign:'center'
 }
-const cardTextStyle={
-  width:'90%',
-  textAlign:'left'
+const cardTitleStyle={
+   color:'#FFFFFF',
+   fontSize:'125%',
+   fontWeight:'bold'
 }
 const buttonStye={
-  marginLeft:30,
+ marginLeft:30,
 }
 class Comments extends Component{
-  constructor(props) {
-   super(props);
-   this.state = {value: 6};
- }
+ constructor(props) {
+  super(props);
+  this.state = {value: 5};
+}
 
- handleChange = (event, index, value) => this.setState({value});
-	render(){
-		return(<div><Paper style={style}>
-      <Card>
-        <CardHeader title="Comments" style={cardheadstyle} titleColor='white'/>
-        <CardText style={cardTextStyle}>
-        <QuestionType />
-          <br /><br />
-          <TextField
-            hintText="Overall Comments"
-            fullWidth={true}
-          /><br /><br />
-          <Link to="Home/AddQuestion" activeClassName="active">
-            <RaisedButton label="Submit" backgroundColor="#004D40" labelColor='white'/>
-          </Link>
-          <Link to="Home/AddQuestion" activeClassName="active">
-            <RaisedButton label="Cancel" style={buttonStye}/>
-          </Link>
-        </CardText>
-      </Card>
-      </Paper>
-		</div>);
-	}
- }
- export default Comments;
+handleChange = (event, index, value) => this.setState({value});
+    render(){
+        return(<div><Paper >
+     <Card style={{background:'#E5E4E2'}}>
+       <CardHeader title="Comments" style={cardheadstyle} titleStyle={cardTitleStyle}/>
+
+       <CardText style={{marginTop:0}}>
+       <div>
+       <Subheader style={{fontSize:'125%',color:'#1C6D03 '}}> Question Type </Subheader>
+
+       <SelectField
+         value={this.state.value}
+         onChange={this.handleChange}
+       >
+       <Link to="Home/MultiChoice" activeClassName="active">
+          <MenuItem value={1} primaryText="Multiple Choice" />
+       </Link>
+       <Link to="Home/Dropdown" activeClassName="active">
+          <MenuItem value={2} primaryText="Dropdown" />
+       </Link>
+       <Link to="Home/StarRatings" activeClassName="active">
+          <MenuItem value={3} primaryText="Star Ratings" />
+       </Link>
+       <Link to="Home/Slider" activeClassName="active">
+          <MenuItem value={4} primaryText="Slider" />
+       </Link>
+       <MenuItem value={5} primaryText="Single Textbox" />
+                <Link to="Home/SingleText" activeClassName="active">
+           <MenuItem value={6} primaryText="Comments" />
+                </Link>
+        </SelectField>
+
+         </div>
+
+       </CardText>
+       <Divider style={{background:'#000000'}}/>
+         <CardActions style={{marginTop:'0px',marginLeft:'1%'}}>
+          <Subheader style={{fontSize:'125%',color:'#1C6D03 ',marginTop:'3%'}}>Question</Subheader>
+         <TextField
+           hintText="Enter your Question here."
+           hintStyle={{fontWeight:'bold'}}
+           underlineStyle={{borderColor:'#37861E'}}
+           fullWidth={true}
+         />
+        </CardActions>
+        <Divider style={{background:'#000000'}}/>
+       <CardActions style={{marginTop:'0px',marginLeft:'1%'}}>
+       <Link to="Home/AddQuestion" activeClassName="active">
+         <RaisedButton label="Cancel" labelStyle={{fontWeight:'bold'}} />
+         </Link>
+        <Link to="Home/AddQuestion" activeClassName="active">
+         <RaisedButton label="Submit" backgroundColor='#1C6D03 ' labelStyle={{color:'#FFFFFF ',fontWeight:'bold'}} />
+        </Link>
+       </CardActions>
+
+     </Card>
+     </Paper>
+        </div>);
+    }
+}
+export default Comments;

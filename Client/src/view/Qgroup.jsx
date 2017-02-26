@@ -55,7 +55,7 @@ const buttonStye={
  marginLeft:30,
 }
 class Qgroup extends Component{
- 
+
 
 handleChange = (event, index, value) => this.setState({value});
     constructor() {
@@ -71,7 +71,7 @@ handleChange = (event, index, value) => this.setState({value});
     this.checkYes = this.checkYes.bind(this);
     this.checkNo = this.checkNo.bind(this);
   }
- 
+
 checkYes() {
        this.setState({showQuery: 1,
          checked: !this.state.checked});
@@ -82,34 +82,34 @@ checkNo()
   this.setState({showiQuery: 1,
          checked1: !this.state.checked1});
 
- }; 
+ };
     render(){
     let showNo = '';
     let showYes = '';
 
     if(this.state.showiQuery == 1 && this.state.checked1==true)
       {
-      showNo=<Grid style={stylepap}>     
-               <Qoption />       
+      showNo=<Grid style={stylepap}>
+               <Qoption />
         </Grid>
       }
 
     if(this.state.showQuery == 1 && this.state.checked==true)
     {
-      showYes=<Grid style={stylepap} >          
-               <Qoption />        
+      showYes=<Grid style={stylepap} >
+               <Qoption />
           </Grid>
     }
         return(
 
      <Paper style={{height:'100%'}} >
      <Card style={{background:'#E5E4E2',height:'100%'}}>
-       <CardHeader title="Comments" style={cardheadstyle} titleStyle={cardTitleStyle}/>
- 
+       <CardHeader title="Question Group" style={cardheadstyle} titleStyle={cardTitleStyle}/>
+
        <CardText style={{marginTop:0}}>
        <div>
        <Subheader style={{fontSize:'125%',color:'#1C6D03 '}}> Question Type </Subheader>
-      
+
        <SelectField
          value={this.state.value}
          onChange={this.handleChange}
@@ -131,23 +131,23 @@ checkNo()
            <MenuItem value={6} primaryText="Comments" />
                 </Link>
         </SelectField>
-        
+
          </div>
-         
+
        </CardText>
        <Divider style={{background:'#000000'}}/>
          <CardActions style={{marginTop:'0px',marginLeft:'1%'}}>
           <Subheader style={{fontSize:'125%',color:'#1C6D03 ',marginTop:'3%'}}>Question</Subheader>
          <TextField
            hintText="Enter your Question here."
-           hintStyle={{fontWeight:'bold'}} 
+           hintStyle={{fontWeight:'bold'}}
            underlineStyle={{borderColor:'#37861E'}}
            fullWidth={true}
          />
          <div>
        <h4>your question here</h4>
        <div>
-      <Checkbox 
+      <Checkbox
       label="Yes"
       style={styles.checkbox}
       value="checked"
@@ -174,10 +174,10 @@ checkNo()
        <CardActions style={{marginTop:'0px',marginLeft:'1%'}}>
        <Link to="Home/AddQuestion" activeClassName="active">
          <RaisedButton label="Cancel" labelStyle={{fontWeight:'bold'}} />
-         </Link> 
-        <Link to="Home/AddQuestion" activeClassName="active"> 
+         </Link>
+        <Link to="Home/AddQuestion" activeClassName="active">
          <RaisedButton label="Submit" backgroundColor='#1C6D03 ' labelStyle={{color:'#FFFFFF ',fontWeight:'bold'}} />
-        </Link> 
+        </Link>
        </CardActions>
 
      </Card>

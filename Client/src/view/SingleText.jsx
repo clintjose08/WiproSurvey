@@ -34,7 +34,7 @@ handleChange = (event, index, value) => this.setState({value});
     render(){
         return(<div><Paper >
      <Card style={{background:'#E5E4E2'}}>
-       <CardHeader title="Comments" style={cardheadstyle} titleStyle={cardTitleStyle}/>
+       <CardHeader title="SingleText" style={cardheadstyle} titleStyle={cardTitleStyle}/>
 
        <CardText style={{marginTop:0}}>
        <div>
