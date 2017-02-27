@@ -12,6 +12,7 @@ import {IndexLink, Link} from 'react-router';
 import { Grid,Col,Row} from 'react-flexbox-grid';
 import {blueGrey500,white} from 'material-ui/styles/colors';
 import Subheader from 'material-ui/Subheader';
+import SelectType from './SelectType';
 
 const cardheadstyle={
   background:"#242323",
@@ -86,33 +87,7 @@ class StarRatings extends Component
           <CardHeader title="Create Star Rate Questions"  style={cardheadstyle} titleColor='white' titleStyle={{fontWeight:'bold'}}/>
           <CardText style={{background:"#E5E4E2"}}>
           <Subheader style={{fontSize:'125%',color:'#1C6D03 '}}>Select the question type</Subheader>
-            <SelectField
-              iconStyle={{background:'#607D8B'}}
-              floatingLabelText="Question Type"
-              value={this.state.value}
-              onChange={this.handleChange}
-              underlineStyle={{borderColor:blueGrey500}} floatingLabelStyle={{color:blueGrey500}}
-            >
-              <Link to="Home/StarRatings" activeClassName="active">
-            <MenuItem value={1} primaryText="Star Ratings" />
-            </Link>
-            <Link to="Home/Dropdown" activeClassName="active">
-               <MenuItem value={2} primaryText="Dropdown" />
-            </Link>
-            <Link to="Home/MultiChoice" activeClassName="active">
-               <MenuItem value={3} primaryText="Multiple Choice" />
-            </Link>
-            <Link to="Home/Slider" activeClassName="active">
-               <MenuItem value={4} primaryText="Slider" />
-            </Link>
-            <Link to="Home/SingleText" activeClassName="active">
-               <MenuItem value={5} primaryText="Single Textbox" />
-            </Link>
-            <Link to="Home/Comments" activeClassName="active">
-               <MenuItem value={5} primaryText="Comments" />
-           </Link>
-
-             </SelectField>
+            <SelectType/>
               <br /><br />
 
               <Subheader style={{fontSize:'125%',color:'#1C6D03 '}}>Enter the question</Subheader>
