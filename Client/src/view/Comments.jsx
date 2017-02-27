@@ -7,6 +7,7 @@ import {IndexLink, Link} from 'react-router';
 import Dialog from 'material-ui/Dialog';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
+import QuestionType from '../component/QuestionType';
 const style = {
   textAlign: 'center',
   display: 'inline-block',
@@ -38,28 +39,7 @@ class Comments extends Component{
       <Card>
         <CardHeader title="Comments" style={cardheadstyle} titleColor='white'/>
         <CardText style={cardTextStyle}>
-        <SelectField
-          floatingLabelText="Question Type"
-          value={this.state.value}
-          onChange={this.handleChange}
-        >
-        <Link to="Home/MultiChoice" activeClassName="active">
-           <MenuItem value={1} primaryText="Multiple Choice" />
-        </Link>
-        <Link to="Home/Dropdown" activeClassName="active">
-           <MenuItem value={2} primaryText="Dropdown" />
-        </Link>
-        <Link to="Home/StarRatings" activeClassName="active">
-           <MenuItem value={3} primaryText="Star Ratings" />
-        </Link>
-        <Link to="Home/Slider" activeClassName="active">
-           <MenuItem value={4} primaryText="Slider" />
-        </Link>
-        <Link to="Home/SingleText" activeClassName="active">
-           <MenuItem value={5} primaryText="Single Textbox" />
-        </Link>
-           <MenuItem value={6} primaryText="Comments" />
-         </SelectField>
+        <QuestionType />
           <br /><br />
           <TextField
             hintText="Overall Comments"

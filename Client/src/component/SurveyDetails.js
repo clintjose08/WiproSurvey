@@ -8,7 +8,8 @@ import {IndexLink, Link} from 'react-router';
 const style = {
   textAlign: 'center',
   display: 'inline-block',
-  left:'100',
+  marginLeft:'30%',
+  marginTop:'10%',
   width:'40%',
   height:'50%',
 };

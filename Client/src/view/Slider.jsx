@@ -8,16 +8,21 @@ import Dialog from 'material-ui/Dialog';
 import TextField from 'material-ui/TextField';
 import Divider from 'material-ui/Divider';
 import RaisedButton from 'material-ui/RaisedButton';
-import Subheader from 'material-ui/Subheader';
-
+const style = {
+  textAlign: 'center',
+  display: 'inline-block',
+  marginLeft:'30%',
+  marginTop:'10%',
+  width:'40%',
+  height:'50%',
+};
 const cardheadstyle={
- background:'#242323',
- textAlign:'center'
+  background:'black',
+  textAlign:'left',
 }
-const cardTitleStyle={
-   color:'#FFFFFF',
-   fontSize:'125%',
-   fontWeight:'bold'
+const cardTextStyle={
+  width:'90%',
+  textAlign:'left'
 }
 const buttonStye={
   marginLeft:30,
@@ -30,10 +35,10 @@ class Slider extends Component{
 
  handleChange = (event, index, value) => this.setState({value});
 	render(){
-		return(<div><Paper >
-      <Card style={{background:'#E5E4E2'}}>
-        <CardHeader title="Comments" style={cardheadstyle} titleStyle={cardTitleStyle}/>
-        <CardText >
+		return(<div><Paper style={style}>
+      <Card>
+        <CardHeader title="Comments" style={cardheadstyle} titleColor='white'/>
+        <CardText style={cardTextStyle}>
         <SelectField
           floatingLabelText="Question Type"
           value={this.state.value}
@@ -56,42 +61,30 @@ class Slider extends Component{
            <MenuItem value={6} primaryText="Comments" />
 				</Link>
          </SelectField>
-          </CardText>
-          <Divider style={{background:'#000000'}}/>
-          <CardActions>
-          <Subheader style={{fontSize:'125%',color:'#1C6D03',marginTop:'3%'}}>Question</Subheader><br />
+          <br /><br />
           <TextField
-            hintText="Enter Your Question Here" 
-            hintStyle={{fontWeight:'bold'}} 
-            underlineStyle={{borderColor:'#37861E'}}
+            hintText="Question"
             fullWidth={true}
-          />
-          </CardActions>
-					<Divider style={{background:'#000000'}}/>
-					<CardActions>
-					<Subheader style={{fontSize:'125%',color:'#1C6D03',marginTop:'3%'}}>Scale Range</Subheader><br />
+          /><br /><br />
+					<Divider />
+					<br />
+					<label>Scale Range</label><br />
 					<TextField
             hintText="Left Side Value"
-            hintStyle={{fontWeight:'bold'}} 
-            underlineStyle={{borderColor:'#37861E'}}
           /><br />
           <TextField
             hintText="Center Value"
-            hintStyle={{fontWeight:'bold'}} 
-            underlineStyle={{borderColor:'#37861E'}}
           /><br />
 					<TextField
             hintText="Right Side Value"
-            hintStyle={{fontWeight:'bold'}} 
-            underlineStyle={{borderColor:'#37861E'}}
           /><br />
-          </CardActions>
-          <Divider style={{background:'#000000'}}/>
-          <CardActions >
-            <RaisedButton label="Cancel" labelStyle={{fontWeight:'bold'}} />
-            <RaisedButton label="Submit" backgroundColor='#1C6D03' labelStyle={{color:'#FFFFFF',fontWeight:'bold'}} />
-          </CardActions>
-        
+          <Link to="Home/AddQuestion" activeClassName="active">
+            <RaisedButton label="Submit" backgroundColor="#004D40" labelColor='white'/>
+          </Link>
+          <Link to="Home/AddQuestion" activeClassName="active">
+            <RaisedButton label="Cancel" style={buttonStye}/>
+          </Link>
+        </CardText>
       </Card>
       </Paper>
 		</div>);

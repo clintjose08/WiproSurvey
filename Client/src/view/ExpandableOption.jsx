@@ -26,10 +26,10 @@ const cardTextStyle={
 const buttonStye={
   marginLeft:30,
 }
-class Comments extends Component{
+class ExpandableOption extends Component{
   constructor(props) {
    super(props);
-   this.state = {value: 6};
+   this.state = {value: 7};
  }
 
  handleChange = (event, index, value) => this.setState({value});
@@ -58,11 +58,14 @@ class Comments extends Component{
         <Link to="Home/SingleText" activeClassName="active">
            <MenuItem value={5} primaryText="Single Textbox" />
         </Link>
-           <MenuItem value={6} primaryText="Comments" />
+        <Link to="Home/Comments" activeClassName="active">
+          <MenuItem value={6} primaryText="Comments" />
+        </Link>
+        <MenuItem value={7} primaryText="ExpandableOption" />
          </SelectField>
           <br /><br />
           <TextField
-            hintText="Overall Comments"
+            hintText="Type your Questions/Comments"
             fullWidth={true}
           /><br /><br />
           <Link to="Home/AddQuestion" activeClassName="active">
@@ -77,4 +80,4 @@ class Comments extends Component{
 		</div>);
 	}
  }
- export default Comments;
+ export default ExpandableOption;

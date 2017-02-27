@@ -21,26 +21,22 @@ class CreateSurvey extends Component {
 <div>
     <div>
     <Paper  style={{width: '98%', marginTop: 0,marginLeft:15,textAlign:'center'}}>
-         
          <Card style={{background:'#E5E4E2'}}>
-    
-            <CardMedia
-              
-               
-            >
+
+            <CardMedia>
              <img src={background} style={{width:'auto',height:'15%'}} />
             </CardMedia>
             <CardActions>
             <Link to="Home/SurveyDetails" activeClassName="active">
-              <RaisedButton label="Create New Survey" 
+              <RaisedButton label="Create New Survey"
                 icon={<Create />}
                 backgroundColor='#1C6D03 '
                 labelStyle={{color:'#FFFFFF ',fontWeight:'bold',marginTop:'4%'}}
               style={{textAlign:'center',width:'25%',marginTop:'2%',marginBottom:'1%',padding:'0px'}} />
-              </Link> 
+              </Link>
             </CardActions>
   </Card>
-         
+
     </Paper>
     </div>
 
@@ -53,62 +49,65 @@ class CreateSurvey extends Component {
          <div style={{marginLeft:'4%'}} >
          <TableRowColumn>
          <Card >
-        
+
          <CardText>
          <h1 style={{fontSize:200,color:'#2C9707',textAlign: 'center',marginTop:'0px',marginBottom:'0px'}}>0</h1>
           <h5 style={{fontSize:15,marginTop:'0px',marginBottom:'0px'}}>Your active surveys are here Click below to get details</h5>
-          </CardText >
+          </CardText>
            <CardActions>
-            <FlatButton  
+            <FlatButton
             backgroundColor="C4C4C4"
-            style={{width:'100%' ,textAlign: 'center',fontWeight: 'bold',marginTop:'0px',marginBottom:'0px'}} 
-            label="Running" 
-            labelStyle={{fontSize:'125%',fontWeight:'bold'}}/> 
+
+            style={{width:'100%' ,textAlign: 'center',fontWeight: 'bold',marginTop:'0px',marginBottom:'0px'}}
+            label="Running"
+            labelStyle={{fontSize:'125%',fontWeight:'bold'}}/>
            </CardActions>
-         
+
          </Card>
          </TableRowColumn>
 
          <TableRowColumn>
          <Card >
-        
+
          <CardText>
          <h1 style={{fontSize:200,color:'#D80202',textAlign: 'center',marginTop:'0px',marginBottom:'0px',}}>2</h1>
           <h5 style={{fontSize:15,marginTop:'0px',marginBottom:'0px'}}>Already closed surveys are here Click below to get details</h5>
-          </CardText >
+          </CardText>
            <CardActions>
-            <FlatButton  
+            <FlatButton
             backgroundColor="C4C4C4"
-            style={{width:'100%' ,textAlign: 'center',marginTop:'0px',fontWeight: 'bold',marginBottom:'0px'}} 
+            style={{width:'100%' ,textAlign: 'center',marginTop:'0px',fontWeight: 'bold',marginBottom:'0px'}}
             label="Closed"
-            labelStyle={{fontSize:'125%',fontWeight:'bold'}}/>  /> 
+            labelStyle={{fontSize:'125%',fontWeight:'bold'}}/>  />
+
            </CardActions>
-         
+
          </Card>
          </TableRowColumn>
 
           <TableRowColumn>
          <Card >
-        
+
          <CardText>
          <h1 style={{fontSize:200,color:'#C1D100',textAlign: 'center',marginTop:'0px',marginBottom:'0px',}}>2</h1>
           <h5 style={{fontSize:15,marginTop:'0px',marginBottom:'0px'}}>Your all draft surveys are here Click below to get details</h5>
-          </CardText >
+          </CardText>
            <CardActions>
-            <FlatButton  
+            <FlatButton
             backgroundColor="C4C4C4"
-            style={{width:'100%' ,textAlign: 'center',fontWeight: 'bold',marginTop:'0px',marginBottom:'0px'}} 
-            label="Drafts" 
-            labelStyle={{fontSize:'125%',fontWeight:'bold'}}/> /> 
+
+            style={{width:'100%' ,textAlign: 'center',fontWeight: 'bold',marginTop:'0px',marginBottom:'0px'}}
+            label="Drafts"
+            labelStyle={{fontSize:'125%',fontWeight:'bold'}}/> />
            </CardActions>
-         
+
          </Card>
          </TableRowColumn>
-        
+
          </div>
          </Paper>
          </div>
-  
+
 </div>
 
 
