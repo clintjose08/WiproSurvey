@@ -6,6 +6,7 @@ import {IndexLink, Link} from 'react-router';
 import {blueGrey500,white} from 'material-ui/styles/colors';
 
 class SelectType extends Component {
+  
 
 render()
 {
@@ -17,9 +18,7 @@ render()
     onChange={this.handleChange}
     underlineStyle={{borderColor:blueGrey500}} floatingLabelStyle={{color:blueGrey500}}
   >
-    <Link to="Home/StarRatings" activeClassName="active">
-  <MenuItem value={1} primaryText="Star Ratings" />
-  </Link>
+
   <Link to="Home/Dropdown" activeClassName="active">
      <MenuItem value={2} primaryText="Dropdown" />
   </Link>
@@ -36,13 +35,16 @@ render()
      <MenuItem value={6} primaryText="Comments" />
   </Link>
   <Link to="Home/Checkbox" activeClassName="active">
-     <MenuItem value={6} primaryText="Checkbox" />
+     <MenuItem value={7} primaryText="Checkbox" />
   </Link>
   <Link to="Home/QuestionGroup" activeClassName="active">
-     <MenuItem value={6} primaryText="Question Group" />
+     <MenuItem value={8} primaryText="Question Group" />
   </Link>
   <Link to="Home/YesorNo" activeClassName="active">
-     <MenuItem value={6} primaryText="Yes/No" />
+     <MenuItem value={9} primaryText="Yes/No" />
+  </Link>
+  <Link to="Home/ShortQuestion" activeClassName="active">
+     <MenuItem value={10} primaryText="Short Question" />
   </Link>
    </SelectField>);
 }

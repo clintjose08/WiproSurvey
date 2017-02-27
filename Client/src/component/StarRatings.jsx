@@ -35,13 +35,7 @@ class StarRatings extends Component
     addValue: false
   };
 
-  handleChange = (event, index, value) => {
-    this.setState({value:value,
-    addValue:false,
-    listOptions:[]});
-
-  };
-
+  
   onChangeCheck=(e)=>
   {
 
