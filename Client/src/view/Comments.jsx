@@ -1,60 +1,31 @@
-import React,{Component} from 'react';
-import Paper from 'material-ui/Paper';
-import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
-import SelectField from 'material-ui/SelectField';
-import MenuItem from 'material-ui/MenuItem';
-import {IndexLink, Link} from 'react-router';
+import React, { Component } from 'react';
+import Comments from '../component/Comments';
+import TempDisplay from '../component/TempDisplay';
+import { Grid,Row,Col } from 'react-flexbox-grid';
 import Dialog from 'material-ui/Dialog';
-import TextField from 'material-ui/TextField';
-import RaisedButton from 'material-ui/RaisedButton';
-import QuestionType from '../component/QuestionType';
-const style = {
-  textAlign: 'center',
-  display: 'inline-block',
-  marginLeft:'30%',
-  marginTop:'10%',
-  width:'40%',
-  height:'50%',
-};
-const cardheadstyle={
-  background:'black',
-  textAlign:'left',
-}
-const cardTextStyle={
-  width:'90%',
-  textAlign:'left'
-}
-const buttonStye={
-  marginLeft:30,
-}
-class Comments extends Component{
+class CommentsEdit extends Component {
   constructor(props) {
    super(props);
-   this.state = {value: 6};
- }
+   this.state = {open: true};
+  }
+ render() {
 
- handleChange = (event, index, value) => this.setState({value});
-	render(){
-		return(<div><Paper style={style}>
-      <Card>
-        <CardHeader title="Comments" style={cardheadstyle} titleColor='white'/>
-        <CardText style={cardTextStyle}>
-        <QuestionType />
-          <br /><br />
-          <TextField
-            hintText="Overall Comments"
-            fullWidth={true}
-          /><br /><br />
-          <Link to="Home/AddQuestion" activeClassName="active">
-            <RaisedButton label="Submit" backgroundColor="#004D40" labelColor='white'/>
-          </Link>
-          <Link to="Home/AddQuestion" activeClassName="active">
-            <RaisedButton label="Cancel" style={buttonStye}/>
-          </Link>
-        </CardText>
-      </Card>
-      </Paper>
-		</div>);
-	}
+   return (<div >
+            <Dialog  autoScrollBodyContent={true} open={this.state.open} contentStyle={{height:'100%',width:'100%',maxHeight:'none',maxWidth: 'none'}}>
+            <Grid>
+              <Row style={{height:'40%'}}>
+                <Col xs={4.5}>
+                  <Comments />
+                </Col>
+                <Col xs={7.5}>
+                  <TempDisplay />
+                </Col>
+              </Row>
+            </Grid>
+          </Dialog>
+        </div>
+   );
  }
- export default Comments;
+}
+
+export default CommentsEdit;

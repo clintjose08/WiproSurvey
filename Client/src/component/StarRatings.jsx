@@ -72,11 +72,8 @@ class StarRatings extends Component
       items.push(<MenuItem value={i} key={i} primaryText={`${i}`} />);
     }
 
-    return(<div>
-      <Grid>
-          <Row>
-            <Col xs={12}>
-            <Paper style={{marginTop:'3%'}}>
+    return(
+            <Paper>
         <Card style={{background:' #E5E4E2 '}}>
           <CardHeader title="Create Star Rate Questions"  style={cardheadstyle} titleColor='white' titleStyle={{fontWeight:'bold'}}/>
           <CardText style={{background:"#E5E4E2"}}>
@@ -119,10 +116,7 @@ class StarRatings extends Component
           </CardActions>
         </Card>
         </Paper>
-        </Col>
-        </Row>
-    </Grid>
-    </div>);
+      );
   }
 }
 

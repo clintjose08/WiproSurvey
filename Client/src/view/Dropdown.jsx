@@ -1,12 +1,31 @@
-import React,{Component} from 'react';
-import Paper from 'material-ui/Paper';
-import RaisedButton from 'material-ui/RaisedButton';
-import {IndexLink, Link} from 'react-router';
-class Dropdown extends Component{
-	render(){
-		return(<div>
-      <h1>Dropdown</h1>
-		</div>);
-	}
+import React, { Component } from 'react';
+import Dropdown from '../component/Dropdown';
+import TempDisplay from '../component/TempDisplay';
+import { Grid,Row,Col } from 'react-flexbox-grid';
+import Dialog from 'material-ui/Dialog';
+class DropdownEdit extends Component {
+  constructor(props) {
+   super(props);
+   this.state = {open: true};
+  }
+ render() {
+
+   return (<div >
+            <Dialog autoScrollBodyContent={true} open={this.state.open} contentStyle={{height:'100%',width:'100%',maxHeight:'none',maxWidth: 'none'}}>
+            <Grid>
+              <Row style={{height:'40%'}}>
+                <Col xs={4.5}>
+                  <Dropdown />
+                </Col>
+                <Col xs={7.5}>
+                  <TempDisplay />
+                </Col>
+              </Row>
+            </Grid>
+          </Dialog>
+        </div>
+   );
  }
- export default Dropdown;
+}
+
+export default DropdownEdit;

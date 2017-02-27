@@ -6,7 +6,7 @@ import RaisedButton from 'material-ui/RaisedButton';
 import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
 import Subheader from 'material-ui/Subheader';
 import Toggle from 'material-ui/Toggle';
-
+import {IndexLink, Link} from 'react-router';
 const paperStyle={
 
 	height:'100%'
@@ -22,7 +22,7 @@ const cardTitleStyle={
    fontWeight:'bold'
 }
 
-class ThanksScreen extends Component
+class Thankyou extends Component
 {
 
 constructor(props) {
@@ -59,40 +59,40 @@ constructor(props) {
 							<Divider style={{background:'#000000'}}/>
 							<CardActions style={{marginTop:'3%',marginLeft:'1%'}}>
 							<Subheader style={{fontSize:'125%',color:'#1C6D03'}}>Creator Name</Subheader>
-							<Toggle  
+							<Toggle
 							 toggled={this.state.expanded}
 							 onToggle={this.handleToggle}></Toggle>
-							</CardActions >
+							</CardActions>
 
 							<CardActions expandable={true}>
          						<TextField hintText="Type Your Name Here (Optional)" hintStyle={{fontWeight:'bold'}} underlineStyle={{borderColor:'#37861E'}}  />
         					</CardActions>
-        					</Card >
+        					</Card>
         					<Divider style={{background:'#000000'}}/>
 
 
         					<Card expanded={this.state.expandedNumber} style={{background:'#E5E4E2',marginTop:'0px'}}>
         					<CardActions style={{marginTop:'0px',marginLeft:'1%'}}>
 							<Subheader style={{fontSize:'125%',color:'#1C6D03',marginTop:'3%'}}>Creator Contact Number</Subheader>
-							<Toggle  
+							<Toggle
 							 toggled={this.state.expandedNumber}
 							 onToggle={this.handleToggleNumber}></Toggle>
-							</CardActions >
+							</CardActions>
 
 							<CardActions expandable={true}>
          						<TextField hintText="Type Your Contact Number Here (Optional)" hintStyle={{fontWeight:'bold'}} underlineStyle={{borderColor:'#37861E'}}  />
         					</CardActions>
-        					</Card >
+        					</Card>
         					<Divider style={{background:'#000000'}}/>
 
 
         					<Card expanded={this.state.expandedMail} style={{background:'#E5E4E2',marginTop:'0px'}}>
         					<CardActions style={{marginTop:'0px',marginLeft:'1%'}}>
 							<Subheader style={{fontSize:'125%',color:'#1C6D03',marginTop:'3%'}}>Creator E-mail</Subheader>
-							<Toggle  
+							<Toggle
 							 toggled={this.state.expandedMail}
 							 onToggle={this.handleToggleMail}></Toggle>
-							</CardActions >
+							</CardActions>
 
 							<CardActions expandable={true}>
          						<TextField hintText="Type Your E-mail ID Here (Optional)" hintStyle={{fontWeight:'bold'}} underlineStyle={{borderColor:'#37861E'}}  />
@@ -101,12 +101,16 @@ constructor(props) {
         					<Divider style={{background:'#000000'}}/>
 
         					<CardActions >
-         						 <RaisedButton label="Cancel" labelStyle={{fontWeight:'bold'}} />
-         						 <RaisedButton label="Submit" backgroundColor='#1C6D03' labelStyle={{color:'#FFFFFF',fontWeight:'bold'}} />
-        					</CardActions>
+										<Link to="Home/AddQuestion" activeClassName="active">
+											<RaisedButton label="Cancel" labelStyle={{fontWeight:'bold'}} />
+											</Link>
+										 <Link to="Home/AddQuestion" activeClassName="active">
+											<RaisedButton label="Submit" backgroundColor='#1C6D03 ' labelStyle={{color:'#FFFFFF ',fontWeight:'bold'}} />
+										 </Link>
+									</CardActions>
         					</Card>
-        					
-						
+
+
 					</Paper>
 
 				</div>
@@ -119,4 +123,4 @@ constructor(props) {
 			);
 	}
 }
-export default ThanksScreen;
+export default Thankyou;
