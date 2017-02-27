@@ -32,7 +32,7 @@ class Slider extends Component{
 	render(){
 		return(<div><Paper >
       <Card style={{background:'#E5E4E2'}}>
-        <CardHeader title="Comments" style={cardheadstyle} titleStyle={cardTitleStyle}/>
+        <CardHeader title="Slider" style={cardheadstyle} titleStyle={cardTitleStyle}/>
         <CardText >
         <SelectField
           floatingLabelText="Question Type"
@@ -61,8 +61,8 @@ class Slider extends Component{
           <CardActions>
           <Subheader style={{fontSize:'125%',color:'#1C6D03',marginTop:'3%'}}>Question</Subheader><br />
           <TextField
-            hintText="Enter Your Question Here" 
-            hintStyle={{fontWeight:'bold'}} 
+            hintText="Enter Your Question Here"
+            hintStyle={{fontWeight:'bold'}}
             underlineStyle={{borderColor:'#37861E'}}
             fullWidth={true}
           />
@@ -72,26 +72,30 @@ class Slider extends Component{
 					<Subheader style={{fontSize:'125%',color:'#1C6D03',marginTop:'3%'}}>Scale Range</Subheader><br />
 					<TextField
             hintText="Left Side Value"
-            hintStyle={{fontWeight:'bold'}} 
+            hintStyle={{fontWeight:'bold'}}
             underlineStyle={{borderColor:'#37861E'}}
           /><br />
           <TextField
             hintText="Center Value"
-            hintStyle={{fontWeight:'bold'}} 
+            hintStyle={{fontWeight:'bold'}}
             underlineStyle={{borderColor:'#37861E'}}
           /><br />
 					<TextField
             hintText="Right Side Value"
-            hintStyle={{fontWeight:'bold'}} 
+            hintStyle={{fontWeight:'bold'}}
             underlineStyle={{borderColor:'#37861E'}}
           /><br />
           </CardActions>
           <Divider style={{background:'#000000'}}/>
           <CardActions >
-            <RaisedButton label="Cancel" labelStyle={{fontWeight:'bold'}} />
-            <RaisedButton label="Submit" backgroundColor='#1C6D03' labelStyle={{color:'#FFFFFF',fontWeight:'bold'}} />
+            <Link to="Home/AddQuestion" activeClassName="active">
+              <RaisedButton label="Cancel" labelStyle={{fontWeight:'bold'}} />
+              </Link>
+             <Link to="Home/AddQuestion" activeClassName="active">
+              <RaisedButton label="Submit" backgroundColor='#1C6D03 ' labelStyle={{color:'#FFFFFF ',fontWeight:'bold'}} />
+             </Link>
           </CardActions>
-        
+
       </Card>
       </Paper>
 		</div>);

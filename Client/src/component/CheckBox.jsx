@@ -3,7 +3,7 @@ import Paper from 'material-ui/Paper';
 import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
-import AddOptions from './AddOptions';
+import AddOptions from '../component/AddOptions';
 import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
 import {IndexLink, Link} from 'react-router';
@@ -13,15 +13,6 @@ import {blueGrey500,white} from 'material-ui/styles/colors';
 import Subheader from 'material-ui/Subheader';
 
 
-const compStyle={
-marginTop:40,
-width:'100%'
-}
-
-const buttonStye={
-
-}
-
 const cardStyle={
 
 }
@@ -29,7 +20,7 @@ const cardStyle={
 const textStyle={
 marginRight:130
 }
-class MultiChoice extends Component {
+class CheckBox extends Component {
  constructor() {
    	super();
    this.state = {
@@ -71,13 +62,11 @@ changeOptions=(index,value)=>
    });
    return (
 
-      <Grid>
-          <Row>
-            <Col xs={12}>
-                <Paper style={compStyle}>
+
+                <Paper>
                 <Card style={cardStyle} style={{background:"#E5E4E2"}}>
                 <CardHeader
-                  title="Create Checkbox Questions" style={{background:"#242323",}} titleStyle={{fontWeight:'bold',color:'#FFFFFF',marginLeft:'20%'}}
+                  title="Checkbox" style={{background:"#242323",}} titleStyle={{fontWeight:'bold',color:'#FFFFFF',marginLeft:'20%'}}
                 />
                 <CardText >
                 <Subheader style={{fontSize:'125%',color:'#1C6D03 '}}>Select the question type</Subheader>
@@ -120,23 +109,21 @@ changeOptions=(index,value)=>
                 </CardText>
                   <Divider style={{background:blueGrey500}}/>
                 <CardActions>
-                <Link to="Home/AddQuestion" activeClassName="active">
-                  <RaisedButton label="Cancel" labelStyle={{fontWeight:'bold'}} />
-                </Link>
-                <Link to="Home/AddQuestion" activeClassName="active">
-                  <RaisedButton label="Submit" backgroundColor='#1C6D03 ' labelStyle={{color:'#FFFFFF ',fontWeight:'bold'}}/>
-                </Link>
+
+  	           <Link to="Home/AddQuestion" activeClassName="active">
+  	             <RaisedButton label="Cancel" labelStyle={{fontWeight:'bold'}} />
+  	           </Link>
+               <Link to="Home/AddQuestion" activeClassName="active">
+                 <RaisedButton label="Submit" backgroundColor='#1C6D03 ' labelStyle={{color:'#FFFFFF ',fontWeight:'bold'}}/>
+              </Link>
               </CardActions>
                </Card>
                </Paper>
 
-             </Col>
 
-             </Row>
-             </Grid>
 
    );
  }
 }
 
-export default MultiChoice;
+export default CheckBox;

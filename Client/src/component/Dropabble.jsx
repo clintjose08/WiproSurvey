@@ -9,9 +9,6 @@ import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'mat
 const welcomeStyle={
 background:'#2F3A30',
 textAlign:'center',
-marginTop:0,
-marginLeft:0,
-marginRight:0,
 height:"20%"
 }
 
@@ -22,25 +19,21 @@ marginTop:'10%',
 marginBottom:'10%',
 marginLeft:0,
 marginRight:0,
-height:'50%'
+height:'25%'
 }
 
 const thanksStyle={
 background:'#2F3A30',
 textAlign:'center',
 marginTop:'1%',
-marginBottom:'0%',
-marginLeft:0,
-marginRight:0,
-height:"40%"
+height:"35%"
 
 }
 
 const style = {
 textAlign: 'center',
-height:'85%',
+height:'80%',
 width:'100%',
-margin:'0%',
 };
 
 
@@ -48,7 +41,7 @@ margin:'0%',
 class Dropabble  extends Component {
  render() {
    return(
-     <div style={{height:'100%'}}>
+     <div style={{height:'90%'}}>
       <h2 style={{fontWeight:'bold',textAlign:'center'}}>Your Templete</h2>
       <Paper  style={style}>
         <Card style={welcomeStyle}>

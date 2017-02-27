@@ -3,7 +3,7 @@ import Paper from 'material-ui/Paper';
 import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
-import AddOptions from './AddOptions';
+import AddOptions from '../component/AddOptions';
 import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
 import {IndexLink, Link} from 'react-router';
@@ -11,12 +11,6 @@ import Divider from 'material-ui/Divider';
 import { Grid,Col,Row} from 'react-flexbox-grid';
 import {blueGrey500,white} from 'material-ui/styles/colors';
 import Subheader from 'material-ui/Subheader';
-
-
-const compStyle={
-marginTop:40,
-width:'100%'
-}
 
 const cardStyle={
 
@@ -66,11 +60,7 @@ changeOptions=(index,value)=>
      );
    });
    return (
-
-      <Grid>
-          <Row>
-            <Col xs={12}>
-                <Paper style={compStyle}>
+                <Paper>
                 <Card style={cardStyle} style={{background:"#E5E4E2"}}>
                 <CardHeader
                   title="Create Multiple Choice Questions" style={{background:"#242323",}} titleStyle={{fontWeight:'bold',color:'#FFFFFF',marginLeft:'20%'}}
@@ -126,12 +116,6 @@ changeOptions=(index,value)=>
               </CardActions>
                </Card>
                </Paper>
-
-             </Col>
-
-             </Row>
-             </Grid>
-
    );
  }
 }

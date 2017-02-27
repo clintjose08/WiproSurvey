@@ -23,12 +23,14 @@ import {Table, TableBody, TableFooter, TableHeader, TableHeaderColumn, TableRow,
   }
 class Dragabble extends Component{
 	render(){
-		return(<div>
-      <h2>TooLkit</h2>
+		return(
         <div style={{backgroundColor:'#E0E0E0'}}>
 
             <Row style={{marginLeft:'1%',marginRight:'1%'}}>
-              <Col xs={12} style={{marginTop:'10%'}}>
+              <Col xs={12}>
+                <h2>Toolkit</h2>
+              </Col>
+              <Col xs={12}>
                 <Link to="Home/Welcome" activeClassName="active">
                   <RaisedButton label="Welcome Screen" backgroundColor='#66BB6A' labelStyle={{fontWeight:'bold',textTransform:'capitalize'}} style={buttonStyle} icon={<Welcome />}/>
                 </Link>
@@ -97,7 +99,6 @@ class Dragabble extends Component{
               </Col>
             </Row>
           </div>
-        </div>
     );
 	}
  }

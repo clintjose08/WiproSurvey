@@ -1,9 +1,9 @@
 import React from 'react';
 import App from './App';
 import ReactDOM from 'react-dom';
-import Welcome from './view/Welcome'
-import Thankyou from './view/Thankyou'
-import Comments from './view/Comments';
+import WelcomeEdit from './view/Welcome'
+import ThankyouEdit from './view/Thankyou'
+import CommentsEdit from './view/Comments';
 import SurveyDetails from './component/SurveyDetails';
 import Login from './component/Login';
 import CreateSurvey from './component/CreateSurvey';
@@ -12,14 +12,14 @@ import {Router, Route, IndexRoute, hashHistory} from 'react-router';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 
 import AddQuestion from './view/AddQuestion';
-import Dropdown from './view/Dropdown';
-import StarRatings from './view/StarRatings';
-import Slider from './view/Slider';
-import SingleText from './view/SingleText';
-import MultiChoice from './view/MultiChoice';
-import Qgroup from './view/Qgroup';
-import CheckBox from './view/CheckBox';
-import YesOrNo from './view/YesOrNo';
+import DropdownEdit from './view/Dropdown';
+import StarRatingsEdit from './view/StarRatings';
+import SliderEdit from './view/Slider';
+import SingleTextEdit from './view/SingleText';
+import MultiChoiceEdit from './view/MultiChoice';
+import QgroupEdit from './view/Qgroup';
+import CheckBoxEdit from './view/CheckBox';
+import YesOrNoEdit from './view/YesOrNo';
 
 injectTapEventPlugin();
 
@@ -31,17 +31,17 @@ ReactDOM.render(
        <Route path="CreateSurvey" component={CreateSurvey}/>
        <Route path="AddQuestion" component={AddQuestion}/>
        <Route path="SurveyDetails" component={SurveyDetails}/>
-       <Route path="Welcome" component={Welcome}/>
-       <Route path="Comments" component={Comments}/>
-       <Route path="Dropdown" component={Dropdown}/>
-       <Route path="StarRatings" component={StarRatings}/>
-       <Route path="Slider" component={Slider}/>
-       <Route path="SingleText" component={SingleText}/>
-       <Route path="MultiChoice" component={MultiChoice}/>
-       <Route path="Qgroup" component={Qgroup}/>
-       <Route path="YesOrNo" component={YesOrNo}/>
-       <Route path="CheckBox" component={CheckBox}/>
-       <Route path="Thankyou" component={Thankyou}/>
+       <Route path="Welcome" component={WelcomeEdit}/>
+       <Route path="Comments" component={CommentsEdit}/>
+       <Route path="Dropdown" component={DropdownEdit}/>
+       <Route path="StarRatings" component={StarRatingsEdit}/>
+       <Route path="Slider" component={SliderEdit}/>
+       <Route path="SingleText" component={SingleTextEdit}/>
+       <Route path="MultiChoice" component={MultiChoiceEdit}/>
+       <Route path="Qgroup" component={QgroupEdit}/>
+       <Route path="YesOrNo" component={YesOrNoEdit}/>
+       <Route path="CheckBox" component={CheckBoxEdit}/>
+       <Route path="Thankyou" component={ThankyouEdit}/>
     </Route>
   </Router>
   </MuiThemeProvider>,

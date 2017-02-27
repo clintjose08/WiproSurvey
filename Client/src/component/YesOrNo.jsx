@@ -10,6 +10,8 @@ import RaisedButton from 'material-ui/RaisedButton';
 import Subheader from 'material-ui/Subheader';
 import Divider from 'material-ui/Divider';
 
+
+
 const cardheadstyle={
  background:'#242323',
  textAlign:'center'
@@ -22,7 +24,7 @@ const cardTitleStyle={
 const buttonStye={
  marginLeft:30,
 }
-class Comments extends Component{
+class YesOrNo extends Component{
  constructor(props) {
   super(props);
   this.state = {value: 5};
@@ -32,7 +34,7 @@ handleChange = (event, index, value) => this.setState({value});
     render(){
         return(<div><Paper >
      <Card style={{background:'#E5E4E2'}}>
-       <CardHeader title="Comments" style={cardheadstyle} titleStyle={cardTitleStyle}/>
+       <CardHeader title="YesOrNo" style={cardheadstyle} titleStyle={cardTitleStyle}/>
 
        <CardText style={{marginTop:0}}>
        <div>
@@ -88,4 +90,4 @@ handleChange = (event, index, value) => this.setState({value});
         </div>);
     }
 }
-export default Comments;
+export default YesOrNo;

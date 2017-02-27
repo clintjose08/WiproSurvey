@@ -6,7 +6,7 @@ import RaisedButton from 'material-ui/RaisedButton';
 import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
 import Subheader from 'material-ui/Subheader';
 import Toggle from 'material-ui/Toggle';
-
+import {IndexLink, Link} from 'react-router';
 const paperStyle={
 
 	height:'100%'
@@ -22,7 +22,7 @@ const cardTitleStyle={
    fontWeight:'bold'
 }
 
-class WelcomeScreen extends Component
+class Welcome extends Component
 {
 
 constructor(props) {
@@ -51,19 +51,23 @@ constructor(props) {
 							<Divider style={{background:'#000000'}}/>
 							<CardActions style={{marginTop:'3%',marginLeft:'1%'}}>
 							<Subheader style={{fontSize:'125%',color:'#1C6D03'}}>Description</Subheader>
-							<Toggle  
+							<Toggle
 							 toggled={this.state.expanded}
 							 onToggle={this.handleToggle}></Toggle>
-							</CardActions >
+							</CardActions>
 
 							<CardActions expandable={true}>
          						<TextField hintText="Type Your Description Here" hintStyle={{fontWeight:'bold'}} underlineStyle={{borderColor:'#37861E'}}  fullWidth={true}/>
         					</CardActions>
         					<Divider style={{background:'#000000'}}/>
         					<CardActions >
-         						 <RaisedButton label="Cancel" labelStyle={{fontWeight:'bold'}} />
-         						 <RaisedButton label="Submit" backgroundColor='#1C6D03' labelStyle={{color:'#FFFFFF',fontWeight:'bold'}} />
-        					</CardActions>
+										<Link to="Home/AddQuestion" activeClassName="active">
+											<RaisedButton label="Cancel" labelStyle={{fontWeight:'bold'}} />
+											</Link>
+										 <Link to="Home/AddQuestion" activeClassName="active">
+											<RaisedButton label="Submit" backgroundColor='#1C6D03 ' labelStyle={{color:'#FFFFFF ',fontWeight:'bold'}} />
+										 </Link>
+								  </CardActions>
 						</Card>
 					</Paper>
 
@@ -77,4 +81,4 @@ constructor(props) {
 			);
 	}
 }
-export default WelcomeScreen;
+export default Welcome;
