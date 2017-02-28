@@ -29,6 +29,18 @@ class YesOrNo extends Component{
   super(props);
   this.state = {value: 5};
 }
+
+componentWillMount(){
+    this.props.type("YesOrNo");
+  }
+
+handleQuestion(e) {
+    
+    this.props.getQuestion(e.target.value);
+    console.log("Sucess");  
+  }
+
+
     render(){
         return(<div><Paper >
      <Card style={{background:'#E5E4E2'}}>
@@ -48,6 +60,7 @@ class YesOrNo extends Component{
            hintText="Enter your Question here."
            hintStyle={{fontWeight:'bold'}}
            underlineStyle={{borderColor:'#37861E'}}
+           onChange={this.handleQuestion.bind(this)}
            fullWidth={true}
          />
         </CardActions>
