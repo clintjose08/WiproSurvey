@@ -61,6 +61,14 @@ class TempDisplay  extends Component {
        options.push(<br/>)
      });
    }
+   else if(this.props.putType=="Qgroup")
+   {
+      this.props.putOptions.map((option)=>{
+       options.push(<Star color="#FFFF00"/>)
+       options.push(<TextField value={option} disabled={true} /> );
+       options.push(<br/>)
+       });
+   }
 
    return(
       <Paper  style={style}>
