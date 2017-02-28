@@ -119,14 +119,26 @@ class TempDisplay  extends Component {
        options.push(<br/>)
      });
    }
-   else if(this.props.putType=="Qgroup")
-   {
-      this.props.putOptions.map((option)=>{
-       options.push(<Star color="#FFFF00"/>)
-       options.push(<TextField value={option} disabled={true} /> );
-       options.push(<br/>)
-       });
-   }
+   else if(this.props.putQuestion && this.props.putType=="Qgroup"){
+       components.pop();
+       components.push(<div>
+      <h3 style={{marginTop:'3%',marginLeft:'2%',marginBottom:0,color:'#000000',textAlign:'left'}}>{this.props.putQuestion}</h3>
+      <RadioButtonGroup name="YesOrNo" style={{textAlign:'left',marginLeft:'5%',marginTop:'2%'}} >
+      
+        <RadioButton
+        value="Yes"
+        label="Yes"
+      />
+      
+      <RadioButton
+        value="No"
+        label="No"
+      />
+      
+
+      </RadioButtonGroup>
+    </div>);   
+   } 
 
    return(
       <Paper  style={style}>
