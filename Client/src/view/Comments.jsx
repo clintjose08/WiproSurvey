@@ -8,6 +8,21 @@ class CommentsEdit extends Component {
    super(props);
    this.state = {open: true};
   }
+
+  onChangeQuest(quest)
+  {
+    this.setState({
+      quest:quest
+    })
+  }
+  getType(type)
+  {
+
+    this.setState({
+      type:type
+    })
+  }
+
  render() {
 
    return (<div >
@@ -15,10 +30,10 @@ class CommentsEdit extends Component {
             <Grid>
               <Row style={{height:'40%'}}>
                 <Col xs={4.5}>
-                  <Comments />
+                  <Comments getQuestion={this.onChangeQuest.bind(this)}  type={this.getType.bind(this)}/>
                 </Col>
                 <Col xs={7.5}>
-                  <TempDisplay />
+                  <TempDisplay putQuestion={this.state.quest} putType={this.state.type} />
                 </Col>
               </Row>
             </Grid>
