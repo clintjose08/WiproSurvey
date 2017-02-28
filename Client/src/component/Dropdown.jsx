@@ -11,7 +11,7 @@ import Divider from 'material-ui/Divider';
 import { Grid,Col,Row} from 'react-flexbox-grid';
 import {blueGrey500,white} from 'material-ui/styles/colors';
 import Subheader from 'material-ui/Subheader';
-
+import SelectType from './SelectType';
 
 const compStyle={
 marginTop:40,
@@ -34,7 +34,7 @@ class Dropdown extends Component {
    }
  }
 
-handleChange = (event, index, value) => this.setState({value});
+
  addOptions(e)
  {
   var arr=this.state.optionArr;
@@ -73,33 +73,7 @@ changeOptions=(index,value)=>
                 />
                 <CardText >
                 <Subheader style={{fontSize:'125%',color:'#1C6D03 '}}>Select the question type</Subheader>
-					       <SelectField
-    	           floatingLabelText="Question Type"
-    	           value={this.state.value}
-    	           onChange={this.handleChange}
-                 underlineStyle={{borderColor:blueGrey500}} floatingLabelStyle={{color:blueGrey500}}
-                 style={textStyle}
-	               >
-	                 <MenuItem value={1} primaryText="Multiple Choice" />
-        	         <Link to="Home/MultiChoice" activeClassName="active">
-        	            <MenuItem value={2} primaryText="Dropdown" />
-        	         </Link>
-        	         <Link to="Home/StarRatings" activeClassName="active">
-        	            <MenuItem value={3} primaryText="Star Ratings" />
-        	         </Link>
-        	         <Link to="Home/Slider" activeClassName="active">
-        	            <MenuItem value={4} primaryText="Slider" />
-        	         </Link>
-        	         <Link to="Home/SingleText" activeClassName="active">
-        	            <MenuItem value={5} primaryText="Single Textbox" />
-        	         </Link>
-        					 <Link to="Home/Comments" activeClassName="active">
-        	            <MenuItem value={5} primaryText="Comments" />
-        					</Link>
-                  <Link to="Home/Checkbox" activeClassName="active">
-                     <MenuItem value={5} primaryText="Checkbox" />
-                 </Link>
-	              </SelectField>
+					      <SelectType/>
 	              <br /><br />
                 <Subheader style={{fontSize:'125%',color:'#1C6D03 '}}>Enter the question</Subheader>
                  <TextField

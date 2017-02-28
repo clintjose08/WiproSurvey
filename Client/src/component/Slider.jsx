@@ -9,6 +9,7 @@ import TextField from 'material-ui/TextField';
 import Divider from 'material-ui/Divider';
 import RaisedButton from 'material-ui/RaisedButton';
 import Subheader from 'material-ui/Subheader';
+import SelectType from './SelectType';
 
 const cardheadstyle={
  background:'#242323',
@@ -28,34 +29,12 @@ class Slider extends Component{
    this.state = {value: 4};
  }
 
- handleChange = (event, index, value) => this.setState({value});
 	render(){
 		return(<div><Paper >
       <Card style={{background:'#E5E4E2'}}>
         <CardHeader title="Slider" style={cardheadstyle} titleStyle={cardTitleStyle}/>
         <CardText >
-        <SelectField
-          floatingLabelText="Question Type"
-          value={this.state.value}
-          onChange={this.handleChange}
-        >
-        <Link to="Home/MultiChoice" activeClassName="active">
-           <MenuItem value={1} primaryText="Multiple Choice" />
-        </Link>
-        <Link to="Home/Dropdown" activeClassName="active">
-           <MenuItem value={2} primaryText="Dropdown" />
-        </Link>
-        <Link to="Home/StarRatings" activeClassName="active">
-           <MenuItem value={3} primaryText="Star Ratings" />
-        </Link>
-       	<MenuItem value={4} primaryText="Slider" />
-        <Link to="Home/SingleText" activeClassName="active">
-           <MenuItem value={5} primaryText="Single Textbox" />
-        </Link>
-				<Link to="Home/Comments" activeClassName="active">
-           <MenuItem value={6} primaryText="Comments" />
-				</Link>
-         </SelectField>
+        <SelectType/>
           </CardText>
           <Divider style={{background:'#000000'}}/>
           <CardActions>
