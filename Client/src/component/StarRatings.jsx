@@ -22,10 +22,6 @@ const style = {
 marginTop:30
 };
 
-const textStyle={
-  margin:15
-}
-
 class StarRatings extends Component
 {
   state = {
@@ -82,7 +78,7 @@ class StarRatings extends Component
         <Card style={{background:' #E5E4E2 '}}>
           <CardHeader title="Create Star Rate Questions"  style={cardheadstyle} titleColor='white' titleStyle={{fontWeight:'bold'}}/>
           <CardText style={{background:"#E5E4E2"}}>
-          <Subheader style={{fontSize:'125%',color:'#1C6D03 '}}>Select the question type</Subheader>
+          <Subheader style={{color:'#1C6D03 '}}>Select the question type</Subheader>
             <SelectField
               iconStyle={{background:'#607D8B'}}
               floatingLabelText="Question Type"
@@ -112,14 +108,14 @@ class StarRatings extends Component
              </SelectField>
               <br /><br />
 
-              <Subheader style={{fontSize:'125%',color:'#1C6D03 '}}>Enter the question</Subheader>
+              <Subheader style={{color:'#1C6D03 '}}>Enter the question</Subheader>
               <TextField
                 floatingLabelText="Question"
                 value=" "
                 underlineStyle={{borderColor:blueGrey500}} floatingLabelStyle={{color:blueGrey500}}
               /><br />
               <Divider style={{background:blueGrey500}}/>
-              <Subheader style={{fontSize:'125%',color:'#1C6D03 '}}>Select Scale</Subheader>
+              <Subheader style={{color:'#1C6D03 '}}>Select Scale</Subheader>
             <SelectField
               floatingLabelText="Select Scale"
               value={this.state.value}
