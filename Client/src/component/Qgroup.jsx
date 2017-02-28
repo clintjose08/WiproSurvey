@@ -63,13 +63,26 @@ class Qgroup extends Component{
     this.state = {
         showQuery: 0,
         showiQuery: 0,
-        showiiQuery: 0,
           checked:false,
           checked1: false,
-          value: 5,
+        quest:'',
+
     }
     this.checkYes = this.checkYes.bind(this);
     this.checkNo = this.checkNo.bind(this);
+  }
+
+  componentWillMount() {
+    this.props.type('Qgroup');
+  }
+
+  questionChange(e){
+    this.props.options([]);
+    this.setState(
+    {
+      quest:e.target.value
+    })
+    this.props.getQuestion(e.target.value);
   }
 
 checkYes() {
@@ -122,6 +135,8 @@ checkNo()
            hintStyle={{fontWeight:'bold'}}
            underlineStyle={{borderColor:'#37861E'}}
            fullWidth={true}
+           value={this.state.quest}
+           onChange={this.questionChange.bind(this)}
          />
          <div>
        <h4>your question here</h4>

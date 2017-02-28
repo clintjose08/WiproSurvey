@@ -13,7 +13,11 @@ import Welcome from 'material-ui/svg-icons/action/input';
 import Group from 'material-ui/svg-icons/action/assignment';
 import True from 'material-ui/svg-icons/maps/layers-clear';
 import Thank from 'material-ui/svg-icons/action/thumb-up';
+import Subheader from 'material-ui/Subheader';
+import Toggle from 'material-ui/Toggle';
+import TextField from 'material-ui/TextField';
 import {IndexLink, Link} from 'react-router';
+import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
 import {Table, TableBody, TableFooter, TableHeader, TableHeaderColumn, TableRow, TableRowColumn}
   from 'material-ui/Table';
   const buttonStyle={
@@ -22,43 +26,84 @@ import {Table, TableBody, TableFooter, TableHeader, TableHeaderColumn, TableRow,
     marginBottom:'5%',
   }
 class Qoption extends Component{
+  constructor(props) {
+   super(props);
+   this.state = {
+   expandedComments: false,
+   expandedYesOrNo: false,
+   questComments:'',
+   questYesOrNo:'',
+    };
+  };
+
+  expandToggle = (event, toggle) => {
+    this.setState({expandedYesOrNo: toggle});
+  };
+  handleToggle = (event, toggle) => {
+    this.setState({expandedComments: toggle});
+  };
+  questionCommentsChange(e){
+    this.props.options([]);
+    this.setState(
+    {
+      quest:e.target.value
+    })
+    this.props.getCommentsQuestion(e.target.value);
+  }
+  questionYesOrNoChange(e){
+    this.props.options([]);
+    this.setState(
+    {
+      quest:e.target.value
+    })
+    this.props.getYesOrNoQuestion(e.target.value);
+  }
 	render(){
 		return(
         <div style={{backgroundColor:'#E0E0E0',marginTop:'5%'}}>
 
             <Row style={{marginLeft:'1%',marginRight:'1%'}}>
-              <Col xs={6}>
-                <RaisedButton label="Short Questions" backgroundColor='#BDBDBD' labelStyle={{fontWeight:'bold',textTransform:'capitalize'}} buttonStyle={{textAlign:'left'}} style={buttonStyle} icon={<ShortText />}/>
-              </Col>
-              <Col xs={6}>
-                <RaisedButton label="Star Ratings" backgroundColor='#BDBDBD' labelStyle={{fontWeight:'bold',textTransform:'capitalize'}} buttonStyle={{textAlign:'left'}} style={buttonStyle} icon={<StarRate />}/>
-              </Col>
-            </Row>
-            <Row style={{marginLeft:'1%',marginRight:'1%'}}>
-              <Col xs={6}>
-                <RaisedButton label="Multiple Choice" backgroundColor='#BDBDBD' labelStyle={{fontWeight:'bold',textTransform:'capitalize'}} buttonStyle={{textAlign:'left'}} style={buttonStyle} icon={<MultiChoice />}/>
-              </Col>
-              <Col xs={6}>
-                <RaisedButton label="Dropdown" backgroundColor='#BDBDBD' labelStyle={{fontWeight:'bold',textTransform:'capitalize'}} buttonStyle={{textAlign:'left'}} style={buttonStyle} icon={<DropDown />}/>
-              </Col>
-            </Row>
-            <Row style={{marginLeft:'1%',marginRight:'1%'}}>
-              <Col xs={6}>
-                <RaisedButton label="Checkbox" backgroundColor='#BDBDBD' labelStyle={{fontWeight:'bold',textTransform:'capitalize'}} buttonStyle={{textAlign:'left'}} style={buttonStyle} icon={<CheckBox />}/>
-              </Col>
-              <Col xs={6}>
-                <RaisedButton label="Slider" backgroundColor='#BDBDBD' labelStyle={{fontWeight:'bold',textTransform:'capitalize'}} buttonStyle={{textAlign:'left'}} style={buttonStyle} icon={<Slide />}/>
-              </Col>
-            </Row>
-            <Row style={{marginLeft:'1%',marginRight:'1%'}}>
-              <Col xs={6}>
-                <RaisedButton label="Comments" backgroundColor='#BDBDBD' labelStyle={{fontWeight:'bold',textTransform:'capitalize'}} buttonStyle={{textAlign:'left'}} style={buttonStyle} icon={<Group />}/>
-              </Col>
-              <Col xs={6}>
-                <RaisedButton label="Yes/no" backgroundColor='#BDBDBD' labelStyle={{fontWeight:'bold',textTransform:'capitalize'}} buttonStyle={{textAlign:'left'}} style={buttonStyle} icon={<True />}/>
-              </Col>
-            </Row>
+             <Card expanded={this.state.expandedComments}>
+             <CardActions style={{marginTop:'3%',marginLeft:'1%'}}>
+              <Subheader style={{fontSize:'125%',color:'#1C6D03'}}>Comments</Subheader>
+              <Toggle
+               toggled={this.state.expandedComments}
+               onToggle={this.handleToggle}></Toggle>
+              </CardActions>
 
+              <CardActions expandable={true}>
+                    <TextField 
+                    hintText="Type Your Description Here" 
+                    hintStyle={{fontWeight:'bold'}} 
+                    underlineStyle={{borderColor:'#37861E'}}  
+                    fullWidth={true}
+                    value={this.state.questComments}
+                    onChange={this.questionCommentsChange.bind(this)}/>
+                  
+                  </CardActions>
+              </Card>
+            </Row>
+            <Row style={{marginLeft:'1%',marginRight:'1%'}}>
+             <Card expanded={this.state.expandedYesOrNo}>
+             <CardActions style={{marginTop:'3%',marginLeft:'1%'}}>
+              <Subheader style={{fontSize:'125%',color:'#1C6D03'}}>Yes Or No</Subheader>
+              <Toggle
+               toggled={this.state.expandedYesOrNo}
+               onToggle={this.expandToggle}></Toggle>
+              </CardActions>
+
+              <CardActions expandable={true}>
+                    <TextField 
+                    hintText="Type Your Description Here" 
+                    hintStyle={{fontWeight:'bold'}} 
+                    underlineStyle={{borderColor:'#37861E'}} 
+                    fullWidth={true}
+                    value={this.state.questYesOrNo}
+                    onChange={this.questionYesOrNoChange.bind(this)}/>
+                  </CardActions>
+              </Card>
+            </Row>
+            
         </div>
     );
 	}

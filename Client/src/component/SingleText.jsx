@@ -36,6 +36,16 @@ constructor(props) {
  };
 }
 
+componentWillMount(){
+    this.props.type("Textbox");
+  }
+
+handleQuestion(e) {
+    
+    this.props.getQuestion(e.target.value);
+    console.log("Sucess");  
+  }
+
    render(){
        return(
     <Paper style={{height:'100%'}} >
@@ -58,8 +68,8 @@ constructor(props) {
           hintStyle={{fontWeight:'bold'}}
           underlineStyle={{borderColor:'#37861E '}}
           fullWidth={true}
-
-          value={this.state.question}
+          onChange={this.handleQuestion.bind(this)}
+         
         />
         </form>
        </CardActions>
