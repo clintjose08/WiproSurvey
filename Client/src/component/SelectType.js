@@ -6,11 +6,15 @@ import {IndexLink, Link} from 'react-router';
 import {blueGrey500,white} from 'material-ui/styles/colors';
 
 class SelectType extends Component {
-  
+  state = {
+     value: 1,
+   };
+
+   handleChange = (event, index, value) => this.setState({value});
 
 render()
 {
-  return(
+  return(<div>
   <SelectField
     iconStyle={{background:'#607D8B'}}
     floatingLabelText="Question Type"
@@ -18,7 +22,9 @@ render()
     onChange={this.handleChange}
     underlineStyle={{borderColor:blueGrey500}} floatingLabelStyle={{color:blueGrey500}}
   >
-
+  <Link to="Home/StarRatings" activeClassName="active">
+     <MenuItem value={1} primaryText="Star Ratings" />
+  </Link>
   <Link to="Home/Dropdown" activeClassName="active">
      <MenuItem value={2} primaryText="Dropdown" />
   </Link>
@@ -34,19 +40,17 @@ render()
   <Link to="Home/Comments" activeClassName="active">
      <MenuItem value={6} primaryText="Comments" />
   </Link>
-  <Link to="Home/Checkbox" activeClassName="active">
+  <Link to="Home/CheckBox" activeClassName="active">
      <MenuItem value={7} primaryText="Checkbox" />
   </Link>
-  <Link to="Home/QuestionGroup" activeClassName="active">
+  <Link to="Home/Qgroup" activeClassName="active">
      <MenuItem value={8} primaryText="Question Group" />
   </Link>
-  <Link to="Home/YesorNo" activeClassName="active">
+  <Link to="Home/YesOrNo" activeClassName="active">
      <MenuItem value={9} primaryText="Yes/No" />
   </Link>
-  <Link to="Home/ShortQuestion" activeClassName="active">
-     <MenuItem value={10} primaryText="Short Question" />
-  </Link>
-   </SelectField>);
+   </SelectField>
+ </div>);
 }
 }
 

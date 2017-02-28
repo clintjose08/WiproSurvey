@@ -23,48 +23,74 @@ const style = {
 marginTop:30
 };
 
-const textStyle={
-  margin:15
-}
 
 class StarRatings extends Component
 {
   state = {
-    value: 0,
+    quest:" ",
+    value: " ",
     listOptions:[],
-    addValue: false
+    addValue: false,
+    starValues:[],
   };
-
-  
+  componentWillMount(){
+    this.props.type("StarRatings");
+  }
+  handleChange = (event, index, value) => {
+    this.setState({value:value,
+    addValue:false,
+    listOptions:[],
+    starValues:[]});
+    this.props.options([]);
+  }
   onChangeCheck=(e)=>
   {
-
     if(!e.target.checked)
     {
       this.setState({
         listOptions:[],
-        addValue:false
+        addValue:false,
+        starValues:[]
       });
+        this.props.options([]);
     }
     else
     {
       var list=[];
       var text=[];
       var value=this.state.value;
+      var starValue= Array(value).fill(" ");
       for (let i = 1; i <= value; i++ )
       {
         text=[];
         var star=i+" Star";
-        text.push(<TextField hintText={star}/>);
+        text.push(<TextField hintText={star} underlineStyle={{borderColor:blueGrey500}} id={i} onChange={this.changeStarValue.bind(this)}/>);
         list.push(<ListItem primaryText={text}/>);
+        this.props.options(starValue);
       }
       this.setState({
         addValue:true,
-        listOptions:list
+        listOptions:list,
+        starValues:starValue
       })
     }
   };
-
+  changeStarValue(e)
+  {
+    var starValue=this.state.starValues;
+    starValue[e.target.id]=e.target.value;
+    this.setState({
+      starValues:starValue
+    })
+    this.props.options(starValue);
+  }
+  questionChange(e)
+  {
+    this.setState({
+      quest:e.target.vlaue
+    })
+    this.props.getQuestion(e.target.value);
+  }
   render()
   {
     const items = [];
@@ -72,7 +98,7 @@ class StarRatings extends Component
       items.push(<MenuItem value={i} key={i} primaryText={`${i}`} />);
     }
 
-    return(
+    return(<div>
             <Paper>
         <Card style={{background:' #E5E4E2 '}}>
           <CardHeader title="Create Star Rate Questions"  style={cardheadstyle} titleColor='white' titleStyle={{fontWeight:'bold'}}/>
@@ -80,21 +106,21 @@ class StarRatings extends Component
           <Subheader style={{fontSize:'125%',color:'#1C6D03 '}}>Select the question type</Subheader>
             <SelectType/>
               <br /><br />
-
               <Subheader style={{fontSize:'125%',color:'#1C6D03 '}}>Enter the question</Subheader>
               <TextField
-                floatingLabelText="Question"
-                value=" "
-                underlineStyle={{borderColor:blueGrey500}} floatingLabelStyle={{color:blueGrey500}}
+                value={this.state.quest}
+                underlineStyle={{borderColor:blueGrey500}}
+                floatingLabelStyle={{color:blueGrey500}}
+                onChange={this.questionChange.bind(this)}
               /><br />
               <Divider style={{background:blueGrey500}}/>
               <Subheader style={{fontSize:'125%',color:'#1C6D03 '}}>Select Scale</Subheader>
             <SelectField
               floatingLabelText="Select Scale"
               value={this.state.value}
-              onChange={this.handleChange}
+              onChange={this.handleChange.bind(this)}
               maxHeight={200}
-              underlineStyle={{borderColor:blueGrey500}} floatingLabelStyle={{color:blueGrey500}}
+              underlineStyle={{borderColor:blueGrey500}}
             >
               {items}
             </SelectField>
@@ -116,6 +142,7 @@ class StarRatings extends Component
           </CardActions>
         </Card>
         </Paper>
+        </div>
       );
   }
 }

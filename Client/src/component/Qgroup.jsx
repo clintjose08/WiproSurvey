@@ -13,6 +13,8 @@ import Divider from 'material-ui/Divider';
 import FlatButton from 'material-ui/FlatButton';
 import Qoption from '../component/Qoption';
 import { Grid,Row,Col } from 'react-flexbox-grid';
+import SelectType from './SelectType';
+
 const styles={
   block: {
     maxWidth: 250,
@@ -56,8 +58,6 @@ const buttonStye={
 }
 class Qgroup extends Component{
 
-
-handleChange = (event, index, value) => this.setState({value});
     constructor() {
     super();
     this.state = {
@@ -109,28 +109,7 @@ checkNo()
        <CardText style={{marginTop:0}}>
        <div>
        <Subheader style={{fontSize:'125%',color:'#1C6D03 '}}> Question Type </Subheader>
-
-       <SelectField
-         value={this.state.value}
-         onChange={this.handleChange}
-       >
-       <Link to="Home/MultiChoice" activeClassName="active">
-          <MenuItem value={1} primaryText="Multiple Choice" />
-       </Link>
-       <Link to="Home/Dropdown" activeClassName="active">
-          <MenuItem value={2} primaryText="Dropdown" />
-       </Link>
-       <Link to="Home/StarRatings" activeClassName="active">
-          <MenuItem value={3} primaryText="Star Ratings" />
-       </Link>
-       <Link to="Home/Slider" activeClassName="active">
-          <MenuItem value={4} primaryText="Slider" />
-       </Link>
-       <MenuItem value={5} primaryText="Single Textbox" />
-                <Link to="Home/SingleText" activeClassName="active">
-           <MenuItem value={6} primaryText="Comments" />
-                </Link>
-        </SelectField>
+       <SelectType/>
 
          </div>
 
