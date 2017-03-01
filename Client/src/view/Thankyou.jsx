@@ -8,6 +8,46 @@ class ThankyouEdit extends Component {
    super(props);
    this.state = {open: true};
   }
+
+   onChangeThanks(msg)
+  {
+    this.setState({
+      msg:msg
+    })
+  }
+
+  onChangeName(name)
+  {
+
+    this.setState({
+      name:name
+    })
+  
+  }
+  onChangeContact(contact)
+  {
+
+    this.setState({
+      contact:contact
+    })
+  
+  }
+  onChangeEmail(mail)
+  {
+
+    this.setState({
+      mail:mail
+    })
+  
+  }
+   getType(type)
+  {
+
+    this.setState({
+      type:type
+    })
+  }
+
  render() {
 
    return (<div >
@@ -15,10 +55,10 @@ class ThankyouEdit extends Component {
             <Grid>
               <Row style={{height:'40%'}}>
                 <Col xs={4.5}>
-                  <Thankyou />
+                  <Thankyou getThanks={this.onChangeThanks.bind(this)} getName={this.onChangeName.bind(this)} getContact={this.onChangeContact.bind(this)} getEmail={this.onChangeEmail.bind(this)} type={this.getType.bind(this)} />
                 </Col>
                 <Col xs={7.5}>
-                  <TempDisplay />
+                  <TempDisplay  putThanks={this.state.msg} putName={this.state.name} putContact={this.state.contact} putEmail={this.state.mail} putType={this.state.type} />
                 </Col>
               </Row>
             </Grid>

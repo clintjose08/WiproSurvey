@@ -37,12 +37,42 @@ constructor(props) {
  handleToggle = (event, toggle) => {
     this.setState({expanded: toggle});
   };
+
   handleToggleNumber = (event, toggle) => {
     this.setState({expandedNumber: toggle});
   };
+
   handleToggleMail = (event, toggle) => {
     this.setState({expandedMail: toggle});
   };
+
+    componentWillMount(){
+    this.props.type("Thanks");
+  } 
+
+   handleThanks(e) {
+    
+    this.props.getThanks(e.target.value);
+    console.log("Sucess");  
+  }
+
+   handleName(e) {
+
+    this.props.getName(e.target.value);
+    console.log("Sucess"); 
+  }
+
+   handleContact(e) {
+    
+    this.props.getContact(e.target.value);
+    console.log("Sucess");  
+  }
+
+   handleEmail(e) {
+
+    this.props.getEmail(e.target.value);
+    console.log("Sucess"); 
+  }
 	render()
 	{
 		return(
@@ -54,7 +84,15 @@ constructor(props) {
 							</CardHeader>
 							<CardActions style={{marginTop:'3%',marginLeft:'1%'}}>
 								<Subheader style={{fontSize:'125%',color:'#1C6D03'}}>Message</Subheader>
-								<TextField hintText="Thank you text goes here"  hintStyle={{fontWeight:'bold'}} underlineStyle={{borderColor:'#37861E'}} fullWidth={true}/>
+								<TextField 
+								    hintText="Thank you text goes here" 
+								    hintStyle={{fontWeight:'bold'}} 
+								    underlineStyle={{borderColor:'#37861E'}}
+								    onChange={this.handleThanks.bind(this)}
+								    required
+								    multiLine={true}
+								    fullWidth={true}
+								/>
 							</CardActions>
 							<Divider style={{background:'#000000'}}/>
 							<CardActions style={{marginTop:'3%',marginLeft:'1%'}}>
@@ -65,7 +103,13 @@ constructor(props) {
 							</CardActions>
 
 							<CardActions expandable={true}>
-         						<TextField hintText="Type Your Name Here (Optional)" hintStyle={{fontWeight:'bold'}} underlineStyle={{borderColor:'#37861E'}}  />
+         						<TextField 
+         						    hintText="Type Your Name Here (Optional)" 
+         						    hintStyle={{fontWeight:'bold'}}
+         						    onChange={this.handleName.bind(this)} 
+         						    underlineStyle={{borderColor:'#37861E'}} 
+								    multiLine={true}
+         						     />
         					</CardActions>
         					</Card>
         					<Divider style={{background:'#000000'}}/>
@@ -80,7 +124,13 @@ constructor(props) {
 							</CardActions>
 
 							<CardActions expandable={true}>
-         						<TextField hintText="Type Your Contact Number Here (Optional)" hintStyle={{fontWeight:'bold'}} underlineStyle={{borderColor:'#37861E'}}  />
+         						<TextField 
+         						    hintText="Type Your Contact Number Here (Optional)" 
+         						    hintStyle={{fontWeight:'bold'}} 
+         						    underlineStyle={{borderColor:'#37861E'}} 
+                                    onChange={this.handleContact.bind(this)}
+                                    multiLine={true}
+         						     />
         					</CardActions>
         					</Card>
         					<Divider style={{background:'#000000'}}/>
@@ -95,7 +145,13 @@ constructor(props) {
 							</CardActions>
 
 							<CardActions expandable={true}>
-         						<TextField hintText="Type Your E-mail ID Here (Optional)" hintStyle={{fontWeight:'bold'}} underlineStyle={{borderColor:'#37861E'}}  />
+         						<TextField 
+         						    hintText="Type Your E-mail ID Here (Optional)" 
+         						    hintStyle={{fontWeight:'bold'}} 
+         						    underlineStyle={{borderColor:'#37861E'}} 
+         						    onChange={this.handleEmail.bind(this)}
+         						    multiLine={true}
+         						     />
         					</CardActions>
 
         					<Divider style={{background:'#000000'}}/>

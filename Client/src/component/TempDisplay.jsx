@@ -6,6 +6,7 @@ import FlatButton from 'material-ui/FlatButton';
 import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
 import Checkbox from 'material-ui/Checkbox';
 import {RadioButton, RadioButtonGroup} from 'material-ui/RadioButton';
+import Slider from 'material-ui/Slider';
 import Star from 'material-ui/svg-icons/toggle/star';
 import { Grid,Row,Col } from 'react-flexbox-grid';
 
@@ -40,29 +41,47 @@ width:'100%',
 
 class TempDisplay  extends Component {
 
+  state = {
+    sliderChange: 0,
+    
+  };
+
+  handleSlider = (event, value) => {
+    this.setState({sliderChange: value});
+  };
+
  render() {
 
-  /* const components=[];
-      components.push(<h3 style={{marginTop:0,marginBottom:0,color:'#818181'}}>[ Questions comes Here ] {this.state.recive}</h3>);
-    if(this.props.question){
-      components.pop();
-      components.push(<div>
-      <h2 style={{marginTop:0,marginLeft:'2%',marginBottom:0,color:'#000000',textAlign:'left'}}>{this.props.question}</h2>
-      <TextField hintText="Your Text Here"/>
-    </div>);
-
-    }*/
+ 
+    var welcome=[];
    var components=[]; 
+   var thanks=[];
    var options=[];
    components.push(<h3 style={{marginTop:0,marginBottom:0,color:'#818181'}}>[ Questions comes Here ] </h3>);
-   if(this.props.putType=="Checkbox")
-   {
-     this.props.putOptions.map((option)=>{
-       options.push(<Checkbox label={option} disabled={true} /> );
-       options.push(<br/>)
-     });
-   }
 
+   welcome.push( <div> 
+    <h3 style={{marginTop:'2%',marginBottom:'2%',color:'#FFFFFF',fontSize:'150%'}}> [Title comes Here]</h3>
+      <Divider/>
+     <h4 style={{marginTop:'1%',marginLeft:'1%',color:'#DAF7A6  ',textAlign:'left'}}>[ Description ]</h4>
+     </div>);
+   thanks.push(<div>
+     <h3 style={{marginTop:'2%',marginBottom:'2%',color:'#FFFFFF'}}> [Thank You Mesage comes Here]</h3>
+      <Divider/>
+     <h4 style={{marginTop:'1%',marginLeft:'1%',color:'#DAF7A6  ',textAlign:'left'}}>[ Craeter Name ]</h4>
+     <h4 style={{marginTop:0,marginLeft:'1%',color:'#DAF7A6  ',textAlign:'left'}}>[ Craeter Contact Number ]</h4>
+     <h4 style={{marginTop:0,marginLeft:'1%',color:'#DAF7A6  ',textAlign:'left'}}>[ Craeter E-mail ]</h4>
+   </div>);
+
+   if(this.props.putWelMsg && this.props.putType=="Welcome")
+   {
+     welcome.pop();
+     welcome.push(<div>
+     <h3 style={{marginTop:'2%',marginBottom:'2%',color:'#FFFFFF',fontSize:'150%'}}>{this.props.putWelMsg}</h3>
+      <Divider/>
+     <h4 style={{marginTop:'1%',marginLeft:'1%',color:'#DAF7A6  ',textAlign:'left'}}>{this.props.putWelDes}</h4>
+    </div>);
+   }
+    
 
    else if(this.props.putQuestion && this.props.putType=="Textbox"){
        components.pop();
@@ -99,11 +118,13 @@ class TempDisplay  extends Component {
         <RadioButton
         value="Yes"
         label="Yes"
+        labelStyle={{fontWeight:'bold'}}
       />
       
       <RadioButton
         value="No"
         label="No"
+        labelStyle={{fontWeight:'bold'}}
       />
       
 
@@ -111,26 +132,49 @@ class TempDisplay  extends Component {
     </div>);   
    } 
 
-   else if(this.props.putType=="StarRatings")
+   else if(this.props.putQuestion && this.props.putType=="Slider"){
+       components.pop();
+       components.push(<div>
+      <h3 style={{marginTop:'3%',marginLeft:'2%',marginBottom:0,color:'#000000',textAlign:'left'}}>{this.props.putQuestion}</h3>
+     <Slider
+          min={0}
+          max={this.props.putMaxValue}
+          step={this.props.putScaleValue}
+          defaultValue={0}
+          value={this.state.sliderChange}
+          onChange={this.handleSlider}
+          style={{marginLeft:'4%',marginRight:'4%'}}
+        />
+
+       
+          <span style={{fontWeight:'bold'}}>{this.state.sliderChange}</span>
+          <span style={{fontWeight:'bold'}}>{'/'}</span> <span style={{fontWeight:'bold'}}>{this.props.putMaxValue}</span>
+    </div>);   
+   } 
+
+  else if(this.props.putThanks && this.props.putType=="Thanks")
    {
-     this.props.putOptions.map((option)=>{
-       options.push(<Star color="#FFFF00"/>)
-       options.push(<TextField value={option} disabled={true} /> );
-       options.push(<br/>)
-     });
+    thanks.pop();
+    thanks.push(<div>
+     <h3 style={{marginTop:'2%',marginBottom:'2%',color:'#FFFFFF'}}>{this.props.putThanks}</h3>
+      <Divider/>
+     <h4 style={{marginTop:'1%',marginLeft:'1%',color:'#DAF7A6  ',textAlign:'left'}}>{this.props.putName}</h4>
+     <h4 style={{marginTop:0,marginLeft:'1%',color:'#DAF7A6  ',textAlign:'left'}}>Contact Number:{this.props.putContact} </h4>
+     <h4 style={{marginTop:0,marginLeft:'1%',color:'#DAF7A6  ',textAlign:'left'}}>E-mail ID:{this.props.putEmail}</h4>
+     </div>);
    }
 
    return(
       <Paper  style={style}>
         <Card style={welcomeStyle}>
-          <h3 style={{marginTop:'0%',marginBottom:'0%',color:'#FFFFFF',fontSize:'150%'}}> [Header]</h3>
+          {welcome}
         </Card>
         <Card style={questionStyle}>
         {components}
         </Card>
        
         <Card style={thanksStyle}>
-          <h3 style={{marginTop:'18%',marginBottom:'0%',color:'#FFFFFF'}}> [Footer]</h3>
+          {thanks}
         </Card>
       </Paper>
   );

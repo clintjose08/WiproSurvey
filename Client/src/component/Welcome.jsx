@@ -32,6 +32,22 @@ constructor(props) {
     };
   }
 
+  componentWillMount(){
+    this.props.type("Welcome");
+  }
+
+  handleWelcome(e) {
+    
+    this.props.getWelcome(e.target.value);
+    console.log("Sucess");  
+  }
+
+  handleWelcomeDes(e) {
+
+    this.props.getWelDes(e.target.value);
+    console.log("Sucess"); 
+  }
+
  handleToggle = (event, toggle) => {
     this.setState({expanded: toggle});
   };
@@ -46,7 +62,14 @@ constructor(props) {
 							</CardHeader>
 							<CardActions style={{marginTop:'3%',marginLeft:'1%'}}>
 								<Subheader style={{fontSize:'125%',color:'#1C6D03'}}>Title of survey</Subheader>
-								<TextField hintText="Type Your Title Here"  hintStyle={{fontWeight:'bold'}} underlineStyle={{borderColor:'#37861E'}}/>
+								<TextField 
+								hintText="Type Your Title Here"  
+								hintStyle={{fontWeight:'bold'}} 
+								required
+								underlineStyle={{borderColor:'#37861E'}}
+                                onChange={this.handleWelcome.bind(this)}   
+                                multiLine={true}
+								/>
 							</CardActions>
 							<Divider style={{background:'#000000'}}/>
 							<CardActions style={{marginTop:'3%',marginLeft:'1%'}}>
@@ -57,7 +80,13 @@ constructor(props) {
 							</CardActions>
 
 							<CardActions expandable={true}>
-         						<TextField hintText="Type Your Description Here" hintStyle={{fontWeight:'bold'}} underlineStyle={{borderColor:'#37861E'}}  fullWidth={true}/>
+         						<TextField 
+         						hintText="Type Your Description Here" 
+         						hintStyle={{fontWeight:'bold'}} 
+         						underlineStyle={{borderColor:'#37861E'}} 
+         						onChange={this.handleWelcomeDes.bind(this)}
+         						multiLine={true}
+         						fullWidth={true}/>
         					</CardActions>
         					<Divider style={{background:'#000000'}}/>
         					<CardActions >
