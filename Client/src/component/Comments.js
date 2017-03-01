@@ -30,6 +30,17 @@ class Comments extends Component{
   this.state = {value: 5};
 }
 
+componentWillMount(){
+    this.props.type("Comments");
+  }
+
+handleQuestion(e) {
+    
+    this.props.getQuestion(e.target.value);
+    console.log("Sucess");  
+  }
+
+
 handleChange = (event, index, value) => this.setState({value});
     render(){
         return(<div><Paper >
@@ -53,6 +64,7 @@ handleChange = (event, index, value) => this.setState({value});
            hintStyle={{fontWeight:'bold'}}
            underlineStyle={{borderColor:'#37861E'}}
            fullWidth={true}
+           onChange={this.handleQuestion.bind(this)}
          />
         </CardActions>
         <Divider style={{background:'#000000'}}/>

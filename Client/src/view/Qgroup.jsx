@@ -6,8 +6,43 @@ import Dialog from 'material-ui/Dialog';
 class QgroupEdit extends Component {
   constructor(props) {
    super(props);
-   this.state = {open: true};
+   this.state = 
+   {
+    open: true,
+    quest:'',
+   questComments:'',
+   questYesOrNo:'',
+    type:'',
+    options:[]
+   };
+ }
+onChangeOptions(options){
+  this.setState({
+    options:options
+  })
+}
+onCommentsChangeQuest(questComments)
+  {
+    this.setState({
+      questComments:questComments
+    })
   }
+  onYesOrNoChangeQuest(questYesOrNo)
+  {
+    this.setState({
+      questYesOrNo:questYesOrNo
+    })
+  }
+getType(type){
+  this.setState({
+    type:type
+  })
+}
+onQuestionChange(quest){
+  this.setState({
+    quest:quest
+  })
+} 
  render() {
 
    return (<div >
@@ -15,10 +50,10 @@ class QgroupEdit extends Component {
             <Grid>
               <Row style={{height:'40%'}}>
                 <Col xs={4.5}>
-                  <Qgroup />
+                  <Qgroup getQuestion={this.onQuestionChange.bind(this)} getComments={this.onCommentsChangeQuest.bind(this)} getYesOrNo={this.onYesOrNoChangeQuest.bind(this)} options={this.onChangeOptions.bind(this)} type={this.getType.bind(this)} />
                 </Col>
                 <Col xs={7.5}>
-                  <TempDisplay />
+                  <TempDisplay putQuestion={this.state.quest} putOptions={this.state.options} putComments={this.state.questComments} putYesOrNo={this.state.questYesOrNo} putType={this.state.type}/>
                 </Col>
               </Row>
             </Grid>
