@@ -18,10 +18,6 @@ marginTop:40,
 width:'100%'
 }
 
-const cardStyle={
-
-}
-
 const textStyle={
 marginRight:130
 }
@@ -29,35 +25,77 @@ class Dropdown extends Component {
  constructor() {
    	super();
    this.state = {
+     quest:" ",
      optionArr: [' '],
-		 value: 1
+		 value: 1,
+     disabled:true
    }
  }
+ componentWillMount(){
+   this.props.type("Dropdown");
+ }
+ questionChange(e)
+ {
+   var arr=this.state.optionArr;
+   var disable;
+   if(e.target.length>=5)
+   disable=false;
 
-
+   this.setState({
+     quest:e.target.value,
+     disabled:disable
+   })
+   this.props.question(e.target.value);
+ }
  addOptions(e)
  {
-  var arr=this.state.optionArr;
-  arr.push(' ');
-  this.setState({
-    optionArr:arr
-  })
- }
+  if(this.state.quest.length>=5)
+  {
+    var arr=this.state.optionArr;
+    arr.push(' ');
+    this.setState({
+      optionArr:arr
+    })
+  }
+}
  removeOptions=(index)=>
  {
-  var arr=this.state.optionArr;
-  arr.splice(index,1);
-  this.setState({
-    optionArr:arr
-  })
+  if(this.state.quest.length>=5)
+  {
+    var arr=this.state.optionArr;
+      if(arr.length>1)
+    {
+      arr.splice(index,1);
+      this.setState({
+        optionArr:arr
+      })
+    this.props.options(arr);
+  }
+}
  }
 changeOptions=(index,value)=>
 {
+  if(this.state.quest.length>=5)
+  {
+    var arr=this.state.optionArr;
+    arr[index]=value;
+    this.setState({
+    optionArr:arr
+    })
+    this.props.options(arr);
+  }
+}
+onSubmit=()=>
+{
+  if(this.state.quest.length<5)
+  {
+    alert("Question not added!!");
+  }
   var arr=this.state.optionArr;
-  arr[index]=value;
-  this.setState({
-  optionArr:arr
-  })
+  if(arr.length<2)
+  {
+    alert("Question needs at least two options... Please add more options");
+  }
 }
  render() {
    const options=this.state.optionArr.map((value,index) => {
@@ -67,7 +105,7 @@ changeOptions=(index,value)=>
    });
    return (
                 <Paper>
-                <Card style={cardStyle} style={{background:"#E5E4E2"}}>
+                <Card  style={{background:"#E5E4E2"}}>
                 <CardHeader
                   title="Dropdown" style={{background:"#242323",}} titleStyle={{fontWeight:'bold',color:'#FFFFFF',marginLeft:'20%'}}
                 />
@@ -77,7 +115,11 @@ changeOptions=(index,value)=>
 	              <br /><br />
                 <Subheader style={{fontSize:'125%',color:'#1C6D03 '}}>Enter the question</Subheader>
                  <TextField
-                  floatingLabelText="Type your question here" value=" " underlineStyle={{borderColor:blueGrey500}} floatingLabelStyle={{color:blueGrey500}} style={textStyle}/>
+                value={this.state.quest}
+                underlineStyle={{borderColor:blueGrey500}}
+                style={textStyle}
+                multiLine={true}
+                onChange={this.questionChange.bind(this)} />
                 <br /><br />
                 <Divider style={{background:blueGrey500}}/>
                 <Subheader style={{fontSize:'125%',color:'#1C6D03 '}}>Add answer options</Subheader>
@@ -91,8 +133,8 @@ changeOptions=(index,value)=>
   	             <RaisedButton label="Cancel" labelStyle={{fontWeight:'bold'}} />
   	           </Link>
                <Link to="Home/AddQuestion" activeClassName="active">
-                 <RaisedButton label="Submit" backgroundColor='#1C6D03 ' labelStyle={{color:'#FFFFFF ',fontWeight:'bold'}}/>
-              </Link>
+                 <RaisedButton label="Submit" backgroundColor='#1C6D03' onClick={this.onSubmit.bind(this)} labelStyle={{color:'#FFFFFF ',fontWeight:'bold'}} disabled={this.state.disabled}/>
+                 </Link>
               </CardActions>
                </Card>
                </Paper>

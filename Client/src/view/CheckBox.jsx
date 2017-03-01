@@ -6,7 +6,29 @@ import Dialog from 'material-ui/Dialog';
 class CheckBoxEdit extends Component {
   constructor(props) {
    super(props);
-   this.state = {open: true};
+   this.state = {open: true,
+     quest:" ",
+      options:[],
+      type:" "};
+  }
+  onChangeQuest(quest)
+  {
+    this.setState({
+      quest:quest
+    })
+  }
+  getType(type)
+  {
+
+    this.setState({
+      type:type
+    })
+  }
+  onChangeOptions(options)
+  {
+    this.setState({
+      options:options
+    })
   }
  render() {
 
@@ -15,10 +37,10 @@ class CheckBoxEdit extends Component {
             <Grid>
               <Row>
                 <Col xs={4.5}>
-                  <CheckBox />
+                  <CheckBox type={this.getType.bind(this)} question={this.onChangeQuest.bind(this)} options={this.onChangeOptions.bind(this)}/>
                 </Col>
                 <Col xs={7.5}>
-                  <TempDisplay />
+                  <TempDisplay putQuestion={this.state.quest} putOptions={this.state.options} putType={this.state.type}/>
                 </Col>
               </Row>
             </Grid>
