@@ -17,6 +17,7 @@ class StarRatingsEdit extends Component {
       quest:quest
     })
   }
+  
   getType(type)
   {
 

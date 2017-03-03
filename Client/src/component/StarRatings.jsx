@@ -41,7 +41,8 @@ class StarRatings extends Component
     addValue:false,
     listOptions:[],
     starValues:[]});
-    this.props.options([]);
+    var starValue= Array(value).fill(" ");
+    this.props.options(starValue);
   }
   onChangeCheck=(e)=>
   {
@@ -60,7 +61,7 @@ class StarRatings extends Component
       var text=[];
       var value=this.state.value;
       var starValue= Array(value).fill(" ");
-      for (let i = 1; i <= value; i++ )
+      for (let i = 1; i <=value; i++ )
       {
         text=[];
         var star=i+" Star";
@@ -78,7 +79,7 @@ class StarRatings extends Component
   changeStarValue(e)
   {
     var starValue=this.state.starValues;
-    starValue[e.target.id]=e.target.value;
+    starValue[e.target.id-1]=e.target.value;
     this.setState({
       starValues:starValue
     })
@@ -110,7 +111,6 @@ class StarRatings extends Component
               <TextField
                 value={this.state.quest}
                 underlineStyle={{borderColor:blueGrey500}}
-                floatingLabelStyle={{color:blueGrey500}}
                 onChange={this.questionChange.bind(this)}
               /><br />
               <Divider style={{background:blueGrey500}}/>
