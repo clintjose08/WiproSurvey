@@ -37,10 +37,97 @@ width:'100%',
 };
 
 
-
 class TempDisplay  extends Component {
-
+constructor(){
+  super();
+  this.state={
+    checked:'',
+    showYes:false,
+  }
+}
+handleOptionChangeYes (e) {
+  this.setState({showYes:e.target.value})
+}
  render() {
+   var dispQuest =[];
+   var yesComments=[];
+   if(this.props.putComments){
+     yesComments.push(<div style={{marginLeft:'5%'}}>
+       {this.props.putComments}
+       <br />
+       <TextField
+       hintText="Your Option Here"
+       hintStyle={{fontWeight:'bold'}}
+       underlineStyle={{borderColor:'#37861E '}}
+       />
+     </div>);
+   }
+   var yesOptions=[];
+   if(this.props.putYesOrNo){
+     yesOptions.push(<div style={{marginLeft:'5%'}}>
+       {this.props.putYesOrNo}
+       <RadioButtonGroup name="YesOrNo" style={{textAlign:'left',marginLeft:'5%',marginTop:'2%'}} >
+
+               <RadioButton
+               value="Yes"
+               label="Yes"
+             />
+
+             <RadioButton
+               value="No"
+               label="No"
+             />
+
+       </RadioButtonGroup>
+     </div>);
+   }
+   var noComments=[];
+   if(this.props.putComments1){
+     noComments.push(<div>
+       {this.props.putComments1}
+       <TextField
+       hintText="Your Option Here"
+       hintStyle={{fontWeight:'bold'}}
+       underlineStyle={{borderColor:'#37861E '}}
+       style={{marginLeft:'5%'}}
+       />
+     </div>);
+   }
+   var noOptions=[];
+   if(this.props.putYesOrNo1){
+     noOptions.push(<div>
+       {this.props.putYesOrNo1}
+       <RadioButtonGroup name="YesOrNo" style={{textAlign:'left',marginLeft:'5%'}} >
+
+               <RadioButton
+               value="Yes"
+               label="Yes"
+             />
+
+             <RadioButton
+               value="No"
+               label="No"
+             />
+
+       </RadioButtonGroup>
+     </div>);
+   }
+   if(this.state.showYes=='Yes')
+     {
+       console.log("test");
+     dispQuest.push(<div>
+     {yesComments}
+     {yesOptions}
+
+     </div>);
+     }
+     else if(this.state.showYes=='No'){
+        dispQuest.push(<div>
+       {noComments}
+       {noOptions}
+        </div>);
+     }
+
 
   /* const components=[];
       components.push(<h3 style={{marginTop:0,marginBottom:0,color:'#818181'}}>[ Questions comes Here ] {this.state.recive}</h3>);
@@ -52,7 +139,7 @@ class TempDisplay  extends Component {
     </div>);
 
     }*/
-   var components=[]; 
+   var components=[];
    var options=[];
    components.push(<h3 style={{marginTop:0,marginBottom:0,color:'#818181'}}>[ Questions comes Here ] </h3>);
    if(this.props.putType=="Checkbox")
@@ -68,77 +155,74 @@ class TempDisplay  extends Component {
        components.pop();
        components.push(<div>
       <h3 style={{marginTop:0,marginLeft:'2%',marginBottom:0,color:'#000000',textAlign:'left'}}>{this.props.putQuestion}</h3>
-      <TextField 
+      <TextField
       hintText="Your Option Here"
       hintStyle={{fontWeight:'bold'}}
       underlineStyle={{borderColor:'#37861E '}}
       />
     </div>);
-       
+
    }
-    
+
    else if(this.props.putQuestion && this.props.putType=="Comments"){
        components.pop();
        components.push(<div>
       <h3 style={{marginTop:'3%',marginLeft:'2%',marginBottom:0,color:'#000000',textAlign:'left'}}>{this.props.putQuestion}</h3>
-      <TextField 
+      <TextField
       hintText="Your Comments Here"
       hintStyle={{fontWeight:'bold'}}
       underlineStyle={{borderColor:'#37861E '}}
       fullWidth={true}
       />
-    </div>);   
-   } 
+    </div>);
+   }
 
    else if(this.props.putQuestion && this.props.putType=="YesOrNo"){
        components.pop();
        components.push(<div>
       <h3 style={{marginTop:'3%',marginLeft:'2%',marginBottom:0,color:'#000000',textAlign:'left'}}>{this.props.putQuestion}</h3>
       <RadioButtonGroup name="YesOrNo" style={{textAlign:'left',marginLeft:'5%',marginTop:'2%'}} >
-      
-        <RadioButton
-        value="Yes"
-        label="Yes"
-      />
-      
-      <RadioButton
-        value="No"
-        label="No"
-      />
-      
+
+              <RadioButton
+              value="Yes"
+              label="Yes"
+            />
+
+            <RadioButton
+              value="No"
+              label="No"
+            />
 
       </RadioButtonGroup>
-    </div>);   
-   } 
-
-   else if(this.props.putType=="StarRatings")
-   {
-     this.props.putOptions.map((option)=>{
-       options.push(<Star color="#FFFF00"/>)
-       options.push(<TextField value={option} disabled={true} /> );
-       options.push(<br/>)
-     });
+</div>);
    }
+
    else if(this.props.putQuestion && this.props.putType=="Qgroup"){
        components.pop();
        components.push(<div>
       <h3 style={{marginTop:'3%',marginLeft:'2%',marginBottom:0,color:'#000000',textAlign:'left'}}>{this.props.putQuestion}</h3>
-      <RadioButtonGroup name="YesOrNo" style={{textAlign:'left',marginLeft:'5%',marginTop:'2%'}} >
-      
-        <RadioButton
-        value="Yes"
-        label="Yes"
-      />
-      
+      <RadioButtonGroup name="YesOrNo" style={{textAlign:'left',marginLeft:'5%',marginTop:'2%'}} onChange={this.handleOptionChangeYes.bind(this)}>
+
       <RadioButton
-        value="No"
-        label="No"
-      />
-      
+      value="Yes"
+      label="Yes"
+
+    />
+
+    <RadioButton
+      value="No"
+      label="No"
+
+    />
+
 
       </RadioButtonGroup>
-    </div>);   
-   } 
+      <div style={{textAlign:'left',marginTop:'2%'}}>{dispQuest}</div>
+
+
+
+    </div>);
+   }
 
    return(
       <Paper  style={style}>
@@ -148,7 +232,7 @@ class TempDisplay  extends Component {
         <Card style={questionStyle}>
         {components}
         </Card>
-       
+
         <Card style={thanksStyle}>
           <h3 style={{marginTop:'18%',marginBottom:'0%',color:'#FFFFFF'}}> [Footer]</h3>
         </Card>
