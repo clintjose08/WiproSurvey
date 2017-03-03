@@ -12,9 +12,6 @@ import { Grid,Col,Row} from 'react-flexbox-grid';
 import {blueGrey500,white} from 'material-ui/styles/colors';
 import Subheader from 'material-ui/Subheader';
 import SelectType from './SelectType';
-const cardStyle={
-
-}
 
 const textStyle={
 marginRight:130
@@ -23,11 +20,21 @@ class MultiChoice extends Component {
  constructor() {
    	super();
    this.state = {
+      quest:" ",
      optionArr: [' '],
 		 value: 1
    }
  }
-
+ componentWillMount(){
+   this.props.type("MultiChoice");
+ }
+ questionChange(e)
+ {
+   this.setState({
+     quest:e.target.value,
+   })
+   this.props.question(e.target.value);
+ }
  addOptions(e)
  {
   var arr=this.state.optionArr;
@@ -35,6 +42,7 @@ class MultiChoice extends Component {
   this.setState({
     optionArr:arr
   })
+
  }
  removeOptions=(index)=>
  {
@@ -43,6 +51,7 @@ class MultiChoice extends Component {
   this.setState({
     optionArr:arr
   })
+  this.props.options(arr);
  }
 changeOptions=(index,value)=>
 {
@@ -51,6 +60,7 @@ changeOptions=(index,value)=>
   this.setState({
   optionArr:arr
   })
+    this.props.options(arr);
 }
  render() {
    const options=this.state.optionArr.map((value,index) => {
@@ -60,7 +70,7 @@ changeOptions=(index,value)=>
    });
    return (
                 <Paper>
-                <Card style={cardStyle} style={{background:"#E5E4E2"}}>
+                <Card  style={{background:"#E5E4E2"}}>
                 <CardHeader
                   title="Create Multiple Choice Questions" style={{background:"#242323",}} titleStyle={{fontWeight:'bold',color:'#FFFFFF',marginLeft:'20%'}}
                 />
@@ -70,7 +80,11 @@ changeOptions=(index,value)=>
 	              <br /><br />
                 <Subheader style={{fontSize:'125%',color:'#1C6D03 '}}>Enter the question</Subheader>
                  <TextField
-                  floatingLabelText="Type your question here" value=" " underlineStyle={{borderColor:blueGrey500}} floatingLabelStyle={{color:blueGrey500}} style={textStyle}/>
+                  value={this.state.quest}
+                  underlineStyle={{borderColor:blueGrey500}}
+                  multiLine={true}
+                  style={textStyle}
+                  onChange={this.questionChange.bind(this)}/>
                 <br /><br />
                 <Divider style={{background:blueGrey500}}/>
                 <Subheader style={{fontSize:'125%',color:'#1C6D03 '}}>Add answer options</Subheader>

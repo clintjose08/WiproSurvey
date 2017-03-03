@@ -5,12 +5,11 @@ import TextField from 'material-ui/TextField';
 import FlatButton from 'material-ui/FlatButton';
 import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
 import Checkbox from 'material-ui/Checkbox';
-
+import IconButton from 'material-ui/IconButton';
 import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
-
 import {RadioButton, RadioButtonGroup} from 'material-ui/RadioButton';
-
+import StarBorder from 'material-ui/svg-icons/toggle/star-border'
 import Star from 'material-ui/svg-icons/toggle/star';
 import { Grid,Row,Col } from 'react-flexbox-grid';
 
@@ -56,7 +55,7 @@ class TempDisplay  extends Component {
      components.push(<h2 style={{marginTop:'10%',marginBottom:'10%'}}>{this.props.putQuestion}</h2>)
    }
 
-   if(this.props.putQuestion.length>=5&&this.props.putType==="Checkbox"){
+   if(this.props.putType==="Checkbox"){
 
      this.props.putOptions.map((option)=>{
        components.push(<Checkbox label={option} disabled={true} iconStyle={{marginLeft:'35%'}} labelStyle={{marginRight:'50%'}}/> );
@@ -64,14 +63,14 @@ class TempDisplay  extends Component {
      })
    }
 
-   else if(this.props.putQuestion.length>=5&&this.props.putType==="Textbox"){
+   else if(this.props.putType==="Textbox"){
 
      this.props.putOptions.map((option)=>{
       components.push(<TextField value={option} disabled={true} /> )
 
      })
    }
-   else if (this.props.putQuestion.length>=5&&this.props.putType==="Dropdown") {
+   else if (this.props.putType==="Dropdown") {
 
        var index=1;
        selOpt.push(<MenuItem value={index} primaryText="Select an option"/>)
@@ -82,14 +81,14 @@ class TempDisplay  extends Component {
 
    }
 
-   else if(this.props.putQuestion>=5&&this.props.putType==="StarRatings")
-
+   else if(this.props.putType==="StarRatings")
    {
-
      this.props.putOptions.map((option)=>{
-       components.push(<Star color="#FFFF00"/>)
-       components.push(<TextField value={option} disabled={true} /> )
-       components.push(<br/>)
+       components.push(<div style={{display:'inline-block'}}><Checkbox
+                          checkedIcon={<IconButton iconStyle={{width:'160%',height:'160%'}}><Star /></IconButton>}
+                          uncheckedIcon={<IconButton iconStyle={{width:'160%',height:'160%'}}><StarBorder style={{width:'160%',height:'160%'}} hoverColor={'#27AE60 '}/></IconButton>}
+                          iconStyle={{size:120}}
+                           /></div>);
      })
    }
    else if(this.props.putQuestion && this.props.putType=="Qgroup"){
@@ -97,20 +96,30 @@ class TempDisplay  extends Component {
        components.push(<div>
       <h3 style={{marginTop:'3%',marginLeft:'2%',marginBottom:0,color:'#000000',textAlign:'left'}}>{this.props.putQuestion}</h3>
       <RadioButtonGroup name="YesOrNo" style={{textAlign:'left',marginLeft:'5%',marginTop:'2%'}} >
-
         <RadioButton
         value="Yes"
         label="Yes"
       />
-
       <RadioButton
         value="No"
         label="No"
       />
-
-
       </RadioButtonGroup>
     </div>);
+   }
+   else if (this.props.putType=="MultiChoice") {
+     this.props.putOptions.map((option)=>{
+       selOpt.push(<RadioButton
+       value={option}
+       label={option}
+       style={{width:'auto', marginRight:'20'}}
+       labelStyle={ {marginLeft:'0'}}
+     />);
+   });
+   components.push(<div><RadioButtonGroup name="MultiChoice" style={{ display: 'flex', textAlign:'left'}}>
+    {selOpt}
+    </RadioButtonGroup>
+  </div>);
    }
 
 

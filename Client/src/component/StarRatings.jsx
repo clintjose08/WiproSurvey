@@ -37,11 +37,26 @@ class StarRatings extends Component
     this.props.type("StarRatings");
   }
   handleChange = (event, index, value) => {
+    var list=[];
+    var text=[];
+    var starValue= Array(value).fill(" ");
     this.setState({value:value,
-    addValue:false,
-    listOptions:[],
-    starValues:[]});
-    this.props.options([]);
+    starValues:starValue});
+    this.props.options(starValue);
+    if(this.state.addValue)
+    {
+      for (let i = 1; i <=value; i++ )
+      {
+        text=[];
+        var star=i+" Star";
+        text.push(<TextField hintText={star} underlineStyle={{borderColor:blueGrey500}} id={i} onChange={this.changeStarValue.bind(this)}/>);
+        list.push(<ListItem primaryText={text}/>);
+        this.props.options(starValue);
+      }
+      this.setState({
+        listOptions:list
+      })
+    }
   }
   onChangeCheck=(e)=>
   {
@@ -50,9 +65,8 @@ class StarRatings extends Component
       this.setState({
         listOptions:[],
         addValue:false,
-        starValues:[]
       });
-        this.props.options([]);
+        this.props.options(this.state.starValues);
     }
     else
     {
