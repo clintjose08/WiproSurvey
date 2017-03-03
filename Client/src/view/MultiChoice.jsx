@@ -13,7 +13,6 @@ class MultiChoiceEdit extends Component {
   }
   getType(type)
   {
-
     this.setState({
       type:type
     })
@@ -31,7 +30,6 @@ class MultiChoiceEdit extends Component {
     })
   }
  render() {
-
    return (<div >
             <Dialog autoScrollBodyContent={true} open={this.state.open} contentStyle={{height:'100%',width:'100%',maxHeight:'none',maxWidth: 'none'}}>
             <Grid>
@@ -49,5 +47,4 @@ class MultiChoiceEdit extends Component {
    );
  }
 }
-
 export default MultiChoiceEdit;

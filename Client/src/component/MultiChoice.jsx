@@ -18,11 +18,11 @@ marginRight:130
 }
 class MultiChoice extends Component {
  constructor() {
-   	super();
+    super();
    this.state = {
       quest:" ",
      optionArr: [' '],
-		 value: 1
+         value: 1
    }
  }
  componentWillMount(){
@@ -76,8 +76,8 @@ changeOptions=(index,value)=>
                 />
                 <CardText >
                 <Subheader style={{fontSize:'125%',color:'#1C6D03 '}}>Select the question type</Subheader>
-					       <SelectType/>
-	              <br /><br />
+                           <SelectType/>
+                  <br /><br />
                 <Subheader style={{fontSize:'125%',color:'#1C6D03 '}}>Enter the question</Subheader>
                  <TextField
                   value={this.state.quest}
@@ -93,10 +93,9 @@ changeOptions=(index,value)=>
                 </CardText>
                   <Divider style={{background:blueGrey500}}/>
                 <CardActions>
-
-  	           <Link to="Home/AddQuestion" activeClassName="active">
-  	             <RaisedButton label="Cancel" labelStyle={{fontWeight:'bold'}} />
-  	           </Link>
+               <Link to="Home/AddQuestion" activeClassName="active">
+                 <RaisedButton label="Cancel" labelStyle={{fontWeight:'bold'}} />
+               </Link>
                <Link to="Home/AddQuestion" activeClassName="active">
                  <RaisedButton label="Submit" backgroundColor='#1C6D03 ' labelStyle={{color:'#FFFFFF ',fontWeight:'bold'}}/>
               </Link>
@@ -106,5 +105,4 @@ changeOptions=(index,value)=>
    );
  }
 }
-
 export default MultiChoice;

@@ -41,6 +41,7 @@ class StarRatings extends Component
     var text=[];
     var starValue= Array(value).fill(" ");
     this.setState({value:value,
+
     starValues:starValue});
     this.props.options(starValue);
     if(this.state.addValue)

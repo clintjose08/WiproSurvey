@@ -8,6 +8,30 @@ class WelcomeEdit extends Component {
    super(props);
    this.state = {open: true};
   }
+
+   onChangeWelcome(msg)
+  {
+    this.setState({
+      msg:msg
+    })
+  }
+
+  onChangeWelDes(desMsg)
+  {
+
+    this.setState({
+      desMsg:desMsg
+    })
+  
+  }
+   getType(type)
+  {
+
+    this.setState({
+      type:type
+    })
+  }
+
  render() {
 
    return (<div >
@@ -15,10 +39,10 @@ class WelcomeEdit extends Component {
             <Grid>
               <Row style={{height:'40%'}}>
                 <Col xs={4.5}>
-                  <Welcome />
+                  <Welcome getWelcome={this.onChangeWelcome.bind(this)} getWelDes={this.onChangeWelDes.bind(this)}  type={this.getType.bind(this)} />
                 </Col>
                 <Col xs={7.5}>
-                  <TempDisplay />
+                  <TempDisplay putWelMsg={this.state.msg} putWelDes={this.state.desMsg} putType={this.state.type}/>
                 </Col>
               </Row>
             </Grid>
