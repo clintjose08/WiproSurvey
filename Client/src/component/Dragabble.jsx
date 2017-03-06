@@ -14,6 +14,7 @@ import Group from 'material-ui/svg-icons/action/assignment';
 import True from 'material-ui/svg-icons/maps/layers-clear';
 import Thank from 'material-ui/svg-icons/action/thumb-up';
 import {IndexLink, Link} from 'react-router';
+
 import {Table, TableBody, TableFooter, TableHeader, TableHeaderColumn, TableRow, TableRowColumn}
   from 'material-ui/Table';
   const buttonStyle={
@@ -37,55 +38,55 @@ class Dragabble extends Component{
               </Col>
             </Row>
             <Row style={{marginLeft:'1%',marginRight:'1%'}}>
-              <Col xs={6}>
+              <Col xs={12} md={6}>
                 <Link to="Home/SingleText" activeClassName="active">
                   <RaisedButton label="Short Questions" backgroundColor='#BDBDBD' labelStyle={{fontWeight:'bold',textTransform:'capitalize'}} buttonStyle={{textAlign:'left'}} style={buttonStyle} icon={<ShortText />}/>
                 </Link>
               </Col>
-              <Col xs={6}>
+              <Col xs={12} md={6}>
                 <Link to="Home/StarRatings" activeClassName="active">
                   <RaisedButton label="Star Ratings" backgroundColor='#BDBDBD' labelStyle={{fontWeight:'bold',textTransform:'capitalize'}} buttonStyle={{textAlign:'left'}} style={buttonStyle} icon={<StarRate />}/>
                 </Link>
               </Col>
             </Row>
             <Row style={{marginLeft:'1%',marginRight:'1%'}}>
-              <Col xs={6}>
+              <Col xs={12} md={6}>
                 <Link to="Home/MultiChoice" activeClassName="active">
                   <RaisedButton label="Multiple Choice" backgroundColor='#BDBDBD' labelStyle={{fontWeight:'bold',textTransform:'capitalize'}} buttonStyle={{textAlign:'left'}} style={buttonStyle} icon={<MultiChoice />}/>
                 </Link>
               </Col>
-              <Col xs={6}>
+              <Col xs={12} md={6}>
                 <Link to="Home/Dropdown" activeClassName="active">
                   <RaisedButton label="Dropdown" backgroundColor='#BDBDBD' labelStyle={{fontWeight:'bold',textTransform:'capitalize'}} buttonStyle={{textAlign:'left'}} style={buttonStyle} icon={<DropDown />}/>
                 </Link>
               </Col>
             </Row>
             <Row style={{marginLeft:'1%',marginRight:'1%'}}>
-              <Col xs={6}>
+              <Col xs={12} md={6}>
                 <Link to="Home/CheckBox" activeClassName="active">
                   <RaisedButton label="Checkbox" backgroundColor='#BDBDBD' labelStyle={{fontWeight:'bold',textTransform:'capitalize'}} buttonStyle={{textAlign:'left'}} style={buttonStyle} icon={<CheckBox />}/>
                 </Link>
               </Col>
-              <Col xs={6}>
+              <Col xs={12} md={6}>
                 <Link to="Home/Slider" activeClassName="active">
                   <RaisedButton label="Slider" backgroundColor='#BDBDBD' labelStyle={{fontWeight:'bold',textTransform:'capitalize'}} buttonStyle={{textAlign:'left'}} style={buttonStyle} icon={<Slide />}/>
                 </Link>
               </Col>
             </Row>
             <Row style={{marginLeft:'1%',marginRight:'1%'}}>
-              <Col xs={6}>
+              <Col xs={12} md={6}>
                 <Link to="Home/Qgroup" activeClassName="active">
                   <RaisedButton label="Question Group" backgroundColor='#BDBDBD' labelStyle={{fontWeight:'bold',textTransform:'capitalize'}} buttonStyle={{textAlign:'left'}} style={buttonStyle} icon={<Group />}/>
                 </Link>
               </Col>
-              <Col xs={6}>
+              <Col xs={12} md={6}>
                 <Link to="Home/YesOrNo" activeClassName="active">
                   <RaisedButton label="Yes/no" backgroundColor='#BDBDBD' labelStyle={{fontWeight:'bold',textTransform:'capitalize'}} buttonStyle={{textAlign:'left'}} style={buttonStyle} icon={<True />}/>
                 </Link>
               </Col>
             </Row>
             <Row style={{marginLeft:'1%',marginRight:'1%'}}>
-              <Col xs={6}>
+              <Col xs={12} md={6}>
                 <Link to="Home/Comments" activeClassName="active">
                   <RaisedButton label="Comments" backgroundColor='#BDBDBD' labelStyle={{fontWeight:'bold',textTransform:'capitalize'}} buttonStyle={{textAlign:'left'}} style={buttonStyle} icon={<Comment />}/>
                 </Link>

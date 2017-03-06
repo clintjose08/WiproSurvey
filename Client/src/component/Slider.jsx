@@ -29,6 +29,26 @@ class Slider extends Component{
    this.state = {value: 4};
  }
 
+componentWillMount(){
+    this.props.type("Slider");
+  }
+
+handleQuestion(e) {
+    
+    this.props.getQuestion(e.target.value);
+    console.log("Sucess");  
+  }
+
+handleMaxValue(e) {
+    
+    this.props.getMaxValue(e.target.value);
+    console.log("Sucess");  
+  }
+handleScale(e) {
+    
+    this.props.getScale(e.target.value);
+    console.log("Sucess");  
+  }  
 	render(){
 		return(<div><Paper >
       <Card style={{background:'#E5E4E2'}}>
@@ -40,29 +60,35 @@ class Slider extends Component{
           <CardActions>
           <Subheader style={{fontSize:'125%',color:'#1C6D03',marginTop:'3%'}}>Question</Subheader><br />
           <TextField
+            floatingLabelText="Question"
             hintText="Enter Your Question Here"
             hintStyle={{fontWeight:'bold'}}
+            required
             underlineStyle={{borderColor:'#37861E'}}
+            onChange={this.handleQuestion.bind(this)}
             fullWidth={true}
           />
           </CardActions>
 					<Divider style={{background:'#000000'}}/>
 					<CardActions>
 					<Subheader style={{fontSize:'125%',color:'#1C6D03',marginTop:'3%'}}>Scale Range</Subheader><br />
-					<TextField
-            hintText="Left Side Value"
-            hintStyle={{fontWeight:'bold'}}
-            underlineStyle={{borderColor:'#37861E'}}
-          /><br />
+					
           <TextField
-            hintText="Center Value"
+            floatingLabelText="MaxValue"
+            hintText="Max Side Value"
             hintStyle={{fontWeight:'bold'}}
+            required
+            min='10'
             underlineStyle={{borderColor:'#37861E'}}
+            onChange={this.handleMaxValue.bind(this)}
           /><br />
 					<TextField
-            hintText="Right Side Value"
+             floatingLabelText="Scale"
+            hintText="Scale"
             hintStyle={{fontWeight:'bold'}}
+            required
             underlineStyle={{borderColor:'#37861E'}}
+            onChange={this.handleScale.bind(this)}
           /><br />
           </CardActions>
           <Divider style={{background:'#000000'}}/>

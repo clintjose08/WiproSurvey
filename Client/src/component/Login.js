@@ -5,6 +5,7 @@ import {IndexLink, Link} from 'react-router';
 import TextField from 'material-ui/TextField';
 import survey from '../../images/survey.jpg';
 import RaisedButton from 'material-ui/RaisedButton';
+import { Grid,Col,Row} from 'react-flexbox-grid';
 const style = {
   textAlign: 'center',
   display: 'inline-block',
@@ -29,24 +30,25 @@ const buttonStye={
 class Login extends Component{
 	render(){
 		return(<div  style={{textAlign:'center',marginTop:"7%"}}>
+      <Grid>
       <img src= {survey} style={{postion:'fixed',margin:'auto',width:400,height:'auto'}}/>
       <h1 style={{fontWeight:'bold'}}>Wipro Survey</h1>
       <Paper style={style}>
-      
+
       <Card style={{background:'#E5E4E2'}}>
         <CardHeader title="Please sign in to your account" style={cardheadstyle} titleStyle={cardTitleStyle} />
         <CardText>
           <TextField
             hintText="Enter your Emp-ID"
-           hintStyle={{fontWeight:'bold'}} 
+           hintStyle={{fontWeight:'bold'}}
            underlineStyle={{borderColor:'#37861E'}}
-           
+
           /><br />
           <TextField
            hintText="Enter your Password"
-           hintStyle={{fontWeight:'bold'}} 
+           hintStyle={{fontWeight:'bold'}}
            underlineStyle={{borderColor:'#37861E'}}
-           
+
           /><br />
           <Link to="Home/CreateSurvey" activeClassName="active">
             <RaisedButton label="Submit" backgroundColor='#1C6D03 ' labelStyle={{color:'#FFFFFF ',fontWeight:'bold'}}/>
@@ -54,6 +56,7 @@ class Login extends Component{
         </CardText>
       </Card>
       </Paper>
+      </Grid>
 		</div>);
 	}
  }

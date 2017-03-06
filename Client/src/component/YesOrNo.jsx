@@ -12,6 +12,7 @@ import Divider from 'material-ui/Divider';
 import SelectType from './SelectType';
 
 
+
 const cardheadstyle={
  background:'#242323',
  textAlign:'center'

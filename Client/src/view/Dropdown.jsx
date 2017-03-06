@@ -6,7 +6,29 @@ import Dialog from 'material-ui/Dialog';
 class DropdownEdit extends Component {
   constructor(props) {
    super(props);
-   this.state = {open: true};
+   this.state = {open: true,
+   quest:" ",
+    options:[],
+    type:" "};
+  }
+  getType(type)
+  {
+
+    this.setState({
+      type:type
+    })
+  }
+  onChangeQuest(quest)
+  {
+    this.setState({
+      quest:quest
+    })
+  }
+  onChangeOptions(options)
+  {
+    this.setState({
+      options:options
+    })
   }
  render() {
 
@@ -14,11 +36,11 @@ class DropdownEdit extends Component {
             <Dialog autoScrollBodyContent={true} open={this.state.open} contentStyle={{height:'100%',width:'100%',maxHeight:'none',maxWidth: 'none'}}>
             <Grid>
               <Row style={{height:'40%'}}>
-                <Col xs={4.5}>
-                  <Dropdown />
+                <Col xs={12} sm={4.5}>
+                  <Dropdown type={this.getType.bind(this)} question={this.onChangeQuest.bind(this)} options={this.onChangeOptions.bind(this)}/>
                 </Col>
-                <Col xs={7.5}>
-                  <TempDisplay />
+                <Col xs={12} sm={7.5}>
+                  <TempDisplay putQuestion={this.state.quest} putOptions={this.state.options} putType={this.state.type}/>
                 </Col>
               </Row>
             </Grid>

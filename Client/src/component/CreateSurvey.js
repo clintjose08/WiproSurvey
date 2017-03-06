@@ -9,7 +9,7 @@ import {Table, TableBody, TableFooter, TableHeader, TableHeaderColumn, TableRow,
   from 'material-ui/Table';
 import background from '../../images/banner.png';
 import {IndexLink, Link} from 'react-router';
-
+import { Grid,Col,Row} from 'react-flexbox-grid';
 import Create from 'material-ui/svg-icons/content/create';
 
 class CreateSurvey extends Component {
@@ -18,8 +18,9 @@ class CreateSurvey extends Component {
   render() {
     return(
 
-<div>
-    <div>
+<Grid>
+    <Row>
+    <Col xs={12}>
     <Paper  style={{width: '98%', marginTop: 0,marginLeft:15,textAlign:'center'}}>
          <Card style={{background:'#E5E4E2'}}>
 
@@ -38,16 +39,19 @@ class CreateSurvey extends Component {
   </Card>
 
     </Paper>
-    </div>
+    </Col>
+    </Row>
 
-    <div>
+    <Row>
+    <Col xs={12}>
     <Paper  style={{width: '98%', marginTop: 0,marginLeft:15,background:'#E5E4E2'}}>
-         <div>
+         <Row>
          <h1 style={{textAlign: 'center', margin:'10',padding:'10'}}>Your All Surveys</h1>
          <Divider/>
-         </div>
-         <div style={{marginLeft:'4%'}} >
-         <TableRowColumn>
+         </Row>
+         <Row>
+         <Col xs={12} md={4}>
+
          <Card >
 
          <CardText>
@@ -64,9 +68,9 @@ class CreateSurvey extends Component {
            </CardActions>
 
          </Card>
-         </TableRowColumn>
+        </Col>
+        <Col xs={12} md={4}>
 
-         <TableRowColumn>
          <Card >
 
          <CardText>
@@ -83,9 +87,8 @@ class CreateSurvey extends Component {
            </CardActions>
 
          </Card>
-         </TableRowColumn>
-
-          <TableRowColumn>
+        </Col>
+        <Col xs={12} md={4}>
          <Card >
 
          <CardText>
@@ -102,13 +105,14 @@ class CreateSurvey extends Component {
            </CardActions>
 
          </Card>
-         </TableRowColumn>
+        </Col>
 
-         </div>
+      </Row>
          </Paper>
-         </div>
+         </Col>
+         </Row>
 
-</div>
+</Grid>
 
 
    );
