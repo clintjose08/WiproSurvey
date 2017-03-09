@@ -27,8 +27,8 @@ marginTop:30
 class StarRatings extends Component
 {
   state = {
-    quest:" ",
-    value: " ",
+    quest:"",
+    value: null,
     listOptions:[],
     addValue: false,
     starValues:[],
@@ -106,6 +106,10 @@ class StarRatings extends Component
     })
     this.props.getQuestion(e.target.value);
   }
+  validateSubmit()
+  {
+
+  }
   render()
   {
     const items = [];
@@ -114,6 +118,7 @@ class StarRatings extends Component
     }
 
     return(<div>
+        <form onSubmit={this.validateSubmit.bind(this)}>
             <Paper>
         <Card style={{background:' #E5E4E2 '}}>
           <CardHeader title="Create Star Rate Questions"  style={cardheadstyle} titleColor='white' titleStyle={{fontWeight:'bold'}}/>
@@ -126,7 +131,9 @@ class StarRatings extends Component
                 value={this.state.quest}
                 underlineStyle={{borderColor:blueGrey500}}
                 onChange={this.questionChange.bind(this)}
-              /><br />
+                multiLine={true}
+                required
+                /><br />
               <Divider style={{background:blueGrey500}}/>
               <Subheader style={{fontSize:'125%',color:'#1C6D03 '}}>Select Scale</Subheader>
             <SelectField
@@ -134,8 +141,7 @@ class StarRatings extends Component
               value={this.state.value}
               onChange={this.handleChange.bind(this)}
               maxHeight={200}
-              underlineStyle={{borderColor:blueGrey500}}
-            >
+              underlineStyle={{borderColor:blueGrey500}} required>
               {items}
             </SelectField>
             <Checkbox label="Add Rating Value" iconStyle={{borderColor:blueGrey500}} labelStyle={{marginRight:1000,color:blueGrey500}} checked={this.state.addValue} onCheck={this.onChangeCheck.bind(this)}/>
@@ -150,12 +156,13 @@ class StarRatings extends Component
             <Link to="Home/AddQuestion" activeClassName="active">
           <RaisedButton label="Cancel" labelStyle={{fontWeight:'bold'}} />
           </Link>
-            <Link to="Home/AddQuestion" activeClassName="active">
-          <RaisedButton label="Submit" backgroundColor='#1C6D03 ' labelStyle={{color:'#FFFFFF ',fontWeight:'bold'}} />
-            </Link>
+
+          <RaisedButton label="Submit" type="submit" backgroundColor='#1C6D03 ' labelStyle={{color:'#FFFFFF ',fontWeight:'bold'}} />
+
           </CardActions>
         </Card>
         </Paper>
+        </form>
         </div>
       );
   }

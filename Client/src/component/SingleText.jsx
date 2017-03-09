@@ -41,50 +41,54 @@ componentWillMount(){
   }
 
 handleQuestion(e) {
-    
+  this.setState({
+    question:e.target.value
+  })
+
+
+
     this.props.getQuestion(e.target.value);
-    console.log("Sucess");  
   }
 
+validateSubmit(e)
+{
+}
    render(){
        return(
+         <form onSubmit={this.validateSubmit.bind(this)}>
     <Paper style={{height:'100%'}} >
     <Card style={{background:'#E5E4E2 ',height:'100%'}}>
       <CardHeader title="Comments" style={cardheadstyle} titleStyle={cardTitleStyle}/>
-
       <CardText style={{marginTop:0}}>
       <div>
       <Subheader style={{fontSize:'125%',color:'#1C6D03 '}}> Question Type </Subheader>
       <SelectType/>
         </div>
-
       </CardText>
       <Divider style={{background:'#000000 '}}/>
         <CardActions style={{marginTop:'0px',marginLeft:'1%'}}>
          <Subheader style={{fontSize:'125%',color:'#1C6D03 ',marginTop:'3%'}}>Question</Subheader>
-          <form >
         <TextField
           hintText="Enter your Question here."
           hintStyle={{fontWeight:'bold'}}
           underlineStyle={{borderColor:'#37861E '}}
           fullWidth={true}
           onChange={this.handleQuestion.bind(this)}
-         
+          required
         />
-        </form>
+
        </CardActions>
        <Divider style={{background:'#000000 '}}/>
       <CardActions style={{marginTop:'0px',marginLeft:'1%'}}>
       <Link to="Home/AddQuestion" activeClassName="active">
         <RaisedButton label="Cancel" labelStyle={{fontWeight:'bold'}} />
         </Link>
-       <Link to="Home/AddQuestion" activeClassName="active">
-        <RaisedButton label="Submit" backgroundColor='#1C6D03 ' labelStyle={{color:'#FFFFFF ',fontWeight:'bold'}} />
-       </Link>
-      </CardActions>
 
+        <RaisedButton backgroundColor='#1C6D03' type="submit" label="Submit" labelStyle={{color:'#FFFFFF ',fontWeight:'bold'}}/>
+      </CardActions>
     </Card>
     </Paper>
+    </form>
        );
    }
 }

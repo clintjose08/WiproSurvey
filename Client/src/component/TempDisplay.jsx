@@ -5,22 +5,11 @@ import TextField from 'material-ui/TextField';
 import FlatButton from 'material-ui/FlatButton';
 import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
 import Checkbox from 'material-ui/Checkbox';
-<<<<<<< HEAD
 import IconButton from 'material-ui/IconButton';
 import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
 import {RadioButton, RadioButtonGroup} from 'material-ui/RadioButton';
-import StarBorder from 'material-ui/svg-icons/toggle/star-border'
-=======
-
-import Rate from 'rc-rate';
-
-import SelectField from 'material-ui/SelectField';
-import MenuItem from 'material-ui/MenuItem';
-import {RadioButton, RadioButtonGroup} from 'material-ui/RadioButton';
 import Slider from 'material-ui/Slider';
-
->>>>>>> d34de23cbd92d47d8ca2eb7828c0c80095b4689b
 import Star from 'material-ui/svg-icons/toggle/star';
 import StarBorder from 'material-ui/svg-icons/toggle/star-border'
 import { Grid,Row,Col } from 'react-flexbox-grid';
@@ -52,9 +41,7 @@ textAlign: 'center',
 width:'100%',
 };
 
-const ratingChanged = (newRating) => {
-  console.log(newRating)
-  }
+
 
 
 class TempDisplay  extends Component {
@@ -64,9 +51,7 @@ class TempDisplay  extends Component {
     starRating: 1
 
   };
- componentWillMount() {
-   this.setState({starRating:this.props.putOptions.length});
- }
+
 
   handleSlider = (event, value) => {
     this.setState({sliderChange: value});
@@ -83,7 +68,7 @@ class TempDisplay  extends Component {
    var thanks=[];
    var options=[];
    var selOpt=[];
-   let starValue=this.props.putOptions.length;
+
 
      components.push(<h3 style={{marginTop:'10%',marginBottom:'10%',color:'#818181'}}>[Question comes here]</h3>);
 
@@ -204,10 +189,7 @@ class TempDisplay  extends Component {
        components.push( <div style={{display:'inline-block',marginLeft:'2%',marginTop:'1%',height:'50%'}}>
                 {this.props.putOptions.length}
 
-                      <Rate
-                        count={5}
-                        defaultValue={0}
-                      />
+
                     </div> );
 
    }
