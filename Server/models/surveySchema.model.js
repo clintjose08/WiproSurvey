@@ -3,7 +3,7 @@ const Schema = mongoose.Schema;
 
 const questSchema=new Schema({
   questionno:{type:Number},
-  question:{type:String},
+  questionQ:{type:String},
   options:{type:Array}
 },{
   _id: false,

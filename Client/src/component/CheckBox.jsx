@@ -21,7 +21,7 @@ class CheckBox extends Component {
  constructor() {
    	super();
    this.state = {
-     quest:" ",
+     quest:' ',
      optionArr: [' '],
 		 value: 1
    }
@@ -62,7 +62,7 @@ changeOptions=(index,value)=>
 questionChange(e)
 {
   this.setState({
-    quest:e.target.vlaue
+    quest:e.target.value
   })
   this.props.question(e.target.value);
 }
@@ -70,7 +70,8 @@ updateDb(){
   var questionScreen={
     questions:[
       {
-        question: this.state.quest,
+        questionno:1,
+        questionQ:this.state.quest,
         options:this.state.optionArr
       }
     ]
