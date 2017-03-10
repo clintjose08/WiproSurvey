@@ -193,7 +193,7 @@ constructor(props) {
 											<RaisedButton label="Cancel" labelStyle={{fontWeight:'bold'}} />
 											</Link>
 										 <Link to="Home/AddQuestion" activeClassName="active">
-											<RaisedButton label="Submit" backgroundColor='#1C6D03 ' onClick={this.updateDb.bind(this)}labelStyle={{color:'#FFFFFF ',fontWeight:'bold'}} />
+											<RaisedButton label="Submit" backgroundColor='#1C6D03 ' onClick={this.updateDb.bind(this)} labelStyle={{color:'#FFFFFF ',fontWeight:'bold'}} />
 										 </Link>
 									</CardActions>
         					</Card>
