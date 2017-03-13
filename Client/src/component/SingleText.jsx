@@ -10,6 +10,7 @@ import RaisedButton from 'material-ui/RaisedButton';
 import Subheader from 'material-ui/Subheader';
 import Divider from 'material-ui/Divider';
 import SelectType from './SelectType';
+import request from 'superagent';
 
 
 const cardheadstyle={
@@ -31,7 +32,8 @@ class SingleText extends Component{
 constructor(props) {
  super(props);
  this.state = {
-     value: 5,
+   quest:' ',
+     value: 1,
      question:""
  };
 }
@@ -41,11 +43,29 @@ componentWillMount(){
   }
 
 handleQuestion(e) {
-    
+    this.setState({
+    quest:e.target.value
+  })
     this.props.getQuestion(e.target.value);
     console.log("Sucess");  
   }
-
+updateDb(){
+  var shortQuestionScreen={
+    questions:[
+      {
+        questionno:1,
+        questionQ:this.state.quest,
+      }
+    ]
+  }
+  request.post('http://localhost:9080/api/createSurvey')
+          .set('Content-Type', 'application/json')
+          .send(shortQuestionScreen)
+           .end((err,res)=>
+           {
+             console.log("posted");
+            })
+}
    render(){
        return(
     <Paper style={{height:'100%'}} >
@@ -79,7 +99,7 @@ handleQuestion(e) {
         <RaisedButton label="Cancel" labelStyle={{fontWeight:'bold'}} />
         </Link>
        <Link to="Home/AddQuestion" activeClassName="active">
-        <RaisedButton label="Submit" backgroundColor='#1C6D03 ' labelStyle={{color:'#FFFFFF ',fontWeight:'bold'}} />
+        <RaisedButton label="Submit" backgroundColor='#1C6D03 ' onClick={this.updateDb.bind(this)} labelStyle={{color:'#FFFFFF ',fontWeight:'bold'}} />
        </Link>
       </CardActions>
 
