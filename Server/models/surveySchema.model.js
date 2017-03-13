@@ -3,8 +3,12 @@ const Schema = mongoose.Schema;
 
 const questSchema=new Schema({
   questionno:{type:Number},
+  questionType:{type:String},
   questionQ:{type:String},
-  options:{type:Array}
+  options:{type:Array},
+  maxValue:{type:Number},
+  minValue:{type:Number},
+  scale:{type:Number}
 },{
   _id: false,
   toObject: { virtuals: true },
