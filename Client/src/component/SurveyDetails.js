@@ -22,13 +22,16 @@ const buttonStye={
 }
 
 class SurveyDetails extends Component{
-  constructor() {
-    	super();
+  constructor(props) {
+    	super(props);
     this.state = {
       name:''
     }
   }
   createDb(){
+     localStorage.setItem("sName", this.state.name);
+    console.log("name set Sucess", this.state.name);
+    console.log(localStorage.getItem('sName'));
     var nameData={
       surveyname:this.state.name
     }
@@ -54,9 +57,6 @@ class SurveyDetails extends Component{
           <TextField
             hintText="Name of the survey"
             onChange={this.nameChange.bind(this)}
-          /><br />
-          <TextField
-            hintText="Description about the survey" multiLine={true} rows={2}
           /><br />
 
           <Link to="Home/AddQuestion" activeClassName="active">

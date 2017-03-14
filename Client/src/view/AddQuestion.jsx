@@ -2,8 +2,11 @@ import React, { Component } from 'react';
 import Dragabble from '../component/Dragabble';
 import Dropabble from '../component/Dropabble';
 import { Grid,Row,Col } from 'react-flexbox-grid';
+  
 class AddQuestion  extends Component {
+
   render() {
+    console.log("local :",localStorage.getItem('sName'));
     return(
       <div>
         <Grid>
