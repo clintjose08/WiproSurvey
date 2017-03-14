@@ -60,9 +60,10 @@ handleScale(e) {
   }
   updateDb(){
     var questionScreen={
+      sName:localStorage.getItem('sName'),
+      type:'slider',
       questions:[
         {
-          questionno:1,
           questionType:"Slider",
           questionQ:this.state.quest,
           maxValue:this.state.maximum,
@@ -70,7 +71,7 @@ handleScale(e) {
         }
       ]
     }
-    request.post('http://localhost:9080/api/createSurvey')
+    request.post('http://localhost:9080/api/updateSurvey')
             .set('Content-Type', 'application/json')
             .send(questionScreen)
              .end((err,res)=>

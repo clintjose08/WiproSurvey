@@ -39,6 +39,19 @@ width:'100%',
 
 
 class Dropabble  extends Component {
+ 
+  componentWillMount() {
+    var sName=localStorage.getItem('sName');
+      request
+      .get('http://localhost:9080/api/getSurvey/'+sName)
+      .then((res) => {
+       this.setState({
+          repositories: res.body,
+        });
+      console.log("next");
+      });
+    }
+
   saveData(e){
     var data={	"surveyname":"{type:String}",
     "description":"{type:String}",
@@ -73,6 +86,8 @@ class Dropabble  extends Component {
              {
                console.log("posted");
               })
+
+  
   }
  render() {
    return(

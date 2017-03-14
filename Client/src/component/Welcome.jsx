@@ -62,7 +62,8 @@ constructor(props) {
   };
 	updateDb(e){
 		var welcomeScreen={
-			"type":'welcome1',
+			"sName":localStorage.getItem('sName'),
+			"type":'welcome',
 			"welcomeMsg":this.state.welcomeMsg,
 			"description":this.state.discript
 		}

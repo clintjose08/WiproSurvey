@@ -42,6 +42,7 @@ class SurveyDetails extends Component{
              {
                console.log("posted");
               })
+
   }
   nameChange(e)
   {
