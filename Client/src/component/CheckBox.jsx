@@ -71,6 +71,7 @@ updateDb(){
     questions:[
       {
         questionno:1,
+        questionType:'Checkbox',
         questionQ:this.state.quest,
         options:this.state.optionArr
       }

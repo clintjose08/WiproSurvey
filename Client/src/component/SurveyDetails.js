@@ -4,7 +4,7 @@ import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'mat
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import {IndexLink, Link} from 'react-router';
-
+import request from 'superagent';
 const style = {
   textAlign: 'center',
   display: 'inline-block',
@@ -22,6 +22,30 @@ const buttonStye={
 }
 
 class SurveyDetails extends Component{
+  constructor() {
+    	super();
+    this.state = {
+      name:''
+    }
+  }
+  createDb(){
+    var nameData={
+      surveyname:this.state.name
+    }
+    request.post('http://localhost:9080/api/createSurvey')
+            .set('Content-Type', 'application/json')
+            .send(nameData)
+             .end((err,res)=>
+             {
+               console.log("posted");
+              })
+  }
+  nameChange(e)
+  {
+    this.setState({
+      name:e.target.value
+    })
+  }
 	render(){
 		return(<div><Paper style={style}>
       <Card>
@@ -29,13 +53,14 @@ class SurveyDetails extends Component{
         <CardText>
           <TextField
             hintText="Name of the survey"
+            onChange={this.nameChange.bind(this)}
           /><br />
           <TextField
             hintText="Description about the survey" multiLine={true} rows={2}
           /><br />
 
           <Link to="Home/AddQuestion" activeClassName="active">
-            <RaisedButton label="Submit" backgroundColor="#004D40" labelColor='white'/>
+            <RaisedButton label="Submit" onClick={this.createDb.bind(this)} backgroundColor="#004D40" labelColor='white'/>
           </Link>
           <Link to="Home/CreateSurvey" activeClassName="active">
             <RaisedButton label="Cancel" style={buttonStye}/>

@@ -62,10 +62,11 @@ constructor(props) {
   };
 	updateDb(e){
 		var welcomeScreen={
+			"type":'welcome1',
 			"welcomeMsg":this.state.welcomeMsg,
 			"description":this.state.discript
 		}
-		request.post('http://localhost:9080/api/createSurvey')
+		request.post('http://localhost:9080/api/updateSurvey')
 						.set('Content-Type', 'application/json')
 						.send(welcomeScreen)
 						 .end((err,res)=>
