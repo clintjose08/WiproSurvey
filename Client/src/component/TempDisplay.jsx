@@ -5,18 +5,13 @@ import TextField from 'material-ui/TextField';
 import FlatButton from 'material-ui/FlatButton';
 import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
 import Checkbox from 'material-ui/Checkbox';
-
-
-import StarRating from 'star-rating-react';
-
+import IconButton from 'material-ui/IconButton';
 import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
 import {RadioButton, RadioButtonGroup} from 'material-ui/RadioButton';
 import Slider from 'material-ui/Slider';
-
-import Star from 'material-ui/svg-icons/toggle/star';
-import StarBorder from 'material-ui/svg-icons/toggle/star-border'
 import { Grid,Row,Col } from 'react-flexbox-grid';
+import StarRating from 'star-rating-react';
 
 const welcomeStyle={
 background:'#2F3A30',
@@ -45,7 +40,6 @@ textAlign: 'center',
 width:'100%',
 };
 
-
 class TempDisplay  extends Component {
 
 constructor(){
@@ -54,13 +48,12 @@ constructor(){
     checked:'',
     showYes:false,
     sliderChange: 0,
-    starRating: 0
-  }
+    starRating: 1
+  };
 }
 handleOptionChangeYes (e) {
   this.setState({showYes:e.target.value})
 }
-
 
 handleSlider = (event, value) => {
   this.setState({sliderChange: value});
@@ -70,6 +63,7 @@ valueChanged = (event) =>  {
   this.setState({starRating:event});
   console.log(event)
 }
+
  render() {
    var dispQuest =[];
    var yesComments=[];
@@ -188,7 +182,6 @@ valueChanged = (event) =>  {
    }
 
 
-
    else if(this.props.putQuestion&&this.props.putType==="Checkbox"){
        components.pop();
        components.push(<div>
@@ -198,10 +191,10 @@ valueChanged = (event) =>  {
      components.push(<div>
        <Checkbox label={option}  iconStyle={{marginLeft:'35%'}} labelStyle={{marginRight:'50%',color:'#000000',marginLeft:'2%'}}/>
        </div>);
+
      })
 
    }
-
    else if(this.props.putQuestion && this.props.putType=="Textbox"){
        components.pop();
        components.push(<div>
@@ -214,6 +207,25 @@ valueChanged = (event) =>  {
     </div>);
 
    }
+   else if(this.props.putQuestion &&this.props.putType==="StarRatings")
+
+  {
+
+      components.pop();
+      components.push(<div>
+     <h3 style={{marginTop:0,marginLeft:'2%',marginBottom:0,color:'#000000 ',textAlign:'left'}}>{this.props.putQuestion}</h3>
+     </div>);
+      components.push( <div style={{display:'inline-block',marginLeft:'2%',marginTop:'1%',height:'50%'}}>
+
+      
+                  <StarRating
+                   size={this.props.putOptions.length}
+                   value={this.state.starRating}
+                   onChange={this.valueChanged.bind(this)}
+                   />
+                   </div> );
+
+  }
    else if (this.props.putQuestion && this.props.putType==="Dropdown") {
 
        components.pop();
@@ -261,31 +273,12 @@ valueChanged = (event) =>  {
         labelStyle={{fontWeight:'bold'}}
       />
       </RadioButtonGroup>
-</div>);
-   }
-
-
-   else if(this.props.putQuestion &&this.props.putType==="StarRatings")
-
-   {
-
-       components.pop();
-       components.push(<div>
-      <h3 style={{marginTop:0,marginLeft:'2%',marginBottom:0,color:'#000000',textAlign:'left'}}>{this.props.putQuestion}</h3>
-      </div>);
-
-
-       components.push( <div style={{display:'inline-block',marginLeft:'2%',marginTop:'1%',height:'50%'}}>
-                {this.props.putOptions.length}
-
-                   <StarRating
-                    size={this.props.putOptions.length}
-                    value={this.state.starRating}
-                    onChange={this.valueChanged.bind(this)}
-                    />
-                    </div> );
+    </div>);
 
    }
+
+
+
 
   else if (this.props.putQuestion && this.props.putType=="MultiChoice") {
 
@@ -359,13 +352,26 @@ valueChanged = (event) =>  {
 
     />
 
-
       </RadioButtonGroup>
       <div style={{textAlign:'left',marginTop:'2%'}}>{dispQuest}</div>
 
 
 
     </div>);
+   }
+   else if (this.props.putType=="MultiChoice") {
+     this.props.putOptions.map((option)=>{
+       selOpt.push(<RadioButton
+       value={option}
+       label={option}
+       style={{width:'auto', marginRight:'20'}}
+       labelStyle={ {marginLeft:'0'}}
+     />);
+   });
+   components.push(<div><RadioButtonGroup name="MultiChoice" style={{ display: 'flex', textAlign:'left'}}>
+    {selOpt}
+    </RadioButtonGroup>
+  </div>);
    }
 
    return(

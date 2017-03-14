@@ -43,6 +43,19 @@ componentWillMount(){
   }
 
 handleQuestion(e) {
+
+  this.setState({
+    question:e.target.value
+  })
+
+
+
+    this.props.getQuestion(e.target.value);
+  }
+
+validateSubmit(e)
+{
+
     this.setState({
     quest:e.target.value
   })
@@ -67,24 +80,23 @@ updateDb(){
            {
              console.log("posted");
             })
+
 }
    render(){
        return(
+         <form onSubmit={this.validateSubmit.bind(this)}>
     <Paper style={{height:'100%'}} >
     <Card style={{background:'#E5E4E2 ',height:'100%'}}>
       <CardHeader title="Comments" style={cardheadstyle} titleStyle={cardTitleStyle}/>
-
       <CardText style={{marginTop:0}}>
       <div>
       <Subheader style={{fontSize:'125%',color:'#1C6D03 '}}> Question Type </Subheader>
       <SelectType/>
         </div>
-
       </CardText>
       <Divider style={{background:'#000000 '}}/>
         <CardActions style={{marginTop:'0px',marginLeft:'1%'}}>
          <Subheader style={{fontSize:'125%',color:'#1C6D03 ',marginTop:'3%'}}>Question</Subheader>
-          <form >
         <TextField
           hintText="Enter your Question here."
           hintStyle={{fontWeight:'bold'}}
@@ -92,8 +104,10 @@ updateDb(){
           fullWidth={true}
           onChange={this.handleQuestion.bind(this)}
 
+          required
+
         />
-        </form>
+
        </CardActions>
        <Divider style={{background:'#000000 '}}/>
       <CardActions style={{marginTop:'0px',marginLeft:'1%'}}>
@@ -105,8 +119,10 @@ updateDb(){
        </Link>
       </CardActions>
 
+  
     </Card>
     </Paper>
+    </form>
        );
    }
 }

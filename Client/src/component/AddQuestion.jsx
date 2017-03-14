@@ -12,7 +12,7 @@ textAlign:'center',
 marginTop:0,
 marginLeft:0,
 marginRight:0,
-height:"20%"
+height:'20%'
 }
 
 const questionStyle={
@@ -32,7 +32,7 @@ marginTop:'1%',
 marginBottom:0,
 marginLeft:0,
 marginRight:0,
-height:"40%"
+height:'40%'
 
 }
 

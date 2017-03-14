@@ -37,14 +37,8 @@ class Dropdown extends Component {
  }
  questionChange(e)
  {
-   var arr=this.state.optionArr;
-   var disable;
-   if(e.target.length>=5)
-   disable=false;
-
    this.setState({
      quest:e.target.value,
-     disabled:disable
    })
    this.props.question(e.target.value);
  }
@@ -151,7 +145,7 @@ var dropdownScreen={
   	             <RaisedButton label="Cancel" labelStyle={{fontWeight:'bold'}} />
   	           </Link>
                <Link to="Home/AddQuestion" activeClassName="active">
-                 <RaisedButton label="Submit" backgroundColor='#1C6D03' onClick={this.onSubmit.bind(this)} labelStyle={{color:'#FFFFFF ',fontWeight:'bold'}} disabled={this.state.disabled}/>
+                 <RaisedButton label="Submit" backgroundColor='#1C6D03' onClick={this.onSubmit.bind(this)} labelStyle={{color:'#FFFFFF ',fontWeight:'bold'}}/>
                  </Link>
               </CardActions>
                </Card>

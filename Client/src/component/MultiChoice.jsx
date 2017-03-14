@@ -42,6 +42,7 @@ class MultiChoice extends Component {
   this.setState({
     optionArr:arr
   })
+
  }
  removeOptions=(index)=>
  {

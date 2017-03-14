@@ -27,8 +27,8 @@ marginTop:30
 class StarRatings extends Component
 {
   state = {
-    quest:" ",
-    value: " ",
+    quest:"",
+    value: null,
     listOptions:[],
     addValue: false,
     starValues:[],
@@ -37,12 +37,27 @@ class StarRatings extends Component
     this.props.type("StarRatings");
   }
   handleChange = (event, index, value) => {
-    this.setState({value:value,
-    addValue:false,
-    listOptions:[],
-    starValues:[]});
+    var list=[];
+    var text=[];
     var starValue= Array(value).fill(" ");
+    this.setState({value:value,
+
+    starValues:starValue});
     this.props.options(starValue);
+    if(this.state.addValue)
+    {
+      for (let i = 1; i <=value; i++ )
+      {
+        text=[];
+        var star=i+" Star";
+        text.push(<TextField hintText={star} underlineStyle={{borderColor:blueGrey500}} id={i} onChange={this.changeStarValue.bind(this)}/>);
+        list.push(<ListItem primaryText={text}/>);
+        this.props.options(starValue);
+      }
+      this.setState({
+        listOptions:list
+      })
+    }
   }
   onChangeCheck=(e)=>
   {
@@ -51,9 +66,8 @@ class StarRatings extends Component
       this.setState({
         listOptions:[],
         addValue:false,
-        starValues:[]
       });
-        this.props.options([]);
+        this.props.options(this.state.starValues);
     }
     else
     {
@@ -65,7 +79,7 @@ class StarRatings extends Component
       for (let i = 1; i <=value; i++ )
       {
         text=[];
-        var star=i+1+" Star";
+        var star=i+" Star";
         text.push(<TextField hintText={star} underlineStyle={{borderColor:blueGrey500}} id={i} onChange={this.changeStarValue.bind(this)}/>);
         list.push(<ListItem primaryText={text}/>);
         this.props.options(starValue);
@@ -93,6 +107,7 @@ class StarRatings extends Component
     })
     this.props.getQuestion(e.target.value);
   }
+
   updateDb(){
     if(this.state.addValue){
   var questionScreen={
@@ -128,6 +143,7 @@ class StarRatings extends Component
              console.log("posted");
             })
 }
+
   render()
   {
     const items = [];
@@ -136,6 +152,7 @@ class StarRatings extends Component
     }
 
     return(<div>
+        <form >
             <Paper>
         <Card style={{background:' #E5E4E2 '}}>
           <CardHeader title="Create Star Rate Questions"  style={cardheadstyle} titleColor='white' titleStyle={{fontWeight:'bold'}}/>
@@ -148,7 +165,9 @@ class StarRatings extends Component
                 value={this.state.quest}
                 underlineStyle={{borderColor:blueGrey500}}
                 onChange={this.questionChange.bind(this)}
-              /><br />
+                multiLine={true}
+                required
+                /><br />
               <Divider style={{background:blueGrey500}}/>
               <Subheader style={{color:'#1C6D03 '}}>Select Scale</Subheader>
             <SelectField
@@ -156,8 +175,7 @@ class StarRatings extends Component
               value={this.state.value}
               onChange={this.handleChange.bind(this)}
               maxHeight={200}
-              underlineStyle={{borderColor:blueGrey500}}
-            >
+              underlineStyle={{borderColor:blueGrey500}} required>
               {items}
             </SelectField>
             <Checkbox label="Add Rating Value" iconStyle={{borderColor:blueGrey500}} labelStyle={{marginRight:1000,color:blueGrey500}} checked={this.state.addValue} onCheck={this.onChangeCheck.bind(this)}/>
@@ -172,12 +190,15 @@ class StarRatings extends Component
             <Link to="Home/AddQuestion" activeClassName="active">
           <RaisedButton label="Cancel" labelStyle={{fontWeight:'bold'}} />
           </Link>
+
             <Link to="Home/AddQuestion" activeClassName="active">
           <RaisedButton label="Submit" backgroundColor='#1C6D03 ' onClick={this.updateDb.bind(this)} labelStyle={{color:'#FFFFFF ',fontWeight:'bold'}} />
             </Link>
+
           </CardActions>
         </Card>
         </Paper>
+        </form>
         </div>
       );
   }

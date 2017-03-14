@@ -9,7 +9,7 @@ import request from 'superagent';
 const welcomeStyle={
 background:'#2F3A30',
 textAlign:'center',
-height:"20%"
+height:'20%'
 }
 
 const questionStyle={
@@ -26,7 +26,7 @@ const thanksStyle={
 background:'#2F3A30',
 textAlign:'center',
 marginTop:'1%',
-height:"35%"
+height:'35%'
 
 }
 
