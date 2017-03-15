@@ -62,7 +62,7 @@ constructor(props) {
   };
 	updateDb(e){
 		var welcomeScreen={
-			"type":'welcome1',
+			"type":'welcome',
 			"welcomeMsg":this.state.welcomeMsg,
 			"description":this.state.discript
 		}

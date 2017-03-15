@@ -94,16 +94,32 @@ class StarRatings extends Component
     this.props.getQuestion(e.target.value);
   }
   updateDb(){
+    if(this.state.addValue){
   var questionScreen={
+    type:'starrate',
     questions:[
       {
-        questionno:1,
+        questionType:'StarRatings',
         questionQ:this.state.quest,
-        options:this.state.optionArr
+        scale:this.state.value,
+        options:this.state.listOptions
       }
     ]
+  }}else {
+    var questionScreen={
+      type:'starrate',
+      questions:[
+        {
+          questionType:'StarRatings',
+          questionQ:this.state.quest,
+          scale:this.state.value,
+          options:this.state.listOptions
+        }
+      ]
+
   }
-  request.post('http://localhost:9080/api/createSurvey')
+}
+  request.post('http://localhost:9080/api/updateSurvey')
           .set('Content-Type', 'application/json')
           .send(questionScreen)
            .end((err,res)=>

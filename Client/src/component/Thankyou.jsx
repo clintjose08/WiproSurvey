@@ -92,12 +92,13 @@ constructor(props) {
   }
 	updateDb(){
 		var thankyouScreen={
+			"type":'thanksMessage',
 			"creterEmail":this.state.email,
 			"createrName":this.state.name,
 			"thanksMessage":this.state.thankyouMsg,
 			"createrContact":this.state.contact
 		}
-		request.post('http://localhost:9080/api/createSurvey')
+		request.post('http://localhost:9080/api/updateSurvey')
 						.set('Content-Type', 'application/json')
 						.send(thankyouScreen)
 						 .end((err,res)=>

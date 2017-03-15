@@ -47,18 +47,19 @@ handleQuestion(e) {
     quest:e.target.value
   })
     this.props.getQuestion(e.target.value);
-    console.log("Sucess");  
+    console.log("Sucess");
   }
 updateDb(){
   var shortQuestionScreen={
+    type:'singletext',
     questions:[
       {
-        questionno:1,
+        questionType:'SingleText',
         questionQ:this.state.quest,
       }
     ]
   }
-  request.post('http://localhost:9080/api/createSurvey')
+  request.post('http://localhost:9080/api/updateSurvey')
           .set('Content-Type', 'application/json')
           .send(shortQuestionScreen)
            .end((err,res)=>
@@ -89,7 +90,7 @@ updateDb(){
           underlineStyle={{borderColor:'#37861E '}}
           fullWidth={true}
           onChange={this.handleQuestion.bind(this)}
-         
+
         />
         </form>
        </CardActions>

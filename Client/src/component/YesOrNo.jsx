@@ -46,16 +46,16 @@ handleQuestion(e) {
 
   updateDb(){
     var questionScreen={
+      type:'yesorno',
       questions:[
         {
-          questionno:1,
           questionType:"YesOrNo",
           questionQ:this.state.quest,
           options:["Yes","No"]
         }
       ]
     }
-    request.post('http://localhost:9080/api/createSurvey')
+    request.post('http://localhost:9080/api/updateSurvey')
             .set('Content-Type', 'application/json')
             .send(questionScreen)
              .end((err,res)=>

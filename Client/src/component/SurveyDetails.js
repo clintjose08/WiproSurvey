@@ -29,6 +29,9 @@ class SurveyDetails extends Component{
     }
   }
   createDb(){
+    var questStore=[];
+    questStore.push({'new':"jsdkjsk"});
+    localStorage.setItem('questStore',questStore);
     var nameData={
       surveyname:this.state.name
     }
@@ -39,6 +42,7 @@ class SurveyDetails extends Component{
              {
                console.log("posted");
               })
+
   }
   nameChange(e)
   {

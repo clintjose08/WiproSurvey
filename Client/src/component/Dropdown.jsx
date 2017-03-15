@@ -98,15 +98,16 @@ onSubmit=()=>
     alert("Question needs at least two options... Please add more options");
   }
 var dropdownScreen={
+    type:'dropdown',
     questions:[
       {
-        questionno:1,
+        questionType:'Dropdown',
         questionQ:this.state.quest,
         options:this.state.optionArr
       }
     ]
   }
-  request.post('http://localhost:9080/api/createSurvey')
+  request.post('http://localhost:9080/api/updateSurvey')
           .set('Content-Type', 'application/json')
           .send(dropdownScreen)
            .end((err,res)=>
