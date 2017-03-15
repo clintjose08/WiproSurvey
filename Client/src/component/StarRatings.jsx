@@ -23,7 +23,6 @@ const style = {
 marginTop:30
 };
 
-
 class StarRatings extends Component
 {
   state = {
@@ -75,10 +74,11 @@ class StarRatings extends Component
       var text=[];
       var value=this.state.value;
       var starValue= Array(value).fill(" ");
+
       for (let i = 1; i <=value; i++ )
       {
         text=[];
-        var star=i+" Star";
+        var star=i+1+" Star";
         text.push(<TextField hintText={star} underlineStyle={{borderColor:blueGrey500}} id={i} onChange={this.changeStarValue.bind(this)}/>);
         list.push(<ListItem primaryText={text}/>);
         this.props.options(starValue);
@@ -102,7 +102,7 @@ class StarRatings extends Component
   questionChange(e)
   {
     this.setState({
-      quest:e.target.vlaue
+      quest:e.target.value
     })
     this.props.getQuestion(e.target.value);
   }
@@ -127,7 +127,7 @@ class StarRatings extends Component
             <SelectType/>
               <br /><br />
               <Subheader style={{fontSize:'125%',color:'#1C6D03 '}}>Enter the question</Subheader>
-              <TextField
+               <TextField
                 value={this.state.quest}
                 underlineStyle={{borderColor:blueGrey500}}
                 onChange={this.questionChange.bind(this)}
@@ -135,7 +135,7 @@ class StarRatings extends Component
                 required
                 /><br />
               <Divider style={{background:blueGrey500}}/>
-              <Subheader style={{fontSize:'125%',color:'#1C6D03 '}}>Select Scale</Subheader>
+              <Subheader style={{color:'#1C6D03 '}}>Select Scale</Subheader>
             <SelectField
               floatingLabelText="Select Scale"
               value={this.state.value}

@@ -8,10 +8,10 @@ class AddQuestion  extends Component {
       <div>
         <Grid>
           <Row>
-            <Col xs={4} style={{paddingTop:'6%'}}>
+            <Col xs={12} style={{paddingTop:'5.5%'}} sm={4}>
               <Dragabble />
             </Col>
-            <Col xs={8}>
+            <Col xs={12} sm={8}>
               <Dropabble />
             </Col>
           </Row>

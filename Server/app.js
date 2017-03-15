@@ -1,10 +1,16 @@
+
 const express = require('express');
 const app = express();
-const mongoose = require('mongoose');
-const connection=mongoose.connect('mongodb://localhost/Database_CI');
-const http = require('http');
 const port = process.env.PORT || 9080;
+const createSurveyConfigRoute=require('./route/createSurvey.route');
+const getResultConfigRoute=require('./route/getResult.route');
+const addResult=require('./route/addResult.route');
+const http = require('http');
+const mongoose = require('mongoose');
+const connection=mongoose.connect('mongodb://localhost/Survey_Details');
 
+var BodyParser = require('body-parser');
+app.use(BodyParser());
 app.use(function(req, res, next) {
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT ,DELETE');
@@ -12,10 +18,9 @@ app.use(function(req, res, next) {
     next();
 });
 
-function createApp() {
-  const app = express();
-  return app;
-}
+app.use('/',createSurveyConfigRoute);
+app.use('/',getResultConfigRoute);
+app.use('/',addResult);
 
 const server = http.createServer(app);
 server.listen(port, () => {

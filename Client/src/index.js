@@ -10,10 +10,9 @@ import CreateSurvey from './component/CreateSurvey';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import {Router, Route, IndexRoute, hashHistory} from 'react-router';
 import injectTapEventPlugin from 'react-tap-event-plugin';
-
 import AddQuestion from './view/AddQuestion';
 import DropdownEdit from './view/Dropdown';
-import StarRatingsEdit from './view/StarRatings';
+import MCQGraph from './view/MCQGraph';
 import SliderEdit from './view/Slider';
 import SingleTextEdit from './view/SingleText';
 import MultiChoiceEdit from './view/MultiChoice';
@@ -34,7 +33,7 @@ ReactDOM.render(
        <Route path="Welcome" component={WelcomeEdit}/>
        <Route path="Comments" component={CommentsEdit}/>
        <Route path="Dropdown" component={DropdownEdit}/>
-       <Route path="StarRatings" component={StarRatingsEdit}/>
+       <Route path="Result" component={MCQGraph}/>
        <Route path="Slider" component={SliderEdit}/>
        <Route path="SingleText" component={SingleTextEdit}/>
        <Route path="MultiChoice" component={MultiChoiceEdit}/>

@@ -17,7 +17,7 @@ class StarRatingsEdit extends Component {
       quest:quest
     })
   }
-  
+
   getType(type)
   {
 
@@ -34,13 +34,13 @@ class StarRatingsEdit extends Component {
  render() {
 
    return (<div >
-            <Dialog autoScrollBodyContent={true} open={this.state.open} contentStyle={{height:'100%',width:'100%',maxHeight:'none',maxWidth: 'none'}}>
+            <Dialog  autoScrollBodyContent={true} open={this.state.open} contentStyle={{height:'100%',width:'100%',maxHeight:'none',maxWidth: 'none'}}>
             <Grid>
               <Row style={{height:'40%'}}>
-                <Col xs={4}>
+                <Col xs={12} sm={4}>
                   <StarRatings getQuestion={this.onChangeQuest.bind(this)} options={this.onChangeOptions.bind(this)} type={this.getType.bind(this)}/>
                 </Col>
-                <Col xs={8}>
+                <Col xs={12} sm={8}>
                   <TempDisplay putQuestion={this.state.quest} putOptions={this.state.options} putType={this.state.type}/>
                 </Col>
               </Row>
