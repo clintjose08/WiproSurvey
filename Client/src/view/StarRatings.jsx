@@ -34,9 +34,9 @@ class StarRatingsEdit extends Component {
  render() {
 
    return (<div >
-            <Dialog  autoScrollBodyContent={true} open={this.state.open} contentStyle={{height:'100%',width:'100%',maxHeight:'none',maxWidth: 'none'}}>
+            <Dialog  autoScrollBodyContent={true} open={this.state.open} modal={true} contentStyle={{width:'100%',maxWidth:'100%'}}>
             <Grid>
-              <Row style={{height:'40%'}}>
+              <Row>
                 <Col xs={12} sm={4}>
                   <StarRatings getQuestion={this.onChangeQuest.bind(this)} options={this.onChangeOptions.bind(this)} type={this.getType.bind(this)}/>
                 </Col>

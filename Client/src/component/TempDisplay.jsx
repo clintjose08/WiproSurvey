@@ -10,9 +10,8 @@ import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
 import {RadioButton, RadioButtonGroup} from 'material-ui/RadioButton';
 import Slider from 'material-ui/Slider';
-import Star from 'material-ui/svg-icons/toggle/star';
-import StarBorder from 'material-ui/svg-icons/toggle/star-border'
 import { Grid,Row,Col } from 'react-flexbox-grid';
+import StarRating from 'star-rating-react';
 
 const welcomeStyle={
 background:'#2F3A30',
@@ -208,6 +207,25 @@ valueChanged = (event) =>  {
     </div>);
 
    }
+   else if(this.props.putQuestion &&this.props.putType==="StarRatings")
+
+  {
+
+      components.pop();
+      components.push(<div>
+     <h3 style={{marginTop:0,marginLeft:'2%',marginBottom:0,color:'#000000 ',textAlign:'left'}}>{this.props.putQuestion}</h3>
+     </div>);
+      components.push( <div style={{display:'inline-block',marginLeft:'2%',marginTop:'1%',height:'50%'}}>
+
+      
+                  <StarRating
+                   size={this.props.putOptions.length}
+                   value={this.state.starRating}
+                   onChange={this.valueChanged.bind(this)}
+                   />
+                   </div> );
+
+  }
    else if (this.props.putQuestion && this.props.putType==="Dropdown") {
 
        components.pop();

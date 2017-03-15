@@ -13,6 +13,7 @@ import { Grid,Col,Row} from 'react-flexbox-grid';
 import {blueGrey500,white} from 'material-ui/styles/colors';
 import Subheader from 'material-ui/Subheader';
 import SelectType from './SelectType';
+import request from 'superagent';
 
 const cardheadstyle={
   background:"#242323",
@@ -78,7 +79,7 @@ class StarRatings extends Component
       for (let i = 1; i <=value; i++ )
       {
         text=[];
-        var star=i+1+" Star";
+        var star=i+" Star";
         text.push(<TextField hintText={star} underlineStyle={{borderColor:blueGrey500}} id={i} onChange={this.changeStarValue.bind(this)}/>);
         list.push(<ListItem primaryText={text}/>);
         this.props.options(starValue);
@@ -106,10 +107,42 @@ class StarRatings extends Component
     })
     this.props.getQuestion(e.target.value);
   }
-  validateSubmit()
-  {
+
+  updateDb(){
+    if(this.state.addValue){
+  var questionScreen={
+    type:'starrate',
+    questions:[
+      {
+        questionType:'StarRatings',
+        questionQ:this.state.quest,
+        scale:this.state.value,
+        options:this.state.listOptions
+      }
+    ]
+  }}else {
+    var questionScreen={
+      type:'starrate',
+      questions:[
+        {
+          questionType:'StarRatings',
+          questionQ:this.state.quest,
+          scale:this.state.value,
+          options:this.state.listOptions
+        }
+      ]
 
   }
+}
+  request.post('http://localhost:9080/api/updateSurvey')
+          .set('Content-Type', 'application/json')
+          .send(questionScreen)
+           .end((err,res)=>
+           {
+             console.log("posted");
+            })
+}
+
   render()
   {
     const items = [];
@@ -118,7 +151,7 @@ class StarRatings extends Component
     }
 
     return(<div>
-        <form onSubmit={this.validateSubmit.bind(this)}>
+        <form >
             <Paper>
         <Card style={{background:' #E5E4E2 '}}>
           <CardHeader title="Create Star Rate Questions"  style={cardheadstyle} titleColor='white' titleStyle={{fontWeight:'bold'}}/>
@@ -157,7 +190,9 @@ class StarRatings extends Component
           <RaisedButton label="Cancel" labelStyle={{fontWeight:'bold'}} />
           </Link>
 
-          <RaisedButton label="Submit" type="submit" backgroundColor='#1C6D03 ' labelStyle={{color:'#FFFFFF ',fontWeight:'bold'}} />
+            <Link to="Home/AddQuestion" activeClassName="active">
+          <RaisedButton label="Submit" backgroundColor='#1C6D03 ' onClick={this.updateDb.bind(this)} labelStyle={{color:'#FFFFFF ',fontWeight:'bold'}} />
+            </Link>
 
           </CardActions>
         </Card>

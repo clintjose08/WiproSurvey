@@ -11,13 +11,13 @@ const connection=mongoose.connect('mongodb://localhost/Survey_Details');
 
 var BodyParser = require('body-parser');
 app.use(BodyParser());
+
 app.use(function(req, res, next) {
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT ,DELETE');
     res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type, Authorization');
     next();
 });
-
 app.use('/',createSurveyConfigRoute);
 app.use('/',getResultConfigRoute);
 app.use('/',addResult);

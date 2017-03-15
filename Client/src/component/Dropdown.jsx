@@ -12,6 +12,7 @@ import { Grid,Col,Row} from 'react-flexbox-grid';
 import {blueGrey500,white} from 'material-ui/styles/colors';
 import Subheader from 'material-ui/Subheader';
 import SelectType from './SelectType';
+import request from 'superagent';
 
 const compStyle={
 marginTop:40,
@@ -90,6 +91,23 @@ onSubmit=()=>
   {
     alert("Question needs at least two options... Please add more options");
   }
+var dropdownScreen={
+    type:'dropdown',
+    questions:[
+      {
+        questionType:'Dropdown',
+        questionQ:this.state.quest,
+        options:this.state.optionArr
+      }
+    ]
+  }
+  request.post('http://localhost:9080/api/updateSurvey')
+          .set('Content-Type', 'application/json')
+          .send(dropdownScreen)
+           .end((err,res)=>
+           {
+             console.log("posted");
+            })
 }
  render() {
    const options=this.state.optionArr.map((value,index) => {

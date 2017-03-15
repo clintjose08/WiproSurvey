@@ -10,7 +10,7 @@ import Divider from 'material-ui/Divider';
 import RaisedButton from 'material-ui/RaisedButton';
 import Subheader from 'material-ui/Subheader';
 import SelectType from './SelectType';
-
+import request from 'superagent';
 const cardheadstyle={
  background:'#242323',
  textAlign:'center'
@@ -26,7 +26,10 @@ const buttonStye={
 class Slider extends Component{
   constructor(props) {
    super(props);
-   this.state = {value: 4};
+   this.state = {value: 4,
+   maximum:0,
+    scale:0,
+  quest:' '};
  }
 
 componentWillMount(){
@@ -34,21 +37,47 @@ componentWillMount(){
   }
 
 handleQuestion(e) {
-    
+    this.setState({
+      quest:e.target.value
+    })
     this.props.getQuestion(e.target.value);
-    console.log("Sucess");  
+    console.log("Sucess");
   }
 
 handleMaxValue(e) {
-    
+  this.setState({
+    maximum:e.target.value
+  })
     this.props.getMaxValue(e.target.value);
-    console.log("Sucess");  
+    console.log("Sucess");
   }
 handleScale(e) {
-    
+  this.setState({
+    scale:e.target.value
+  })
     this.props.getScale(e.target.value);
-    console.log("Sucess");  
-  }  
+    console.log("Sucess");
+  }
+  updateDb(){
+    var questionScreen={
+      type:'slider',
+      questions:[
+        {
+          questionType:"Slider",
+          questionQ:this.state.quest,
+          maxValue:this.state.maximum,
+          scale:this.state.scale
+        }
+      ]
+    }
+    request.post('http://localhost:9080/api/updateSurvey')
+            .set('Content-Type', 'application/json')
+            .send(questionScreen)
+             .end((err,res)=>
+             {
+               console.log("posted");
+              })
+  }
 	render(){
 		return(<div><Paper >
       <Card style={{background:'#E5E4E2'}}>
@@ -72,7 +101,7 @@ handleScale(e) {
 					<Divider style={{background:'#000000'}}/>
 					<CardActions>
 					<Subheader style={{fontSize:'125%',color:'#1C6D03',marginTop:'3%'}}>Scale Range</Subheader><br />
-					
+
           <TextField
             floatingLabelText="MaxValue"
             hintText="Max Side Value"
@@ -97,7 +126,7 @@ handleScale(e) {
               <RaisedButton label="Cancel" labelStyle={{fontWeight:'bold'}} />
               </Link>
              <Link to="Home/AddQuestion" activeClassName="active">
-              <RaisedButton label="Submit" backgroundColor='#1C6D03 ' labelStyle={{color:'#FFFFFF ',fontWeight:'bold'}} />
+              <RaisedButton label="Submit" backgroundColor='#1C6D03' onClick={this.updateDb.bind(this)} labelStyle={{color:'#FFFFFF ',fontWeight:'bold'}} />
              </Link>
           </CardActions>
 

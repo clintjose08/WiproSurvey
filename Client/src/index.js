@@ -19,7 +19,7 @@ import MultiChoiceEdit from './view/MultiChoice';
 import QgroupEdit from './view/Qgroup';
 import CheckBoxEdit from './view/CheckBox';
 import YesOrNoEdit from './view/YesOrNo';
-
+import StarRatings from './view/StarRatings';
 injectTapEventPlugin();
 
 ReactDOM.render(
@@ -37,6 +37,7 @@ ReactDOM.render(
        <Route path="Slider" component={SliderEdit}/>
        <Route path="SingleText" component={SingleTextEdit}/>
        <Route path="MultiChoice" component={MultiChoiceEdit}/>
+       <Route path="StarRatings" component={StarRatings}/>
        <Route path="Qgroup" component={QgroupEdit}/>
        <Route path="YesOrNo" component={YesOrNoEdit}/>
        <Route path="CheckBox" component={CheckBoxEdit}/>

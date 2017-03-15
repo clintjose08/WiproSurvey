@@ -12,7 +12,7 @@ import { Grid,Col,Row} from 'react-flexbox-grid';
 import {blueGrey500,white} from 'material-ui/styles/colors';
 import Subheader from 'material-ui/Subheader';
 import SelectType from './SelectType';
-
+import request from 'superagent';
 const textStyle={
 marginRight:130
 }
@@ -21,7 +21,7 @@ class CheckBox extends Component {
  constructor() {
    	super();
    this.state = {
-     quest:" ",
+     quest:' ',
      optionArr: [' '],
 		 value: 1
    }
@@ -62,9 +62,28 @@ changeOptions=(index,value)=>
 questionChange(e)
 {
   this.setState({
-    quest:e.target.vlaue
+    quest:e.target.value
   })
   this.props.question(e.target.value);
+}
+updateDb(){
+  var questionScreen={
+    type:'checkbox',
+    questions:[
+      {
+        questionType:'Checkbox',
+        questionQ:this.state.quest,
+        options:this.state.optionArr
+      }
+    ]
+  }
+  request.post('http://localhost:9080/api/updateSurvey')
+          .set('Content-Type', 'application/json')
+          .send(questionScreen)
+           .end((err,res)=>
+           {
+             console.log("posted");
+            })
 }
  render() {
    const options=this.state.optionArr.map((value,index) => {
@@ -102,7 +121,7 @@ questionChange(e)
   	             <RaisedButton label="Cancel" labelStyle={{fontWeight:'bold'}} />
   	           </Link>
                <Link to="Home/AddQuestion" activeClassName="active">
-                 <RaisedButton label="Submit" backgroundColor='#1C6D03 ' labelStyle={{color:'#FFFFFF ',fontWeight:'bold'}}/>
+                 <RaisedButton label="Submit" backgroundColor='#1C6D03' onClick={this.updateDb.bind(this)} labelStyle={{color:'#FFFFFF ',fontWeight:'bold'}}/>
               </Link>
               </CardActions>
                </Card>

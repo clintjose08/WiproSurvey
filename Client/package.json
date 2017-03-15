@@ -72,6 +72,7 @@
     "react-svg-piechart": "^1.2.0",
     "react-tap-event-plugin": "^2.0.1",
     "star-rating-react": "0.0.1",
+    "superagent": "^3.5.0",
     "webpack-dev-server": "^1.16.2"
   },
   "scripts": {

@@ -10,6 +10,7 @@ import RaisedButton from 'material-ui/RaisedButton';
 import Subheader from 'material-ui/Subheader';
 import Divider from 'material-ui/Divider';
 import SelectType from './SelectType';
+import request from 'superagent';
 
 
 const cardheadstyle={
@@ -31,7 +32,8 @@ class SingleText extends Component{
 constructor(props) {
  super(props);
  this.state = {
-     value: 5,
+   quest:' ',
+     value: 1,
      question:""
  };
 }
@@ -41,6 +43,7 @@ componentWillMount(){
   }
 
 handleQuestion(e) {
+
   this.setState({
     question:e.target.value
   })
@@ -52,6 +55,31 @@ handleQuestion(e) {
 
 validateSubmit(e)
 {
+
+    this.setState({
+    quest:e.target.value
+  })
+    this.props.getQuestion(e.target.value);
+    console.log("Sucess");
+  }
+updateDb(){
+  var shortQuestionScreen={
+    type:'singletext',
+    questions:[
+      {
+        questionType:'SingleText',
+        questionQ:this.state.quest,
+      }
+    ]
+  }
+  request.post('http://localhost:9080/api/updateSurvey')
+          .set('Content-Type', 'application/json')
+          .send(shortQuestionScreen)
+           .end((err,res)=>
+           {
+             console.log("posted");
+            })
+
 }
    render(){
        return(
@@ -74,7 +102,9 @@ validateSubmit(e)
           underlineStyle={{borderColor:'#37861E '}}
           fullWidth={true}
           onChange={this.handleQuestion.bind(this)}
+
           required
+
         />
 
        </CardActions>
@@ -83,9 +113,12 @@ validateSubmit(e)
       <Link to="Home/AddQuestion" activeClassName="active">
         <RaisedButton label="Cancel" labelStyle={{fontWeight:'bold'}} />
         </Link>
-
-        <RaisedButton backgroundColor='#1C6D03' type="submit" label="Submit" labelStyle={{color:'#FFFFFF ',fontWeight:'bold'}}/>
+       <Link to="Home/AddQuestion" activeClassName="active">
+        <RaisedButton label="Submit" backgroundColor='#1C6D03 ' onClick={this.updateDb.bind(this)} labelStyle={{color:'#FFFFFF ',fontWeight:'bold'}} />
+       </Link>
       </CardActions>
+
+  
     </Card>
     </Paper>
     </form>
