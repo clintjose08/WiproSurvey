@@ -4,46 +4,33 @@ import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'mat
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import {IndexLink, Link} from 'react-router';
-
-const style = {
-  textAlign: 'center',
-  display: 'inline-block',
-  marginLeft:'30%',
-  marginTop:'10%',
-  width:'40%',
-  height:'50%',
-};
-const cardheadstyle={
-  background:'black',
-  textAlign:'center',
-}
-const buttonStye={
-  marginLeft:30,
-}
+import { Grid,Col,Row} from 'react-flexbox-grid';
 
 class SurveyDetails extends Component{
 	render(){
-		return(<div><Paper style={style}>
-      <Card>
-        <CardHeader title="Create Survey" style={cardheadstyle} titleColor='white'/>
-        <CardText>
+		return(<Grid>
+        <Row  middle="xs">
+         
+         <Col xs={12}>
+      
           <TextField
             hintText="Name of the survey"
-          /><br />
-          <TextField
-            hintText="Description about the survey" multiLine={true} rows={2}
-          /><br />
-
+          />
+        </Col>
+        <Col xs={12}>
+        <Row>
+       
+        <Col xsOffset={1}  xs={1}>
           <Link to="Home/AddQuestion" activeClassName="active">
-            <RaisedButton label="Submit" backgroundColor="#004D40" labelColor='white'/>
+            <RaisedButton label="Start" backgroundColor="#1C6D03" labelColor='white' labelStyle={{fontWeight:'bold'}} />
           </Link>
-          <Link to="Home/CreateSurvey" activeClassName="active">
-            <RaisedButton label="Cancel" style={buttonStye}/>
-          </Link>
-        </CardText>
-      </Card>
-      </Paper>
-		</div>);
+        </Col>
+          </Row>
+          
+          </Col>
+         
+        </Row>
+		</Grid>);
 	}
  }
  export default SurveyDetails;

@@ -10,7 +10,7 @@ import RaisedButton from 'material-ui/RaisedButton';
 import Subheader from 'material-ui/Subheader';
 import Divider from 'material-ui/Divider';
 import SelectType from './SelectType';
-
+import { Grid,Row,Col } from 'react-flexbox-grid'
 
 const cardheadstyle={
  background:'#242323',
@@ -43,22 +43,28 @@ handleQuestion(e) {
 
 handleChange = (event, index, value) => this.setState({value});
     render(){
-        return(<div><Paper >
+        return(<Paper >
      <Card style={{background:'#E5E4E2'}}>
+     
        <CardHeader title="Comments" style={cardheadstyle} titleStyle={cardTitleStyle}/>
-
+      <Row>
        <CardText style={{marginTop:0}}>
-       <div>
+       <Col xs={12}>
        <Subheader style={{fontSize:'125%',color:'#1C6D03 '}}> Question Type </Subheader>
 
 
         <SelectType/>
-         </div>
+         </Col>
 
        </CardText>
+       </Row>
        <Divider style={{background:'#000000'}}/>
+       <Row>
          <CardActions style={{marginTop:'0px',marginLeft:'1%'}}>
+         <Col xs={12}>
           <Subheader style={{fontSize:'125%',color:'#1C6D03 ',marginTop:'3%'}}>Question</Subheader>
+         </Col>
+         <Col xs={12}>
          <TextField
            hintText="Enter your Question here."
            hintStyle={{fontWeight:'bold'}}
@@ -66,7 +72,9 @@ handleChange = (event, index, value) => this.setState({value});
            fullWidth={true}
            onChange={this.handleQuestion.bind(this)}
          />
+         </Col>
         </CardActions>
+        </Row>
         <Divider style={{background:'#000000'}}/>
        <CardActions style={{marginTop:'0px',marginLeft:'1%'}}>
        <Link to="Home/AddQuestion" activeClassName="active">
@@ -79,7 +87,7 @@ handleChange = (event, index, value) => this.setState({value});
 
      </Card>
      </Paper>
-        </div>);
+        );
     }
 }
 export default Comments;

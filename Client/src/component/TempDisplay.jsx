@@ -59,9 +59,9 @@ class TempDisplay  extends Component {
     this.setState({sliderChange: value});
   };
 
-  valueChanged = (event) =>  {
-    this.setState({starRating:event});
-    console.log(event)
+  valueChanged = (newValue) =>  {
+    this.setState({starRating:newValue});
+    console.log(newValue)
   }
   
  render() {
@@ -74,21 +74,33 @@ class TempDisplay  extends Component {
    var selOpt=[];
    
   
-     components.push(<h3 style={{marginTop:'10%',marginBottom:'10%',color:'#818181'}}>[Question comes here]</h3>);
+     components.push(
+      <Row>
+      <Col xs={12}>
+            <h3 style={{marginTop:'10%',marginBottom:'10%',color:'#818181'}}>[Question comes here]</h3>
+      </Col>      
+      </Row>      
+      );
    
    
-   welcome.push( <div> 
-    <h3 style={{marginTop:'2%',marginBottom:'2%',color:'#FFFFFF',fontSize:'150%'}}> [Title comes Here]</h3>
-      <Divider/>
-     <h4 style={{marginTop:'1%',marginLeft:'1%',color:'#DAF7A6  ',textAlign:'left'}}>[ Description ]</h4>
-     </div>);
-   thanks.push(<div>
-     <h3 style={{marginTop:'2%',marginBottom:'2%',color:'#FFFFFF'}}> [Thank You Mesage comes Here]</h3>
-      <Divider/>
-     <h4 style={{marginTop:'1%',marginLeft:'1%',color:'#DAF7A6  ',textAlign:'left'}}>[ Craeter Name ]</h4>
-     <h4 style={{marginTop:0,marginLeft:'1%',color:'#DAF7A6  ',textAlign:'left'}}>[ Craeter Contact Number ]</h4>
-     <h4 style={{marginTop:0,marginLeft:'1%',color:'#DAF7A6  ',textAlign:'left'}}>[ Craeter E-mail ]</h4>
-   </div>);
+   welcome.push( 
+    <Row>
+      <Col xs={12}>
+        <h3 style={{marginTop:'2%',marginBottom:'2%',color:'#FFFFFF',fontSize:'150%'}}> [Title comes Here]</h3>
+          <Divider/>
+      </Col>
+      
+     </Row>
+     );
+   thanks.push(
+    <Row>
+        <Col xs={12}>
+          <h3 style={{marginTop:'2%',marginBottom:'2%',color:'#FFFFFF'}}> [Thank You Mesage comes Here]</h3>
+            <Divider/>
+        </Col>
+       
+     </Row>
+   );
 
    if(this.props.putWelMsg && this.props.putType=="Welcome")
    {
@@ -144,15 +156,23 @@ class TempDisplay  extends Component {
    }
     else if(this.props.putQuestion && this.props.putType=="Comments"){
        components.pop();
-       components.push(<div>
-      <h3 style={{marginTop:'3%',marginLeft:'2%',marginBottom:0,color:'#000000',textAlign:'left'}}>{this.props.putQuestion}</h3>
+       components.push(
+        <Row>
+       
+      <h3 style={{marginTop:'10%',marginBottom:'10%',marginLeft:'2%',marginBottom:0,color:'#000000',textAlign:'left'}}>{this.props.putQuestion}</h3>
+     
+      <Col xs={12}>
       <TextField 
       hintText="Your Comments Here"
       hintStyle={{fontWeight:'bold'}}
       underlineStyle={{borderColor:'#37861E '}}
       fullWidth={true}
+      style={{marginBottom:'10%'}}
       />
-    </div>);   
+      </Col>
+     
+      </Row>
+    );   
    } 
 
    else if(this.props.putQuestion && this.props.putType=="YesOrNo"){
@@ -278,7 +298,8 @@ class TempDisplay  extends Component {
 
 
    return(
-
+ 
+     
       <Paper  style={style}>
         <Card style={welcomeStyle}>
           {welcome}
@@ -292,6 +313,8 @@ class TempDisplay  extends Component {
           {thanks}
         </Card>
       </Paper>
+     
+  
   );
  }
 }

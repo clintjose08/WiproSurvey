@@ -25,20 +25,22 @@ class CommentsEdit extends Component {
 
  render() {
 
-   return (<div >
-            <Dialog  autoScrollBodyContent={true} open={this.state.open} contentStyle={{height:'100%',width:'100%',maxHeight:'none',maxWidth: 'none'}}>
-            <Grid>
-              <Row style={{height:'40%'}}>
-                <Col xs={4.5}>
+   return ( 
+            <Dialog   open={this.state.open} contentStyle={{height:'100%',width:'100%',maxHeight:'none',maxWidth: 'none'}}>
+           
+              <Grid>
+                <Row >
+                <Col xs={4}>
                   <Comments getQuestion={this.onChangeQuest.bind(this)}  type={this.getType.bind(this)}/>
                 </Col>
-                <Col xs={7.5}>
+                <Col xs={7}>
                   <TempDisplay putQuestion={this.state.quest} putType={this.state.type} />
                 </Col>
-              </Row>
-            </Grid>
+            </Row> 
+        </Grid> 
+           
           </Dialog>
-        </div>
+      
    );
  }
 }

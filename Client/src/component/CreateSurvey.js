@@ -7,108 +7,222 @@ import RaisedButton from 'material-ui/RaisedButton';
 import Divider from 'material-ui/Divider';
 import {Table, TableBody, TableFooter, TableHeader, TableHeaderColumn, TableRow, TableRowColumn}
   from 'material-ui/Table';
-import background from '../../images/banner.png';
+import Dialog from 'material-ui/Dialog';
+import TextField from 'material-ui/TextField';
+
+import background from '../../images/Home.jpg';
 import {IndexLink, Link} from 'react-router';
 
 import Create from 'material-ui/svg-icons/content/create';
+import Running from 'material-ui/svg-icons/maps/directions-run';
+import Close from 'material-ui/svg-icons/navigation/close';
+import Drafts from 'material-ui/svg-icons/content/drafts';
+
+import SurveyDetails from './SurveyDetails';
+
+
+import { Grid,Col,Row} from 'react-flexbox-grid';
 
 class CreateSurvey extends Component {
+ state = {
+    open: false,
+  };
 
+  handleOpen = () => {
+    this.setState({open: true});
+  };
+
+  handleClose = () => {
+    this.setState({open: false});
+  };
 
   render() {
+
+    
+
     return(
 
-<div>
-    <div>
-    <Paper  style={{width: '98%', marginTop: 0,marginLeft:15,textAlign:'center'}}>
-         <Card style={{background:'#E5E4E2'}}>
+<Grid>
+   <Row>
+   <Col xs={12}>
+    <Paper  style={{ marginTop:'1%',textAlign:'center'}}>
+         <Card >
+            <Row middle="xs">
+             <Col xs={4}>
+             <CardText style={{background:'#FFFFFF'}}>
+              <Row center="xs">
+              <Col xs={12}>
+             <Avatar
+        
+          size={150}
+              
+                />
+              <h2>User Name</h2>
+              <h4>Emp-Id</h4>
+              <h4>Designation</h4>
+              </Col>
+              </Row>
+             </CardText>
+              </Col>
 
-            <CardMedia>
-             <img src={background} style={{width:'auto',height:'15%'}} />
+              <Col xs={3}>
+              <CardText>
+              <Row middle="xs">
+              <Col xs={12}>
+              <h3 style={{color:'#28B463',fontSize:'175%',textAlign:'left', fontFamily: 'Black Ops One'}}>Easy Way to Survey</h3>
+              <h3 style={{color:'#28B463',fontSize:'180%',fontFamily: 'Black Ops One'}}>Your Audience</h3>
+              </Col>
+              
+              </Row>
+              </CardText>
+              </Col>
+            <Col xs={5}>
+            <CardMedia style={{marginLeft:0}}>
+             <img src={background} style={{width:'auto',height:'20%'}} />
             </CardMedia>
+              </Col>           
+             </Row>
             <CardActions>
-            <Link to="Home/SurveyDetails" activeClassName="active">
+            <Divider />
+           
               <RaisedButton label="Create New Survey"
                 icon={<Create />}
                 backgroundColor='#1C6D03 '
                 labelStyle={{color:'#FFFFFF ',fontWeight:'bold',marginTop:'4%'}}
-              style={{textAlign:'center',width:'25%',marginTop:'2%',marginBottom:'1%',padding:'0px'}} />
-              </Link>
+                style={{textAlign:'center',width:'25%',marginTop:'2%',marginBottom:'1%',padding:'0px'}} 
+                onTouchTap={this.handleOpen}/>
+            
             </CardActions>
   </Card>
 
     </Paper>
-    </div>
-
-    <div>
-    <Paper  style={{width: '98%', marginTop: 0,marginLeft:15,background:'#E5E4E2'}}>
-         <div>
-         <h1 style={{textAlign: 'center', margin:'10',padding:'10'}}>Your All Surveys</h1>
-         <Divider/>
-         </div>
-         <div style={{marginLeft:'4%'}} >
-         <TableRowColumn>
-         <Card >
-
+</Col>
+<Col xs={12}>    
+    <Paper  style={{ marginTop:'2%'}}>
+         <Row>
+        
+        
+         <Card style={{textAlign:'center'}} >
+         <Row>
+         <Col xs={4}>
          <CardText>
-         <h1 style={{fontSize:200,color:'#2C9707',textAlign: 'center',marginTop:'0px',marginBottom:'0px'}}>0</h1>
-          <h5 style={{fontSize:15,marginTop:'0px',marginBottom:'0px'}}>Your active surveys are here Click below to get details</h5>
+         <h3>Running</h3>
+         <Divider />
+         <Avatar
+          icon= {<Running/>}
+          size={150}
+          backgroundColor={'#27AE60'}
+          style={{marginTop:'2%'}}
+         />
+         <h2 style={{fontSize:'125%'}}>0</h2>
+          <h5 style={{fontSize:'125%',marginTop:'0px',marginBottom:'0px'}}>Your active surveys are here Click below to get details</h5>
           </CardText>
            <CardActions>
+            <Link to="Home/Details" activeClassName="active">
             <FlatButton
-            backgroundColor="C4C4C4"
+            backgroundColor="#27AE60"
 
             style={{width:'100%' ,textAlign: 'center',fontWeight: 'bold',marginTop:'0px',marginBottom:'0px'}}
             label="Running"
-            labelStyle={{fontSize:'125%',fontWeight:'bold'}}/>
+            labelStyle={{fontSize:'125%',color:'#FDFEFE',fontWeight:'bold'}}/>
+            </Link>
            </CardActions>
 
-         </Card>
-         </TableRowColumn>
+         
+         </Col>
 
-         <TableRowColumn>
-         <Card >
-
-         <CardText>
-         <h1 style={{fontSize:200,color:'#D80202',textAlign: 'center',marginTop:'0px',marginBottom:'0px',}}>2</h1>
-          <h5 style={{fontSize:15,marginTop:'0px',marginBottom:'0px'}}>Already closed surveys are here Click below to get details</h5>
+         <Col xs={4}>   
+           <CardText>
+           <h3>Closed</h3>
+           <Divider />
+            <Avatar
+             size={150}
+             icon= {<Close/>}
+             backgroundColor={'#E74C3C'}
+             style={{marginTop:'2%'}}
+            />
+              <h2 style={{fontSize:'125%'}}>2</h2>
+              <h5 style={{fontSize:'125%',marginTop:'0px',marginBottom:'0px'}}>Already closed surveys are here Click below to get details</h5>
           </CardText>
            <CardActions>
             <FlatButton
-            backgroundColor="C4C4C4"
+            backgroundColor="#E74C3C"
             style={{width:'100%' ,textAlign: 'center',marginTop:'0px',fontWeight: 'bold',marginBottom:'0px'}}
             label="Closed"
-            labelStyle={{fontSize:'125%',fontWeight:'bold'}}/>  />
+            labelStyle={{fontSize:'125%',color:'#FDFEFE',fontWeight:'bold'}}/>  />
 
            </CardActions>
 
-         </Card>
-         </TableRowColumn>
+     
+         </Col>
 
-          <TableRowColumn>
-         <Card >
+          <Col xs={4}>
+        
 
          <CardText>
-         <h1 style={{fontSize:200,color:'#C1D100',textAlign: 'center',marginTop:'0px',marginBottom:'0px',}}>2</h1>
-          <h5 style={{fontSize:15,marginTop:'0px',marginBottom:'0px'}}>Your all draft surveys are here Click below to get details</h5>
+         <h3>Drafts</h3>
+          <Divider/>
+
+          <Avatar
+           icon= {<Drafts/>}
+           size={150}
+           backgroundColor={'#F39C12'}
+           style={{marginTop:'2%'}}
+          />
+          
+          <h2 style={{fontSize:'125%'}}>0</h2>
+          <h5 style={{fontSize:'125%',marginTop:'0px',marginBottom:'0px'}}>Your all draft surveys are here Click below to get details</h5>
+           
           </CardText>
            <CardActions>
             <FlatButton
-            backgroundColor="C4C4C4"
+            backgroundColor="#F39C12"
 
             style={{width:'100%' ,textAlign: 'center',fontWeight: 'bold',marginTop:'0px',marginBottom:'0px'}}
             label="Drafts"
-            labelStyle={{fontSize:'125%',fontWeight:'bold'}}/> />
+            labelStyle={{fontSize:'125%',color:'#FDFEFE',fontWeight:'bold'}}/> />
            </CardActions>
-
+          </Col> 
+          </Row>
          </Card>
-         </TableRowColumn>
+         
 
-         </div>
+     
+         </Row>
          </Paper>
-         </div>
+</Col>
+         <Dialog
+          title="Name Your Survey"
+          modal={false}
+          contentStyle={{width:'60%'}}
+          open={this.state.open}
+          onRequestClose={this.handleClose}
+        >
+          <Row  middle="xs">
+         
+         <Col xs={12}>
+      
+          <TextField
+            hintText="Name of the survey"
+          />
+        </Col>
+        <Col xs={12}>
+        <Row>
+       
+        <Col xsOffset={1}  xs={1}>
+          <Link to="Home/AddQuestion" activeClassName="active">
+            <RaisedButton label="Start" backgroundColor="#1C6D03" labelColor='white' labelStyle={{fontWeight:'bold'}} />
+          </Link>
+        </Col>
+          </Row>
+          
+          </Col>
+         
+        </Row>
+        </Dialog>
+        </Row>
 
-</div>
+</Grid>
 
 
    );

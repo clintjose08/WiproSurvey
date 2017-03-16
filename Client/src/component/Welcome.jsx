@@ -7,6 +7,9 @@ import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'mat
 import Subheader from 'material-ui/Subheader';
 import Toggle from 'material-ui/Toggle';
 import {IndexLink, Link} from 'react-router';
+
+import request from 'superagent';
+
 const paperStyle={
 
 	height:'100%'
@@ -29,6 +32,8 @@ constructor(props) {
    super(props);
    this.state = {
    expanded: false,
+   welcomeMsg:'',
+   discript:''
     };
   }
 
@@ -39,18 +44,43 @@ constructor(props) {
   handleWelcome(e) {
     
     this.props.getWelcome(e.target.value);
+    this.setState({
+			welcomeMsg:e.target.value
+		})
     console.log("Sucess");  
   }
 
   handleWelcomeDes(e) {
 
     this.props.getWelDes(e.target.value);
+    this.setState({
+			discript:e.target.value
+		})
     console.log("Sucess"); 
   }
 
  handleToggle = (event, toggle) => {
     this.setState({expanded: toggle});
   };
+
+  updateDb(e){
+		var welcomeScreen={
+			"welcomeMsg":this.state.welcomeMsg,
+			"description":this.state.discript,
+			"createrName":"Bibin",
+			"thanksMessage":"No"
+
+		}
+		request.post('http://localhost:9080/api/createSurvey')
+						.set('Content-Type', 'application/json')
+						.send(welcomeScreen)
+						 .end((err,res)=>
+						 {
+							 console.log("posted");
+							})
+	}
+
+
 	render()
 	{
 		return(
@@ -94,7 +124,7 @@ constructor(props) {
 											<RaisedButton label="Cancel" labelStyle={{fontWeight:'bold'}} />
 											</Link>
 										 <Link to="Home/AddQuestion" activeClassName="active">
-											<RaisedButton label="Submit" backgroundColor='#1C6D03 ' labelStyle={{color:'#FFFFFF ',fontWeight:'bold'}} />
+											<RaisedButton label="Submit" onClick={this.updateDb.bind(this)} backgroundColor='#1C6D03 ' labelStyle={{color:'#FFFFFF ',fontWeight:'bold'}} />
 										 </Link>
 								  </CardActions>
 						</Card>

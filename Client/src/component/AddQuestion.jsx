@@ -7,7 +7,7 @@ import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'mat
 
 
 const welcomeStyle={
-background:'#2F3A30',
+background:'#7AD604',
 textAlign:'center',
 marginTop:0,
 marginLeft:0,
@@ -26,7 +26,7 @@ marginRight:0,
 }
 
 const thanksStyle={
-background:'#2F3A30',
+background:'#7AD604',
 textAlign:'center',
 marginTop:'1%',
 marginBottom:0,
@@ -55,10 +55,10 @@ class AddQuestion  extends Component {
 
 <div>
 
-   <h2 style={{fontWeight:'bold',textAlign:'center'}}>Your Template</h2>
+   <h2 style={{fontWeight:'bold',textAlign:'center'}}>Your Temp</h2>
    <Paper  style={style}>
    <Card style={welcomeStyle}>
-      <h3 style={{marginTop:'2%',marginBottom:'2%',color:'#FFFFFF',fontSize:'150%'}}> [Title comes Here]</h3>
+      <h3 style={{marginTop:'2%',marginBottom:'2%',color:'#FFFFFF',fontSize:'150%'}}> [Survey Title]</h3>
       <Divider/>
      <h4 style={{marginTop:'1%',marginLeft:'1%',color:'#DAF7A6  ',textAlign:'left'}}>[ Description ]</h4>
    </Card>

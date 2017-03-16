@@ -3,13 +3,29 @@ import Paper from 'material-ui/Paper';
 import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
 import {IndexLink, Link} from 'react-router';
 import TextField from 'material-ui/TextField';
-import survey from '../../images/survey.jpg';
+import Avatar from 'material-ui/Avatar';
+import Divider from 'material-ui/Divider';
 import RaisedButton from 'material-ui/RaisedButton';
+
+import Forward from 'material-ui/svg-icons/content/forward';
+import UserName from 'material-ui/svg-icons/action/account-box';
+import PasswordIcon from 'material-ui/svg-icons/action/lock';
+
+import survey from '../../images/survey.jpg';
+import Background from '../../images/file.jpg';
+import { Grid,Col,Row} from 'react-flexbox-grid';
+
+import '../App.css';
+
 const style = {
   textAlign: 'center',
   display: 'inline-block',
-  width:'40%',
-  height:'50%',
+  marginTop:'5%',
+ marginBottom:'9%',
+ marginLeft:'30%',
+
+ width:'40%',
+ height:'40%'
 };
 const cardheadstyle={
   background:'#242323',
@@ -28,33 +44,81 @@ const buttonStye={
 
 class Login extends Component{
 	render(){
-		return(<div  style={{textAlign:'center',marginTop:"7%"}}>
-      <img src= {survey} style={{postion:'fixed',margin:'auto',width:400,height:'auto'}}/>
-      <h1 style={{fontWeight:'bold'}}>Wipro Survey</h1>
-      <Paper style={style}>
+		return(
+     
+      <Grid>
+      <Row middle="xs">
+       <Col xs={12}>
+       <Row center="xs">
+       <h2 style={{fontSize:'350%',fontFamily:'Black Ops One',color:'#FDFEFE'}}>Start Survey</h2>
+       </Row>
+       <Row center="xs">
+       <Col xs={8}>
+     <form 
+     style={{borderStyle:'solid',borderRadius:25,borderWidth:2,borderColor:'#212F3D', background:'#34495E', opacity: 0.5}}>
+     
+     <Col xs={12}>
+      <h2 style={{color:'#FDFEFE'}}>LOGIN</h2>
+      </Col>
+     
+      <Row >
       
-      <Card style={{background:'#E5E4E2'}}>
-        <CardHeader title="Please sign in to your account" style={cardheadstyle} titleStyle={cardTitleStyle} />
-        <CardText>
+      <Col xsOffset={4} >
+         <Avatar
+          icon= {<UserName/>}
+          backgroundColor={'#566573'}
+          style={{marginTop:'2%'}}
+         />
+         
+         </Col>
+          <Col xs={1}>
           <TextField
             hintText="Enter your Emp-ID"
-           hintStyle={{fontWeight:'bold'}} 
-           underlineStyle={{borderColor:'#37861E'}}
+           hintStyle={{fontWeight:'bold',color:'#FDFEFE '}} 
+           underlineStyle={{borderColor:'#F4F6F7'}}
+           style={{marginTop:'2%',marginLeft:'5%'}}
            
-          /><br />
+          />
+          </Col>
+          </Row>
+          <Row>
+         <Col xsOffset={4}>
+         <Avatar
+          icon= {<PasswordIcon/>}
+          backgroundColor={'#566573'}
+          style={{marginTop:'2%'}}
+         />
+         
+         </Col>
+         <Col xs={1}>
           <TextField
            hintText="Enter your Password"
-           hintStyle={{fontWeight:'bold'}} 
-           underlineStyle={{borderColor:'#37861E'}}
-           
-          /><br />
+           hintStyle={{fontWeight:'bold',color:'#FDFEFE '}} 
+           underlineStyle={{borderColor:'#F4F6F7'}}
+            style={{marginLeft:'5%'}}
+          />
+          </Col>
+         </Row> 
+         <Row center="xs">
+         <Col xs="3">
           <Link to="Home/CreateSurvey" activeClassName="active">
-            <RaisedButton label="Submit" backgroundColor='#1C6D03 ' labelStyle={{color:'#FFFFFF ',fontWeight:'bold'}}/>
+             <RaisedButton 
+                  label="Login"
+                  backgroundColor="#2ECC71" 
+                  style={{marginTop:'3%',marginBottom:'3%'}}  
+                  labelStyle={{color:'#FFFFFF ',fontWeight:'bold'}}  
+                  icon={< Forward />} />
           </Link>
-        </CardText>
-      </Card>
-      </Paper>
-		</div>);
+          </Col>
+          </Row>
+
+        </form>
+        </Col>
+        </Row>
+      </Col>
+      </Row>
+		</Grid>
+    );
 	}
  }
  export default Login;

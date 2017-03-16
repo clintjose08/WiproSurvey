@@ -7,6 +7,7 @@ import CommentsEdit from './view/Comments';
 import SurveyDetails from './component/SurveyDetails';
 import Login from './component/Login';
 import CreateSurvey from './component/CreateSurvey';
+import DisplayDetails from './component/DisplayDetails';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import {Router, Route, IndexRoute, hashHistory} from 'react-router';
 import injectTapEventPlugin from 'react-tap-event-plugin';
@@ -32,6 +33,7 @@ ReactDOM.render(
        <Route path="AddQuestion" component={AddQuestion}/>
        <Route path="SurveyDetails" component={SurveyDetails}/>
        <Route path="Welcome" component={WelcomeEdit}/>
+       <Route path="Details" component={DisplayDetails}/>
        <Route path="Comments" component={CommentsEdit}/>
        <Route path="Dropdown" component={DropdownEdit}/>
        <Route path="StarRatings" component={StarRatingsEdit}/>

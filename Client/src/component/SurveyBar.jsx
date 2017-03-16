@@ -5,8 +5,16 @@ import IconMenu from 'material-ui/IconMenu';
 import MenuItem from 'material-ui/MenuItem';
 import FlatButton from 'material-ui/FlatButton';
 import Toggle from 'material-ui/Toggle';
+
+
+
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 import NavigationClose from 'material-ui/svg-icons/navigation/close';
+import Home from 'material-ui/svg-icons/action/home';
+import Refresh from 'material-ui/svg-icons/navigation/refresh';
+import AllData from 'material-ui/svg-icons/action/dashboard';
+import Signout from 'material-ui/svg-icons/action/highlight-off';
+
 import {IndexLink, Link} from 'react-router';
 class Login extends Component {
  static muiName = 'IconMenu';
@@ -27,10 +35,10 @@ const Logged = (props) => (
    targetOrigin={{horizontal: 'right', vertical: 'top'}}
    anchorOrigin={{horizontal: 'right', vertical: 'top'}}
  >
-   <MenuItem primaryText="Refresh" />
-   <MenuItem primaryText="Help" />
+   <MenuItem primaryText="Home"  leftIcon={<Home />}/>
+   <MenuItem primaryText="All Serveys" leftIcon={<AllData />} />
    <Link to="/" activeClassName="active">
-    <MenuItem primaryText="Sign out" />
+    <MenuItem primaryText="Sign out" leftIcon={<Signout />}/>
    </Link>
  </IconMenu>
 );
@@ -55,9 +63,11 @@ class SurveyBar extends Component {
      <div>
 
        <AppBar
-         title="Wipro Survey"
-         style={{background:'#001811',marginTop:0,marginLeft:0,marginRight:0}}
-         iconElementRight={this.state.logged ? <Logged /> : <Login />}
+         title="Start Survey"
+         titleStyle={{fontFamily: 'Aladin',fontSize:'150%'}}
+         style={{background:'#145A32',marginTop:0,marginLeft:0,marginRight:0}}
+         iconElementLeft={<Home style={{marginTop:'20%',marginBottom:0,marginRight:'3%'}} color={'#FDFEFE'}/>}
+         iconElementRight={ <Logged /> }
        />
      </div>
    );
