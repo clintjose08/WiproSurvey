@@ -6,7 +6,6 @@ import TextField from 'material-ui/TextField';
 import Avatar from 'material-ui/Avatar';
 import Divider from 'material-ui/Divider';
 import RaisedButton from 'material-ui/RaisedButton';
-
 import Forward from 'material-ui/svg-icons/content/forward';
 import UserName from 'material-ui/svg-icons/action/account-box';
 import PasswordIcon from 'material-ui/svg-icons/action/lock';
@@ -44,6 +43,7 @@ const buttonStye={
 
 class Login extends Component{
 	render(){
+
 		return(
      
       <Grid>
@@ -101,6 +101,7 @@ class Login extends Component{
          </Row> 
          <Row center="xs">
          <Col xs="3">
+
           <Link to="Home/CreateSurvey" activeClassName="active">
              <RaisedButton 
                   label="Login"
@@ -109,6 +110,7 @@ class Login extends Component{
                   labelStyle={{color:'#FFFFFF ',fontWeight:'bold'}}  
                   icon={< Forward />} />
           </Link>
+
           </Col>
           </Row>
 
@@ -119,6 +121,7 @@ class Login extends Component{
       </Row>
 		</Grid>
     );
+
 	}
  }
  export default Login;

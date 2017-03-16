@@ -22,7 +22,7 @@ class ThankyouEdit extends Component {
     this.setState({
       name:name
     })
-  
+
   }
   onChangeContact(contact)
   {
@@ -30,7 +30,7 @@ class ThankyouEdit extends Component {
     this.setState({
       contact:contact
     })
-  
+
   }
   onChangeEmail(mail)
   {
@@ -38,7 +38,7 @@ class ThankyouEdit extends Component {
     this.setState({
       mail:mail
     })
-  
+
   }
    getType(type)
   {
@@ -54,10 +54,10 @@ class ThankyouEdit extends Component {
             <Dialog autoScrollBodyContent={true} open={this.state.open} contentStyle={{height:'100%',width:'100%',maxHeight:'none',maxWidth: 'none'}}>
             <Grid>
               <Row style={{height:'40%'}}>
-                <Col xs={4.5}>
+                <Col xs={12} sm={4.5}>
                   <Thankyou getThanks={this.onChangeThanks.bind(this)} getName={this.onChangeName.bind(this)} getContact={this.onChangeContact.bind(this)} getEmail={this.onChangeEmail.bind(this)} type={this.getType.bind(this)} />
                 </Col>
-                <Col xs={7.5}>
+                <Col xs={12} sm={7.5}>
                   <TempDisplay  putThanks={this.state.msg} putName={this.state.name} putContact={this.state.contact} putEmail={this.state.mail} putType={this.state.type} />
                 </Col>
               </Row>

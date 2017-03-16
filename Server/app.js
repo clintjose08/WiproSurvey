@@ -1,11 +1,17 @@
+
 const express = require('express');
 const app = express();
 const port = process.env.PORT || 9080;
 const createSurveyConfigRoute=require('./route/createSurvey.route');
+
 const getTempData=require('./route/getTempData');
+
+const getResultConfigRoute=require('./route/getResult.route');
+const addResult=require('./route/addResult.route');
 const http = require('http');
 const mongoose = require('mongoose');
-const connection=mongoose.connect('mongodb://localhost/surveyTemp');
+const connection=mongoose.connect('mongodb://localhost/surveyDetails');
+
 
 var BodyParser = require('body-parser');
 app.use(BodyParser());
@@ -17,8 +23,10 @@ app.use(function(req, res, next) {
     next();
 });
 app.use('/',createSurveyConfigRoute);
+// 
 app.use('/',getTempData);
-
+app.use('/',getResultConfigRoute);
+app.use('/',addResult);
 const server = http.createServer(app);
 server.listen(port, () => {
 

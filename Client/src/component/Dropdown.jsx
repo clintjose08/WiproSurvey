@@ -12,6 +12,7 @@ import { Grid,Col,Row} from 'react-flexbox-grid';
 import {blueGrey500,white} from 'material-ui/styles/colors';
 import Subheader from 'material-ui/Subheader';
 import SelectType from './SelectType';
+import request from 'superagent';
 
 const compStyle={
 marginTop:40,
@@ -36,14 +37,8 @@ class Dropdown extends Component {
  }
  questionChange(e)
  {
-   var arr=this.state.optionArr;
-   var disable;
-   if(e.target.length>=5)
-   disable=false;
-
    this.setState({
      quest:e.target.value,
-     disabled:disable
    })
    this.props.question(e.target.value);
  }
@@ -87,15 +82,27 @@ changeOptions=(index,value)=>
 }
 onSubmit=()=>
 {
-  if(this.state.quest.length<5)
-  {
-    alert("Question not added!!");
-  }
+  
   var arr=this.state.optionArr;
-  if(arr.length<2)
-  {
-    alert("Question needs at least two options... Please add more options");
+     var sName=localStorage.getItem('sName');
+var dropdownScreen={
+    sName:localStorage.getItem('sName'),
+    type:'dropdown',
+    questions:[
+      {
+        questionType:'Dropdown',
+        questionQ:this.state.quest,
+        options:this.state.optionArr
+      }
+    ]
   }
+  request.post('http://localhost:9080/api/updateSurvey/'+sName)
+          .set('Content-Type', 'application/json')
+          .send(dropdownScreen)
+           .end((err,res)=>
+           {
+             console.log("posted");
+            })
 }
  render() {
    const options=this.state.optionArr.map((value,index) => {
@@ -133,7 +140,7 @@ onSubmit=()=>
   	             <RaisedButton label="Cancel" labelStyle={{fontWeight:'bold'}} />
   	           </Link>
                <Link to="Home/AddQuestion" activeClassName="active">
-                 <RaisedButton label="Submit" backgroundColor='#1C6D03' onClick={this.onSubmit.bind(this)} labelStyle={{color:'#FFFFFF ',fontWeight:'bold'}} disabled={this.state.disabled}/>
+                 <RaisedButton label="Submit" backgroundColor='#1C6D03' onClick={this.onSubmit.bind(this)} labelStyle={{color:'#FFFFFF ',fontWeight:'bold'}}/>
                  </Link>
               </CardActions>
                </Card>

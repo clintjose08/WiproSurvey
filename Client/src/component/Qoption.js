@@ -43,68 +43,68 @@ class Qoption extends Component{
     this.setState({expandedComments: toggle});
   };
   questionCommentsChange(e){
-    this.props.options([]);
     this.setState(
     {
-      quest:e.target.value
+      questComments:e.target.value
     })
     this.props.getCommentsQuestion(e.target.value);
   }
   questionYesOrNoChange(e){
-    this.props.options([]);
     this.setState(
     {
-      quest:e.target.value
+      questYesOrNo:e.target.value
     })
     this.props.getYesOrNoQuestion(e.target.value);
   }
 	render(){
 		return(
-        <div style={{backgroundColor:'#E0E0E0',marginTop:'5%'}}>
+        <Row>
 
-            <Row style={{marginLeft:'1%',marginRight:'1%'}}>
-             <Card expanded={this.state.expandedComments}>
-             <CardActions style={{marginTop:'3%',marginLeft:'1%'}}>
-              <Subheader style={{fontSize:'125%',color:'#1C6D03'}}>Comments</Subheader>
+            <Col xs={12}>
+             <Card expanded={this.state.expandedComments} style={{background:'#E5E4E2',marginBottom:0}}>
+             <CardActions>
+              <Subheader style={{fontSize:'100%',color:'#1C6D03',marginBottom:0}}>Comments</Subheader>
               <Toggle
                toggled={this.state.expandedComments}
                onToggle={this.handleToggle}></Toggle>
               </CardActions>
 
               <CardActions expandable={true}>
-                    <TextField 
-                    hintText="Type Your Description Here" 
-                    hintStyle={{fontWeight:'bold'}} 
-                    underlineStyle={{borderColor:'#37861E'}}  
+                    <TextField
+                    hintText="Type Your Description Here"
+                    hintStyle={{fontWeight:'bold'}}
+                    underlineStyle={{borderColor:'#37861E'}}
                     fullWidth={true}
                     value={this.state.questComments}
-                    onChange={this.questionCommentsChange.bind(this)}/>
-                  
+                    onChange={this.questionCommentsChange.bind(this)}
+                    style={{marginTop:0}}
+                    />
+
                   </CardActions>
               </Card>
-            </Row>
-            <Row style={{marginLeft:'1%',marginRight:'1%'}}>
-             <Card expanded={this.state.expandedYesOrNo}>
-             <CardActions style={{marginTop:'3%',marginLeft:'1%'}}>
-              <Subheader style={{fontSize:'125%',color:'#1C6D03'}}>Yes Or No</Subheader>
+            </Col>
+            <Col xs={12}>
+             <Card expanded={this.state.expandedYesOrNo}style={{background:'#E5E4E2',marginBottom:0}}>
+             <CardActions>
+              <Subheader style={{fontSize:'100%',color:'#1C6D03'}}>Yes Or No</Subheader>
               <Toggle
                toggled={this.state.expandedYesOrNo}
                onToggle={this.expandToggle}></Toggle>
               </CardActions>
 
               <CardActions expandable={true}>
-                    <TextField 
-                    hintText="Type Your Description Here" 
-                    hintStyle={{fontWeight:'bold'}} 
-                    underlineStyle={{borderColor:'#37861E'}} 
+                    <TextField
+                    hintText="Type Your Description Here"
+                    hintStyle={{fontWeight:'bold'}}
+                    underlineStyle={{borderColor:'#37861E'}}
                     fullWidth={true}
                     value={this.state.questYesOrNo}
                     onChange={this.questionYesOrNoChange.bind(this)}/>
                   </CardActions>
               </Card>
-            </Row>
-            
-        </div>
+            </Col>
+
+        </Row>
     );
 	}
  }

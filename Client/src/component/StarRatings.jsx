@@ -13,6 +13,7 @@ import { Grid,Col,Row} from 'react-flexbox-grid';
 import {blueGrey500,white} from 'material-ui/styles/colors';
 import Subheader from 'material-ui/Subheader';
 import SelectType from './SelectType';
+import request from 'superagent';
 
 const cardheadstyle={
   background:"#242323",
@@ -23,12 +24,11 @@ const style = {
 marginTop:30
 };
 
-
 class StarRatings extends Component
 {
   state = {
-    quest:" ",
-    value: " ",
+    quest:"",
+    value: null,
     listOptions:[],
     addValue: false,
     starValues:[],
@@ -37,12 +37,27 @@ class StarRatings extends Component
     this.props.type("StarRatings");
   }
   handleChange = (event, index, value) => {
-    this.setState({value:value,
-    addValue:false,
-    listOptions:[],
-    starValues:[]});
+    var list=[];
+    var text=[];
     var starValue= Array(value).fill(" ");
+    this.setState({value:value,
+
+    starValues:starValue});
     this.props.options(starValue);
+    if(this.state.addValue)
+    {
+      for (let i = 1; i <=value; i++ )
+      {
+        text=[];
+        var star=i+" Star";
+        text.push(<TextField hintText={star} underlineStyle={{borderColor:blueGrey500}} id={i} onChange={this.changeStarValue.bind(this)}/>);
+        list.push(<ListItem primaryText={text}/>);
+        this.props.options(starValue);
+      }
+      this.setState({
+        listOptions:list
+      })
+    }
   }
   onChangeCheck=(e)=>
   {
@@ -51,9 +66,8 @@ class StarRatings extends Component
       this.setState({
         listOptions:[],
         addValue:false,
-        starValues:[]
       });
-        this.props.options([]);
+        this.props.options(this.state.starValues);
     }
     else
     {
@@ -61,6 +75,7 @@ class StarRatings extends Component
       var text=[];
       var value=this.state.value;
       var starValue= Array(value).fill(" ");
+
       for (let i = 1; i <=value; i++ )
       {
         text=[];
@@ -88,10 +103,49 @@ class StarRatings extends Component
   questionChange(e)
   {
     this.setState({
-      quest:e.target.vlaue
+      quest:e.target.value
     })
     this.props.getQuestion(e.target.value);
   }
+
+  updateDb(){
+    if(this.state.addValue){
+  var questionScreen={
+    sName:localStorage.getItem('sName'),
+    type:'starrate',
+    questions:[
+      {
+        questionType:'StarRatings',
+        questionQ:this.state.quest,
+        scale:this.state.value,
+        options:this.state.listOptions
+      }
+    ]
+  }}else {
+    var sName=localStorage.getItem('sName');
+    var questionScreen={
+      sName:localStorage.getItem('sName'),
+      type:'starrate',
+      questions:[
+        {
+          questionType:'StarRatings',
+          questionQ:this.state.quest,
+          scale:this.state.value,
+          options:this.state.listOptions
+        }
+      ]
+
+  }
+}
+  request.post('http://localhost:9080/api/updateSurvey/'+sName)
+          .set('Content-Type', 'application/json')
+          .send(questionScreen)
+           .end((err,res)=>
+           {
+             console.log("posted");
+            })
+}
+
   render()
   {
     const items = [];
@@ -100,6 +154,7 @@ class StarRatings extends Component
     }
 
     return(<div>
+        <form >
             <Paper>
         <Card style={{background:' #E5E4E2 '}}>
           <CardHeader title="Create Star Rate Questions"  style={cardheadstyle} titleColor='white' titleStyle={{fontWeight:'bold'}}/>
@@ -108,20 +163,21 @@ class StarRatings extends Component
             <SelectType/>
               <br /><br />
               <Subheader style={{fontSize:'125%',color:'#1C6D03 '}}>Enter the question</Subheader>
-              <TextField
+               <TextField
                 value={this.state.quest}
                 underlineStyle={{borderColor:blueGrey500}}
                 onChange={this.questionChange.bind(this)}
-              /><br />
+                multiLine={true}
+                required
+                /><br />
               <Divider style={{background:blueGrey500}}/>
-              <Subheader style={{fontSize:'125%',color:'#1C6D03 '}}>Select Scale</Subheader>
+              <Subheader style={{color:'#1C6D03 '}}>Select Scale</Subheader>
             <SelectField
               floatingLabelText="Select Scale"
               value={this.state.value}
               onChange={this.handleChange.bind(this)}
               maxHeight={200}
-              underlineStyle={{borderColor:blueGrey500}}
-            >
+              underlineStyle={{borderColor:blueGrey500}} required>
               {items}
             </SelectField>
             <Checkbox label="Add Rating Value" iconStyle={{borderColor:blueGrey500}} labelStyle={{marginRight:1000,color:blueGrey500}} checked={this.state.addValue} onCheck={this.onChangeCheck.bind(this)}/>
@@ -136,12 +192,15 @@ class StarRatings extends Component
             <Link to="Home/AddQuestion" activeClassName="active">
           <RaisedButton label="Cancel" labelStyle={{fontWeight:'bold'}} />
           </Link>
+
             <Link to="Home/AddQuestion" activeClassName="active">
-          <RaisedButton label="Submit" backgroundColor='#1C6D03 ' labelStyle={{color:'#FFFFFF ',fontWeight:'bold'}} />
+          <RaisedButton label="Submit" backgroundColor='#1C6D03 ' onClick={this.updateDb.bind(this)} labelStyle={{color:'#FFFFFF ',fontWeight:'bold'}} />
             </Link>
+
           </CardActions>
         </Card>
         </Paper>
+        </form>
         </div>
       );
   }

@@ -66,6 +66,8 @@ class Qgroup extends Component{
           checked:false,
           checked1: false,
         quest:'',
+        status:true,
+        submit:true
 
     }
     this.checkYes = this.checkYes.bind(this);
@@ -75,13 +77,35 @@ class Qgroup extends Component{
   componentWillMount() {
     this.props.type('Qgroup');
   }
-
+getCommentsvalue(comment){
+  this.props.getCommentsQuestion(comment);
+}
+getCommentsvalue1(comment1){
+  this.props.getCommentsQuestion1(comment1);
+}
+getYesOrNovalue(yes){
+  this.props.getYesOrNo(yes);
+}
+getYesOrNovalue1(no){
+  this.props.getYesOrNo1(no);
+}
   questionChange(e){
     this.props.options([]);
     this.setState(
     {
-      quest:e.target.value
+      quest:e.target.value,
     })
+    if(this.state.quest.length>=5){
+      this.setState({
+        status:false,
+        submit:false
+      })
+    }
+    else{
+      this.setState({
+        status:true
+      })
+    }
     this.props.getQuestion(e.target.value);
   }
 
@@ -100,18 +124,18 @@ checkNo()
     let showNo = '';
     let showYes = '';
 
-    if(this.state.showiQuery == 1 && this.state.checked1==true)
+    if(this.state.quest && this.state.showiQuery == 1 && this.state.checked1==true)
       {
-      showNo=<Grid style={stylepap}>
-               <Qoption />
-        </Grid>
+      showNo=<Row>
+               <Qoption getCommentsQuestion={this.getCommentsvalue1.bind(this)} getYesOrNoQuestion={this.getYesOrNovalue1.bind(this)}/>
+        </Row>
       }
 
-    if(this.state.showQuery == 1 && this.state.checked==true)
+    if(this.state.quest && this.state.showQuery == 1 && this.state.checked==true)
     {
-      showYes=<Grid style={stylepap} >
-               <Qoption />
-          </Grid>
+      showYes=<Row>
+               <Qoption getCommentsQuestion={this.getCommentsvalue.bind(this)} getYesOrNoQuestion={this.getYesOrNovalue.bind(this)}/>
+          </Row>
     }
         return(
 
@@ -120,11 +144,11 @@ checkNo()
        <CardHeader title="Question Group" style={cardheadstyle} titleStyle={cardTitleStyle}/>
 
        <CardText style={{marginTop:0}}>
-       <div>
+
        <Subheader style={{fontSize:'125%',color:'#1C6D03 '}}> Question Type </Subheader>
        <SelectType/>
 
-         </div>
+
 
        </CardText>
        <Divider style={{background:'#000000'}}/>
@@ -138,29 +162,34 @@ checkNo()
            value={this.state.quest}
            onChange={this.questionChange.bind(this)}
          />
-         <div>
+
+
        <h4>your question here</h4>
-       <div>
+
+
       <Checkbox
       label="Yes"
       style={styles.checkbox}
       value="checked"
+      disabled={this.state.status}
       checked={this.state.checked}
       onCheck={this.checkYes}
       />
+      <Col xs={12}>
       {showYes}
-      </div>
-    <div>
+      </Col>
       <Checkbox
         label="No"
         style={styles.checkbox}
         value1="checked"
+        disabled={this.state.status}
         checked1={this.state.checked1}
         onCheck={this.checkNo}
       />
+          <Col xs={12}>
        {showNo}
-    </div>
-   </div>
+       </Col>
+
 
         </CardActions>
 
@@ -170,7 +199,7 @@ checkNo()
          <RaisedButton label="Cancel" labelStyle={{fontWeight:'bold'}} />
          </Link>
         <Link to="Home/AddQuestion" activeClassName="active">
-         <RaisedButton label="Submit" backgroundColor='#1C6D03 ' labelStyle={{color:'#FFFFFF ',fontWeight:'bold'}} />
+         <RaisedButton label="Submit" backgroundColor='#1C6D03 'disabled={this.state.submit} labelStyle={{color:'#FFFFFF ',fontWeight:'bold'}} />
         </Link>
        </CardActions>
 

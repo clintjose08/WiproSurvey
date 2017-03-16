@@ -34,6 +34,7 @@ constructor(props) {
    expanded: false,
    welcomeMsg:'',
    discript:''
+
     };
   }
 
@@ -42,36 +43,41 @@ constructor(props) {
   }
 
   handleWelcome(e) {
-    
+
     this.props.getWelcome(e.target.value);
+
     this.setState({
 			welcomeMsg:e.target.value
 		})
     console.log("Sucess");  
+
   }
 
   handleWelcomeDes(e) {
 
     this.props.getWelDes(e.target.value);
+
     this.setState({
 			discript:e.target.value
 		})
     console.log("Sucess"); 
+
   }
 
  handleToggle = (event, toggle) => {
     this.setState({expanded: toggle});
   };
 
-  updateDb(e){
+	updateDb(e){
+		var sName=localStorage.getItem('sName');
 		var welcomeScreen={
+			"sName":localStorage.getItem('sName'),
+			"type":'welcome',
 			"welcomeMsg":this.state.welcomeMsg,
-			"description":this.state.discript,
-			"createrName":"Bibin",
-			"thanksMessage":"No"
-
+			"description":this.state.discript
 		}
-		request.post('http://localhost:9080/api/createSurvey')
+		request.post('http://localhost:9080/api/updateSurvey/'+sName)
+
 						.set('Content-Type', 'application/json')
 						.send(welcomeScreen)
 						 .end((err,res)=>
@@ -79,7 +85,6 @@ constructor(props) {
 							 console.log("posted");
 							})
 	}
-
 
 	render()
 	{
@@ -92,12 +97,12 @@ constructor(props) {
 							</CardHeader>
 							<CardActions style={{marginTop:'3%',marginLeft:'1%'}}>
 								<Subheader style={{fontSize:'125%',color:'#1C6D03'}}>Title of survey</Subheader>
-								<TextField 
-								hintText="Type Your Title Here"  
-								hintStyle={{fontWeight:'bold'}} 
+								<TextField
+								hintText="Type Your Title Here"
+								hintStyle={{fontWeight:'bold'}}
 								required
 								underlineStyle={{borderColor:'#37861E'}}
-                                onChange={this.handleWelcome.bind(this)}   
+                                onChange={this.handleWelcome.bind(this)}
                                 multiLine={true}
 								/>
 							</CardActions>
@@ -110,10 +115,10 @@ constructor(props) {
 							</CardActions>
 
 							<CardActions expandable={true}>
-         						<TextField 
-         						hintText="Type Your Description Here" 
-         						hintStyle={{fontWeight:'bold'}} 
-         						underlineStyle={{borderColor:'#37861E'}} 
+         						<TextField
+         						hintText="Type Your Description Here"
+         						hintStyle={{fontWeight:'bold'}}
+         						underlineStyle={{borderColor:'#37861E'}}
          						onChange={this.handleWelcomeDes.bind(this)}
          						multiLine={true}
          						fullWidth={true}/>

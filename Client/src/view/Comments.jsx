@@ -25,6 +25,7 @@ class CommentsEdit extends Component {
 
  render() {
 
+
    return ( 
             <Dialog   open={this.state.open} contentStyle={{height:'100%',width:'100%',maxHeight:'none',maxWidth: 'none'}}>
            

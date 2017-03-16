@@ -1,15 +1,15 @@
 import React, { Component } from 'react';
 import Paper from 'material-ui/Paper';
 import Divider from 'material-ui/Divider';
-
+import { Grid,Col,Row} from 'react-flexbox-grid';
 import FlatButton from 'material-ui/FlatButton';
 import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
-
-
+import RaisedButton from 'material-ui/RaisedButton';
+import request from 'superagent';
 const welcomeStyle={
 background:'#649F4E',
 textAlign:'center',
-height:"20%"
+height:'20%'
 }
 
 const questionStyle={
@@ -26,7 +26,7 @@ const thanksStyle={
 background:'#649F4E',
 textAlign:'center',
 marginTop:'1%',
-height:"35%"
+height:'35%'
 
 }
 
@@ -39,12 +39,63 @@ width:'100%',
 
 
 class Dropabble  extends Component {
+ 
+  componentWillMount() {
+    var sName=localStorage.getItem('sName');
+      request
+      .get('http://localhost:9080/api/getSurvey/'+sName)
+      .then((res) => {
+       this.setState({
+          repositories: res.body,
+        });
+      console.log("next");
+      });
+    }
+
+  saveData(e){
+    var data={	"surveyname":"{type:String}",
+    "description":"{type:String}",
+    "thanksMessage":"{type:String}",
+    "createrName":"{type:String}",
+    "createrContact":24634,
+    "creterEmail":"{type:String}",
+    "questions": [
+      {
+        "questionno": 1,
+        "question": "ajafa",
+        "options": [
+          "xgfgf",
+          "gfg"
+        ]
+      },
+      {
+        "questionno": 2,
+        "question": "ajafa",
+        "options": [
+          "fdsgh",
+          "gfhh",
+          "gfhghg"
+        ]
+      }
+    ]
+           }
+    request.post('http://localhost:9080/api/createSurvey')
+            .set('Content-Type', 'application/json')
+            .send(data)
+             .end((err,res)=>
+             {
+               console.log("posted");
+              })
+
+  
+  }
  render() {
    return(
      <div style={{height:'90%'}}>
       <h2 style={{fontWeight:'bold',textAlign:'center'}}>Your Template</h2>
       <Paper  style={style}>
         <Card style={welcomeStyle}>
+
           <h3 style={{marginTop:'2%',marginBottom:'2%',fontSize:'150%'}}> Survey Title</h3>
           <Divider/>
           <h4 style={{marginTop:'1%',marginLeft:'1%',color:'#283747',textAlign:'left'}}>Description </h4>
@@ -56,7 +107,9 @@ class Dropabble  extends Component {
           <h4 style={{marginTop:'1%',marginLeft:'1%',color:'',textAlign:'left',color:'#283747'}}> Creater Name </h4>
           <h4 style={{marginTop:0,marginLeft:'1%',color:'#283747',textAlign:'left'}}>Creater Contact Number </h4>
           <h4 style={{marginTop:0,marginLeft:'1%',color:'#283747',textAlign:'left'}}> Creater E-mail </h4>
+
         </Card>
+
       </Paper>
     </div>
   );

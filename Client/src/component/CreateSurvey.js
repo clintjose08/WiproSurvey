@@ -12,21 +12,51 @@ import TextField from 'material-ui/TextField';
 
 import background from '../../images/Home.jpg';
 import {IndexLink, Link} from 'react-router';
-
+import { Grid,Col,Row} from 'react-flexbox-grid';
 import Create from 'material-ui/svg-icons/content/create';
 import Running from 'material-ui/svg-icons/maps/directions-run';
 import Close from 'material-ui/svg-icons/navigation/close';
 import Drafts from 'material-ui/svg-icons/content/drafts';
 
+import request from 'superagent';
+
 import SurveyDetails from './SurveyDetails';
 
 
-import { Grid,Col,Row} from 'react-flexbox-grid';
+
 
 class CreateSurvey extends Component {
- state = {
-    open: false,
-  };
+  constructor(props) {
+      super(props);
+    this.state = {
+      open: false,
+      name:''
+    
+  }}
+  createDb(){
+     localStorage.setItem("sName", this.state.name);
+    console.log("name set Sucess", this.state.name);
+    console.log(localStorage.getItem('sName'));
+    var nameData={
+      surveyname:this.state.name
+    }
+    request.post('http://localhost:9080/api/createSurvey')
+            .set('Content-Type', 'application/json')
+            .send(nameData)
+             .end((err,res)=>
+             {
+              if(err){
+               console.log("faild posted");
+              }
+              })
+
+  }
+  nameChange(e)
+  {
+    this.setState({
+      name:e.target.value
+    })
+  }
 
   handleOpen = () => {
     this.setState({open: true});
@@ -38,9 +68,11 @@ class CreateSurvey extends Component {
 
   render() {
 
+
     
 
     return(
+
 
 <Grid>
    <Row>
@@ -96,6 +128,7 @@ class CreateSurvey extends Component {
   </Card>
 
     </Paper>
+
 </Col>
 <Col xs={12}>    
     <Paper  style={{ marginTop:'2%'}}>
@@ -105,6 +138,7 @@ class CreateSurvey extends Component {
          <Card style={{textAlign:'center'}} >
          <Row>
          <Col xs={4}>
+
          <CardText>
          <h3>Running</h3>
          <Divider />
@@ -128,6 +162,7 @@ class CreateSurvey extends Component {
             </Link>
            </CardActions>
 
+
          
          </Col>
 
@@ -143,6 +178,7 @@ class CreateSurvey extends Component {
             />
               <h2 style={{fontSize:'125%'}}>2</h2>
               <h5 style={{fontSize:'125%',marginTop:'0px',marginBottom:'0px'}}>Already closed surveys are here Click below to get details</h5>
+
           </CardText>
            <CardActions>
             <FlatButton
@@ -153,11 +189,13 @@ class CreateSurvey extends Component {
 
            </CardActions>
 
+
      
          </Col>
 
           <Col xs={4}>
         
+
 
          <CardText>
          <h3>Drafts</h3>
@@ -185,8 +223,6 @@ class CreateSurvey extends Component {
           </Col> 
           </Row>
          </Card>
-         
-
      
          </Row>
          </Paper>
@@ -204,6 +240,7 @@ class CreateSurvey extends Component {
       
           <TextField
             hintText="Name of the survey"
+            onChange={this.nameChange.bind(this)}
           />
         </Col>
         <Col xs={12}>
@@ -211,7 +248,7 @@ class CreateSurvey extends Component {
        
         <Col xsOffset={1}  xs={1}>
           <Link to="Home/AddQuestion" activeClassName="active">
-            <RaisedButton label="Start" backgroundColor="#1C6D03" labelColor='white' labelStyle={{fontWeight:'bold'}} />
+            <RaisedButton label="Start" onClick={this.createDb.bind(this)} backgroundColor="#1C6D03" labelColor='white' labelStyle={{fontWeight:'bold'}} />
           </Link>
         </Col>
           </Row>
@@ -221,6 +258,7 @@ class CreateSurvey extends Component {
         </Row>
         </Dialog>
         </Row>
+
 
 </Grid>
 

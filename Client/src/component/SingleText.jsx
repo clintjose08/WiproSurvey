@@ -10,6 +10,7 @@ import RaisedButton from 'material-ui/RaisedButton';
 import Subheader from 'material-ui/Subheader';
 import Divider from 'material-ui/Divider';
 import SelectType from './SelectType';
+import request from 'superagent';
 
 
 const cardheadstyle={
@@ -31,7 +32,8 @@ class SingleText extends Component{
 constructor(props) {
  super(props);
  this.state = {
-     value: 5,
+   quest:' ',
+     value: 1,
      question:""
  };
 }
@@ -41,37 +43,72 @@ componentWillMount(){
   }
 
 handleQuestion(e) {
-    
+
+  this.setState({
+    question:e.target.value
+  })
+
+
+
     this.props.getQuestion(e.target.value);
-    console.log("Sucess");  
   }
 
+validateSubmit(e)
+{
+
+    this.setState({
+    quest:e.target.value
+  })
+    this.props.getQuestion(e.target.value);
+    console.log("Sucess");
+  }
+updateDb(){
+      var sName=localStorage.getItem('sName');
+  var shortQuestionScreen={
+    sName:localStorage.getItem('sName'),
+    type:'singletext',
+    questions:[
+      {
+        questionType:'SingleText',
+        questionQ:this.state.quest,
+      }
+    ]
+  }
+  request.post('http://localhost:9080/api/updateSurvey/'+sName)
+          .set('Content-Type', 'application/json')
+          .send(shortQuestionScreen)
+           .end((err,res)=>
+           {
+             console.log("posted");
+            })
+
+}
    render(){
        return(
+         <form onSubmit={this.validateSubmit.bind(this)}>
     <Paper style={{height:'100%'}} >
     <Card style={{background:'#E5E4E2 ',height:'100%'}}>
       <CardHeader title="Comments" style={cardheadstyle} titleStyle={cardTitleStyle}/>
-
       <CardText style={{marginTop:0}}>
       <div>
       <Subheader style={{fontSize:'125%',color:'#1C6D03 '}}> Question Type </Subheader>
       <SelectType/>
         </div>
-
       </CardText>
       <Divider style={{background:'#000000 '}}/>
         <CardActions style={{marginTop:'0px',marginLeft:'1%'}}>
          <Subheader style={{fontSize:'125%',color:'#1C6D03 ',marginTop:'3%'}}>Question</Subheader>
-          <form >
         <TextField
           hintText="Enter your Question here."
           hintStyle={{fontWeight:'bold'}}
           underlineStyle={{borderColor:'#37861E '}}
           fullWidth={true}
           onChange={this.handleQuestion.bind(this)}
-         
+
+          required
+
         />
-        </form>
+
        </CardActions>
        <Divider style={{background:'#000000 '}}/>
       <CardActions style={{marginTop:'0px',marginLeft:'1%'}}>
@@ -79,12 +116,14 @@ handleQuestion(e) {
         <RaisedButton label="Cancel" labelStyle={{fontWeight:'bold'}} />
         </Link>
        <Link to="Home/AddQuestion" activeClassName="active">
-        <RaisedButton label="Submit" backgroundColor='#1C6D03 ' labelStyle={{color:'#FFFFFF ',fontWeight:'bold'}} />
+        <RaisedButton label="Submit" backgroundColor='#1C6D03 ' onClick={this.updateDb.bind(this)} labelStyle={{color:'#FFFFFF ',fontWeight:'bold'}} />
        </Link>
       </CardActions>
 
+  
     </Card>
     </Paper>
+    </form>
        );
    }
 }

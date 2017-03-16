@@ -10,7 +10,11 @@ import RaisedButton from 'material-ui/RaisedButton';
 import Subheader from 'material-ui/Subheader';
 import Divider from 'material-ui/Divider';
 import SelectType from './SelectType';
+
 import { Grid,Row,Col } from 'react-flexbox-grid'
+
+import request from 'superagent';
+
 
 const cardheadstyle={
  background:'#242323',
@@ -27,7 +31,8 @@ const buttonStye={
 class Comments extends Component{
  constructor(props) {
   super(props);
-  this.state = {value: 5};
+  this.state = {value: 5,
+  quest:' '};
 }
 
 componentWillMount(){
@@ -35,12 +40,33 @@ componentWillMount(){
   }
 
 handleQuestion(e) {
-    
+  this.setState({
+    quest:e.target.value
+  })
     this.props.getQuestion(e.target.value);
-    console.log("Sucess");  
+    console.log("Sucess");
   }
 
-
+  updateDb(){
+        var sName=localStorage.getItem('sName');
+    var questionScreen={
+        sName:localStorage.getItem('sName'),
+        type:'comments',
+      questions:[
+        {
+          questionType:'Comments',
+          questionQ:this.state.quest,
+        }
+      ]
+    }
+    request.post('http://localhost:9080/api/updateSurvey/'+sName)
+            .set('Content-Type', 'application/json')
+            .send(questionScreen)
+             .end((err,res)=>
+             {
+               console.log("posted");
+              })
+  }
 handleChange = (event, index, value) => this.setState({value});
     render(){
         return(<Paper >
@@ -81,7 +107,7 @@ handleChange = (event, index, value) => this.setState({value});
          <RaisedButton label="Cancel" labelStyle={{fontWeight:'bold'}} />
          </Link>
         <Link to="Home/AddQuestion" activeClassName="active">
-         <RaisedButton label="Submit" backgroundColor='#1C6D03 ' labelStyle={{color:'#FFFFFF ',fontWeight:'bold'}} />
+         <RaisedButton label="Submit" backgroundColor='#1C6D03' onClick={this.updateDb.bind(this)} labelStyle={{color:'#FFFFFF ',fontWeight:'bold'}} />
         </Link>
        </CardActions>
 
