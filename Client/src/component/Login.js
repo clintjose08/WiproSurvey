@@ -9,9 +9,10 @@ import RaisedButton from 'material-ui/RaisedButton';
 import Forward from 'material-ui/svg-icons/content/forward';
 import UserName from 'material-ui/svg-icons/action/account-box';
 import PasswordIcon from 'material-ui/svg-icons/action/lock';
+import ImageResponsive, {Source} from 'react-image-responsive';
 
 import survey from '../../images/survey.jpg';
-import Background from '../../images/file.jpg';
+import Background from '../../images/Final.png';
 import { Grid,Col,Row} from 'react-flexbox-grid';
 
 import '../App.css';
@@ -47,6 +48,9 @@ class Login extends Component{
 		return(
      
       <Grid>
+         
+    
+         
       <Row middle="xs">
        <Col xs={12}>
        <Row center="xs">
@@ -119,6 +123,7 @@ class Login extends Component{
         </Row>
       </Col>
       </Row>
+     
 		</Grid>
     );
 
