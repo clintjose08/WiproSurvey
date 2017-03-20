@@ -52,12 +52,12 @@ handleQuestion(e) {
     var questionScreen={
         sName:localStorage.getItem('sName'),
         type:'comments',
-      questions:[
+      questions:
         {
           questionType:'Comments',
           questionQ:this.state.quest,
         }
-      ]
+
     }
     request.post('http://localhost:9080/api/updateSurvey/'+sName)
             .set('Content-Type', 'application/json')
@@ -71,7 +71,7 @@ handleChange = (event, index, value) => this.setState({value});
     render(){
         return(<Paper >
      <Card style={{background:'#E5E4E2'}}>
-     
+
        <CardHeader title="Comments" style={cardheadstyle} titleStyle={cardTitleStyle}/>
       <Row>
        <CardText style={{marginTop:0}}>

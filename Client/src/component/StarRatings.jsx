@@ -126,14 +126,14 @@ class StarRatings extends Component
     var questionScreen={
       sName:localStorage.getItem('sName'),
       type:'starrate',
-      questions:[
+      questions:
         {
           questionType:'StarRatings',
           questionQ:this.state.quest,
           scale:this.state.value,
           options:this.state.listOptions
         }
-      ]
+
 
   }
 }

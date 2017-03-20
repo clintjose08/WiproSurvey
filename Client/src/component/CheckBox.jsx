@@ -71,13 +71,13 @@ updateDb(){
   var questionScreen={
     sName:localStorage.getItem('sName'),
     type:'checkbox',
-    questions:[
+    questions:
       {
         questionType:'Checkbox',
         questionQ:this.state.quest,
         options:this.state.optionArr
       }
-    ]
+    
   }
   request.post('http://localhost:9080/api/updateSurvey/'+sName)
           .set('Content-Type', 'application/json')

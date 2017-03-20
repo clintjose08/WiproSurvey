@@ -67,12 +67,12 @@ updateDb(){
   var shortQuestionScreen={
     sName:localStorage.getItem('sName'),
     type:'singletext',
-    questions:[
+    questions:
       {
         questionType:'SingleText',
         questionQ:this.state.quest,
       }
-    ]
+    
   }
   request.post('http://localhost:9080/api/updateSurvey/'+sName)
           .set('Content-Type', 'application/json')
@@ -120,7 +120,7 @@ updateDb(){
        </Link>
       </CardActions>
 
-  
+
     </Card>
     </Paper>
     </form>
