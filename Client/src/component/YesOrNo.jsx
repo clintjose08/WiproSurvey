@@ -49,13 +49,13 @@ handleQuestion(e) {
     var questionScreen={
       sName:localStorage.getItem('sName'),
       type:'yesorno',
-      questions:[
+      questions:
         {
           questionType:"YesOrNo",
           questionQ:this.state.quest,
           options:["Yes","No"]
         }
-      ]
+
     }
     request.post('http://localhost:9080/api/updateSurvey/'+sName)
             .set('Content-Type', 'application/json')

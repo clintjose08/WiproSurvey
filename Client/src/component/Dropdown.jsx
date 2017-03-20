@@ -82,19 +82,19 @@ changeOptions=(index,value)=>
 }
 onSubmit=()=>
 {
-  
+
   var arr=this.state.optionArr;
      var sName=localStorage.getItem('sName');
 var dropdownScreen={
     sName:localStorage.getItem('sName'),
     type:'dropdown',
-    questions:[
+    questions:
       {
         questionType:'Dropdown',
         questionQ:this.state.quest,
         options:this.state.optionArr
       }
-    ]
+    
   }
   request.post('http://localhost:9080/api/updateSurvey/'+sName)
           .set('Content-Type', 'application/json')
