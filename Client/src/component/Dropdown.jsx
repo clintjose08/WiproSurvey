@@ -33,7 +33,7 @@ class Dropdown extends Component {
    }
  }
  componentWillMount(){
-   this.props.type("Dropdown");
+   
  }
  questionChange(e)
  {
@@ -41,6 +41,7 @@ class Dropdown extends Component {
      quest:e.target.value,
    })
    this.props.question(e.target.value);
+   this.props.type("Dropdown");
  }
  addOptions(e)
  {

@@ -21,6 +21,7 @@ import QgroupEdit from './view/Qgroup';
 import CheckBoxEdit from './view/CheckBox';
 import YesOrNoEdit from './view/YesOrNo';
 import StarRatings from './view/StarRatings';
+import DraftDisplay from './component/draftDisplay'
 import Timer from './component/timer';
 
 injectTapEventPlugin();
@@ -47,6 +48,7 @@ ReactDOM.render(
        <Route path="CheckBox" component={CheckBoxEdit}/>
        <Route path="Thankyou" component={ThankyouEdit}/>
        <Route path="Timer" component={Timer}/>
+       <Route path="DraftDisplay" component={DraftDisplay}/>
     </Route>
   </Router>
   </MuiThemeProvider>,

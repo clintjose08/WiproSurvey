@@ -3,7 +3,7 @@ module.exports=function (req, res) {
 	const surveyConfig = new surveyConfigModel();
 
 		surveyConfigModel.findOneAndUpdate({surveyname:req.body.sName},
-		{$pop:{questions[:i]}},
+		{$pop:{questions}},
 		function(err,doc){
 
 		      console.log("deleted");

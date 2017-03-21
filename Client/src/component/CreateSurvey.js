@@ -214,12 +214,14 @@ class CreateSurvey extends Component {
            
           </CardText>
            <CardActions>
+           <Link to="Home/DraftDisplay" activeClassName="active">
             <FlatButton
             backgroundColor="#F39C12"
 
             style={{width:'100%' ,textAlign: 'center',fontWeight: 'bold',marginTop:'0px',marginBottom:'0px'}}
             label="Drafts"
             labelStyle={{fontSize:'125%',color:'#FDFEFE',fontWeight:'bold'}}/> />
+            </Link>
            </CardActions>
           </Col> 
           </Row>

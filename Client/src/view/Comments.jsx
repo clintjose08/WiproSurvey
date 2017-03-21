@@ -31,7 +31,7 @@ class CommentsEdit extends Component {
            
               <Grid>
                 <Row >
-                <Col xs={4}>
+                <Col xs={5}>
                   <Comments getQuestion={this.onChangeQuest.bind(this)}  type={this.getType.bind(this)}/>
                 </Col>
                 <Col xs={7}>
