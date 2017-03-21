@@ -28,8 +28,8 @@ const cardTitleStyle={
 class Welcome extends Component
 {
 
-constructor(props) {
-   super(props);
+constructor(props,context:any) {
+   super(props,context:any);
    this.state = {
    expanded: false,
    welcomeMsg:'',

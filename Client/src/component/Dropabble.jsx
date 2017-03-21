@@ -57,6 +57,7 @@ class Dropabble  extends Component {
     }
   }
   componentWillMount() {
+
     var sName=localStorage.getItem('sName');
       request
       .get('http://localhost:9080/api/getSurvey/'+sName)
@@ -69,6 +70,7 @@ class Dropabble  extends Component {
       });
 
     }
+
 handleChange(i)
 {
   var sName=localStorage.getItem('sName');
@@ -79,7 +81,7 @@ handleChange(i)
     console.log("next");
     // console.log("quest",res.body.questions[1].questionQ);
     });
-
+window.location.reload()
   }
 
   saveData(e){
@@ -123,6 +125,7 @@ handleChange(i)
     this.setState({sliderChange: value});
   };
  render() {
+
    var welcomeTitle=[];
    var thanksMessage=[];
    var questions=[];
@@ -175,7 +178,7 @@ handleChange(i)
            if(obj.questionType=="Comments"){
              return(<Card>
                <CardText>
-               <IconButton onTouchTap={this.handleChange.bind(this,i)} style={{marginRight:0}}><ActionInfo style={iconStyles}/></IconButton>
+               <IconButton onTouchTap={this.handleChange.bind(this,obj.questionQ)} style={{marginRight:0}}><ActionInfo style={iconStyles}/></IconButton>
                </CardText>
                <CardText>
                <h3 style={{marginTop:0,marginLeft:'2%',marginBottom:0,color:'#000000',textAlign:'left'}}>{i+1}.{obj.questionQ}</h3>
@@ -200,8 +203,10 @@ handleChange(i)
 
               return(<Card expanded='false'>
                 <CardText>
-
-              <h3 style={{marginTop:0,marginLeft:'2%',marginBottom:0,color:'#000000',textAlign:'left'}}><IconButton onTouchTap={this.handleChange.bind(this)}><ActionInfo style={iconStyles}/></IconButton>{i+1}.{obj.questionQ} </h3>
+                <IconButton onTouchTap={this.handleChange.bind(this,obj.questionQ)} style={{marginRight:0}}><ActionInfo style={iconStyles}/></IconButton>
+                </CardText>
+                <CardText>
+              <h3 style={{marginTop:0,marginLeft:'2%',marginBottom:0,color:'#000000',textAlign:'left'}}>{i+1}.{obj.questionQ} </h3>
               </CardText>
               <CardText>
               {options}
@@ -219,8 +224,10 @@ else if(obj.questionType=="Dropdown"){
 
    return(<Card expanded='false'>
      <CardText>
-
-   <h3 style={{marginTop:0,marginLeft:'2%',marginBottom:0,color:'#000000',textAlign:'left'}}><IconButton onTouchTap={this.handleChange.bind(this)}><ActionInfo style={iconStyles}/></IconButton>{i+1}.{obj.questionQ} </h3>
+     <IconButton onTouchTap={this.handleChange.bind(this,obj.questionQ)} style={{marginRight:0}}><ActionInfo style={iconStyles}/></IconButton>
+     </CardText>
+     <CardText>
+   <h3 style={{marginTop:0,marginLeft:'2%',marginBottom:0,color:'#000000',textAlign:'left'}}>{i+1}.{obj.questionQ} </h3>
    </CardText>
    <CardText>
    {options}
@@ -238,8 +245,10 @@ else if(obj.questionType=="SingleText"){
 
    return(<Card expanded='false'>
      <CardText>
-
-   <h3 style={{marginTop:0,marginLeft:'2%',marginBottom:0,color:'#000000',textAlign:'left'}}><IconButton onTouchTap={this.handleChange.bind(this)}><ActionInfo style={iconStyles}/></IconButton>{i+1}.{obj.questionQ} </h3>
+     <IconButton onTouchTap={this.handleChange.bind(this,obj.questionQ)} style={{marginRight:0}}><ActionInfo style={iconStyles}/></IconButton>
+     </CardText>
+     <CardText>
+   <h3 style={{marginTop:0,marginLeft:'2%',marginBottom:0,color:'#000000',textAlign:'left'}}>{i+1}.{obj.questionQ} </h3>
    </CardText>
    <CardText>
    {options}
@@ -260,8 +269,10 @@ else if(obj.questionType=="MultiChoice"){
 
    return(<Card expanded='false'>
      <CardText>
-
-   <h3 style={{marginTop:0,marginLeft:'2%',marginBottom:0,color:'#000000',textAlign:'left'}}><IconButton onTouchTap={this.handleChange.bind(this)}><ActionInfo style={iconStyles}/></IconButton>{i+1}.{obj.questionQ} </h3>
+     <IconButton onTouchTap={this.handleChange.bind(this,obj.questionQ)} style={{marginRight:0}}><ActionInfo style={iconStyles}/></IconButton>
+     </CardText>
+     <CardText>
+   <h3 style={{marginTop:0,marginLeft:'2%',marginBottom:0,color:'#000000',textAlign:'left'}}>{i+1}.{obj.questionQ} </h3>
    </CardText>
    <CardText>
    <RadioButtonGroup name="YesOrNo" style={{textAlign:'left',marginLeft:'5%',marginTop:'2%'}} >
@@ -275,8 +286,10 @@ else if(obj.questionType=="Slider"){
 
    return(<Card expanded='false'>
      <CardText>
-
-   <h3 style={{marginTop:0,marginLeft:'2%',marginBottom:0,color:'#000000',textAlign:'left'}}><IconButton onTouchTap={this.handleChange.bind(this)}><ActionInfo style={iconStyles}/></IconButton>{i+1}.{obj.questionQ} </h3>
+     <IconButton onTouchTap={this.handleChange.bind(this,obj.questionQ)} style={{marginRight:0}}><ActionInfo style={iconStyles}/></IconButton>
+     </CardText>
+     <CardText>
+   <h3 style={{marginTop:0,marginLeft:'2%',marginBottom:0,color:'#000000',textAlign:'left'}}>{i+1}.{obj.questionQ} </h3>
    </CardText>
    <CardText>
    <Slider
@@ -300,8 +313,10 @@ else if(obj.questionType=="YesOrNo"){
 
    return(<Card expanded='false'>
      <CardText>
-
-   <h3 style={{marginTop:0,marginLeft:'2%',marginBottom:0,color:'#000000',textAlign:'left'}}><IconButton onTouchTap={this.handleChange.bind(this)}><ActionInfo style={iconStyles}/></IconButton>{i+1}.{obj.questionQ} </h3>
+     <IconButton onTouchTap={this.handleChange.bind(this,obj.questionQ)} style={{marginRight:0}}><ActionInfo style={iconStyles}/></IconButton>
+     </CardText>
+     <CardText>
+   <h3 style={{marginTop:0,marginLeft:'2%',marginBottom:0,color:'#000000',textAlign:'left'}}>{i+1}.{obj.questionQ} </h3>
    </CardText>
    <CardText>
    <RadioButtonGroup name="YesOrNo" style={{textAlign:'left',marginLeft:'5%',marginTop:'2%'}} >

@@ -70,9 +70,9 @@ updateDb(){
     questions:
       {
         questionType:'SingleText',
-        questionQ:this.state.quest,
+        questionQ:this.state.question,
       }
-    
+
   }
   request.post('http://localhost:9080/api/updateSurvey/'+sName)
           .set('Content-Type', 'application/json')

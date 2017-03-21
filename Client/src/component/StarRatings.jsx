@@ -98,7 +98,7 @@ class StarRatings extends Component
     this.setState({
       starValues:starValue
     })
-    this.props.options(starValue);
+    this.props.options(listOptions);
   }
   questionChange(e)
   {
