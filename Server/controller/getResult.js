@@ -1,6 +1,4 @@
 const surveyResultModel=require('../models/ResultSchema');
-const sliderResultModel=require('../models/sliderResultSchema');
-const commentResultModel=require('../models/commentResultSchema');
 var data=[];
 module.exports=function (req, res) {
 	const surveyResult = new surveyResultModel();

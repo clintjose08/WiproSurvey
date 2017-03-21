@@ -60,11 +60,12 @@ class Dropabble  extends Component {
        starRating: 1,
        dropDown:'null',
        singleTextValue:'',
-       commentValue:'',
+       commentValue:[],
        checkboxValue:[],
        multiChoiceValue:'',
        yesOrNoValue:'',
        sliderValue:'',
+
        i:0
     }
   }
@@ -97,9 +98,14 @@ class Dropabble  extends Component {
     console.log("singletext value set", newValue)
   }
 
-  commentsValueChanged=(e,newValue) =>  {
-    this.setState({commentValue:newValue});
-    console.log("comment value set", newValue)
+  commentsValueChanged=(qstn,e,newValue) =>  {
+    var a=this.state.commentValue;
+    a.pop();
+    a.pop();
+    a.push(qstn);
+    a.push(newValue);
+    this.setState({commentValue:a});
+    console.log("comment value set",qstn, this.state.commentValue)
   }
   multiChoiceValueChange=(e,value)=>{
     this.setState({multiChoiceValue:value});
@@ -124,18 +130,19 @@ class Dropabble  extends Component {
     this.setState({checkboxValue:a});
     console.log("checkbox value unsetset", a)}
   }
-  saveData(e){
+updateDb(e){
+var options=[];
+options.push(this.state.commentValue);
+var data={surveyName:localStorage.getItem('sName'),options:options}
+    request.put('http://localhost:9080/api/answerSurvey')
+            .set('Content-Type', 'application/json')
+            .send(data)
+             .then((err,res)=>
+             {
+               console.log("posted");
+              })
 
-    //        
-    // request.post('http://localhost:9080/api/answerSurvey')
-    //         .set('Content-Type', 'application/json')
-    //         .send(data)
-    //          .then((err,res)=>
-    //          {
-    //            console.log("posted");
-    //           })
-
-
+console.log("options push : ",data.options[0]);
   }
 
   handleSlider = (event, value) => {
@@ -185,7 +192,7 @@ class Dropabble  extends Component {
                hintText="Your Option Here"
                hintStyle={{fontWeight:'bold'}}
                underlineStyle={{borderColor:'#37861E '}}
-               onChange={this.commentsValueChanged}
+               onChange={this.commentsValueChanged.bind(this,obj.questionQ)}
                />
                </CardText>
              </Card>);
@@ -196,9 +203,7 @@ class Dropabble  extends Component {
                options.push(<div>
                   <Checkbox label={option} onCheck={this.checkboxValueChange.bind(this,option)} iconStyle={{marginLeft:'35%'}} labelStyle={{marginRight:'50%',color:'#000000',marginLeft:'2%'}}/>
                   </div>);
-
                 });
-
               return(<Card expanded='false'>
                 <CardText>
               <h3 style={{marginTop:0,marginLeft:'2%',marginBottom:0,color:'#000000',textAlign:'left'}}>{i+1}.{obj.questionQ} </h3>
@@ -207,7 +212,7 @@ class Dropabble  extends Component {
               {options}
               </CardText>
               </Card>);
-}
+            }
 else if(obj.questionType=="Dropdown"){
    var options=[];
     obj.options.map((option)=>{
