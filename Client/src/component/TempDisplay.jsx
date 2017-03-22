@@ -10,6 +10,7 @@ import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
 import {RadioButton, RadioButtonGroup} from 'material-ui/RadioButton';
 import Slider from 'material-ui/Slider';
+import ReactTooltip from 'react-tooltip';
 import { Grid,Row,Col } from 'react-flexbox-grid';
 import StarRating from 'star-rating-react';
 
@@ -48,7 +49,8 @@ constructor(){
     checked:'',
     showYes:false,
     sliderChange: 0,
-    starRating: 1
+    starRating: 1,
+    starComment:''
   };
 }
 handleOptionChangeYes (e) {
@@ -67,6 +69,10 @@ valueChanged = (event) =>  {
 
   valueChanged = (newValue) =>  {
     this.setState({starRating:newValue});
+    if(newValue==1)
+    {
+      this.setState({starComment:'very bad'});
+    }
     console.log(newValue)
   }
   
@@ -240,7 +246,7 @@ valueChanged = (event) =>  {
                    size={this.props.putOptions.length}
                    value={this.state.starRating}
                    onChange={this.valueChanged.bind(this)}
-                   />
+                   /> <span style={{textWeight:'bold'}}>{this.state.starComment}</span>
                    </Col> ) ;
 
   }

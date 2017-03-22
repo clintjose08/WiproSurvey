@@ -56,6 +56,7 @@ class Dropabble  extends Component {
        sliderChange:0
     }
   }
+
   componentWillMount() {
 
     var sName=localStorage.getItem('sName');
@@ -346,7 +347,6 @@ else if(obj.questionType=="YesOrNo"){
 
    return(
      <div style={{height:'90%'}}>
-      <h2 style={{fontWeight:'bold',textAlign:'center'}}>Your Template</h2>
       <Paper  style={style}>
         <Card style={welcomeStyle}>
           {welcomeTitle}

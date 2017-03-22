@@ -33,7 +33,7 @@ class StarRatings extends Component
     addValue: false,
     starValues:[],
   };
-  
+
   handleChange = (event, index, value) => {
     var list=[];
     var text=[];
@@ -93,10 +93,11 @@ class StarRatings extends Component
   {
     var starValue=this.state.starValues;
     starValue[e.target.id-1]=e.target.value;
+    console.log("Star value",starValue);
     this.setState({
       starValues:starValue
     })
-    this.props.options(listOptions);
+    this.props.options(starValue);
   }
   questionChange(e)
   {
@@ -200,7 +201,7 @@ class StarRatings extends Component
         </Card>
         </Paper>
         </form>
-        
+
       );
   }
 }

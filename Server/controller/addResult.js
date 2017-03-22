@@ -1,11 +1,10 @@
 const surveyResultModel=require('../models/ResultSchema');
 module.exports=function (req, res) {
 	const surveyResult = new surveyResultModel();
-  surveyResult.question=req.body.question;
-  surveyResult.questiontype=req.body.questiontype;
+  surveyResult.questions=req.body.questions;
   surveyResult.surveyid=req.body.surveyid;
-  surveyResult.answer=req.body.answer;
-  console.log(req.body);
+
+  console.log(surveyResult);
     surveyResult.save(function (err) {
       if(!err){
         res.send("created")
