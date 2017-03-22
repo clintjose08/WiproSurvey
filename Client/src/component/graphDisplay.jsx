@@ -21,7 +21,9 @@ class GraphDisplay extends Component
       }
   componentWillMount()
   {
+
       Request.get('http://localhost:9080/api/getResult').end((err,res)=>{
+
         this.setState({
           allData:res.body[0]
         })
@@ -55,14 +57,35 @@ class GraphDisplay extends Component
             {
               answer=[];
               answer.push(["Options","Count"]);
-              for(var i=0;i<data.options.length;i++)
-              answer.push([data.options[i]+" ("+data.count[i]+")",data.count[i]]);
+              var max=data.maxValue;
+              var scale=max/5;
+              var limit=max/scale;
+              var end,count,beg=0;
+
+              for(var i=0;i<limit;i++)
+              {
+
+                end=beg+scale;
+                count=0;
+                console.log("i",i,scale,limit);
+                data.options.map((obj)=>{
+                  if(beg<=obj&&obj<end)
+                  ++count;
+                });
+                answer.push([beg+"-"+end+" ("+count+")",count]);
+                beg+=scale;
+              }
+
+
               chart=(<Chart
-                   chartType="ScatterChart"
+                   chartType="PieChart"
                    data={answer}
+                   options={{title:"Response Report",pieHole:0.4,is3D:true}}
+
                    width="100%"
-                   options={{title:"Response Report",hAxis:{title:"Options",minValue:0,maxValue:data.maxValue},vAxis:{title:"Count",minValue:0,maxValue:15}}}
-                   legend="none"
+                   height="400px"
+                   legend_toggle
+
                  />);
             }
             else if(data.questiontype==="Comment")

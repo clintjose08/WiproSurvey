@@ -13,6 +13,7 @@ import Checkbox from 'material-ui/Checkbox';
 import IconButton from 'material-ui/IconButton';
 import Slider from 'material-ui/Slider';
 
+
 const welcomeStyle={
 background:'#649F4E',
 textAlign:'center',
