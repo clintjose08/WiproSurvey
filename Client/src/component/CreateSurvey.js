@@ -24,15 +24,26 @@ import SurveyDetails from './SurveyDetails';
 
 
 
-
 class CreateSurvey extends Component {
   constructor(props) {
       super(props);
     this.state = {
       open: false,
-      name:''
-    
+      name:'',
+      output:[]
+
   }}
+  componentWillMount(){
+    request
+    .get('http://localhost:9080/api/getDetails/')
+    .end((err,res) => {
+
+      this.setState({
+        output:res.body
+      });
+      console.log("result",res.body);
+    });
+  }
   createDb(){
      localStorage.setItem("sName", this.state.name);
     console.log("name set Sucess", this.state.name);
@@ -67,9 +78,21 @@ class CreateSurvey extends Component {
   };
 
   render() {
+    var drafts=0;
+    var running=0;
+    var closed=0;
 
-
-    
+this.state.output.map((obj,i)=>{
+  if(obj.status=="draft"){
+    drafts++;
+  }
+  else if (obj.status=="running") {
+    running++;
+  }
+  else if (obj.status=="closed") {
+    closed++;
+  }
+});
 
     return(
 
@@ -85,12 +108,13 @@ class CreateSurvey extends Component {
               <Row center="xs">
               <Col xs={12}>
              <Avatar
-        
+
           size={150}
-              
+
                 />
               <h2>User Name</h2>
               <h4>Emp-Id</h4>
+
               <h4>Designation</h4>
               </Col>
               </Row>
@@ -104,7 +128,7 @@ class CreateSurvey extends Component {
               <h3 style={{color:'#28B463',fontSize:'175%',textAlign:'left', fontFamily: 'Black Ops One'}}>Easy Way to Survey</h3>
               <h3 style={{color:'#28B463',fontSize:'180%',fontFamily: 'Black Ops One'}}>Your Audience</h3>
               </Col>
-              
+
               </Row>
               </CardText>
               </Col>
@@ -112,29 +136,29 @@ class CreateSurvey extends Component {
             <CardMedia style={{marginLeft:0}}>
              <img src={background} style={{width:'auto',height:'20%'}} />
             </CardMedia>
-              </Col>           
+              </Col>
              </Row>
             <CardActions>
             <Divider />
-           
+
               <RaisedButton label="Create New Survey"
                 icon={<Create />}
                 backgroundColor='#1C6D03 '
                 labelStyle={{color:'#FFFFFF ',fontWeight:'bold',marginTop:'4%'}}
-                style={{textAlign:'center',width:'25%',marginTop:'2%',marginBottom:'1%',padding:'0px'}} 
+                style={{textAlign:'center',width:'25%',marginTop:'2%',marginBottom:'1%',padding:'0px'}}
                 onTouchTap={this.handleOpen}/>
-            
+
             </CardActions>
   </Card>
 
     </Paper>
 
 </Col>
-<Col xs={12}>    
+<Col xs={12}>
     <Paper  style={{ marginTop:'2%'}}>
          <Row>
-        
-        
+
+
          <Card style={{textAlign:'center'}} >
          <Row>
          <Col xs={4}>
@@ -148,7 +172,7 @@ class CreateSurvey extends Component {
           backgroundColor={'#27AE60'}
           style={{marginTop:'2%'}}
          />
-         <h2 style={{fontSize:'125%'}}>0</h2>
+         <h2 style={{fontSize:'125%'}}>{running}</h2>
           <h5 style={{fontSize:'125%',marginTop:'0px',marginBottom:'0px'}}>Your active surveys are here Click below to get details</h5>
           </CardText>
            <CardActions>
@@ -163,10 +187,10 @@ class CreateSurvey extends Component {
            </CardActions>
 
 
-         
+
          </Col>
 
-         <Col xs={4}>   
+         <Col xs={4}>
            <CardText>
            <h3>Closed</h3>
            <Divider />
@@ -176,7 +200,7 @@ class CreateSurvey extends Component {
              backgroundColor={'#E74C3C'}
              style={{marginTop:'2%'}}
             />
-              <h2 style={{fontSize:'125%'}}>2</h2>
+              <h2 style={{fontSize:'125%'}}>{closed}</h2>
               <h5 style={{fontSize:'125%',marginTop:'0px',marginBottom:'0px'}}>Already closed surveys are here Click below to get details</h5>
 
           </CardText>
@@ -186,16 +210,16 @@ class CreateSurvey extends Component {
             backgroundColor="#E74C3C"
             style={{width:'100%' ,textAlign: 'center',marginTop:'0px',fontWeight: 'bold',marginBottom:'0px'}}
             label="Closed"
-            labelStyle={{fontSize:'125%',color:'#FDFEFE',fontWeight:'bold'}}/>  />
+            labelStyle={{fontSize:'125%',color:'#FDFEFE',fontWeight:'bold'}}/>
             </Link>
            </CardActions>
 
 
-     
+
          </Col>
 
           <Col xs={4}>
-        
+
 
 
          <CardText>
@@ -208,10 +232,10 @@ class CreateSurvey extends Component {
            backgroundColor={'#F39C12'}
            style={{marginTop:'2%'}}
           />
-          
-          <h2 style={{fontSize:'125%'}}>0</h2>
+
+          <h2 style={{fontSize:'125%'}}>{drafts}</h2>
           <h5 style={{fontSize:'125%',marginTop:'0px',marginBottom:'0px'}}>Your all draft surveys are here Click below to get details</h5>
-           
+
           </CardText>
            <CardActions>
            <Link to="Home/DraftDisplay" activeClassName="active">
@@ -223,10 +247,10 @@ class CreateSurvey extends Component {
             labelStyle={{fontSize:'125%',color:'#FDFEFE',fontWeight:'bold'}}/> />
             </Link>
            </CardActions>
-          </Col> 
+          </Col>
           </Row>
          </Card>
-     
+
          </Row>
          </Paper>
 </Col>
@@ -238,9 +262,9 @@ class CreateSurvey extends Component {
           onRequestClose={this.handleClose}
         >
           <Row  middle="xs">
-         
+
          <Col xs={12}>
-      
+
           <TextField
             hintText="Name of the survey"
             onChange={this.nameChange.bind(this)}
@@ -248,16 +272,16 @@ class CreateSurvey extends Component {
         </Col>
         <Col xs={12}>
         <Row>
-       
+
         <Col xsOffset={1}  xs={1}>
           <Link to="Home/AddQuestion" activeClassName="active">
             <RaisedButton label="Start" onClick={this.createDb.bind(this)} backgroundColor="#1C6D03" labelColor='white' labelStyle={{fontWeight:'bold'}} />
           </Link>
         </Col>
           </Row>
-          
+
           </Col>
-         
+
         </Row>
         </Dialog>
         </Row>

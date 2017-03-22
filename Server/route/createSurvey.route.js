@@ -1,5 +1,5 @@
 const createSurveyConfig=require('../controller/createSurvey');
-
+const getSurveyDetails=require('../controller/getDetails');
 const updateSurveyConfig=require('../controller/updateSurvey');
 const getSurveyConfig=require('../controller/getSurveyConfig');
 const deleteQuest=require('../controller/deleteSurveyQuest');
@@ -10,4 +10,5 @@ router.post('/api/createSurvey',createSurveyConfig);
 router.put('/api/deleteQuest/:sName/:surveyQuest',deleteQuest);
 router.post('/api/updateSurvey/:sName',updateSurveyConfig);
 router.get('/api/getSurvey/:sName',getSurveyConfig);
+router.get('/api/getDetails',getSurveyDetails);
 module.exports=router;

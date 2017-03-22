@@ -23,7 +23,7 @@ import StarRatings from './view/StarRatings';
 import DraftDisplay from './component/draftDisplay'
 import Timer from './component/timer';
 import TakeSurvey from './view/TakeSurvey';
-
+import Preview from './component/Preview';
 
 injectTapEventPlugin();
 
@@ -33,6 +33,7 @@ ReactDOM.render(
      <Route path="/" component={Login}/>
      <Route path="/Home" component={App}>
        <Route path="CreateSurvey" component={CreateSurvey}/>
+       <Route path="Preview" component={Preview}/>
        <Route path="AddQuestion" component={AddQuestion}/>
        <Route path="SurveyDetails" component={SurveyDetails}/>
        <Route path="Welcome" component={WelcomeEdit}/>
