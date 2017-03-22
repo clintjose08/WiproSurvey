@@ -14,66 +14,79 @@ class GraphDisplay extends Component {
   constructor() {
    super();
    this.state={
-     
-     allData:[]
-     
-     
+
+     allData:""
+
+
    };
  }
 
   componentDidMount() {
   	Request
-          .get('http://localhost:9080/api/result')
-          .then((res)=>{
-            console.log("Getting Value"+res.body);
+          .get('http://localhost:9080/api/getResult')
+          .then((res,err)=>{
+            if(err)
+            console.log("error",err);
+
             this.setState({
               allData:res.body
             });
-            
+
           });
 
 
-  }	
- 
+  }
+
 
   render() {
-    const Details=this.state.allData.map((data)=>{
+    var Details;
+    if(this.state.allData!="")
+    {
+     Details=this.state.allData.map((data)=>{
+       var answer=[], obj,total=0,title="Overall response rate";
+       answer.push(['Options','Count']);
+       data.answer.map((opt)=>{
+         obj=[];
+         obj.push(opt.options+" ("+opt.count+")");
+         obj.push(opt.count);
+         if(data.questiontype!="Checkbox")
+         {total+=opt.count;
+
+           title="Total no of participants : "+total;
+         }
+         answer.push(obj);
+       });
+
             return (
                      <Card>
-                     
-                      
                           <CardHeader
-                          title={data.welcomeMsg}
+                          title={data.question}
                           actAsExpander={true}
-                          
                           />
-                         
-                     
-                     
-                          <CardText expandable={true}>
-                          
+                        <CardText expandable={true}>
+
                           <Col xs={12}>
                          <Chart
                               chartType="PieChart"
-                              data={[["Option","Opinion"],["Excellent",11],["Very Good",2],["Good",2],["Average",2],["Bad",7]]}
-                              options={{title:"Your Points",pieHole:0.4,is3D:true}}
-                             
+                              data={answer}
+                              options={{title:title,pieHole:0.4,is3D:true}}
+
                               width="100%"
                               height="400px"
                               legend_toggle
                             />
-                            
-                            <h4>Item Name</h4>
+
                             </Col>
-                            
+
                           </CardText>
-                           
+
                       </Card>
-                   
+
                         );
-                        
+
                         });
-    
+                      }
+
 
     return(
     	    <div>

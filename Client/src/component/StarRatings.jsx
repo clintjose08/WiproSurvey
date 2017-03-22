@@ -95,6 +95,7 @@ class StarRatings extends Component
   {
     var starValue=this.state.starValues;
     starValue[e.target.id-1]=e.target.value;
+    console.log("Star value",starValue);
     this.setState({
       starValues:starValue
     })

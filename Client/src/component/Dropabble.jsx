@@ -39,7 +39,7 @@ width:'100%',
 
 
 class Dropabble  extends Component {
- 
+
   componentWillMount() {
     var sName=localStorage.getItem('sName');
       request
@@ -87,12 +87,11 @@ class Dropabble  extends Component {
                console.log("posted");
               })
 
-  
+
   }
  render() {
    return(
      <div style={{height:'90%'}}>
-      <h2 style={{fontWeight:'bold',textAlign:'center'}}>Your Template</h2>
       <Paper  style={style}>
         <Card style={welcomeStyle}>
 

@@ -10,9 +10,7 @@ import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
 import {Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn} from 'material-ui/Table';
 import { Grid,Col,Row} from 'react-flexbox-grid';
-
 import GraphDisplay from './graphDisplay'; 
-
 import Analyze from 'material-ui/svg-icons/action/assessment';
 import Reminder from 'material-ui/svg-icons/navigation/refresh';
 import Cancel from 'material-ui/svg-icons/navigation/cancel';
@@ -22,7 +20,7 @@ class DisplayDetails extends Component{
     value: 1,
     open: false,
   };
-   
+
   handleOpen = () => {
     this.setState({open: true});
   };
@@ -41,7 +39,7 @@ class DisplayDetails extends Component{
                      primary={true}
                      onTouchTap={this.handleClose}
                 />,
-                
+
                  ];
 
 		return(<Grid>
@@ -60,7 +58,7 @@ class DisplayDetails extends Component{
                          <MenuItem value={1} primaryText="Running" />
                          <MenuItem value={2} primaryText="Closed" />
                          <MenuItem value={3} primaryText="All Surveys" />
-                         
+
                     </SelectField>
                     </Col>
                 </Row>
@@ -91,7 +89,7 @@ class DisplayDetails extends Component{
                          <TableRowColumn><RaisedButton label="Reminder" backgroundColor='#3498DB' labelColor='#FDFEFE' icon={<Reminder />} /></TableRowColumn>
                          <TableRowColumn><RaisedButton label="Cancel" backgroundColor='#EC7063' labelColor='#FDFEFE' icon={<Cancel />} /></TableRowColumn>
                      </TableRow>
-                    
+
                   </TableBody>
                 </Table>
                 </Paper>
@@ -102,7 +100,7 @@ class DisplayDetails extends Component{
                  modal={false}
                  open={this.state.open}
                  onRequestClose={this.handleClose}
-                 autoScrollBodyContent={true} 
+                 autoScrollBodyContent={true}
                  contentStyle={{height:'100%',width:'100%',maxHeight:'none',maxWidth: 'none'}}
                 >
                  {<GraphDisplay />}
@@ -113,6 +111,6 @@ class DisplayDetails extends Component{
                 </Row>
 			</Grid>);
 		}
-	}	
+	}
 
-   export default DisplayDetails; 
+   export default DisplayDetails;
