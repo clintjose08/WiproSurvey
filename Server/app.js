@@ -3,9 +3,7 @@ const express = require('express');
 const app = express();
 const port = process.env.PORT || 9080;
 const createSurveyConfigRoute=require('./route/createSurvey.route');
-
 const getTempData=require('./route/getTempData');
-
 const getResultConfigRoute=require('./route/getResult.route');
 const addResult=require('./route/addResult.route');
 const http = require('http');
@@ -23,10 +21,10 @@ app.use(function(req, res, next) {
     next();
 });
 app.use('/',createSurveyConfigRoute);
-// 
 app.use('/',getTempData);
 app.use('/',getResultConfigRoute);
 app.use('/',addResult);
+
 const server = http.createServer(app);
 server.listen(port, () => {
 
