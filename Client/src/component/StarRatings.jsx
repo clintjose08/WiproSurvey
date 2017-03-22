@@ -33,9 +33,7 @@ class StarRatings extends Component
     addValue: false,
     starValues:[],
   };
-  componentWillMount(){
-    
-  }
+  
   handleChange = (event, index, value) => {
     var list=[];
     var text=[];

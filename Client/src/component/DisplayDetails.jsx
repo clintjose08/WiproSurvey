@@ -86,7 +86,7 @@ class DisplayDetails extends Component{
                          <TableRowColumn>26 Feb 2017</TableRowColumn>
                          <TableRowColumn>30 Mar</TableRowColumn>
                          <TableRowColumn>100</TableRowColumn>
-                         <TableRowColumn><RaisedButton label="Details" backgroundColor='#616A6B' labelColor='#FDFEFE' icon={<Analyze />} onTouchTap={this.handleOpen}/></TableRowColumn>
+                         <TableRowColumn><RaisedButton label="Statistics" backgroundColor='#616A6B' labelColor='#FDFEFE' icon={<Analyze />} onTouchTap={this.handleOpen}/></TableRowColumn>
                          <TableRowColumn>Running</TableRowColumn>
                          <TableRowColumn><RaisedButton label="Reminder" backgroundColor='#3498DB' labelColor='#FDFEFE' icon={<Reminder />} /></TableRowColumn>
                          <TableRowColumn><RaisedButton label="Cancel" backgroundColor='#EC7063' labelColor='#FDFEFE' icon={<Cancel />} /></TableRowColumn>
