@@ -1,80 +1,90 @@
 import React, { Component } from 'react';
-import { Grid,Col,Row} from 'react-flexbox-grid';
+import Paper from 'material-ui/Paper';
 import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
+import {Grid,Col,Row} from 'react-flexbox-grid';
+import {List, ListItem} from 'material-ui/List';
+import Request from 'superagent';
+import { Chart } from 'react-google-charts';
 import FlatButton from 'material-ui/FlatButton';
 import Divider from 'material-ui/Divider';
 
-
-import { Chart } from 'react-google-charts';
-
-import Request from 'superagent';
-
-class GraphDisplay extends Component {
-
-  constructor() {
-   super();
-   this.state={
-
-     allData:""
-
-
-   };
- }
-
-  componentDidMount() {
-  	Request
-          .get('http://localhost:9080/api/getResult')
-          .then((res,err)=>{
-            if(err)
-            console.log("error",err);
-
-            this.setState({
-              allData:res.body
-            });
-
-          });
-
+const cardStyle={
+  width:'80%'
+}
+class GraphDisplay extends Component
+{
+  constructor(props) {
+        super(props);
+        this.state={
+          allData:''
+        }
+      }
+  componentWillMount()
+  {
+      Request.get('http://localhost:9080/api/getResult').end((err,res)=>{
+        this.setState({
+          allData:res.body[0]
+        })
+      });
 
   }
-
-
-  render() {
+  render()
+  {
     var Details;
-    if(this.state.allData!="")
+    if(this.state.allData.questions)
     {
-     Details=this.state.allData.map((data)=>{
-       var answer=[], obj,total=0,title="Overall response rate";
-       answer.push(['Options','Count']);
-       data.answer.map((opt)=>{
-         obj=[];
-         obj.push(opt.options+" ("+opt.count+")");
-         obj.push(opt.count);
-         if(data.questiontype!="Checkbox")
-         {total+=opt.count;
+      var chart,answer=[];
+     Details=this.state.allData.questions.map((data)=>{
+            if(data.questiontype==="MultiChoice")
+            {
+              answer=[];
+              answer.push(["Options","Count"]);
+              for(var i=0;i<data.options.length;i++)
+              answer.push([data.options[i]+" ("+data.count[i]+")",data.count[i]]);
+              chart=(<Chart
+                   chartType="PieChart"
+                   data={answer}
+                   options={{title:"Response Report",pieHole:0.4,is3D:true}}
 
-           title="Total no of participants : "+total;
-         }
-         answer.push(obj);
-       });
+                   width="100%"
+                   height="400px"
+                   legend_toggle
+                 />);
+            }
+            else if(data.questiontype==="Slider")
+            {
+              answer=[];
+              answer.push(["Options","Count"]);
+              for(var i=0;i<data.options.length;i++)
+              answer.push([data.options[i]+" ("+data.count[i]+")",data.count[i]]);
+              chart=(<Chart
+                   chartType="ScatterChart"
+                   data={answer}
+                   width="100%"
+                   options={{title:"Response Report",hAxis:{title:"Options",minValue:0,maxValue:data.maxValue},vAxis:{title:"Count",minValue:0,maxValue:15}}}
+                   legend="none"
+                 />);
+            }
+            else if(data.questiontype==="Comment")
+            {
+              chart=[];
+              chart.push(<h3>User Comments</h3>)
+              data.options.map((obj)=>{
+              chart.push(<p style={{textAlign:"left",margin:20}}>{obj}<hr/></p>)
+            });
 
+            }
             return (
                      <Card>
-                          <CardHeader
+                        <CardHeader
                           title={data.question}
                           actAsExpander={true}
                           />
                         <CardText expandable={true}>
-
                           <Col xs={12}>
-                         <Chart
-                              chartType="PieChart"
-                              data={answer}
-                              options={{title:title,pieHole:0.4,is3D:true}}
 
-                              width="100%"
-                              height="400px"
-                              legend_toggle
-                            />
+                          {chart}
+
 
                             </Col>
 
@@ -84,17 +94,15 @@ class GraphDisplay extends Component {
 
                         );
 
-                        });
-                      }
+                      });}
 
 
     return(
-    	    <div>
+            <div>
           {Details}
           </div>
-    	);
-
-    }
+        );
+  }
 }
 
 export default GraphDisplay;

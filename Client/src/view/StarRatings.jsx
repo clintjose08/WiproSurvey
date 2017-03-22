@@ -33,7 +33,7 @@ class StarRatingsEdit extends Component {
   }
  render() {
 
-   return (<div >
+   return (
             <Dialog  autoScrollBodyContent={true} open={this.state.open} modal={true} contentStyle={{width:'100%',maxWidth:'100%'}}>
             <Grid>
               <Row>
@@ -46,7 +46,7 @@ class StarRatingsEdit extends Component {
               </Row>
             </Grid>
           </Dialog>
-        </div>
+        
    );
  }
 }

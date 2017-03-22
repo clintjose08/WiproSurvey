@@ -26,7 +26,7 @@ class MultiChoice extends Component {
    }
  }
  componentWillMount(){
-   this.props.type("MultiChoice");
+   
  }
  questionChange(e)
  {
@@ -34,6 +34,7 @@ class MultiChoice extends Component {
      quest:e.target.value,
    })
    this.props.question(e.target.value);
+   this.props.type("MultiChoice");
  }
  addOptions(e)
  {
@@ -67,13 +68,13 @@ updateDb(){
   var questionScreen={
     sName:localStorage.getItem('sName'),
     type:'multichoice',
-    questions:[
+    questions:
       {
         questionType:'MultiChoice',
         questionQ:this.state.quest,
         options:this.state.optionArr
       }
-    ]
+    
   }
   request.post('http://localhost:9080/api/updateSurvey/'+sName)
           .set('Content-Type', 'application/json')

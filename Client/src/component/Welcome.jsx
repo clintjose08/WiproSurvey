@@ -28,8 +28,8 @@ const cardTitleStyle={
 class Welcome extends Component
 {
 
-constructor(props) {
-   super(props);
+constructor(props,context:any) {
+   super(props,context:any);
    this.state = {
    expanded: false,
    welcomeMsg:'',
@@ -37,6 +37,11 @@ constructor(props) {
 
     };
   }
+	static get contextTypes() {
+	        return {
+	          router: React.PropTypes.object.isRequired
+	        };
+	      }
 
   componentWillMount(){
     this.props.type("Welcome");
@@ -49,7 +54,7 @@ constructor(props) {
     this.setState({
 			welcomeMsg:e.target.value
 		})
-    console.log("Sucess");  
+    console.log("Sucess");
 
   }
 
@@ -60,7 +65,7 @@ constructor(props) {
     this.setState({
 			discript:e.target.value
 		})
-    console.log("Sucess"); 
+    console.log("Sucess");
 
   }
 
@@ -82,6 +87,7 @@ constructor(props) {
 						.send(welcomeScreen)
 						 .end((err,res)=>
 						 {
+							   this.context.router.push('Home/AddQuestion');
 							 console.log("posted");
 							})
 	}
@@ -128,9 +134,9 @@ constructor(props) {
 										<Link to="Home/AddQuestion" activeClassName="active">
 											<RaisedButton label="Cancel" labelStyle={{fontWeight:'bold'}} />
 											</Link>
-										 <Link to="Home/AddQuestion" activeClassName="active">
+											<Link to="Home/AddQuestion" activeClassName="active">
 											<RaisedButton label="Submit" onClick={this.updateDb.bind(this)} backgroundColor='#1C6D03 ' labelStyle={{color:'#FFFFFF ',fontWeight:'bold'}} />
-										 </Link>
+											</Link>
 								  </CardActions>
 						</Card>
 					</Paper>

@@ -63,14 +63,14 @@ handleScale(e) {
     var questionScreen={
       sName:localStorage.getItem('sName'),
       type:'slider',
-      questions:[
+      questions:
         {
           questionType:"Slider",
           questionQ:this.state.quest,
           maxValue:this.state.maximum,
           scale:this.state.scale
         }
-      ]
+
     }
     request.post('http://localhost:9080/api/updateSurvey/'+sName)
             .set('Content-Type', 'application/json')
