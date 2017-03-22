@@ -58,6 +58,7 @@ class Dropabble  extends Component {
        starRating: 1
     }
   }
+
   componentWillMount() {
 
     var sName=localStorage.getItem('sName');
@@ -137,23 +138,23 @@ window.location.reload()
    var thanksMessage=[];
    var questions=[];
    welcomeTitle.push(
-  <div>
+  <Col xs={12}>
       <h3 style={{marginTop:'2%',marginBottom:'2%',fontSize:'150%'}}> Survey Title</h3>
       <Divider/>
       <h4 style={{marginTop:'1%',marginLeft:'1%',color:'#283747',textAlign:'left'}}>Description </h4>
-</div>
+</Col>
      );
      questions.push(
          <h3 style={{marginTop:'5%',marginBottom:'5%',color:'#818181',height:'50%'}}>Your Questions </h3>
        );
      thanksMessage.push(
-<div>
+<Col xs={12}>
         <h3 style={{marginTop:'2%',marginBottom:'2%'}}> Thank You Message</h3>
         <Divider/>
         <h4 style={{marginTop:'1%',marginLeft:'1%',color:'',textAlign:'left',color:'#283747'}}> Creater Name </h4>
         <h4 style={{marginTop:0,marginLeft:'1%',color:'#283747',textAlign:'left'}}>Creater Contact Number </h4>
         <h4 style={{marginTop:0,marginLeft:'1%',color:'#283747',textAlign:'left'}}> Creater E-mail </h4>
-</div>
+</Col>
        );
        if(this.state.output.welcomeMsg)
        {
@@ -375,7 +376,6 @@ else if(obj.questionType=="YesOrNo"){
 
    return(
      <div style={{height:'90%'}}>
-      <h2 style={{fontWeight:'bold',textAlign:'center'}}>Your Template</h2>
       <Paper  style={style}>
         <Card style={welcomeStyle}>
           {welcomeTitle}

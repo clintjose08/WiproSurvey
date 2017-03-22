@@ -32,20 +32,20 @@ class DropdownEdit extends Component {
   }
  render() {
 
-   return (<div >
+   return (
             <Dialog autoScrollBodyContent={true} open={this.state.open} contentStyle={{height:'100%',width:'100%',maxHeight:'none',maxWidth: 'none'}}>
             <Grid>
               <Row style={{height:'40%'}}>
-                <Col xs={12} sm={4.5}>
+                <Col xs={12} sm={5}>
                   <Dropdown type={this.getType.bind(this)} question={this.onChangeQuest.bind(this)} options={this.onChangeOptions.bind(this)}/>
                 </Col>
-                <Col xs={12} sm={7.5}>
+                <Col xs={12} sm={7}>
                   <TempDisplay putQuestion={this.state.quest} putOptions={this.state.options} putType={this.state.type}/>
                 </Col>
               </Row>
             </Grid>
           </Dialog>
-        </div>
+        
    );
  }
 }

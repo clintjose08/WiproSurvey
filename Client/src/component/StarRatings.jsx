@@ -34,7 +34,7 @@ class StarRatings extends Component
     starValues:[],
   };
   componentWillMount(){
-    this.props.type("StarRatings");
+
   }
   handleChange = (event, index, value) => {
     var list=[];
@@ -95,6 +95,7 @@ class StarRatings extends Component
   {
     var starValue=this.state.starValues;
     starValue[e.target.id-1]=e.target.value;
+    console.log("Star value",starValue);
     this.setState({
       starValues:starValue
     })
@@ -106,6 +107,7 @@ class StarRatings extends Component
       quest:e.target.value
     })
     this.props.getQuestion(e.target.value);
+    this.props.type("StarRatings");
   }
 
   updateDb(){
@@ -153,7 +155,7 @@ class StarRatings extends Component
       items.push(<MenuItem value={i} key={i} primaryText={`${i}`} />);
     }
 
-    return(<div>
+    return(
         <form >
             <Paper>
         <Card style={{background:' #E5E4E2 '}}>
@@ -201,7 +203,7 @@ class StarRatings extends Component
         </Card>
         </Paper>
         </form>
-        </div>
+
       );
   }
 }

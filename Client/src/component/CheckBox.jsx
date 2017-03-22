@@ -27,7 +27,7 @@ class CheckBox extends Component {
    }
  }
  componentWillMount(){
-   this.props.type("Checkbox");
+   
  }
 handleChange = (event, index, value) => this.setState({value});
  addOptions(e)
@@ -65,6 +65,7 @@ questionChange(e)
     quest:e.target.value
   })
   this.props.question(e.target.value);
+  this.props.type("Checkbox");
 }
 updateDb(){
   var sName=localStorage.getItem('sName');

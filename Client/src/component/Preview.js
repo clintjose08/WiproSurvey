@@ -125,39 +125,15 @@ class Dropabble  extends Component {
     console.log("checkbox value unsetset", a)}
   }
   saveData(e){
-    var data={	"surveyname":"{type:String}",
-    "description":"{type:String}",
-    "thanksMessage":"{type:String}",
-    "createrName":"{type:String}",
-    "createrContact":24634,
-    "creterEmail":"{type:String}",
-    "questions": [
-      {
-        "questionno": 1,
-        "question": "ajafa",
-        "options": [
-          "xgfgf",
-          "gfg"
-        ]
-      },
-      {
-        "questionno": 2,
-        "question": "ajafa",
-        "options": [
-          "fdsgh",
-          "gfhh",
-          "gfhghg"
-        ]
-      }
-    ]
-           }
-    request.post('http://localhost:9080/api/createSurvey')
-            .set('Content-Type', 'application/json')
-            .send(data)
-             .then((err,res)=>
-             {
-               console.log("posted");
-              })
+
+    //        
+    // request.post('http://localhost:9080/api/answerSurvey')
+    //         .set('Content-Type', 'application/json')
+    //         .send(data)
+    //          .then((err,res)=>
+    //          {
+    //            console.log("posted");
+    //           })
 
 
   }
@@ -387,6 +363,8 @@ else if(obj.questionType=="YesOrNo"){
 
         <Card style={thanksStyle}>
             {thanksMessage}
+            <RaisedButton label="Submit" backgroundColor='#1C6D03 ' onClick={this.updateDb.bind(this)} labelStyle={{color:'#FFFFFF ',fontWeight:'bold'}}/>
+
         </Card>
 
       </Paper>

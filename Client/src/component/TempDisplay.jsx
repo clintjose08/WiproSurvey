@@ -218,41 +218,41 @@ valueChanged = (event) =>  {
    }
    else if(this.props.putQuestion && this.props.putType=="Textbox"){
        components.pop();
-       components.push(<div>
+       components.push(<Col xs={12}>
       <h3 style={{marginTop:0,marginLeft:'2%',marginBottom:0,color:'#000000',textAlign:'left'}}>{this.props.putQuestion}</h3>
       <TextField
       hintText="Your Option Here"
       hintStyle={{fontWeight:'bold'}}
       underlineStyle={{borderColor:'#37861E '}}
       />
-    </div>);
+    </Col>);
 
    }
-   else if(this.props.putQuestion &&this.props.putType==="StarRatings")
+   else if(this.props.putQuestion && this.props.putType=="StarRatings")
 
   {
 
       components.pop();
-      components.push(<div>
-     <h3 style={{marginTop:0,marginLeft:'2%',marginBottom:0,color:'#000000 ',textAlign:'left'}}>{this.props.putQuestion}</h3>
-     </div>);
+
       components.push( <div style={{display:'inline-block',marginLeft:'2%',marginTop:'1%',height:'50%'}}>
 
+     <h3 style={{marginTop:'10%',marginBottom:'5%',marginLeft:'2%',color:'#000000 ',textAlign:'left'}}>{this.props.putQuestion}</h3>
 
                   <StarRating
                    size={this.props.putOptions.length}
                    value={this.state.starRating}
                    onChange={this.valueChanged.bind(this)}
                    />
-                   </div> );
+                   </div> ) ;
 
   }
-   else if (this.props.putQuestion && this.props.putType==="Dropdown") {
+   else if (this.props.putQuestion && this.props.putType=="Dropdown") {
 
        components.pop();
-       components.push(<div>
+       components.push(<Col xs={12}>
+
       <h3 style={{marginTop:0,marginLeft:'2%',marginBottom:0,color:'#000000',textAlign:'left'}}>{this.props.putQuestion}</h3>
-      </div>);
+      </Col>);
 
        var index=1;
        selOpt.push(<MenuItem value={index} primaryText="Select an option"/>)
@@ -267,12 +267,14 @@ valueChanged = (event) =>  {
        components.pop();
 
        components.push(
+
         <Row>
 
       <h3 style={{marginTop:'10%',marginBottom:'10%',marginLeft:'2%',marginBottom:0,color:'#000000',textAlign:'left'}}>{this.props.putQuestion}</h3>
 
       <Col xs={12}>
       <TextField
+
       hintText="Your Comments Here"
       hintStyle={{fontWeight:'bold'}}
       underlineStyle={{borderColor:'#37861E '}}
@@ -282,9 +284,11 @@ valueChanged = (event) =>  {
 
       </Col>
 
+
       </Row>
     );
    }
+
 
 
    else if(this.props.putQuestion && this.props.putType=="YesOrNo"){
@@ -312,7 +316,7 @@ valueChanged = (event) =>  {
 
 
 
-  else if (this.props.putQuestion && this.props.putType=="MultiChoice") {
+  else if (this.props.putOptions && this.props.putQuestion && this.props.putType=="MultiChoice") {
 
        components.pop();
        components.push(<div>

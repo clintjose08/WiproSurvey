@@ -13,7 +13,6 @@ import {Router, Route, IndexRoute, hashHistory} from 'react-router';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 import AddQuestion from './view/AddQuestion';
 import DropdownEdit from './view/Dropdown';
-import MCQGraph from './view/MCQGraph';
 import SliderEdit from './view/Slider';
 import SingleTextEdit from './view/SingleText';
 import MultiChoiceEdit from './view/MultiChoice';
@@ -21,8 +20,9 @@ import QgroupEdit from './view/Qgroup';
 import CheckBoxEdit from './view/CheckBox';
 import YesOrNoEdit from './view/YesOrNo';
 import StarRatings from './view/StarRatings';
+import DraftDisplay from './component/draftDisplay'
 import Timer from './component/timer';
-import Preview from './component/Preview'
+import Preview from './component/Preview';
 injectTapEventPlugin();
 
 ReactDOM.render(
@@ -38,7 +38,6 @@ ReactDOM.render(
        <Route path="Details" component={DisplayDetails}/>
        <Route path="Comments" component={CommentsEdit}/>
        <Route path="Dropdown" component={DropdownEdit}/>
-       <Route path="Result" component={MCQGraph}/>
        <Route path="Slider" component={SliderEdit}/>
        <Route path="SingleText" component={SingleTextEdit}/>
        <Route path="MultiChoice" component={MultiChoiceEdit}/>
@@ -48,6 +47,8 @@ ReactDOM.render(
        <Route path="CheckBox" component={CheckBoxEdit}/>
        <Route path="Thankyou" component={ThankyouEdit}/>
        <Route path="Timer" component={Timer}/>
+       <Route path="DraftDisplay" component={DraftDisplay}/>
+
     </Route>
   </Router>
   </MuiThemeProvider>,

@@ -1,17 +1,22 @@
 const surveyResultModel=require('../models/ResultSchema');
+const sliderResultModel=require('../models/sliderResultSchema');
+const commentResultModel=require('../models/commentResultSchema');
+var data=[];
 module.exports=function (req, res) {
 	const surveyResult = new surveyResultModel();
-	surveyResultModel.findOne({surveyid:"1234"},function (err, mySchema) {
+	surveyResultModel.find({surveyid:"345"},function (err, mySchema) {
 		if (err) {
-			console.log("error");
+			console.log("error in survey");
 		}
 		if(mySchema){
 			console.log(mySchema);
-			res.send(mySchema);
+			res.send(mySchema)
 		}
 		else{
-			console.log("Database doesn't exist");
-			res.send("Database doesn't exist");
+			console.log("Database survey doesn't exist");
+			res.send("Database survey doesn't exist");
 		}
 	});
+
+
 }
