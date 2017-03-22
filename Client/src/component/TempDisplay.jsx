@@ -69,7 +69,7 @@ valueChanged = (event) =>  {
     this.setState({starRating:newValue});
     console.log(newValue)
   }
-  
+
 
  render() {
    var dispQuest =[];
@@ -161,24 +161,24 @@ valueChanged = (event) =>  {
    var options=[];
    var selOpt=[];
 
-   
-  
+
+
      components.push(
       <Row>
       <Col xs={12}>
             <h3 style={{marginTop:'10%',marginBottom:'10%',color:'#818181'}}>[Question comes here]</h3>
-      </Col>      
-      </Row>      
+      </Col>
+      </Row>
       );
-   
-   
-   welcome.push( 
+
+
+   welcome.push(
     <Row>
       <Col xs={12}>
         <h3 style={{marginTop:'2%',marginBottom:'2%',color:'#FFFFFF',fontSize:'150%'}}> [Title comes Here]</h3>
           <Divider/>
       </Col>
-      
+
      </Row>
      );
    thanks.push(
@@ -187,7 +187,7 @@ valueChanged = (event) =>  {
           <h3 style={{marginTop:'2%',marginBottom:'2%',color:'#FFFFFF'}}> [Thank You Mesage comes Here]</h3>
             <Divider/>
         </Col>
-       
+
      </Row>
    );
 
@@ -238,7 +238,7 @@ valueChanged = (event) =>  {
      </div>);
       components.push( <div style={{display:'inline-block',marginLeft:'2%',marginTop:'1%',height:'50%'}}>
 
-      
+
                   <StarRating
                    size={this.props.putOptions.length}
                    value={this.state.starRating}
@@ -268,11 +268,11 @@ valueChanged = (event) =>  {
 
        components.push(
         <Row>
-       
+
       <h3 style={{marginTop:'10%',marginBottom:'10%',marginLeft:'2%',marginBottom:0,color:'#000000',textAlign:'left'}}>{this.props.putQuestion}</h3>
-     
+
       <Col xs={12}>
-      <TextField 
+      <TextField
       hintText="Your Comments Here"
       hintStyle={{fontWeight:'bold'}}
       underlineStyle={{borderColor:'#37861E '}}
@@ -281,10 +281,10 @@ valueChanged = (event) =>  {
       />
 
       </Col>
-     
+
       </Row>
-    );   
-   } 
+    );
+   }
 
 
    else if(this.props.putQuestion && this.props.putType=="YesOrNo"){
@@ -407,8 +407,8 @@ valueChanged = (event) =>  {
    }
 
    return(
- 
-     
+
+
       <Paper  style={style}>
         <Card style={welcomeStyle}>
           {welcome}
@@ -422,8 +422,8 @@ valueChanged = (event) =>  {
           {thanks}
         </Card>
       </Paper>
-     
-  
+
+
   );
  }
 
