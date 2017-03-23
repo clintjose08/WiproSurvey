@@ -12,7 +12,7 @@ const addResult=require('./route/addResult.route');
 const mailRoute  = require('./route/mailRoute');
 const http = require('http');
 const mongoose = require('mongoose');
-const connection=mongoose.connect('mongodb://localhost/surveyDetails');
+const connection=mongoose.connect('mongodb://10.201.174.210/surveyDetails');
 
 
 var BodyParser = require('body-parser');

@@ -55,6 +55,7 @@ class Dropabble  extends Component {
   constructor() {
      super();
     this.state = {
+
        output:[],
        sliderChange:0,
        starRating: 1,
@@ -71,9 +72,9 @@ class Dropabble  extends Component {
   }
   componentWillMount() {
 
-    var sName=localStorage.getItem('sName');
+    var sName=this.props.params.sName;
       request
-      .get('http://localhost:9080/api/getSurvey/'+sName)
+      .get('http://10.201.174.210:9080/api/getSurvey/'+sName)
       .end((err,res) => {
         this.setState({
           output:res.body
@@ -85,17 +86,33 @@ class Dropabble  extends Component {
     }
 
 
-  valueChanged=(newValue) =>  {
-    this.setState({starRating:newValue});
-    console.log(newValue)
+  valueChanged=(qstn,newValue) =>  {
+      this.setState({starRating:newValue})
+    var a=this.state.commentValue;
+    a.pop();
+    a.pop();
+    a.push(qstn);
+    a.push(newValue);
+    this.setState({commentValue:a});
+
   }
-  dropValueChanged=(e,i,newValue) =>  {
-    this.setState({dropDown:newValue});
-    console.log("dropdown value set", newValue)
+  dropValueChanged=(qstn,e,i,newValue) =>  {
+    var a=this.state.commentValue;
+    a.pop();
+    a.pop();
+    a.push(qstn);
+    a.push(newValue);
+    this.setState({commentValue:a});
+    console.log("comment value set",a)
   }
-  singleTextValueChanged=(e,newValue) =>  {
-    this.setState({singleTextValue:newValue});
-    console.log("singletext value set", newValue)
+  singleTextValueChanged=(qstn,e,newValue) =>  {
+    var a=this.state.commentValue;
+    a.pop();
+    a.pop();
+    a.push(qstn);
+    a.push(newValue);
+    this.setState({commentValue:a});
+    console.log("comment value set",a)
   }
 
   commentsValueChanged=(qstn,e,newValue) =>  {
@@ -107,13 +124,21 @@ class Dropabble  extends Component {
     this.setState({commentValue:a});
     console.log("comment value set",qstn, this.state.commentValue)
   }
-  multiChoiceValueChange=(e,value)=>{
-    this.setState({multiChoiceValue:value});
-    console.log("multiChoiceValue",value);
+  multiChoiceValueChange=(qstn,e,newValue)=>{
+    var a=this.state.commentValue;
+    a.pop();
+    a.pop();
+    a.push(qstn);
+    a.push(newValue);
+    this.setState({commentValue:a});
   }
-  yesOrNoValueChange=(e,value)=>{
-    this.setState({yesOrNoValue:value});
-    console.log("yesOrNoValue",value);
+  yesOrNoValueChange=(qstn,e,newValue)=>{
+    var a=this.state.commentValue;
+    a.pop();
+    a.pop();
+    a.push(qstn);
+    a.push(newValue);
+    this.setState({commentValue:a});
   }
   checkboxValueChange=(e,i,value) =>  {
     var a=this.state.checkboxValue;
@@ -134,7 +159,7 @@ updateDb(e){
 var options=this.state.commentValue;
 //options.push(this.state.commentValue);
 var data={surveyName:localStorage.getItem('sName'),options:this.state.commentValue}
-    request.put('http://localhost:9080/api/answerSurvey')
+    request.put('http://10.201.174.210:9080/api/answerSurvey')
             .set('Content-Type', 'application/json')
             .send(data)
              .then((err,res)=>
@@ -145,9 +170,16 @@ var data={surveyName:localStorage.getItem('sName'),options:this.state.commentVal
 console.log("options push : ",data.options[0]);
   }
 
-  handleSlider = (event, value) => {
+  handleSlider = (quest,event, value) => {
+    var a=this.state.commentValue;
+    a.pop();
+    a.pop();
+    a.push(quest);
+    a.push(value);
+    this.setState({commentValue:a});
     this.setState({sliderChange:value});
-    console.log("sliderChange",value);
+    console.log(this.state.sliderChange,a);
+
   };
  render() {
 
@@ -182,6 +214,7 @@ console.log("options push : ",data.options[0]);
 
          questions.pop();
          questions.push(this.state.output.questions.map((obj,i)=>{
+           // comments question
            if(obj.questionType=="Comments"){
              return(<Card>
                <CardText>
@@ -192,7 +225,7 @@ console.log("options push : ",data.options[0]);
                hintText="Your Option Here"
                hintStyle={{fontWeight:'bold'}}
                underlineStyle={{borderColor:'#37861E '}}
-               onChange={this.commentsValueChanged.bind(this,i)}
+               onChange={this.commentsValueChanged.bind(this,obj.questionQ)}
                />
                </CardText>
              </Card>);
@@ -229,7 +262,7 @@ else if(obj.questionType=="Dropdown"){
    <h3 style={{marginTop:0,marginLeft:'2%',marginBottom:0,color:'#000000',textAlign:'left'}}>{i+1}.{obj.questionQ} </h3>
    </CardText>
    <CardText>
-   <DropDownMenu onChange={this.dropValueChanged} value={this.state.dropDown} labelStyle={{marginRight:'50%',color:'#000000',marginLeft:'2%'}}>
+   <DropDownMenu onChange={this.dropValueChanged.bind(this,obj.questionQ)} value={this.state.dropDown} labelStyle={{marginRight:'50%',color:'#000000',marginLeft:'2%'}}>
    {options}
    </DropDownMenu>
    </CardText>
@@ -241,7 +274,7 @@ else if(obj.questionType=="StarRatings"){
       <StarRating
        size={obj.options.length}
        value={this.state.starRating}
-       onChange={this.valueChanged.bind(this)}
+       onChange={this.valueChanged.bind(this,obj.questionQ)}
        />
      );
 
@@ -267,7 +300,7 @@ else if(obj.questionType=="SingleText"){
    hintText="Your Answer Here"
    hintStyle={{fontWeight:'bold'}}
    underlineStyle={{borderColor:'#37861E '}}
-   onChange={this.singleTextValueChanged.bind(this)}
+   onChange={this.singleTextValueChanged.bind(this,obj.questionQ)}
    />
    </CardText>
    </Card>);
@@ -291,7 +324,7 @@ else if(obj.questionType=="MultiChoice"){
    <h3 style={{marginTop:0,marginLeft:'2%',marginBottom:0,color:'#000000',textAlign:'left'}}>{i+1}.{obj.questionQ} </h3>
    </CardText>
    <CardText>
-   <RadioButtonGroup onChange={this.multiChoiceValueChange} name="YesOrNo" style={{textAlign:'left',marginLeft:'5%',marginTop:'2%'}} >
+   <RadioButtonGroup onChange={this.multiChoiceValueChange.bind(this,obj.questionQ)} name="YesOrNo" style={{textAlign:'left',marginLeft:'5%',marginTop:'2%'}} >
    {options}
    </RadioButtonGroup>
    </CardText>
@@ -312,7 +345,7 @@ else if(obj.questionType=="Slider"){
         step={obj.scale}
         defaultValue={0}
         value={this.state.sliderChange}
-        onChange={this.handleSlider}
+        onChange={this.handleSlider.bind(this,obj.questionQ)}
         style={{marginLeft:'4%',marginRight:'4%'}}
       />
 
@@ -331,7 +364,7 @@ else if(obj.questionType=="YesOrNo"){
    <h3 style={{marginTop:0,marginLeft:'2%',marginBottom:0,color:'#000000',textAlign:'left'}}>{i+1}.{obj.questionQ} </h3>
    </CardText>
    <CardText>
-   <RadioButtonGroup name="YesOrNo" onChange={this.yesOrNoValueChange.bind(this)}style={{textAlign:'left',marginLeft:'5%',marginTop:'2%'}} >
+   <RadioButtonGroup name="YesOrNo" onChange={this.yesOrNoValueChange.bind(this,obj.questionQ)}style={{textAlign:'left',marginLeft:'5%',marginTop:'2%'}} >
 
      <RadioButton
      value="Yes"
