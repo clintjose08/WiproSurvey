@@ -131,9 +131,9 @@ class Dropabble  extends Component {
     console.log("checkbox value unsetset", a)}
   }
 updateDb(e){
-var options=[];
-options.push(this.state.commentValue);
-var data={surveyName:localStorage.getItem('sName'),options:options}
+var options=this.state.commentValue;
+//options.push(this.state.commentValue);
+var data={surveyName:localStorage.getItem('sName'),options:this.state.commentValue}
     request.put('http://localhost:9080/api/answerSurvey')
             .set('Content-Type', 'application/json')
             .send(data)
@@ -192,7 +192,7 @@ console.log("options push : ",data.options[0]);
                hintText="Your Option Here"
                hintStyle={{fontWeight:'bold'}}
                underlineStyle={{borderColor:'#37861E '}}
-               onChange={this.commentsValueChanged.bind(this,obj.questionQ)}
+               onChange={this.commentsValueChanged.bind(this,i)}
                />
                </CardText>
              </Card>);
