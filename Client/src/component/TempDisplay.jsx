@@ -234,7 +234,7 @@ valueChanged = (event) =>  {
 
       components.pop();
 
-      components.push( <div style={{display:'inline-block',marginLeft:'2%',marginTop:'1%',height:'50%'}}>
+      components.push( <div>
 
      <h3 style={{marginTop:'10%',marginBottom:'5%',marginLeft:'2%',color:'#000000 ',textAlign:'left'}}>{this.props.putQuestion}</h3>
 
