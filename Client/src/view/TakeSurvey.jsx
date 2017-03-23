@@ -9,7 +9,9 @@ import FlatButton from 'material-ui/FlatButton';
 import ExpandTransition from 'material-ui/internal/ExpandTransition';
 import TextField from 'material-ui/TextField';
 import Paper from 'material-ui/Paper';
-
+import {Grid,Col,Row} from 'react-flexbox-grid';
+import image from '../../images/welcome.png';
+import Request from 'superagent';
 
 class TakeSurvey extends React.Component {
 
@@ -17,8 +19,17 @@ class TakeSurvey extends React.Component {
     loading: false,
     finished: false,
     stepIndex: 0,
+    allData:''
   };
+  componentWillMount()
+  {
+    Request.get('http://localhost:9080/api/getDetails').end((err,res)=>{
 
+      this.setState({
+        allData:res.body[0]
+      })
+    });
+  }
   dummyAsync = (cb) => {
     this.setState({loading: true}, () => {
       this.asyncTimer = setTimeout(cb, 500);
@@ -30,8 +41,7 @@ class TakeSurvey extends React.Component {
     if (!this.state.loading) {
       this.dummyAsync(() => this.setState({
         loading: false,
-        stepIndex: stepIndex + 1,
-        finished: stepIndex >= 2,
+        stepIndex: stepIndex + 1
       }));
     }
   };
@@ -47,37 +57,97 @@ class TakeSurvey extends React.Component {
   };
 
   getStepContent(stepIndex) {
-    switch (stepIndex) {
-      case 0:
-        return (
-          <p>
-            Select campaign settings. Campaign settings can include your budget, network, bidding
-            options and adjustments, location targeting, campaign end date, and other settings that
-            affect an entire campaign.
-          </p>
-        );
-      case 1:
-        return (
-          <div>
-            <TextField style={{marginTop: 0}} floatingLabelText="Ad group name" />
-            <p>
-              Ad group status is different than the statuses for campaigns, ads, and keywords, though the
-              statuses can affect each other. Ad groups are contained within a campaign, and each campaign can
-              have one or more ad groups. Within each ad group are ads, keywords, and bids.
-            </p>
-            <p>Something something whatever cool</p>
-          </div>
-        );
-      case 2:
-        return (
-          <p>
-            Try out different ad text to see what brings in the most customers, and learn how to
-            enhance your ads using features like ad extensions. If you run into any problems with your
-            ads, find out how to tell if theyre running and how to resolve approval issues.
-          </p>
-        );
-      default:
-        return 'You\'re a long way from home sonny jim!';
+
+    if(this.state.allData.questions)
+    {
+    var data=this.state.allData.questions;
+    var length=data.length;
+    console.log("data",data);
+    if(stepIndex==0)
+    {
+      return (
+        <div>
+          <Grid>
+            <Row center="xs">
+              <Paper style={{background:'#90EE90',width:'100%',height:'100%',padding:20,margin:20}} zDepth={1}>
+                <Row center="xs">
+                  <Col xs={6}>
+                    <h2 style={{color:"#FFFFFF"}}>Hi there...</h2>
+                    <p>{this.state.allData.welcomeMsg}</p>
+                  </Col>
+                  <Col xs={6}>
+                    <img src="" />
+                  </Col>
+                </Row>
+              </Paper>
+            </Row>
+
+            <div style={{marginTop: 24, marginBottom: 12}}>
+              <FlatButton
+                label="Back"
+                disabled={stepIndex === 0}
+                onTouchTap={this.handlePrev}
+                style={{marginRight: 12}}
+              />
+              <RaisedButton
+                label={'Next'}
+                primary={true}
+                onTouchTap={this.handleNext}
+              />
+            </div>
+          </Grid>
+        </div>
+      );
+    }
+    else if (stepIndex===data.length+1) {
+      return (
+        <div>
+          <Grid>
+            <Row center="xs">
+              <Paper style={{background:'#90EE90',width:'100%',height:'100%',padding:20,margin:20}} zDepth={1}>
+                <Row center="xs">
+                  <Col xs={12}>
+                    <h1>{this.state.allData.thanksmessage}</h1>
+                  </Col>
+                </Row>
+              </Paper>
+            </Row>
+            <div style={{marginTop: 24, marginBottom: 12}}>
+              <FlatButton
+                label="Back"
+                disabled={stepIndex === 0}
+                onTouchTap={this.handlePrev}
+                style={{marginRight: 12}}
+              />
+              <RaisedButton
+                label={'Finish'}
+                primary={true}
+                onTouchTap={this.handleNext}
+              />
+            </div>
+          </Grid>
+        </div>
+      );
+    }
+    else {
+        return(data.map((obj,i)=>{
+          if(stepIndex==i+1)
+          return(<div><p>{obj.questionno} {obj.questionQ}</p>
+            <div style={{marginTop: 24, marginBottom: 12}}>
+              <FlatButton
+                label="Back"
+                disabled={stepIndex === 0}
+                onTouchTap={this.handlePrev}
+                style={{marginRight: 12}}
+              />
+              <RaisedButton
+                label={'Next'}
+                primary={true}
+                onTouchTap={this.handleNext}
+              />
+            </div></div>);
+        }));
+      }
     }
   }
 
@@ -85,40 +155,10 @@ class TakeSurvey extends React.Component {
     const {finished, stepIndex} = this.state;
     const contentStyle = {margin: '0 16px', overflow: 'hidden'};
 
-    if (finished) {
-      return (
-        <div style={contentStyle}>
-          <p>
-            <a
-              href="#"
-              onClick={(event) => {
-                event.preventDefault();
-                this.setState({stepIndex: 0, finished: false});
-              }}
-            >
-              Click here
-            </a> to reset the example.
-          </p>
-        </div>
-      );
-    }
 
     return (
       <div style={contentStyle}>
         <div>{this.getStepContent(stepIndex)}</div>
-        <div style={{marginTop: 24, marginBottom: 12}}>
-          <FlatButton
-            label="Back"
-            disabled={stepIndex === 0}
-            onTouchTap={this.handlePrev}
-            style={{marginRight: 12}}
-          />
-          <RaisedButton
-            label={stepIndex === 2 ? 'Finish' : 'Next'}
-            primary={true}
-            onTouchTap={this.handleNext}
-          />
-        </div>
       </div>
     );
   }
@@ -129,17 +169,6 @@ class TakeSurvey extends React.Component {
     return (
       <div style={{width: '100%', marginTop:'50'}}>
       <Paper>
-        <Stepper activeStep={stepIndex}>
-          <Step>
-            <StepLabel>Enter welcome message</StepLabel>
-          </Step>
-          <Step>
-            <StepLabel>Add questions</StepLabel>
-          </Step>
-          <Step>
-            <StepLabel>Enter a thank you message</StepLabel>
-          </Step>
-        </Stepper>
         <ExpandTransition loading={loading} open={true}>
           {this.renderContent()}
         </ExpandTransition>
