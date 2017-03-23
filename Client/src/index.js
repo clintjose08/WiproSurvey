@@ -22,7 +22,9 @@ import YesOrNoEdit from './view/YesOrNo';
 import StarRatings from './view/StarRatings';
 import DraftDisplay from './component/draftDisplay'
 import Timer from './component/timer';
+import TakeSurvey from './view/TakeSurvey';
 import Preview from './component/Preview';
+
 injectTapEventPlugin();
 
 ReactDOM.render(
@@ -48,7 +50,7 @@ ReactDOM.render(
        <Route path="Thankyou" component={ThankyouEdit}/>
        <Route path="Timer" component={Timer}/>
        <Route path="DraftDisplay" component={DraftDisplay}/>
-
+       <Route path="TakeSurvey" component={TakeSurvey}/>
     </Route>
   </Router>
   </MuiThemeProvider>,

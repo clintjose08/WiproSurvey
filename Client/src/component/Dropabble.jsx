@@ -108,7 +108,7 @@ window.location.reload()
               console.log("options",obj.options);
               }
         })
-    
+
      request.post('http://localhost:9080/api/addResult')
             .set('Content-Type', 'application/json')
             .send(data)

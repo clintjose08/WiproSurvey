@@ -1,8 +1,9 @@
 const surveyResultModel=require('../models/ResultSchema');
+
 var data=[];
 module.exports=function (req, res) {
 	const surveyResult = new surveyResultModel();
-	surveyResultModel.find({surveyid:"345"},function (err, mySchema) {
+	surveyResultModel.find({surveyid:"3454"},function (err, mySchema) {
 		if (err) {
 			console.log("error in survey");
 		}
