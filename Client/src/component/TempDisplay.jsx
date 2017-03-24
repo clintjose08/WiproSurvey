@@ -10,7 +10,7 @@ import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
 import {RadioButton, RadioButtonGroup} from 'material-ui/RadioButton';
 import Slider from 'material-ui/Slider';
-import ReactTooltip from 'react-tooltip';
+import { Tooltip } from 'reactstrap';
 import { Grid,Row,Col } from 'react-flexbox-grid';
 import StarRating from 'star-rating-react';
 
@@ -50,9 +50,13 @@ constructor(){
     showYes:false,
     sliderChange: 0,
     starRating: 1,
-    starComment:''
+    starComment:'',
+   
   };
 }
+
+
+
 handleOptionChangeYes (e) {
   this.setState({showYes:e.target.value})
 }
@@ -69,13 +73,16 @@ valueChanged = (event) =>  {
 
   valueChanged = (newValue) =>  {
     this.setState({starRating:newValue});
-    if(newValue==1)
+   
+    for(let i=0;i<this.props.putOptions.length;i++)
     {
-      this.setState({starComment:'very bad'});
+      this.setState({starComment:this.props.putOptions[newValue-1]});
     }
     console.log(newValue)
   }
+
   
+
 
  render() {
    var dispQuest =[];
@@ -167,24 +174,24 @@ valueChanged = (event) =>  {
    var options=[];
    var selOpt=[];
 
-   
-  
+
+
      components.push(
       <Row>
       <Col xs={12}>
             <h3 style={{marginTop:'10%',marginBottom:'10%',color:'#818181'}}>[Question comes here]</h3>
-      </Col>      
-      </Row>      
+      </Col>
+      </Row>
       );
-   
-   
-   welcome.push( 
+
+
+   welcome.push(
     <Row>
       <Col xs={12}>
         <h3 style={{marginTop:'2%',marginBottom:'2%',color:'#FFFFFF',fontSize:'150%'}}> [Title comes Here]</h3>
           <Divider/>
       </Col>
-      
+
      </Row>
      );
    thanks.push(
@@ -193,7 +200,7 @@ valueChanged = (event) =>  {
           <h3 style={{marginTop:'2%',marginBottom:'2%',color:'#FFFFFF'}}> [Thank You Mesage comes Here]</h3>
             <Divider/>
         </Col>
-       
+
      </Row>
    );
 
@@ -239,14 +246,18 @@ valueChanged = (event) =>  {
   {
 
       components.pop();
-      components.push(<Col xs={12}>
+
+      components.push( <Col xs={12} >
+
      <h3 style={{marginTop:'10%',marginBottom:'5%',marginLeft:'2%',color:'#000000 ',textAlign:'left'}}>{this.props.putQuestion}</h3>
-      
+                   
                   <StarRating
                    size={this.props.putOptions.length}
                    value={this.state.starRating}
                    onChange={this.valueChanged.bind(this)}
-                   /> <span style={{textWeight:'bold'}}>{this.state.starComment}</span>
+                   
+                   /> <span style={{fontWeight:'bold'}}>{this.state.starComment}</span>
+                   
                    </Col> ) ;
 
   }
@@ -271,12 +282,14 @@ valueChanged = (event) =>  {
        components.pop();
 
        components.push(
-        
-      <Col xs={12}> 
+
+        <Row>
+
       <h3 style={{marginTop:'10%',marginBottom:'10%',marginLeft:'2%',marginBottom:0,color:'#000000',textAlign:'left'}}>{this.props.putQuestion}</h3>
-     
-      
-      <TextField 
+
+      <Col xs={12}>
+      <TextField
+
       hintText="Your Comments Here"
       hintStyle={{fontWeight:'bold'}}
       underlineStyle={{borderColor:'#37861E '}}
@@ -285,10 +298,12 @@ valueChanged = (event) =>  {
       />
 
       </Col>
-     
-      
-    );   
-   } 
+
+
+      </Row>
+    );
+   }
+
 
 
    else if(this.props.putQuestion && this.props.putType=="YesOrNo"){
@@ -411,8 +426,8 @@ valueChanged = (event) =>  {
    }
 
    return(
- 
-     
+
+
       <Paper  style={style}>
         <Card style={welcomeStyle}>
           {welcome}
@@ -426,8 +441,8 @@ valueChanged = (event) =>  {
           {thanks}
         </Card>
       </Paper>
-     
-  
+
+
   );
  }
 

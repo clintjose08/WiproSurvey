@@ -16,7 +16,8 @@ const questSchema=new Schema({
 });
 const SurveySchema = new Schema({
   surveyname:{type:String},
-  welcomemsg:{type:String},
+  status:{type:String},
+  welcomeMsg:{type:String},
   description:{type:String},
   thanksmessage:{type:String},
   creatername:{type:String},

@@ -14,6 +14,8 @@ import IconButton from 'material-ui/IconButton';
 import Slider from 'material-ui/Slider';
 import {IndexLink, Link} from 'react-router';
 import StarRating from 'star-rating-react';
+import DropDownMenu from 'material-ui/DropDownMenu';
+import MenuItem from 'material-ui/MenuItem';
 const welcomeStyle={
 background:'#649F4E',
 textAlign:'center',
@@ -55,10 +57,17 @@ class Dropabble  extends Component {
     this.state = {
        output:[],
        sliderChange:0,
-       starRating: 1
+       starRating: 1,
+       dropDown:'null',
+       singleTextValue:'',
+       commentValue:'',
+       checkboxValue:[],
+       multiChoiceValue:'',
+       yesOrNoValue:'',
+       sliderValue:'',
+       i:0
     }
   }
-
   componentWillMount() {
 
     var sName=localStorage.getItem('sName');
@@ -74,88 +83,71 @@ class Dropabble  extends Component {
 
     }
 
-handleChange(i)
-{
-  var sName=localStorage.getItem('sName');
-    request
-    .put('http://localhost:9080/api/deleteQuest/'+sName+'/'+i)
-    .end((err,res) => {
 
-    console.log("next");
-    // console.log("quest",res.body.questions[1].questionQ);
-    });
-window.location.reload()
-  }
   valueChanged=(newValue) =>  {
     this.setState({starRating:newValue});
     console.log(newValue)
   }
+  dropValueChanged=(e,i,newValue) =>  {
+    this.setState({dropDown:newValue});
+    console.log("dropdown value set", newValue)
+  }
+  singleTextValueChanged=(e,newValue) =>  {
+    this.setState({singleTextValue:newValue});
+    console.log("singletext value set", newValue)
+  }
 
+  commentsValueChanged=(e,newValue) =>  {
+    this.setState({commentValue:newValue});
+    console.log("comment value set", newValue)
+  }
+  multiChoiceValueChange=(e,value)=>{
+    this.setState({multiChoiceValue:value});
+    console.log("multiChoiceValue",value);
+  }
+  yesOrNoValueChange=(e,value)=>{
+    this.setState({yesOrNoValue:value});
+    console.log("yesOrNoValue",value);
+  }
+  checkboxValueChange=(e,i,value) =>  {
+    var a=this.state.checkboxValue;
+    console.log("index value set", value)
+    if(value){
+    a.push(e)
+    this.setState({checkboxValue:a});
+    console.log("checkbox value set", a)}
+
+    else
+    {
+      var x= a.indexOf(e)
+      a.splice(x,1);
+    this.setState({checkboxValue:a});
+    console.log("checkbox value unsetset", a)}
+  }
   saveData(e){
-    var data={	"surveyname":"{type:String}",
-    "description":"{type:String}",
-    "thanksMessage":"{type:String}",
-    "createrName":"{type:String}",
-    "createrContact":24634,
-    "creterEmail":"{type:String}",
-    "questions": [
-      {
-        "questionno": 1,
-        "question": "ajafa",
-        "options": [
-          "xgfgf",
-          "gfg"
-        ]
-      },
-      {
-        "questionno": 2,
-        "question": "ajafa",
-        "options": [
-          "fdsgh",
-          "gfhh",
-          "gfhghg"
-        ]
-      }
-    ]
-           }
-    request.post('http://localhost:9080/api/createSurvey')
-            .set('Content-Type', 'application/json')
-            .send(data)
-             .then((err,res)=>
-             {
-               console.log("posted");
-              })
+
+    //        
+    // request.post('http://localhost:9080/api/answerSurvey')
+    //         .set('Content-Type', 'application/json')
+    //         .send(data)
+    //          .then((err,res)=>
+    //          {
+    //            console.log("posted");
+    //           })
 
 
   }
 
   handleSlider = (event, value) => {
-    this.setState({sliderChange: value});
+    this.setState({sliderChange:value});
+    console.log("sliderChange",value);
   };
  render() {
 
    var welcomeTitle=[];
    var thanksMessage=[];
    var questions=[];
-   welcomeTitle.push(
-  <Col xs={12}>
-      <h3 style={{marginTop:'2%',marginBottom:'2%',fontSize:'150%'}}> Survey Title</h3>
-      <Divider/>
-      <h4 style={{marginTop:'1%',marginLeft:'1%',color:'#283747',textAlign:'left'}}>Description </h4>
-</Col>
-     );
-     questions.push(
-         <h3 style={{marginTop:'5%',marginBottom:'5%',color:'#818181',height:'50%'}}>Your Questions </h3>
-       );
-     thanksMessage.push(
-<Col xs={12}>
-        <h3 style={{marginTop:'2%',marginBottom:'2%'}}> Thank You Message</h3>
-        <Divider/>
-        <h4 style={{marginTop:'1%',marginLeft:'1%',color:'',textAlign:'left',color:'#283747'}}> Creater Name </h4>
-        <h4 style={{marginTop:0,marginLeft:'1%',color:'#283747',textAlign:'left'}}>Creater Contact Number </h4>
-        <h4 style={{marginTop:0,marginLeft:'1%',color:'#283747',textAlign:'left'}}> Creater E-mail </h4>
-</Col>
-       );
+
        if(this.state.output.welcomeMsg)
        {
          console.log("state", this.state.output.welcomeMsg);
@@ -186,9 +178,6 @@ window.location.reload()
            if(obj.questionType=="Comments"){
              return(<Card>
                <CardText>
-               <IconButton onTouchTap={this.handleChange.bind(this,obj.questionQ)} style={{marginRight:0}}><ActionInfo style={iconStyles}/></IconButton>
-               </CardText>
-               <CardText>
                <h3 style={{marginTop:0,marginLeft:'2%',marginBottom:0,color:'#000000',textAlign:'left'}}>{i+1}.{obj.questionQ}</h3>
                </CardText>
                <CardText>
@@ -196,6 +185,7 @@ window.location.reload()
                hintText="Your Option Here"
                hintStyle={{fontWeight:'bold'}}
                underlineStyle={{borderColor:'#37861E '}}
+               onChange={this.commentsValueChanged}
                />
                </CardText>
              </Card>);
@@ -204,15 +194,12 @@ window.location.reload()
               var options=[];
                obj.options.map((option)=>{
                options.push(<div>
-                  <Checkbox label={option}  iconStyle={{marginLeft:'35%'}} labelStyle={{marginRight:'50%',color:'#000000',marginLeft:'2%'}}/>
+                  <Checkbox label={option} onCheck={this.checkboxValueChange.bind(this,option)} iconStyle={{marginLeft:'35%'}} labelStyle={{marginRight:'50%',color:'#000000',marginLeft:'2%'}}/>
                   </div>);
 
                 });
 
               return(<Card expanded='false'>
-                <CardText>
-                <IconButton onTouchTap={this.handleChange.bind(this,obj.questionQ)} style={{marginRight:0}}><ActionInfo style={iconStyles}/></IconButton>
-                </CardText>
                 <CardText>
               <h3 style={{marginTop:0,marginLeft:'2%',marginBottom:0,color:'#000000',textAlign:'left'}}>{i+1}.{obj.questionQ} </h3>
               </CardText>
@@ -224,21 +211,22 @@ window.location.reload()
 else if(obj.questionType=="Dropdown"){
    var options=[];
     obj.options.map((option)=>{
-    options.push(<div>
-       <Checkbox label={option}  iconStyle={{marginLeft:'35%'}} labelStyle={{marginRight:'50%',color:'#000000',marginLeft:'2%'}}/>
-       </div>);
+    options.push(
+         <MenuItem value={option} primaryText={option} iconStyle={{marginLeft:'35%'}}/>
+       );
+
 
      });
 
    return(<Card expanded='false'>
-     <CardText>
-     <IconButton onTouchTap={this.handleChange.bind(this,obj.questionQ)} style={{marginRight:0}}><ActionInfo style={iconStyles}/></IconButton>
-     </CardText>
+
      <CardText>
    <h3 style={{marginTop:0,marginLeft:'2%',marginBottom:0,color:'#000000',textAlign:'left'}}>{i+1}.{obj.questionQ} </h3>
    </CardText>
    <CardText>
+   <DropDownMenu onChange={this.dropValueChanged} value={this.state.dropDown} labelStyle={{marginRight:'50%',color:'#000000',marginLeft:'2%'}}>
    {options}
+   </DropDownMenu>
    </CardText>
    </Card>);
 }
@@ -253,9 +241,7 @@ else if(obj.questionType=="StarRatings"){
      );
 
    return(<Card expanded='false'>
-     <CardText>
-     <IconButton onTouchTap={this.handleChange.bind(this,obj.questionQ)} style={{marginRight:0}}><ActionInfo style={iconStyles}/></IconButton>
-     </CardText>
+
      <CardText>
    <h3 style={{marginTop:0,marginLeft:'2%',marginBottom:0,color:'#000000',textAlign:'left'}}>{i+1}.{obj.questionQ} </h3>
    </CardText>
@@ -265,23 +251,19 @@ else if(obj.questionType=="StarRatings"){
    </Card>);
 }
 else if(obj.questionType=="SingleText"){
-   var options=[];
-    obj.options.map((option)=>{
-    options.push(<div>
-       <Checkbox label={option}  iconStyle={{marginLeft:'35%'}} labelStyle={{marginRight:'50%',color:'#000000',marginLeft:'2%'}}/>
-       </div>);
-
-     });
 
    return(<Card expanded='false'>
-     <CardText>
-     <IconButton onTouchTap={this.handleChange.bind(this,obj.questionQ)} style={{marginRight:0}}><ActionInfo style={iconStyles}/></IconButton>
-     </CardText>
+
      <CardText>
    <h3 style={{marginTop:0,marginLeft:'2%',marginBottom:0,color:'#000000',textAlign:'left'}}>{i+1}.{obj.questionQ} </h3>
    </CardText>
    <CardText>
-   {options}
+   <TextField
+   hintText="Your Answer Here"
+   hintStyle={{fontWeight:'bold'}}
+   underlineStyle={{borderColor:'#37861E '}}
+   onChange={this.singleTextValueChanged.bind(this)}
+   />
    </CardText>
    </Card>);
 }
@@ -292,20 +274,19 @@ else if(obj.questionType=="MultiChoice"){
       <RadioButton
       value={option}
       label={option}
+
       iconStyle={{marginLeft:'35%'}}
       labelStyle={ {marginLeft:'0'}}/>);
 
      });
 
    return(<Card expanded='false'>
-     <CardText>
-     <IconButton onTouchTap={this.handleChange.bind(this,obj.questionQ)} style={{marginRight:0}}><ActionInfo style={iconStyles}/></IconButton>
-     </CardText>
+
      <CardText>
    <h3 style={{marginTop:0,marginLeft:'2%',marginBottom:0,color:'#000000',textAlign:'left'}}>{i+1}.{obj.questionQ} </h3>
    </CardText>
    <CardText>
-   <RadioButtonGroup name="YesOrNo" style={{textAlign:'left',marginLeft:'5%',marginTop:'2%'}} >
+   <RadioButtonGroup onChange={this.multiChoiceValueChange} name="YesOrNo" style={{textAlign:'left',marginLeft:'5%',marginTop:'2%'}} >
    {options}
    </RadioButtonGroup>
    </CardText>
@@ -315,9 +296,7 @@ else if(obj.questionType=="Slider"){
 
 
    return(<Card expanded='false'>
-     <CardText>
-     <IconButton onTouchTap={this.handleChange.bind(this,obj.questionQ)} style={{marginRight:0}}><ActionInfo style={iconStyles}/></IconButton>
-     </CardText>
+
      <CardText>
    <h3 style={{marginTop:0,marginLeft:'2%',marginBottom:0,color:'#000000',textAlign:'left'}}>{i+1}.{obj.questionQ} </h3>
    </CardText>
@@ -342,14 +321,12 @@ else if(obj.questionType=="YesOrNo"){
 
 
    return(<Card expanded='false'>
-     <CardText>
-     <IconButton onTouchTap={this.handleChange.bind(this,obj.questionQ)} style={{marginRight:0}}><ActionInfo style={iconStyles}/></IconButton>
-     </CardText>
+
      <CardText>
    <h3 style={{marginTop:0,marginLeft:'2%',marginBottom:0,color:'#000000',textAlign:'left'}}>{i+1}.{obj.questionQ} </h3>
    </CardText>
    <CardText>
-   <RadioButtonGroup name="YesOrNo" style={{textAlign:'left',marginLeft:'5%',marginTop:'2%'}} >
+   <RadioButtonGroup name="YesOrNo" onChange={this.yesOrNoValueChange.bind(this)}style={{textAlign:'left',marginLeft:'5%',marginTop:'2%'}} >
 
      <RadioButton
      value="Yes"
@@ -376,17 +353,18 @@ else if(obj.questionType=="YesOrNo"){
 
    return(
      <div style={{height:'90%'}}>
+      <h2 style={{fontWeight:'bold',textAlign:'center'}}>Your Template</h2>
       <Paper  style={style}>
         <Card style={welcomeStyle}>
           {welcomeTitle}
           </Card>
 
         {questions}
-        <Link to='/Home/Preview'>
-        <RaisedButton label="Submit" backgroundColor='#1C6D03 'labelStyle={{color:'#FFFFFF ',fontWeight:'bold'}} />
-        </Link>
+
         <Card style={thanksStyle}>
             {thanksMessage}
+            <RaisedButton label="Submit" backgroundColor='#1C6D03 ' onClick={this.updateDb.bind(this)} labelStyle={{color:'#FFFFFF ',fontWeight:'bold'}}/>
+
         </Card>
 
       </Paper>
