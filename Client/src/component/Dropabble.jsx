@@ -50,101 +50,96 @@ const iconStyles = {
 
 
 class Dropabble  extends Component {
- constructor() {
-    super();
-   this.state = {
-      output:[],
-      sliderChange:0,
-      starRating: 1
-   }
- }
 
- componentWillMount() {
+  constructor() {
+     super();
+    this.state = {
+       output:[],
+       sliderChange:0,
+       starRating: 1
+    }
+  }
 
-   var sName=localStorage.getItem('sName');
-     request
-     .get('http://localhost:9080/api/getSurvey/'+sName)
-     .end((err,res) => {
-       this.setState({
-         output:res.body
-       });
-     console.log("next",res.body.welcomeMsg);
-     // console.log("quest",res.body.questions[1].questionQ);
-     });
+  componentWillMount() {
 
-   }
+    var sName=localStorage.getItem('sName');
+      request
+      .get('http://localhost:9080/api/getSurvey/'+sName)
+      .end((err,res) => {
+        this.setState({
+          output:res.body
+        });
+      console.log("next",res.body.welcomeMsg);
+      // console.log("quest",res.body.questions[1].questionQ);
+      });
+
+    }
 
 handleChange(i)
 {
- var sName=localStorage.getItem('sName');
-   request
-   .put('http://localhost:9080/api/deleteQuest/'+sName+'/'+i)
-   .end((err,res) => {
+  var sName=localStorage.getItem('sName');
+    request
+    .put('http://localhost:9080/api/deleteQuest/'+sName+'/'+i)
+    .end((err,res) => {
 
-   console.log("next");
-   // console.log("quest",res.body.questions[1].questionQ);
-   });
+    console.log("next");
+    // console.log("quest",res.body.questions[1].questionQ);
+    });
 window.location.reload()
  }
 
- updateUserSchema(){
-   var qstn=[];
-   var data={
-     surveyname:localStorage.getItem('sName'),
-     questions:qstn
-     }
-     this.state.output.questions.map((obj,i)=>{
-       if(obj.questionType=='Slider'){
-         var size=obj.maxValue/obj.scale;
-         var arr=new Array(size);
-         arr.fill(0);
-         qstn.push({question:obj.questionQ,
-           questiontype:obj.questionType,
-          maxValue:obj.maxValue,
-          scale:obj.scale,
-           count:arr})
-       }
-       else{
-         var size=obj.options.length;
-         var arr=new Array(size);
-         arr.fill(0);
-         qstn.push({question:obj.questionQ,
-           questiontype:obj.questionType,
-           options:obj.options,
-           count:arr})
-             console.log("options",obj.options);
-             }
-       })
+  updateUserSchema(){
+    var qstn=[];
+    var data={
+      surveyname:localStorage.getItem('sName'),
+      questions:qstn
+      }
+      this.state.output.questions.map((obj,i)=>{
+        if(obj.questionType=='Slider'){
+          qstn.push({question:obj.questionQ,
+            questiontype:obj.questionType,
+           maxValue:obj.maxValue,
+            count:[]})
+        }
+        else{
+          qstn.push({question:obj.questionQ,
+            questiontype:obj.questionType,
+            options:obj.options,
+            count:[]})
+              console.log("options",obj.options);
+              }
+        })
 
-    request.post('http://localhost:9080/api/addResult')
-           .set('Content-Type', 'application/json')
-           .send(data)
-            .then((err,res)=>
-            {
-              console.log("posted");
-             })
+     request.post('http://localhost:9080/api/addResult')
+            .set('Content-Type', 'application/json')
+            .send(data)
+             .then((err,res)=>
+             {
+               console.log("posted");
+              })
 
- }
+  }
 
- valueChanged=(newValue) =>  {
-   this.setState({starRating:newValue});
-   console.log(newValue)
- }
+  valueChanged=(newValue) =>  {
+    this.setState({starRating:newValue});
+    console.log(newValue)
+  }
 
 
- handleSlider = (event, value) => {
-   this.setState({sliderChange: value});
- };
-render() {
+  handleSlider = (event, value) => {
+    this.setState({sliderChange: value});
+  };
+ render() {
 
-  var welcomeTitle=[];
-  var thanksMessage=[];
-  var questions=[];
-  welcomeTitle.push(
- <Col xs={12}>
-     <h3 style={{marginTop:'2%',marginBottom:'2%',fontSize:'150%'}}> Survey Title</h3>
-     <Divider/>
-     <h4 style={{marginTop:'1%',marginLeft:'1%',color:'#283747',textAlign:'left'}}>Description </h4>
+   var welcomeTitle=[];
+   var thanksMessage=[];
+   var questions=[];
+   welcomeTitle.push(
+  <Col xs={12}>
+      <h3 style={{marginTop:'2%',marginBottom:'2%',fontSize:'150%'}}> Survey Title</h3>
+      <Divider/>
+      <h4 style={{marginTop:'1%',marginLeft:'1%',color:'#283747',textAlign:'left'}}>Description </h4>
+
 </Col>
     );
     questions.push(
