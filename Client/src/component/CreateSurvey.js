@@ -35,7 +35,7 @@ class CreateSurvey extends Component {
   }}
   componentWillMount(){
     request
-    .get('http://10.201.174.210:9080/api/getDetails/')
+    .get('http://localhost:9080/api/getDetails/')
     .end((err,res) => {
 
       this.setState({
@@ -51,7 +51,7 @@ class CreateSurvey extends Component {
     var nameData={
       surveyname:this.state.name
     }
-    request.post('http://10.201.174.210:9080/api/createSurvey')
+    request.post('http://localhost:9080/api/createSurvey')
             .set('Content-Type', 'application/json')
             .send(nameData)
              .end((err,res)=>

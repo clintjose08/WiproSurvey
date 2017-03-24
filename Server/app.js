@@ -12,7 +12,7 @@ const addResult=require('./route/addResult.route');
 const mailRoute  = require('./route/mailRoute');
 const http = require('http');
 const mongoose = require('mongoose');
-const connection=mongoose.connect('mongodb://10.201.174.210/surveyDetails');
+const connection=mongoose.connect('mongodb://localhost/surveyDetails');
 
 
 var BodyParser = require('body-parser');
@@ -28,7 +28,6 @@ app.use('/',createSurveyConfigRoute);
 app.use('/',getTempData);
 app.use('/',getResultConfigRoute);
 app.use('/',addResult);
-app.use('/',mailRoute);
 
 var transporter = nodemailer.createTransport({
 
