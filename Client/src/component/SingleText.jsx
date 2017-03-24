@@ -74,7 +74,7 @@ updateDb(){
       }
 
   }
-  request.post('http://10.201.174.210:9080/api/updateSurvey/'+sName)
+  request.post('http://localhost:9080/api/updateSurvey/'+sName)
           .set('Content-Type', 'application/json')
           .send(shortQuestionScreen)
            .end((err,res)=>

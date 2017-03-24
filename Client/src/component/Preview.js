@@ -74,7 +74,7 @@ class Dropabble  extends Component {
 
     var sName=this.props.params.sName;
       request
-      .get('http://10.201.174.210:9080/api/getSurvey/'+sName)
+      .get('http://localhost:9080/api/getSurvey/'+sName)
       .end((err,res) => {
         this.setState({
           output:res.body
@@ -159,7 +159,7 @@ updateDb(e){
 var options=this.state.commentValue;
 //options.push(this.state.commentValue);
 var data={surveyName:localStorage.getItem('sName'),options:this.state.commentValue}
-    request.put('http://10.201.174.210:9080/api/answerSurvey')
+    request.put('http://localhost:9080/api/answerSurvey')
             .set('Content-Type', 'application/json')
             .send(data)
              .then((err,res)=>

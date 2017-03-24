@@ -4,7 +4,7 @@ module.exports=function (req, res) {
   surveyResult.surveyname=req.body.surveyname;
   surveyResult.questions=req.body.questions;
 
-  console.log(surveyResult);
+  console.log("result",surveyResult);
     surveyResult.save(function (err) {
       if(!err){
         res.send("created")
