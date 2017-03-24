@@ -86,39 +86,30 @@ handleChange(i)
     });
 window.location.reload()
   }
-  valueChanged=(newValue) =>  {
-    this.setState({starRating:newValue});
-    console.log(newValue)
-  }
 
-  saveData(e){
-    var data={	"surveyname":"{type:String}",
-    "description":"{type:String}",
-    "thanksMessage":"{type:String}",
-    "createrName":"{type:String}",
-    "createrContact":24634,
-    "creterEmail":"{type:String}",
-    "questions": [
-      {
-        "questionno": 1,
-        "question": "ajafa",
-        "options": [
-          "xgfgf",
-          "gfg"
-        ]
-      },
-      {
-        "questionno": 2,
-        "question": "ajafa",
-        "options": [
-          "fdsgh",
-          "gfhh",
-          "gfhghg"
-        ]
+  updateUserSchema(){
+    var qstn=[];
+    var data={
+      surveyname:localStorage.getItem('sName'),
+      questions:qstn
       }
-    ]
-           }
-    request.post('http://localhost:9080/api/createSurvey')
+      this.state.output.questions.map((obj,i)=>{
+        if(obj.questionType=='Slider'){
+          qstn.push({question:obj.questionQ,
+            questiontype:obj.questionType,
+           maxValue:obj.maxValue,
+            count:[]})
+        }
+        else{
+          qstn.push({question:obj.questionQ,
+            questiontype:obj.questionType,
+            options:obj.options,
+            count:[]})
+              console.log("options",obj.options);
+              }
+        })
+
+     request.post('http://localhost:9080/api/addResult')
             .set('Content-Type', 'application/json')
             .send(data)
              .then((err,res)=>
@@ -126,8 +117,13 @@ window.location.reload()
                console.log("posted");
               })
 
-
   }
+
+  valueChanged=(newValue) =>  {
+    this.setState({starRating:newValue});
+    console.log(newValue)
+  }
+
 
   handleSlider = (event, value) => {
     this.setState({sliderChange: value});
@@ -373,7 +369,7 @@ else if(obj.questionType=="YesOrNo"){
        }
 
 
-
+var url='/Home/Preview/'+localStorage.getItem('sName');
    return(
      <div style={{height:'90%'}}>
       <Paper  style={style}>
@@ -382,8 +378,8 @@ else if(obj.questionType=="YesOrNo"){
           </Card>
 
         {questions}
-        <Link to='/Home/Preview'>
-        <RaisedButton label="Submit" backgroundColor='#1C6D03 'labelStyle={{color:'#FFFFFF ',fontWeight:'bold'}} />
+        <Link to={url}>
+        <RaisedButton label="Submit" onClick={this.updateUserSchema.bind(this)} backgroundColor='#1C6D03 'labelStyle={{color:'#FFFFFF ',fontWeight:'bold'}} />
         </Link>
         <Card style={thanksStyle}>
             {thanksMessage}

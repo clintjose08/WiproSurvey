@@ -28,20 +28,14 @@ class TakeSurvey extends React.Component {
     loading: false,
     finished: false,
     stepIndex: 0,
-    allData:'',
-    commentValue:[]
+    allData:''
   };
   componentWillMount()
   {
-
-   var sName=this.props.params.sName;
-
-
-
-    request.get('http://localhost:9080/api/getSurvey/'+sName).end((err,res)=>{
+    Request.get('http://localhost:9080/api/getDetails').end((err,res)=>{
 
       this.setState({
-        allData:res.body
+        allData:res.body[0]
       })
     });
   }
@@ -52,7 +46,13 @@ class TakeSurvey extends React.Component {
   };
 
   handleNext = () => {
-
+    const {stepIndex} = this.state;
+    if (!this.state.loading) {
+      this.dummyAsync(() => this.setState({
+        loading: false,
+        stepIndex: stepIndex + 1
+      }));
+    }
     var options=this.state.commentValue;
     //options.push(this.state.commentValue);
     var data={surveyName:localStorage.getItem('sName'),options:this.state.commentValue}
@@ -63,23 +63,8 @@ class TakeSurvey extends React.Component {
                  {
                    console.log("posted");
                  });
-                 const {stepIndex} = this.state;
-                 if (!this.state.loading) {
-                   this.dummyAsync(() => this.setState({
-                     loading: false,
-                     stepIndex: stepIndex + 1
-                   }));
-                 }
   };
-Welcome=()=>{
-  const {stepIndex} = this.state;
-  if (!this.state.loading) {
-    this.dummyAsync(() => this.setState({
-      loading: false,
-      stepIndex: stepIndex + 1,
-    }));
-  }
-}
+
   handlePrev = () => {
     const {stepIndex} = this.state;
     if (!this.state.loading) {
@@ -207,7 +192,7 @@ Welcome=()=>{
               <RaisedButton
                 label={'Next'}
                 primary={true}
-                onTouchTap={this.Welcome}
+                onTouchTap={this.handleNext}
               />
             </div>
           </Grid>
@@ -248,9 +233,7 @@ Welcome=()=>{
         return(data.map((obj,i)=>{
           if(stepIndex==i+1){
             if(obj.questionType=="Comments"){
-        return(<Col xs={12}>
-          <form 
-     style={{borderStyle:'solid',borderRadius:25,borderWidth:2,borderColor:'#212F3D', background:'#F4F6F6', opacity: 0.5}}>
+        return(<div>
           <h3 style={{marginTop:0,marginLeft:'2%',marginBottom:0,color:'#000000',textAlign:'left'}}>{i+1}.{obj.questionQ}</h3>
 
           <TextField
@@ -259,13 +242,12 @@ Welcome=()=>{
           underlineStyle={{borderColor:'#37861E '}}
           onChange={this.commentsValueChanged.bind(this,obj.questionQ)}
           />
-          </form>
           <RaisedButton
                 label={'Next'}
                 primary={true}
                 onTouchTap={this.handleNext}
               />
-          </Col>);
+          </div>);
       }
       else if(obj.questionType=="Checkbox"){
          var options=[];

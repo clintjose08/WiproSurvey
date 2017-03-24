@@ -28,7 +28,6 @@ app.use('/',createSurveyConfigRoute);
 app.use('/',getTempData);
 app.use('/',getResultConfigRoute);
 app.use('/',addResult);
-app.use('/',mailRoute);
 
 var transporter = nodemailer.createTransport({
 

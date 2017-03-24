@@ -17,7 +17,7 @@ const QuestSchema = new Schema({
 
 const ResultSchema = new Schema({
 
-  surveyid:{type:String,required:true},
+  surveyname:{type:String,required:true},
   questions:[QuestSchema]
 });
 

@@ -247,7 +247,11 @@ valueChanged = (event) =>  {
 
       components.pop();
 
+<<<<<<< HEAD
       components.push( <Col xs={12} >
+=======
+      components.push( <div>
+>>>>>>> 63f91371588cc82f1865a8ab60871595ce7286df
 
      <h3 style={{marginTop:'10%',marginBottom:'5%',marginLeft:'2%',color:'#000000 ',textAlign:'left'}}>{this.props.putQuestion}</h3>
                    
