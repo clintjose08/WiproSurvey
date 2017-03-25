@@ -11,15 +11,17 @@ module.exports=function (req, res) {
 		});
 	}
 else if(req.body.type=='thanksMessage'){
+	console.log("inside thanks");
 	surveyConfigModel.findOneAndUpdate({surveyname:req.body.sName},
 	{$set:{
-		creterEmail:req.body.creterEmail,
+		creteremail:req.body.creterEmail,
 		createrName:req.body.createrName,
-		thanksMessage:req.body.thanksMessage,
+		thanksmessage:req.body.thanksMessage,
 		createrContact:req.body.createrContact
 	}},
 	function(err,doc){
-
+	console.log("thanks err",err);
+	console.log(req.body.thanksMessage);
 				console.log("not exist");
 
 	});

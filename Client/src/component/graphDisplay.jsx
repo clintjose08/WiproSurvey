@@ -24,7 +24,7 @@ class GraphDisplay extends Component
 
 
       Request.get('http://localhost:9080/api/getResult').end((err,res)=>{
-
+        console.log(res.body[0]);
         this.setState({
           allData:res.body[0]
         })
@@ -41,9 +41,17 @@ class GraphDisplay extends Component
             if(data.questiontype==="MultiChoice")
             {
               answer=[];
+              var count;
               answer.push(["Options","Count"]);
-              for(var i=0;i<data.options.length;i++)
-              answer.push([data.options[i]+" ("+data.count[i]+")",data.count[i]]);
+              data.options.map((opt)=>
+              {
+                count=0;
+                data.count.map((obj)=>{
+                  if(obj===opt)
+                  ++count;
+                });
+                answer.push([opt,count]);
+              });
               chart=(<Chart
                    chartType="PieChart"
                    data={answer}
