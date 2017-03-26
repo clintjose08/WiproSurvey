@@ -38,10 +38,10 @@ class GraphDisplay extends Component
     {
       var chart,answer=[];
      Details=this.state.allData.questions.map((data)=>{
-            if(data.questiontype==="MultiChoice")
+            if(data.questiontype=="MultiChoice"||data.questiontype=="YesOrNo"||data.questiontype=="Dropdown")
             {
               answer=[];
-              var count;
+              var count=0;
               answer.push(["Options","Count"]);
               data.options.map((opt)=>
               {
@@ -62,7 +62,32 @@ class GraphDisplay extends Component
                    legend_toggle
                  />);
             }
-            else if(data.questiontype==="Slider")
+            else if(data.questiontype=="StarRatings")
+            {
+              answer=[];
+              var count=0;
+              answer.push(["Options","Count"]);
+              data.options.map((opt)=>
+              {
+                count=0;
+                data.count.map((obj)=>{
+                  if(obj===opt)
+                  ++count;
+                });
+                answer.push([opt.toString(),count]);
+              });
+
+              chart=(<Chart
+                   chartType="PieChart"
+                   data={answer}
+                   options={{title:"Response Report",pieHole:0.4,is3D:true}}
+
+                   width="100%"
+                   height="400px"
+                   legend_toggle
+                 />);
+            }
+            else if(data.questiontype=="Slider")
             {
               answer=[];
               answer.push(["Options","Count"]);
@@ -77,7 +102,7 @@ class GraphDisplay extends Component
                 end=beg+scale;
                 count=0;
                 console.log("i",i,scale,limit);
-                data.options.map((obj)=>{
+                data.count.map((obj)=>{
                   if(beg<=obj&&obj<end)
                   ++count;
                 });
@@ -97,11 +122,11 @@ class GraphDisplay extends Component
 
                  />);
             }
-            else if(data.questiontype==="Comment")
+            else if(data.questiontype=="Comments"||data.questiontype=="SingleText")
             {
               chart=[];
               chart.push(<h3>User Comments</h3>)
-              data.options.map((obj)=>{
+              data.count.map((obj)=>{
               chart.push(<p style={{textAlign:"left",margin:20}}>{obj}<hr/></p>)
             });
 
