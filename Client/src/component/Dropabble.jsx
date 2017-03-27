@@ -55,7 +55,8 @@ class Dropabble  extends Component {
     this.state = {
        output:[],
        sliderChange:0,
-       starRating: 1
+       starRating: 1,
+       starComment:''
     }
   }
 
@@ -120,12 +121,19 @@ window.location.reload()
   }
 
   valueChanged=(newValue) =>  {
+
+    for(let i=0;i<this.props.putOptions.length;i++)
+    {
+      this.setState({starComment:this.props.putOptions[newValue-1]});
+    }
+    
     this.setState({starRating:newValue});
     console.log(newValue)
   }
 
 
   handleSlider = (event, value) => {
+
     this.setState({sliderChange: value});
   };
  render() {

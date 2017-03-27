@@ -11,6 +11,7 @@ import {RadioButton, RadioButtonGroup} from 'material-ui/RadioButton';
 import Checkbox from 'material-ui/Checkbox';
 import IconButton from 'material-ui/IconButton';
 import Slider from 'material-ui/Slider';
+import Avatar from 'material-ui/Avatar';
 import StarRating from 'star-rating-react';
 import DropDownMenu from 'material-ui/DropDownMenu';
 import MenuItem from 'material-ui/MenuItem';
@@ -19,7 +20,14 @@ import ExpandTransition from 'material-ui/internal/ExpandTransition';
 import TextField from 'material-ui/TextField';
 import Paper from 'material-ui/Paper';
 import {Grid,Col,Row} from 'react-flexbox-grid';
-import image from '../../images/welcome.png';
+import Divider from 'material-ui/Divider';
+
+import Person from 'material-ui/svg-icons/social/person';
+import Phone from 'material-ui/svg-icons/communication/contact-phone';
+import Mail from 'material-ui/svg-icons/communication/contact-mail';
+
+import background from '../../images/Home.jpg';
+import finish  from '../../images/finish.jpg';
 import Request from 'superagent';
 
 class TakeSurvey extends React.Component {
@@ -29,6 +37,7 @@ class TakeSurvey extends React.Component {
     finished: false,
     stepIndex: 0,
     allData:'',
+    sliderChange:0,
     commentValue:[]
   };
   componentWillMount()
@@ -168,7 +177,8 @@ Welcome=()=>{
         a.push(value);
         this.setState({commentValue:a});
         this.setState({sliderChange:value});
-        console.log(this.state.sliderChange,a);
+        console.log(value)
+        console.log(this.state.sliderChange);
 
       };
   getStepContent(stepIndex) {
@@ -184,16 +194,28 @@ Welcome=()=>{
         <div>
           <Grid>
             <Row center="xs">
-              <Paper style={{background:'#90EE90',width:'100%',height:'100%',padding:20,margin:20}} zDepth={1}>
-                <Row center="xs">
-                  <Col xs={6}>
-                    <h2 style={{color:"#FFFFFF"}}>Hi there...</h2>
-                    <p>{this.state.allData.welcomeMsg}</p>
-                  </Col>
-                  <Col xs={6}>
-                    <img src="" />
-                  </Col>
+              <Paper style={{width:'100%',height:'100%'}} zDepth={1}>
+              <Row middle="xs">
+              <Col xs={6}>
+                <Row>
+                <Col xs={12}>
+                <section style={{marginLeft:'2%',background:'#28B463',borderStyle:'solid',borderRadius:25,borderWidth:2,borderColor:'#F8F9F9'}}>
+                  <h2 style={{color:'#F8F9F9',fontSize:'150%',paddingTop:"2%",paddingBottom:'2%',fontFamily: 'Fenix'}}>Tell Us What You Think....</h2>
+                </section> 
+                </Col>
                 </Row>
+                 <Row >
+                  <Col xs={12}>
+                    <p style={{fontSize:'225%',fontFamily:'Doppio One',marginLeft:'2%',color:'#2E86C1'}}>{this.state.allData.welcomeMsg}</p>
+                    <p style={{textAlign:'left',fontSize:'125%',fontFamily:'Doppio One',marginLeft:'2%'}}>{this.state.allData.description}</p>
+                  </Col>
+                </Row> 
+                </Col>
+                <Col xs={5}>
+                  <img src={background} style={{width:'auto',height:'20%'}} />
+                </Col>
+                </Row>
+               
               </Paper>
             </Row>
 
@@ -219,12 +241,34 @@ Welcome=()=>{
         <div>
           <Grid>
             <Row center="xs">
-              <Paper style={{background:'#90EE90',width:'100%',height:'100%',padding:20,margin:20}} zDepth={1}>
-                <Row center="xs">
-                  <Col xs={12}>
-                    <h1>{this.state.allData.thanksmessage}</h1>
-                  </Col>
+              <Paper style={{width:'100%',height:'100%'}} zDepth={1}>
+                
+                <Row >
+                    <Col xs={12}>
+                        <img src={finish} style={{width:'auto',height:'70%'}} />
+                        <Divider/>
+                    </Col>
                 </Row>
+               
+                <Row center="xs">
+                  <Col xs={6}>
+                     <p style={{textAlign:'left',fontSize:'225%',fontFamily:'Doppio One',marginLeft:'2%',color:'#2E86C1'}}>{this.state.allData.thanksMessage}</p>
+                  </Col>
+                  <Col xs ={5}>
+                       <p style={{textAlign:'left',fontSize:'125%',fontFamily:'Doppio One',marginLeft:'2%'}}><Avatar icon= {<Person/>}
+                                                                                                                   backgroundColor={'#566573'}
+                                                                                                                   style={{marginTop:'2%'}} />
+                                                                                                                    {this.state.allData.createrName}</p>
+                       <p style={{textAlign:'left',fontSize:'125%',fontFamily:'Doppio One',marginLeft:'2%'}}><Avatar icon= {<Phone/>}
+                                                                                                                   backgroundColor={'#566573'}
+                                                                                                                   style={{marginTop:'2%'}} />
+                                                                                                                    {this.state.allData.createrContact}</p>
+                       <p style={{textAlign:'left',fontSize:'125%',fontFamily:'Doppio One',marginLeft:'2%'}}><Avatar icon= {<Mail/>}
+                                                                                                                   backgroundColor={'#566573'}
+                                                                                                                   style={{marginTop:'2%'}} />{this.state.allData.creterEmail}</p>
+                  </Col>
+                </Row>  
+              
               </Paper>
             </Row>
             <div style={{marginTop: 24, marginBottom: 12}}>
@@ -250,8 +294,8 @@ Welcome=()=>{
             if(obj.questionType=="Comments"){
         return(<Col xs={12}>
           <form 
-     style={{borderStyle:'solid',borderRadius:25,borderWidth:2,borderColor:'#212F3D', background:'#F4F6F6', opacity: 0.5}}>
-          <h3 style={{marginTop:0,marginLeft:'2%',marginBottom:0,color:'#000000',textAlign:'left'}}>{i+1}.{obj.questionQ}</h3>
+     style={{marginTop:'5%',marginBottom:'2%',borderStyle:'solid',borderRadius:25,borderWidth:2,borderColor:'#212F3D', background:'#F4F6F6', opacity: 0.5}}>
+          <h3 style={{marginTop:'1%',marginLeft:'2%',marginBottom:0,color:'#000000',textAlign:'left'}}>{i+1}.{obj.questionQ}</h3>
 
           <TextField
           hintText="Your Option Here"
@@ -260,10 +304,17 @@ Welcome=()=>{
           onChange={this.commentsValueChanged.bind(this,obj.questionQ)}
           />
           </form>
+           <FlatButton
+                label="Back"
+                disabled={stepIndex === 0}
+                onTouchTap={this.handlePrev}
+                style={{marginRight: 12}}
+              />
           <RaisedButton
                 label={'Next'}
                 primary={true}
                 onTouchTap={this.handleNext}
+                style={{marginBottom:'2%'}}
               />
           </Col>);
       }
@@ -274,15 +325,25 @@ Welcome=()=>{
              <Checkbox label={option} onCheck={this.checkboxValueChange.bind(this,option)} iconStyle={{marginLeft:'35%'}} labelStyle={{marginRight:'50%',color:'#000000',marginLeft:'2%'}}/>
              </div>);
            });
-         return(<div>
+         return(<Col xs={12}>
+          <form 
+     style={{marginTop:'5%',marginBottom:'2%',borderStyle:'solid',borderRadius:25,borderWidth:2,borderColor:'#212F3D', background:'#F4F6F6', opacity: 0.5}}>
          <h3 style={{marginTop:0,marginLeft:'2%',marginBottom:0,color:'#000000',textAlign:'left'}}>{i+1}.{obj.questionQ} </h3>
          {options}
+         </form>
+         <FlatButton
+                label="Back"
+                disabled={stepIndex === 0}
+                onTouchTap={this.handlePrev}
+                style={{marginRight: 12}}
+              />
+
          <RaisedButton
                 label={'Next'}
                 primary={true}
                 onTouchTap={this.handleNext}
               />
-         </div>);
+         </Col>);
        }
 else if(obj.questionType=="Dropdown"){
 var options=[];
@@ -294,18 +355,29 @@ options.push(
 
 });
 
-return(<div>
+return(<Col xs={12}>
+          <form 
+     style={{marginTop:'5%',marginBottom:'2%',borderStyle:'solid',borderRadius:25,borderWidth:2,borderColor:'#212F3D', background:'#F4F6F6', opacity: 0.5}}>
 <h3 style={{marginTop:0,marginLeft:'2%',marginBottom:0,color:'#000000',textAlign:'left'}}>{i+1}.{obj.questionQ} </h3>
 
 <DropDownMenu onChange={this.dropValueChanged.bind(this,obj.questionQ)} value={this.state.dropDown} labelStyle={{marginRight:'50%',color:'#000000',marginLeft:'2%'}}>
 {options}
 </DropDownMenu>
+</form>
+
+<FlatButton
+                label="Back"
+                disabled={stepIndex === 0}
+                onTouchTap={this.handlePrev}
+                style={{marginRight: 12}}
+              />
+
 <RaisedButton
                 label={'Next'}
                 primary={true}
                 onTouchTap={this.handleNext}
               />
-</div>);
+</Col>);
 }
 else if(obj.questionType=="StarRatings"){
 var options=[];
@@ -317,20 +389,33 @@ options.push(
   />
 );
 
-return(<div>
+return(<Col xs={12}>
+          <form 
+     style={{marginTop:'5%',marginBottom:'2%',borderStyle:'solid',borderRadius:25,borderWidth:2,borderColor:'#212F3D', background:'#F4F6F6', opacity: 0.5}}>
 <h3 style={{marginTop:0,marginLeft:'2%',marginBottom:0,color:'#000000',textAlign:'left'}}>{i+1}.{obj.questionQ} </h3>
 
 {options}
+</form>
+
+<FlatButton
+                label="Back"
+                disabled={stepIndex === 0}
+                onTouchTap={this.handlePrev}
+                style={{marginRight: 12}}
+              />
+
 <RaisedButton
                 label={'Next'}
                 primary={true}
                 onTouchTap={this.handleNext}
               />
-</div>);
+</Col>);
 }
 else if(obj.questionType=="SingleText"){
 
-return(<div>
+return(<Col xs={12}>
+          <form 
+     style={{marginTop:'5%',marginBottom:'2%',borderStyle:'solid',borderRadius:25,borderWidth:2,borderColor:'#212F3D', background:'#F4F6F6', opacity: 0.5}}>
 <h3 style={{marginTop:0,marginLeft:'2%',marginBottom:0,color:'#000000',textAlign:'left'}}>{i+1}.{obj.questionQ} </h3>
 
 <TextField
@@ -339,12 +424,21 @@ hintStyle={{fontWeight:'bold'}}
 underlineStyle={{borderColor:'#37861E '}}
 onChange={this.singleTextValueChanged.bind(this,obj.questionQ)}
 />
+</form>
+
+<FlatButton
+                label="Back"
+                disabled={stepIndex === 0}
+                onTouchTap={this.handlePrev}
+                style={{marginRight: 12}}
+              />
+
 <RaisedButton
                 label={'Next'}
                 primary={true}
                 onTouchTap={this.handleNext}
               />
-</div>);
+</Col>);
 }
 else if(obj.questionType=="MultiChoice"){
 var options=[];
@@ -359,23 +453,36 @@ options.push(
 
 });
 
-return(<div>
+return(<Col xs={12}>
+          <form 
+     style={{marginTop:'5%',marginBottom:'2%',borderStyle:'solid',borderRadius:25,borderWidth:2,borderColor:'#212F3D', background:'#F4F6F6', opacity: 0.5}}>
 <h3 style={{marginTop:0,marginLeft:'2%',marginBottom:0,color:'#000000',textAlign:'left'}}>{i+1}.{obj.questionQ} </h3>
 
 <RadioButtonGroup onChange={this.multiChoiceValueChange.bind(this,obj.questionQ)} name="YesOrNo" style={{textAlign:'left',marginLeft:'5%',marginTop:'2%'}} >
 {options}
 </RadioButtonGroup>
+</form>
+
+<FlatButton
+                label="Back"
+                disabled={stepIndex === 0}
+                onTouchTap={this.handlePrev}
+                style={{marginRight: 12}}
+              />
+
 <RaisedButton
                 label={'Next'}
                 primary={true}
                 onTouchTap={this.handleNext}
               />
-</div>);
+</Col>);
 }
 else if(obj.questionType=="Slider"){
 
 
-return(<div>
+return(<Col xs={12}>
+          <form 
+     style={{marginTop:'5%',marginBottom:'2%',borderStyle:'solid',borderRadius:25,borderWidth:2,borderColor:'#212F3D', background:'#F4F6F6', opacity: 0.5}}>
 <h3 style={{marginTop:0,marginLeft:'2%',marginBottom:0,color:'#000000',textAlign:'left'}}>{i+1}.{obj.questionQ} </h3>
 
 <Slider
@@ -390,17 +497,28 @@ return(<div>
 
            <span style={{fontWeight:'bold'}}>{this.state.sliderChange}</span>
            <span style={{fontWeight:'bold'}}>{'/'}</span> <span style={{fontWeight:'bold'}}>{obj.maxValue}</span>
+</form>    
+
+        <FlatButton
+                label="Back"
+                disabled={stepIndex === 0}
+                onTouchTap={this.handlePrev}
+                style={{marginRight: 12}}
+              />       
+
            <RaisedButton
                            label={'Next'}
                            primary={true}
                            onTouchTap={this.handleNext}
                          />
-</div>);
+</Col>);
 }
 else if(obj.questionType=="YesOrNo"){
 
 
-return(<div>
+return(<Col xs={12}>
+          <form 
+     style={{marginTop:'5%',marginBottom:'2%',borderStyle:'solid',borderRadius:25,borderWidth:2,borderColor:'#212F3D', background:'#F4F6F6', opacity: 0.5}}>
 <h3 style={{marginTop:0,marginLeft:'2%',marginBottom:0,color:'#000000',textAlign:'left'}}>{i+1}.{obj.questionQ} </h3>
 
 <RadioButtonGroup name="YesOrNo" onChange={this.yesOrNoValueChange.bind(this,obj.questionQ)}style={{textAlign:'left',marginLeft:'5%',marginTop:'2%'}} >
@@ -417,12 +535,21 @@ label="No"
 labelStyle={{fontWeight:'bold'}}
 />
 </RadioButtonGroup>
+</form>
+
+ <FlatButton
+                label="Back"
+                disabled={stepIndex === 0}
+                onTouchTap={this.handlePrev}
+                style={{marginRight: 12}}
+              />   
+
 <RaisedButton
                 label={'Next'}
                 primary={true}
                 onTouchTap={this.handleNext}
               />
-</div>);
+</Col>);
 }
           }
         }));

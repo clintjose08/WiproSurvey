@@ -92,6 +92,7 @@ constructor(props) {
   }
 	updateDb(){
 		var sName=localStorage.getItem('sName');
+		console.log("getin thank");
 		var thankyouScreen={
 			sName:localStorage.getItem('sName'),
 			"type":'thanksMessage',
@@ -105,7 +106,15 @@ constructor(props) {
 						.send(thankyouScreen)
 						 .end((err,res)=>
 						 {
-							 console.log("posted");
+						 	if(err)
+						 	{
+
+							 console.log(err);
+						 	}
+						 	else
+						 	{
+						 		console.log("not err");
+						 	}
 							})
 	}
 	render()

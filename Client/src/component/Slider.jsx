@@ -33,7 +33,7 @@ class Slider extends Component{
  }
 
 componentWillMount(){
-    this.props.type("Slider");
+   
   }
 
 handleQuestion(e) {
@@ -41,6 +41,7 @@ handleQuestion(e) {
       quest:e.target.value
     })
     this.props.getQuestion(e.target.value);
+    this.props.type("Slider");
     console.log("Sucess");
   }
 
