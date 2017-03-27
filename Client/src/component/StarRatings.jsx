@@ -32,15 +32,19 @@ class StarRatings extends Component
     listOptions:[],
     addValue: false,
     starValues:[],
+    defaultValue:[]
   };
 
   handleChange = (event, index, value) => {
     var list=[];
     var text=[];
+    var defaultValue=[];
     var starValue= Array(value).fill(" ");
-    this.setState({value:value,
-
-    starValues:starValue});
+    for(let i=0;i<value;){
+      defaultValue.push(++i);
+    }
+    this.setState({defaultValue:defaultValue});
+    this.setState({value:value,starValues:starValue});
     this.props.options(starValue);
     if(this.state.addValue)
     {
@@ -131,7 +135,7 @@ class StarRatings extends Component
           questionType:'StarRatings',
           questionQ:this.state.quest,
           scale:this.state.value,
-          options:this.state.starValues
+          options:this.state.defaultValue
         }
 
 

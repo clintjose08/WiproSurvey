@@ -100,6 +100,7 @@ Welcome=()=>{
   };
 
     valueChanged=(qstn,newValue) =>  {
+      console.log(newValue);
         this.setState({starRating:newValue})
       var a=this.state.commentValue;
       a.pop();
@@ -155,7 +156,7 @@ Welcome=()=>{
     }
     checkboxValueChange=(e,i,value) =>  {
       var a=this.state.checkboxValue;
-      console.log("index value set", value)
+      console.log("index value set", e)
       if(value){
       a.push(e)
       this.setState({checkboxValue:a});
@@ -206,7 +207,7 @@ Welcome=()=>{
                 </Row>
                  <Row >
                   <Col xs={12}>
-                    <p style={{fontSize:'225%',fontFamily:'Doppio One',marginLeft:'2%',color:'#2E86C1'}}>{this.state.allData.welcomeMsg}</p>
+                    <p style={{textAlign:'left',fontSize:'225%',fontFamily:'Doppio One',marginLeft:'2%',color:'#2E86C1'}}>{this.state.allData.welcomeMsg}</p>
                     <p style={{textAlign:'left',fontSize:'125%',fontFamily:'Doppio One',marginLeft:'2%'}}>{this.state.allData.description}</p>
                   </Col>
                 </Row> 
@@ -292,10 +293,12 @@ Welcome=()=>{
         return(data.map((obj,i)=>{
           if(stepIndex==i+1){
             if(obj.questionType=="Comments"){
+
         return(<Col xs={12}>
           <form 
      style={{marginTop:'5%',marginBottom:'2%',borderStyle:'solid',borderRadius:25,borderWidth:2,borderColor:'#212F3D', background:'#F4F6F6', opacity: 0.5}}>
           <h3 style={{marginTop:'1%',marginLeft:'2%',marginBottom:0,color:'#000000',textAlign:'left'}}>{i+1}.{obj.questionQ}</h3>
+
 
           <TextField
           hintText="Your Option Here"
@@ -303,6 +306,7 @@ Welcome=()=>{
           underlineStyle={{borderColor:'#37861E '}}
           onChange={this.commentsValueChanged.bind(this,obj.questionQ)}
           />
+
           </form>
            <FlatButton
                 label="Back"
@@ -310,6 +314,7 @@ Welcome=()=>{
                 onTouchTap={this.handlePrev}
                 style={{marginRight: 12}}
               />
+
           <RaisedButton
                 label={'Next'}
                 primary={true}
@@ -320,9 +325,9 @@ Welcome=()=>{
       }
       else if(obj.questionType=="Checkbox"){
          var options=[];
-          obj.options.map((option)=>{
+          obj.options.map((option,i)=>{
           options.push(<div>
-             <Checkbox label={option} onCheck={this.checkboxValueChange.bind(this,option)} iconStyle={{marginLeft:'35%'}} labelStyle={{marginRight:'50%',color:'#000000',marginLeft:'2%'}}/>
+             <Checkbox label={option} onCheck={this.checkboxValueChange.bind(this,i)} iconStyle={{marginLeft:'35%'}} labelStyle={{marginRight:'50%',color:'#000000',marginLeft:'2%'}}/>
              </div>);
            });
          return(<Col xs={12}>

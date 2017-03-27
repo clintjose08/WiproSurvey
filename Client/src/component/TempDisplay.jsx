@@ -51,7 +51,7 @@ constructor(){
     sliderChange: 0,
     starRating: 1,
     starComment:'',
-   
+
   };
 }
 
@@ -74,7 +74,7 @@ valueChanged = (event) =>  {
 
   valueChanged = (newValue) =>  {
     this.setState({starRating:newValue});
-   
+
     for(let i=0;i<this.props.putOptions.length;i++)
     {
       this.setState({starComment:this.props.putOptions[newValue-1]});
@@ -82,7 +82,7 @@ valueChanged = (event) =>  {
     console.log(newValue)
   }
 
-  
+
 
 
  render() {
@@ -251,15 +251,17 @@ valueChanged = (event) =>  {
 
       components.push( <Col xs={12} >
 
+
+
      <h3 style={{marginTop:'10%',marginBottom:'5%',marginLeft:'2%',color:'#000000 ',textAlign:'left'}}>{this.props.putQuestion}</h3>
-                   
+
                   <StarRating
                    size={this.props.putOptions.length}
                    value={this.state.starRating}
                    onChange={this.valueChanged.bind(this)}
-                   
+
                    /> <span style={{fontWeight:'bold'}}>{this.state.starComment}</span>
-                   
+
                    </Col> ) ;
 
   }

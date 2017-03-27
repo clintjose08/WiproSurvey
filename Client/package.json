@@ -62,6 +62,7 @@
     "piechart": "^1.0.0",
     "rc-rate": "^2.0.1",
     "react": "^15.4.2",
+    "react-addons-css-transition-group": "^15.4.2",
     "react-cntdwn": "^0.3.0",
     "react-count-down": "^1.1.0",
     "react-countdown-clock": "^1.1.0",
