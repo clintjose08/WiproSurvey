@@ -47,7 +47,7 @@ class TakeSurvey extends React.Component {
 
 
 
-    request.get('http://localhost:9080/api/getSurvey/'+sName).end((err,res)=>{
+    request.get('http://10.201.174.210:9080/api/getSurvey/'+sName).end((err,res)=>{
 
       this.setState({
         allData:res.body
@@ -61,13 +61,13 @@ class TakeSurvey extends React.Component {
   };
 
   handleNext = () => {
-
+var sName=this.props.params.sName;
     var options=this.state.commentValue;
     //options.push(this.state.commentValue);
-    var data={surveyName:localStorage.getItem('sName'),options:this.state.commentValue}
-        request.put('http://localhost:9080/api/answerSurvey')
+    var data1={surveyName:sName,options:this.state.commentValue}
+        request.put('http://10.201.174.210:9080/api/answerSurvey/'+sName)
                 .set('Content-Type', 'application/json')
-                .send(data)
+                .send(data1)
                  .then((err,res)=>
                  {
                    console.log("posted");
@@ -90,6 +90,7 @@ Welcome=()=>{
   }
 }
   handlePrev = () => {
+
     const {stepIndex} = this.state;
     if (!this.state.loading) {
       this.dummyAsync(() => this.setState({
@@ -100,6 +101,7 @@ Welcome=()=>{
   };
 
     valueChanged=(qstn,newValue) =>  {
+      this.setState({commentValue:[]});
       console.log(newValue);
         this.setState({starRating:newValue})
       var a=this.state.commentValue;
@@ -111,6 +113,7 @@ Welcome=()=>{
 
     }
     dropValueChanged=(qstn,e,i,newValue) =>  {
+      this.setState({commentValue:[]});
       var a=this.state.commentValue;
       a.pop();
       a.pop();
@@ -120,25 +123,29 @@ Welcome=()=>{
       console.log("comment value set",a)
     }
     singleTextValueChanged=(qstn,e,newValue) =>  {
+      this.setState({commentValue:[]});
       var a=this.state.commentValue;
       a.pop();
       a.pop();
       a.push(qstn);
       a.push(newValue);
       this.setState({commentValue:a});
-      console.log("comment value set",a)
+      console.log("SingleText set",a)
+
     }
 
-    commentsValueChanged=(qstn,e,newValue) =>  {
+    commentsValueChanged=(qstn,e,cmtValue) =>  {
+      this.setState({commentValue:[]});
       var a=this.state.commentValue;
       a.pop();
       a.pop();
       a.push(qstn);
-      a.push(newValue);
+      a.push(cmtValue);
       this.setState({commentValue:a});
       console.log("comment value set",qstn, this.state.commentValue)
     }
     multiChoiceValueChange=(qstn,e,newValue)=>{
+      this.setState({commentValue:[]});
       var a=this.state.commentValue;
       a.pop();
       a.pop();
@@ -147,12 +154,14 @@ Welcome=()=>{
       this.setState({commentValue:a});
     }
     yesOrNoValueChange=(qstn,e,newValue)=>{
+      this.setState({commentValue:[]});
       var a=this.state.commentValue;
       a.pop();
       a.pop();
       a.push(qstn);
       a.push(newValue);
       this.setState({commentValue:a});
+      console.log("database",this.state.commentValue);
     }
     checkboxValueChange=(e,i,value) =>  {
       var a=this.state.checkboxValue;
@@ -171,6 +180,7 @@ Welcome=()=>{
     }
 
       handleSlider = (quest,event, value) => {
+        this.setState({commentValue:[]});
         var a=this.state.commentValue;
         a.pop();
         a.pop();
@@ -202,7 +212,7 @@ Welcome=()=>{
                 <Col xs={12}>
                 <section style={{marginLeft:'2%',background:'#28B463',borderStyle:'solid',borderRadius:25,borderWidth:2,borderColor:'#F8F9F9'}}>
                   <h2 style={{color:'#F8F9F9',fontSize:'150%',paddingTop:"2%",paddingBottom:'2%',fontFamily: 'Fenix'}}>Tell Us What You Think....</h2>
-                </section> 
+                </section>
                 </Col>
                 </Row>
                  <Row >
@@ -210,13 +220,13 @@ Welcome=()=>{
                     <p style={{textAlign:'left',fontSize:'225%',fontFamily:'Doppio One',marginLeft:'2%',color:'#2E86C1'}}>{this.state.allData.welcomeMsg}</p>
                     <p style={{textAlign:'left',fontSize:'125%',fontFamily:'Doppio One',marginLeft:'2%'}}>{this.state.allData.description}</p>
                   </Col>
-                </Row> 
+                </Row>
                 </Col>
                 <Col xs={5}>
                   <img src={background} style={{width:'auto',height:'20%'}} />
                 </Col>
                 </Row>
-               
+
               </Paper>
             </Row>
 
@@ -243,14 +253,14 @@ Welcome=()=>{
           <Grid>
             <Row center="xs">
               <Paper style={{width:'100%',height:'100%'}} zDepth={1}>
-                
+
                 <Row >
                     <Col xs={12}>
                         <img src={finish} style={{width:'auto',height:'70%'}} />
                         <Divider/>
                     </Col>
                 </Row>
-               
+
                 <Row center="xs">
                   <Col xs={6}>
                      <p style={{textAlign:'left',fontSize:'225%',fontFamily:'Doppio One',marginLeft:'2%',color:'#2E86C1'}}>{this.state.allData.thanksMessage}</p>
@@ -268,22 +278,12 @@ Welcome=()=>{
                                                                                                                    backgroundColor={'#566573'}
                                                                                                                    style={{marginTop:'2%'}} />{this.state.allData.creterEmail}</p>
                   </Col>
-                </Row>  
-              
+                </Row>
+
               </Paper>
             </Row>
             <div style={{marginTop: 24, marginBottom: 12}}>
-              <FlatButton
-                label="Back"
-                disabled={stepIndex === 0}
-                onTouchTap={this.handlePrev}
-                style={{marginRight: 12}}
-              />
-              <RaisedButton
-                label={'Finish'}
-                primary={true}
-                onTouchTap={this.handleNext}
-              />
+              <p>You can close your window now</p>
             </div>
           </Grid>
         </div>
@@ -295,7 +295,7 @@ Welcome=()=>{
             if(obj.questionType=="Comments"){
 
         return(<Col xs={12}>
-          <form 
+          <form
      style={{marginTop:'5%',marginBottom:'2%',borderStyle:'solid',borderRadius:25,borderWidth:2,borderColor:'#212F3D', background:'#F4F6F6', opacity: 0.5}}>
           <h3 style={{marginTop:'1%',marginLeft:'2%',marginBottom:0,color:'#000000',textAlign:'left'}}>{i+1}.{obj.questionQ}</h3>
 
@@ -331,7 +331,7 @@ Welcome=()=>{
              </div>);
            });
          return(<Col xs={12}>
-          <form 
+          <form
      style={{marginTop:'5%',marginBottom:'2%',borderStyle:'solid',borderRadius:25,borderWidth:2,borderColor:'#212F3D', background:'#F4F6F6', opacity: 0.5}}>
          <h3 style={{marginTop:0,marginLeft:'2%',marginBottom:0,color:'#000000',textAlign:'left'}}>{i+1}.{obj.questionQ} </h3>
          {options}
@@ -361,7 +361,7 @@ options.push(
 });
 
 return(<Col xs={12}>
-          <form 
+          <form
      style={{marginTop:'5%',marginBottom:'2%',borderStyle:'solid',borderRadius:25,borderWidth:2,borderColor:'#212F3D', background:'#F4F6F6', opacity: 0.5}}>
 <h3 style={{marginTop:0,marginLeft:'2%',marginBottom:0,color:'#000000',textAlign:'left'}}>{i+1}.{obj.questionQ} </h3>
 
@@ -395,7 +395,7 @@ options.push(
 );
 
 return(<Col xs={12}>
-          <form 
+          <form
      style={{marginTop:'5%',marginBottom:'2%',borderStyle:'solid',borderRadius:25,borderWidth:2,borderColor:'#212F3D', background:'#F4F6F6', opacity: 0.5}}>
 <h3 style={{marginTop:0,marginLeft:'2%',marginBottom:0,color:'#000000',textAlign:'left'}}>{i+1}.{obj.questionQ} </h3>
 
@@ -419,7 +419,7 @@ return(<Col xs={12}>
 else if(obj.questionType=="SingleText"){
 
 return(<Col xs={12}>
-          <form 
+          <form
      style={{marginTop:'5%',marginBottom:'2%',borderStyle:'solid',borderRadius:25,borderWidth:2,borderColor:'#212F3D', background:'#F4F6F6', opacity: 0.5}}>
 <h3 style={{marginTop:0,marginLeft:'2%',marginBottom:0,color:'#000000',textAlign:'left'}}>{i+1}.{obj.questionQ} </h3>
 
@@ -459,7 +459,7 @@ options.push(
 });
 
 return(<Col xs={12}>
-          <form 
+          <form
      style={{marginTop:'5%',marginBottom:'2%',borderStyle:'solid',borderRadius:25,borderWidth:2,borderColor:'#212F3D', background:'#F4F6F6', opacity: 0.5}}>
 <h3 style={{marginTop:0,marginLeft:'2%',marginBottom:0,color:'#000000',textAlign:'left'}}>{i+1}.{obj.questionQ} </h3>
 
@@ -486,7 +486,7 @@ else if(obj.questionType=="Slider"){
 
 
 return(<Col xs={12}>
-          <form 
+          <form
      style={{marginTop:'5%',marginBottom:'2%',borderStyle:'solid',borderRadius:25,borderWidth:2,borderColor:'#212F3D', background:'#F4F6F6', opacity: 0.5}}>
 <h3 style={{marginTop:0,marginLeft:'2%',marginBottom:0,color:'#000000',textAlign:'left'}}>{i+1}.{obj.questionQ} </h3>
 
@@ -502,14 +502,14 @@ return(<Col xs={12}>
 
            <span style={{fontWeight:'bold'}}>{this.state.sliderChange}</span>
            <span style={{fontWeight:'bold'}}>{'/'}</span> <span style={{fontWeight:'bold'}}>{obj.maxValue}</span>
-</form>    
+</form>
 
         <FlatButton
                 label="Back"
                 disabled={stepIndex === 0}
                 onTouchTap={this.handlePrev}
                 style={{marginRight: 12}}
-              />       
+              />
 
            <RaisedButton
                            label={'Next'}
@@ -522,7 +522,7 @@ else if(obj.questionType=="YesOrNo"){
 
 
 return(<Col xs={12}>
-          <form 
+          <form
      style={{marginTop:'5%',marginBottom:'2%',borderStyle:'solid',borderRadius:25,borderWidth:2,borderColor:'#212F3D', background:'#F4F6F6', opacity: 0.5}}>
 <h3 style={{marginTop:0,marginLeft:'2%',marginBottom:0,color:'#000000',textAlign:'left'}}>{i+1}.{obj.questionQ} </h3>
 
@@ -547,7 +547,7 @@ labelStyle={{fontWeight:'bold'}}
                 disabled={stepIndex === 0}
                 onTouchTap={this.handlePrev}
                 style={{marginRight: 12}}
-              />   
+              />
 
 <RaisedButton
                 label={'Next'}

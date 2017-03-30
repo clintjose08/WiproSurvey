@@ -26,7 +26,7 @@ class MultiChoice extends Component {
    }
  }
  componentWillMount(){
-   
+
  }
  questionChange(e)
  {
@@ -62,6 +62,7 @@ changeOptions=(index,value)=>
   optionArr:arr
   })
     this.props.options(arr);
+    console.log("options",arr);
 }
 updateDb(){
       var sName=localStorage.getItem('sName');
@@ -74,9 +75,9 @@ updateDb(){
         questionQ:this.state.quest,
         options:this.state.optionArr
       }
-    
+
   }
-  request.post('http://localhost:9080/api/updateSurvey/'+sName)
+  request.post('http://10.201.174.210:9080/api/updateSurvey/'+sName)
           .set('Content-Type', 'application/json')
           .send(questionScreen)
            .end((err,res)=>
@@ -85,6 +86,7 @@ updateDb(){
             })
 }
  render() {
+   var url="Home/AddQuestion/"+localStorage.getItem("sName");
    const options=this.state.optionArr.map((value,index) => {
      return (
      <AddOptions addoptions={this.addOptions.bind(this)} index={index} value={value} removeoptions={this.removeOptions.bind(this)} changeoptions={this.changeOptions.bind(this)}/>
@@ -115,10 +117,10 @@ updateDb(){
                 </CardText>
                   <Divider style={{background:blueGrey500}}/>
                 <CardActions>
-               <Link to="Home/AddQuestion" activeClassName="active">
+               <Link to={url} activeClassName="active">
                  <RaisedButton label="Cancel" labelStyle={{fontWeight:'bold'}} />
                </Link>
-               <Link to="Home/AddQuestion" activeClassName="active">
+               <Link to={url} activeClassName="active">
                  <RaisedButton label="Submit" backgroundColor='#1C6D03 ' onClick={this.updateDb.bind(this)} labelStyle={{color:'#FFFFFF ',fontWeight:'bold'}}/>
               </Link>
               </CardActions>

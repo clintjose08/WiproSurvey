@@ -38,7 +38,7 @@ class SurveyDetails extends Component{
     var nameData={
       surveyname:this.state.name
     }
-    request.post('http://localhost:9080/api/createSurvey')
+    request.post('http://10.201.174.210:9080/api/createSurvey')
             .set('Content-Type', 'application/json')
             .send(nameData)
              .end((err,res)=>
@@ -58,9 +58,9 @@ class SurveyDetails extends Component{
 	render(){
 		return(<Grid>
         <Row  middle="xs">
-         
+
          <Col xs={12}>
-      
+
           <TextField
             hintText="Name of the survey"
             onChange={this.nameChange.bind(this)}
@@ -75,8 +75,8 @@ class SurveyDetails extends Component{
           </Link>
         </Col>
           </Row>
-          
-         
+
+
 		</Grid>);
 	}
  }

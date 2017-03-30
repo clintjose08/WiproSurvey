@@ -35,7 +35,7 @@ class CreateSurvey extends Component {
   }}
   componentWillMount(){
     request
-    .get('http://localhost:9080/api/getDetails/')
+    .get('http://10.201.174.210:9080/api/getDetails/')
     .end((err,res) => {
 
       this.setState({
@@ -45,13 +45,13 @@ class CreateSurvey extends Component {
     });
   }
   createDb(){
-     localStorage.setItem("sName", this.state.name);
+     
     console.log("name set Sucess", this.state.name);
     console.log(localStorage.getItem('sName'));
     var nameData={
       surveyname:this.state.name
     }
-    request.post('http://localhost:9080/api/createSurvey')
+    request.post('http://10.201.174.210:9080/api/createSurvey')
             .set('Content-Type', 'application/json')
             .send(nameData)
              .end((err,res)=>
@@ -81,7 +81,7 @@ class CreateSurvey extends Component {
     var drafts=0;
     var running=0;
     var closed=0;
-
+    var url='Home/AddQuestion/'+this.state.name
 this.state.output.map((obj,i)=>{
   if(obj.status=="draft"){
     drafts++;
@@ -274,7 +274,7 @@ this.state.output.map((obj,i)=>{
         <Row>
 
         <Col xsOffset={1}  xs={1}>
-          <Link to="Home/AddQuestion" activeClassName="active">
+          <Link to={url} activeClassName="active">
             <RaisedButton label="Start" onClick={this.createDb.bind(this)} backgroundColor="#1C6D03" labelColor='white' labelStyle={{fontWeight:'bold'}} />
           </Link>
         </Col>

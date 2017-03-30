@@ -21,15 +21,14 @@ class GraphDisplay extends Component
       }
   componentWillMount()
   {
-
-
-      Request.get('http://localhost:9080/api/getResult').end((err,res)=>{
+console.log("name of survey",this.props.name);
+var sName="SampleSurvey"
+      Request.get('http://10.201.174.210:9080/api/getResult/'+this.props.name).end((err,res)=>{
         console.log(res.body[0]);
         this.setState({
           allData:res.body[0]
         })
       });
-
   }
   render()
   {

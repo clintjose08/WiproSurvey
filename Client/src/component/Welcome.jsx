@@ -7,7 +7,6 @@ import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'mat
 import Subheader from 'material-ui/Subheader';
 import Toggle from 'material-ui/Toggle';
 import {IndexLink, Link} from 'react-router';
-
 import request from 'superagent';
 
 const paperStyle={
@@ -34,7 +33,6 @@ constructor(props,context:any) {
    expanded: false,
    welcomeMsg:'',
    discript:''
-
     };
   }
 	static get contextTypes() {
@@ -45,8 +43,10 @@ constructor(props,context:any) {
 
   componentWillMount(){
     this.props.type("Welcome");
-  }
 
+  }
+componentDidMount(){
+}
   handleWelcome(e) {
 
     this.props.getWelcome(e.target.value);
@@ -55,18 +55,14 @@ constructor(props,context:any) {
 			welcomeMsg:e.target.value
 		})
     console.log("Sucess");
-
   }
 
   handleWelcomeDes(e) {
-
     this.props.getWelDes(e.target.value);
-
     this.setState({
 			discript:e.target.value
 		})
     console.log("Sucess");
-
   }
 
  handleToggle = (event, toggle) => {
@@ -81,8 +77,7 @@ constructor(props,context:any) {
 			"welcomeMsg":this.state.welcomeMsg,
 			"description":this.state.discript
 		}
-		request.post('http://localhost:9080/api/updateSurvey/'+sName)
-
+		request.post('http://10.201.174.210:9080/api/updateSurvey/'+sName)
 						.set('Content-Type', 'application/json')
 						.send(welcomeScreen)
 						 .end((err,res)=>
@@ -94,9 +89,9 @@ constructor(props,context:any) {
 
 	render()
 	{
+		var url="Home/AddQuestion/"+localStorage.getItem("sName");
 		return(
 				<div >
-
 					<Paper style={{paperStyle}}>
 						<Card expanded={this.state.expanded} style={{background:'#E5E4E2'}}>
 							<CardHeader title='Welcome Screen' subtitle='Design your welcome screen' subtitleColor='#FFFFFF' style={cardHeaderStyle} titleStyle={cardTitleStyle} >
@@ -131,10 +126,10 @@ constructor(props,context:any) {
         					</CardActions>
         					<Divider style={{background:'#000000'}}/>
         					<CardActions >
-										<Link to="Home/AddQuestion" activeClassName="active">
+										<Link to={url} activeClassName="active">
 											<RaisedButton label="Cancel" labelStyle={{fontWeight:'bold'}} />
 											</Link>
-											<Link to="Home/AddQuestion" activeClassName="active">
+											<Link to={url} activeClassName="active">
 											<RaisedButton label="Submit" onClick={this.updateDb.bind(this)} backgroundColor='#1C6D03 ' labelStyle={{color:'#FFFFFF ',fontWeight:'bold'}} />
 											</Link>
 								  </CardActions>
@@ -142,11 +137,6 @@ constructor(props,context:any) {
 					</Paper>
 
 				</div>
-
-
-
-
-
 
 			);
 	}
