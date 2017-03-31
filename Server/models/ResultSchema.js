@@ -18,6 +18,7 @@ const QuestSchema = new Schema({
 const ResultSchema = new Schema({
 
   surveyname:{type:String,required:true},
+  status:{type:String},
   questions:[QuestSchema]
 });
 

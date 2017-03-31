@@ -35,7 +35,7 @@ class CreateSurvey extends Component {
   }}
   componentWillMount(){
     request
-    .get('http://10.201.174.210:9080/api/getDetails/')
+    .get('http://10.201.174.234:9080/api/getDetails/')
     .end((err,res) => {
 
       this.setState({
@@ -45,13 +45,14 @@ class CreateSurvey extends Component {
     });
   }
   createDb(){
-     
+
     console.log("name set Sucess", this.state.name);
     console.log(localStorage.getItem('sName'));
     var nameData={
-      surveyname:this.state.name
+      surveyname:this.state.name,
+      status:'draft'
     }
-    request.post('http://10.201.174.210:9080/api/createSurvey')
+    request.post('http://10.201.174.234:9080/api/createSurvey')
             .set('Content-Type', 'application/json')
             .send(nameData)
              .end((err,res)=>
@@ -244,7 +245,7 @@ this.state.output.map((obj,i)=>{
 
             style={{width:'100%' ,textAlign: 'center',fontWeight: 'bold',marginTop:'0px',marginBottom:'0px'}}
             label="Drafts"
-            labelStyle={{fontSize:'125%',color:'#FDFEFE',fontWeight:'bold'}}/> />
+            labelStyle={{fontSize:'125%',color:'#FDFEFE',fontWeight:'bold'}}/> 
             </Link>
            </CardActions>
           </Col>

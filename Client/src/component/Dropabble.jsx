@@ -14,6 +14,7 @@ import IconButton from 'material-ui/IconButton';
 import Slider from 'material-ui/Slider';
 import {IndexLink, Link} from 'react-router';
 import StarRating from 'star-rating-react';
+import Dialog from 'material-ui/Dialog';
 const welcomeStyle={
 background:'#649F4E',
 textAlign:'center',
@@ -57,7 +58,8 @@ class Dropabble  extends Component {
        output:[],
        sliderChange:0,
        starRating: 1,
-       starComment:''
+       starComment:'',
+       open:false
     }
   }
 
@@ -65,7 +67,7 @@ class Dropabble  extends Component {
 
     var sName=localStorage.getItem('sName');
       request
-      .get('http://10.201.174.210:9080/api/getSurvey/'+sName)
+      .get('http://10.201.174.234:9080/api/getSurvey/'+sName)
       .end((err,res) => {
         this.setState({
           output:res.body
@@ -80,7 +82,7 @@ handleChange(i)
 {
   var sName=localStorage.getItem('sName');
     request
-    .put('http://10.201.174.210:9080/api/deleteQuest/'+sName+'/'+i)
+    .put('http://10.201.174.234:9080/api/deleteQuest/'+sName+'/'+i)
     .end((err,res) => {
 
     console.log("next");
@@ -88,11 +90,18 @@ handleChange(i)
     });
 window.location.reload()
  }
-
+ handleClose = () => {
+   this.setState({open: false});
+ };
   updateUserSchema(){
     var qstn=[];
+
+    this.setState({
+      open:true
+    })
     var data={
       surveyname:localStorage.getItem('sName'),
+      status:'draft',
       questions:qstn
       }
       this.state.output.questions.map((obj,i)=>{
@@ -111,7 +120,7 @@ window.location.reload()
               }
         })
 
-     request.post('http://10.201.174.210:9080/api/addResult')
+     request.post('http://10.201.174.234:9080/api/addResult')
             .set('Content-Type', 'application/json')
             .send(data)
              .then((err,res)=>
@@ -127,7 +136,7 @@ window.location.reload()
     {
       this.setState({starComment:this.props.putOptions[newValue-1]});
     }
-    
+
     this.setState({starRating:newValue});
     console.log(newValue)
   }
@@ -378,8 +387,6 @@ else if(obj.questionType=="YesOrNo"){
  ));
       }
 
-
-var url='/Home/Preview/'+localStorage.getItem('sName');
   return(
     <div style={{height:'90%'}}>
      <Paper  style={style}>
@@ -388,13 +395,37 @@ var url='/Home/Preview/'+localStorage.getItem('sName');
          </Card>
 
        {questions}
-       <Link to={url}>
        <RaisedButton label="Submit" onClick={this.updateUserSchema.bind(this)} backgroundColor='#1C6D03 'labelStyle={{color:'#FFFFFF ',fontWeight:'bold'}} />
-       </Link>
+
        <Card style={thanksStyle}>
            {thanksMessage}
        </Card>
+       <Dialog
+        title="Your Survey is saved successfully"
+        subtitle=""
+        modal={false}
+        contentStyle={{width:'60%'}}
+        open={this.state.open}
+        onRequestClose={this.handleClose}
+      >
+        <Row  middle="xs">
+      <Col xs={12}>
+      <Row>
+      To publish the survey go to 'Drafts' and publish it
+      </Row>
+      <Row>
 
+      <Col xsOffset={1}  xs={1}>
+        <Link to='Home/CreateSurvey' activeClassName="active">
+          <RaisedButton label="Start" backgroundColor="#1C6D03" labelColor='white' labelStyle={{fontWeight:'bold'}} />
+        </Link>
+      </Col>
+        </Row>
+
+        </Col>
+
+      </Row>
+      </Dialog>
      </Paper>
    </div>
  );

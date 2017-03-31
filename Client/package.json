@@ -58,6 +58,7 @@
     "i": "^0.3.5",
     "link": "^0.1.5",
     "material-ui": "^0.17.0",
+    "material-ui-fullscreen-dialog": "^0.2.0",
     "npm": "^4.3.0",
     "piechart": "^1.0.0",
     "rc-rate": "^2.0.1",

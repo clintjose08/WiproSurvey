@@ -77,7 +77,7 @@ componentDidMount(){
 			"welcomeMsg":this.state.welcomeMsg,
 			"description":this.state.discript
 		}
-		request.post('http://10.201.174.210:9080/api/updateSurvey/'+sName)
+		request.post('http://10.201.174.234:9080/api/updateSurvey/'+sName)
 						.set('Content-Type', 'application/json')
 						.send(welcomeScreen)
 						 .end((err,res)=>

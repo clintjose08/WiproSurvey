@@ -3,16 +3,15 @@ import Paper from 'material-ui/Paper';
 import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
 import {IndexLink, Link} from 'react-router';
 import TextField from 'material-ui/TextField';
-import RaisedButton from 'material-ui/RaisedButton';
-import Dialog from 'material-ui/Dialog';
+import RaisedButton  from 'material-ui/RaisedButton';
+import FullscreenDialog from 'material-ui-fullscreen-dialog'
 import FlatButton from 'material-ui/FlatButton';
 import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
 import {Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn} from 'material-ui/Table';
 import { Grid,Col,Row} from 'react-flexbox-grid';
-
-import GraphDisplay from './graphDisplay'; 
-
+import GraphDisplay from './timer';
+import request from 'superagent';
 import Publish from 'material-ui/svg-icons/editor/publish';
 import Preview from 'material-ui/svg-icons/action/pageview';
 import Cancel from 'material-ui/svg-icons/navigation/cancel';
@@ -21,34 +20,67 @@ class DraftDisplay extends Component{
     state = {
     value: 1,
     open: false,
+    output:[],
+    name:''
   };
-   
-  handleOpen = () => {
-    this.setState({open: true});
+   componentWillMount(){
+     request
+     .get('http://10.201.174.234:9080/api/getDetails/')
+     .end((err,res) => {
+       this.setState({
+         output:res.body
+       });
+       console.log("result",res.body);
+     });
+   }
+  handleOpen(name){
+    this.setState({open: true,name:name});
   };
 
   handleClose = () => {
     this.setState({open: false});
   };
 
+publishupdate(name){
+    var status={status:'Running'}
+  request.put('http://10.201.174.234:9080/api/publishSurvey/'+name)
+          .set('Content-Type', 'application/json')
+          .send(status)
+           .then((err,res)=>
+           {
+             console.log("posted");
+           });
+}
   handleChange = (event, index, value) => this.setState({value});
 
 	render(){
-
+var details=[];
+details.push(this.state.output.map((obj)=>{
+  if(obj.status=='draft'){
+    return(
+      <TableRow>
+          <TableRowColumn>{obj.surveyname}</TableRowColumn>
+          <TableRowColumn>26 Feb 2017</TableRowColumn>
+          <TableRowColumn><RaisedButton label="Publish" onClick={this.publishupdate.bind(this,obj.surveyname)} backgroundColor='#1E8449' labelColor='#FDFEFE' icon={<Publish />} onTouchTap={this.handleOpen.bind(this,obj.surveyname)}/></TableRowColumn>
+          <TableRowColumn><RaisedButton label="Preview" backgroundColor='#3498DB' labelColor='#FDFEFE' icon={<Preview />} /></TableRowColumn>
+          <TableRowColumn><RaisedButton label="Delete" backgroundColor='#EC7063' labelColor='#FDFEFE' icon={<Cancel />} /></TableRowColumn>
+      </TableRow>
+    );
+  }}));
          const actions = [
                 <FlatButton
                      label="Cancel"
                      primary={true}
                      onTouchTap={this.handleClose}
                 />,
-                
+
                  ];
 
 		return(<Grid>
 
                 <Row middle="xs">
                 <Col xs={12}>
-                
+
                 <Row>
                 <Col xs={12}>
                 <Paper>
@@ -60,39 +92,35 @@ class DraftDisplay extends Component{
                           <TableHeaderColumn style={{color:'#FDFEFE ',fontWeight:'bold'}}></TableHeaderColumn>
                            <TableHeaderColumn style={{color:'#FDFEFE ',fontWeight:'bold'}}></TableHeaderColumn>
                             <TableHeaderColumn style={{color:'#FDFEFE ',fontWeight:'bold'}}></TableHeaderColumn>
-                         
+
                      </TableRow>
                      </TableHeader>
                     <TableBody displayRowCheckbox={false}>
-                     <TableRow>
-                         <TableRowColumn>Feed Back</TableRowColumn>
-                         <TableRowColumn>26 Feb 2017</TableRowColumn>
-                         <TableRowColumn><RaisedButton label="Publish" backgroundColor='#1E8449' labelColor='#FDFEFE' icon={<Publish />} onTouchTap={this.handleOpen}/></TableRowColumn>
-                         <TableRowColumn><RaisedButton label="Preview" backgroundColor='#3498DB' labelColor='#FDFEFE' icon={<Preview />} /></TableRowColumn>
-                         <TableRowColumn><RaisedButton label="Delete" backgroundColor='#EC7063' labelColor='#FDFEFE' icon={<Cancel />} /></TableRowColumn>
-                     </TableRow>
-                    
+                      {details}
+
                   </TableBody>
                 </Table>
                 </Paper>
+                <FullscreenDialog
+                  open={this.state.open}
+                  onRequestClose={this.handleClose}
+                  title={'Select Your Time'}
+                  style={{height:'80%',textAlign:'center'}}
+                  containerStyle={{background:'transparent\9'}}
+                  actionButton={<RaisedButton
+                      label='Done'
+                      onTouchTap={() => this.setState({ open: false })}
+                      />}
+                    >
 
-                <Dialog
-                 title="Results"
-                 actions={actions}
-                 modal={false}
-                 open={this.state.open}
-                 onRequestClose={this.handleClose}
-                 autoScrollBodyContent={true} 
-                 contentStyle={{height:'100%',width:'100%',maxHeight:'none',maxWidth: 'none'}}
-                >
                  {<GraphDisplay />}
-               </Dialog>
+               </FullscreenDialog>
                 </Col>
                 </Row>
                 </Col>
                 </Row>
 			</Grid>);
 		}
-	}	
+	}
 
-   export default DraftDisplay; 
+   export default DraftDisplay;
