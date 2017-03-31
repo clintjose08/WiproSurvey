@@ -13,7 +13,7 @@ import IconButton from 'material-ui/IconButton';
 import Slider from 'material-ui/Slider';
 import Avatar from 'material-ui/Avatar';
 import StarRating from 'star-rating-react';
-import DropDownMenu from 'material-ui/DropDownMenu';
+import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
 import FlatButton from 'material-ui/FlatButton';
 import ExpandTransition from 'material-ui/internal/ExpandTransition';
@@ -38,7 +38,9 @@ class TakeSurvey extends React.Component {
     stepIndex: 0,
     allData:'',
     sliderChange:0,
-    commentValue:[]
+    commentValue:[],
+    dropDown:'',
+    selectedValue:''
   };
   componentWillMount()
   {
@@ -47,7 +49,7 @@ class TakeSurvey extends React.Component {
 
 
 
-    request.get('http://localhost:9080/api/getSurvey/'+sName).end((err,res)=>{
+    request.get('http://10.201.174.209:9080/api/getSurvey/'+sName).end((err,res)=>{
 
       this.setState({
         allData:res.body
@@ -65,7 +67,7 @@ class TakeSurvey extends React.Component {
     var options=this.state.commentValue;
     //options.push(this.state.commentValue);
     var data={surveyName:localStorage.getItem('sName'),options:this.state.commentValue}
-        request.put('http://localhost:9080/api/answerSurvey')
+        request.put('http://10.201.174.209:9080/api/answerSurvey')
                 .set('Content-Type', 'application/json')
                 .send(data)
                  .then((err,res)=>
@@ -117,6 +119,8 @@ Welcome=()=>{
       a.push(qstn);
       a.push(newValue);
       this.setState({commentValue:a});
+      this.setState({dropDown:newValue});
+
       console.log("comment value set",a)
     }
     singleTextValueChanged=(qstn,e,newValue) =>  {
@@ -145,6 +149,7 @@ Welcome=()=>{
       a.push(qstn);
       a.push(newValue);
       this.setState({commentValue:a});
+      this.setState({selectedValue:newValue});
     }
     yesOrNoValueChange=(qstn,e,newValue)=>{
       var a=this.state.commentValue;
@@ -296,7 +301,7 @@ Welcome=()=>{
 
         return(<Col xs={12}>
           <form 
-     style={{marginTop:'5%',marginBottom:'2%',borderStyle:'solid',borderRadius:25,borderWidth:2,borderColor:'#212F3D', background:'#F4F6F6', opacity: 0.5}}>
+     style={{marginTop:'5%',marginBottom:'2%',borderStyle:'solid',borderRadius:25,borderWidth:2,borderColor:'#212F3D', background:'#F4F6F6'}}>
           <h3 style={{marginTop:'1%',marginLeft:'2%',marginBottom:0,color:'#000000',textAlign:'left'}}>{i+1}.{obj.questionQ}</h3>
 
 
@@ -308,6 +313,7 @@ Welcome=()=>{
           />
 
           </form>
+          <section style={{marginTop: 24, marginBottom: 12}}>
            <FlatButton
                 label="Back"
                 disabled={stepIndex === 0}
@@ -321,6 +327,7 @@ Welcome=()=>{
                 onTouchTap={this.handleNext}
                 style={{marginBottom:'2%'}}
               />
+              </section>
           </Col>);
       }
       else if(obj.questionType=="Checkbox"){
@@ -332,10 +339,11 @@ Welcome=()=>{
            });
          return(<Col xs={12}>
           <form 
-     style={{marginTop:'5%',marginBottom:'2%',borderStyle:'solid',borderRadius:25,borderWidth:2,borderColor:'#212F3D', background:'#F4F6F6', opacity: 0.5}}>
+     style={{marginTop:'5%',marginBottom:'2%',borderStyle:'solid',borderRadius:25,borderWidth:2,borderColor:'#212F3D', background:'#F4F6F6'}}>
          <h3 style={{marginTop:0,marginLeft:'2%',marginBottom:0,color:'#000000',textAlign:'left'}}>{i+1}.{obj.questionQ} </h3>
          {options}
          </form>
+          <section style={{marginTop: 24, marginBottom: 12}}>
          <FlatButton
                 label="Back"
                 disabled={stepIndex === 0}
@@ -348,6 +356,7 @@ Welcome=()=>{
                 primary={true}
                 onTouchTap={this.handleNext}
               />
+              </section>
          </Col>);
        }
 else if(obj.questionType=="Dropdown"){
@@ -362,14 +371,14 @@ options.push(
 
 return(<Col xs={12}>
           <form 
-     style={{marginTop:'5%',marginBottom:'2%',borderStyle:'solid',borderRadius:25,borderWidth:2,borderColor:'#212F3D', background:'#F4F6F6', opacity: 0.5}}>
+     style={{marginTop:'5%',marginBottom:'2%',borderStyle:'solid',borderRadius:25,borderWidth:2,borderColor:'#212F3D', background:'#F4F6F6'}}>
 <h3 style={{marginTop:0,marginLeft:'2%',marginBottom:0,color:'#000000',textAlign:'left'}}>{i+1}.{obj.questionQ} </h3>
 
-<DropDownMenu onChange={this.dropValueChanged.bind(this,obj.questionQ)} value={this.state.dropDown} labelStyle={{marginRight:'50%',color:'#000000',marginLeft:'2%'}}>
+<SelectField onChange={this.dropValueChanged.bind(this,obj.questionQ)} value={this.state.dropDown} floatingLabelText="--Select--"  floatingLabelStyle={{color:'#808b96'}} underlineStyle={{fill: '#000000'}} >
 {options}
-</DropDownMenu>
+</SelectField>
 </form>
-
+ <section style={{marginTop: 24, marginBottom: 12}}>
 <FlatButton
                 label="Back"
                 disabled={stepIndex === 0}
@@ -382,6 +391,7 @@ return(<Col xs={12}>
                 primary={true}
                 onTouchTap={this.handleNext}
               />
+  </section>            
 </Col>);
 }
 else if(obj.questionType=="StarRatings"){
@@ -396,12 +406,12 @@ options.push(
 
 return(<Col xs={12}>
           <form 
-     style={{marginTop:'5%',marginBottom:'2%',borderStyle:'solid',borderRadius:25,borderWidth:2,borderColor:'#212F3D', background:'#F4F6F6', opacity: 0.5}}>
+     style={{marginTop:'5%',marginBottom:'2%',borderStyle:'solid',borderRadius:25,borderWidth:2,borderColor:'#212F3D', background:'#F4F6F6'}}>
 <h3 style={{marginTop:0,marginLeft:'2%',marginBottom:0,color:'#000000',textAlign:'left'}}>{i+1}.{obj.questionQ} </h3>
 
 {options}
 </form>
-
+  <section style={{marginTop: 24, marginBottom: 12}}>
 <FlatButton
                 label="Back"
                 disabled={stepIndex === 0}
@@ -414,13 +424,15 @@ return(<Col xs={12}>
                 primary={true}
                 onTouchTap={this.handleNext}
               />
+
+ </section>             
 </Col>);
 }
 else if(obj.questionType=="SingleText"){
 
 return(<Col xs={12}>
           <form 
-     style={{marginTop:'5%',marginBottom:'2%',borderStyle:'solid',borderRadius:25,borderWidth:2,borderColor:'#212F3D', background:'#F4F6F6', opacity: 0.5}}>
+     style={{marginTop:'5%',marginBottom:'2%',borderStyle:'solid',borderRadius:25,borderWidth:2,borderColor:'#212F3D', background:'#F4F6F6'}}>
 <h3 style={{marginTop:0,marginLeft:'2%',marginBottom:0,color:'#000000',textAlign:'left'}}>{i+1}.{obj.questionQ} </h3>
 
 <TextField
@@ -431,6 +443,7 @@ onChange={this.singleTextValueChanged.bind(this,obj.questionQ)}
 />
 </form>
 
+  <section style={{marginTop: 24, marginBottom: 12}}>
 <FlatButton
                 label="Back"
                 disabled={stepIndex === 0}
@@ -443,6 +456,7 @@ onChange={this.singleTextValueChanged.bind(this,obj.questionQ)}
                 primary={true}
                 onTouchTap={this.handleNext}
               />
+  </section>            
 </Col>);
 }
 else if(obj.questionType=="MultiChoice"){
@@ -460,14 +474,14 @@ options.push(
 
 return(<Col xs={12}>
           <form 
-     style={{marginTop:'5%',marginBottom:'2%',borderStyle:'solid',borderRadius:25,borderWidth:2,borderColor:'#212F3D', background:'#F4F6F6', opacity: 0.5}}>
+     style={{marginTop:'5%',marginBottom:'2%',borderStyle:'solid',borderRadius:25,borderWidth:2,borderColor:'#212F3D', background:'#F4F6F6'}}>
 <h3 style={{marginTop:0,marginLeft:'2%',marginBottom:0,color:'#000000',textAlign:'left'}}>{i+1}.{obj.questionQ} </h3>
 
-<RadioButtonGroup onChange={this.multiChoiceValueChange.bind(this,obj.questionQ)} name="YesOrNo" style={{textAlign:'left',marginLeft:'5%',marginTop:'2%'}} >
+<RadioButtonGroup onChange={this.multiChoiceValueChange.bind(this,obj.questionQ)} name="YesOrNo" style={{textAlign:'left',marginLeft:'5%',marginTop:'2%'}}  defaultSelected={this.state.selectedValue}>
 {options}
 </RadioButtonGroup>
 </form>
-
+  <section style={{marginTop: 24, marginBottom: 12}}>
 <FlatButton
                 label="Back"
                 disabled={stepIndex === 0}
@@ -480,6 +494,7 @@ return(<Col xs={12}>
                 primary={true}
                 onTouchTap={this.handleNext}
               />
+  </section>            
 </Col>);
 }
 else if(obj.questionType=="Slider"){
@@ -487,7 +502,7 @@ else if(obj.questionType=="Slider"){
 
 return(<Col xs={12}>
           <form 
-     style={{marginTop:'5%',marginBottom:'2%',borderStyle:'solid',borderRadius:25,borderWidth:2,borderColor:'#212F3D', background:'#F4F6F6', opacity: 0.5}}>
+     style={{marginTop:'5%',marginBottom:'2%',borderStyle:'solid',borderRadius:25,borderWidth:2,borderColor:'#212F3D', background:'#F4F6F6'}}>
 <h3 style={{marginTop:0,marginLeft:'2%',marginBottom:0,color:'#000000',textAlign:'left'}}>{i+1}.{obj.questionQ} </h3>
 
 <Slider
@@ -503,7 +518,7 @@ return(<Col xs={12}>
            <span style={{fontWeight:'bold'}}>{this.state.sliderChange}</span>
            <span style={{fontWeight:'bold'}}>{'/'}</span> <span style={{fontWeight:'bold'}}>{obj.maxValue}</span>
 </form>    
-
+   <section style={{marginTop: 24, marginBottom: 12}}>
         <FlatButton
                 label="Back"
                 disabled={stepIndex === 0}
@@ -516,6 +531,7 @@ return(<Col xs={12}>
                            primary={true}
                            onTouchTap={this.handleNext}
                          />
+    </section>                     
 </Col>);
 }
 else if(obj.questionType=="YesOrNo"){
@@ -523,7 +539,7 @@ else if(obj.questionType=="YesOrNo"){
 
 return(<Col xs={12}>
           <form 
-     style={{marginTop:'5%',marginBottom:'2%',borderStyle:'solid',borderRadius:25,borderWidth:2,borderColor:'#212F3D', background:'#F4F6F6', opacity: 0.5}}>
+     style={{marginTop:'5%',marginBottom:'2%',borderStyle:'solid',borderRadius:25,borderWidth:2,borderColor:'#212F3D', background:'#F4F6F6'}}>
 <h3 style={{marginTop:0,marginLeft:'2%',marginBottom:0,color:'#000000',textAlign:'left'}}>{i+1}.{obj.questionQ} </h3>
 
 <RadioButtonGroup name="YesOrNo" onChange={this.yesOrNoValueChange.bind(this,obj.questionQ)}style={{textAlign:'left',marginLeft:'5%',marginTop:'2%'}} >
@@ -541,7 +557,8 @@ labelStyle={{fontWeight:'bold'}}
 />
 </RadioButtonGroup>
 </form>
-
+ 
+   <section style={{marginTop: 24, marginBottom: 12}}>
  <FlatButton
                 label="Back"
                 disabled={stepIndex === 0}
@@ -554,6 +571,7 @@ labelStyle={{fontWeight:'bold'}}
                 primary={true}
                 onTouchTap={this.handleNext}
               />
+  </section>            
 </Col>);
 }
           }

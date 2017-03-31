@@ -23,7 +23,7 @@ class GraphDisplay extends Component
   {
 
 
-      Request.get('http://localhost:9080/api/getResult').end((err,res)=>{
+      Request.get('http://10.201.174.209:9080/api/getResult').end((err,res)=>{
         console.log(res.body[0]);
         this.setState({
           allData:res.body[0]

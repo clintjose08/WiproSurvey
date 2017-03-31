@@ -2,6 +2,8 @@ import React,{Component} from 'react';
 import Paper from 'material-ui/Paper';
 import RaisedButton from 'material-ui/RaisedButton';
 import { Grid,Row,Col } from 'react-flexbox-grid';
+import Divider from 'material-ui/Divider';
+
 import MultiChoice from 'material-ui/svg-icons/action/list';
 import StarRate from 'material-ui/svg-icons/toggle/star-border';
 import Comment from 'material-ui/svg-icons/communication/comment';
@@ -13,6 +15,8 @@ import Welcome from 'material-ui/svg-icons/action/input';
 import Group from 'material-ui/svg-icons/action/assignment';
 import True from 'material-ui/svg-icons/maps/layers-clear';
 import Thank from 'material-ui/svg-icons/action/thumb-up';
+import Upload from 'material-ui/svg-icons/file/file-upload';
+
 import {IndexLink, Link} from 'react-router';
 
 import {Table, TableBody, TableFooter, TableHeader, TableHeaderColumn, TableRow, TableRowColumn}
@@ -23,6 +27,21 @@ import {Table, TableBody, TableFooter, TableHeader, TableHeaderColumn, TableRow,
     marginBottom:'5%',
   }
 class Dragabble extends Component{
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      
+      files: [{name: 'Choose CSV file from your system'}],
+      
+    }
+  }
+
+
+  handleFileChange(event) {
+    this.setState({ files: event.target.files });
+  }
+
 	render(){
 		return(
         <div style={{backgroundColor:'#E0E0E0'}}>
@@ -93,12 +112,25 @@ class Dragabble extends Component{
               </Col>
             </Row>
             <Row style={{marginLeft:'1%',marginRight:'1%'}}>
-              <Col xs={12} style={{marginBottom:'10%'}}>
+              <Col xs={12} style={{marginBottom:'5%'}}>
                 <Link to="Home/Thankyou" activeClassName="active">
                   <RaisedButton label="Thankyou" backgroundColor='#81D4FA' labelStyle={{fontWeight:'bold',textTransform:'capitalize'}} style={buttonStyle} icon={<Thank />}/>
                 </Link>
               </Col>
             </Row>
+
+          <Row style={{marginLeft:'1%',marginRight:'1%'}}>
+          <p style={{textAlign:'center',fontWeight:'bold',marginLeft:'50%'}}>OR</p>
+           </Row>
+
+             <Row style={{marginLeft:'1%',marginRight:'1%'}}>
+              <Col xs={12} style={{marginBottom:'3%'}}>
+                <Link to="Home/UploadCSV" activeClassName="active">
+                  <RaisedButton label="Upload CSV" backgroundColor='#616A6B' labelStyle={{fontWeight:'bold',textTransform:'capitalize'}} labelColor='#FDFEFE' style={buttonStyle} icon={<Upload />}/>
+                </Link>
+              </Col>
+            </Row>
+
           </div>
     );
 	}

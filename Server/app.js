@@ -51,7 +51,7 @@ app.use('/',addResult);
 // var mailOptions = {
 
 // 	from:'testing.amith@gmail.com',
-// 	to: 'charlesabm@gmail.com,harsha9204@gmail.com',
+// 	to: 'anishu2011@gmail.com',
 // 	subject:'Testing',
 // 	text:"Mole nee pettu"
 // }

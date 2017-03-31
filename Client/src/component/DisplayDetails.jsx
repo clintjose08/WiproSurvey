@@ -14,12 +14,48 @@ import GraphDisplay from './graphDisplay';
 import Analyze from 'material-ui/svg-icons/action/assessment';
 import Reminder from 'material-ui/svg-icons/navigation/refresh';
 import Cancel from 'material-ui/svg-icons/navigation/cancel';
+import $ from 'jquery';
+
 class DisplayDetails extends Component{
 
     state = {
     value: 1,
     open: false,
   };
+  componentWillMount() {
+               var convertDate= new Date("2017-04-10 5:00 am");
+               setInterval(function() {
+              
+                var now = new Date();
+                var difference = convertDate.getTime() - now.getTime();
+
+                if (difference <= 0) {
+
+                    // Timer done
+                    //clearInterval(timer);
+                    alert("It is done");
+                
+                } 
+                else {
+                    
+                    var seconds = Math.floor(difference / 1000);
+                    var minutes = Math.floor(seconds / 60);
+                    var hours = Math.floor(minutes / 60);
+                    var days = Math.floor(hours / 24);
+
+                    hours %= 24;
+                    minutes %= 60;
+                    seconds %= 60;
+
+                    console.log("days-"+days+"hours-"+hours+"minutes-"+minutes+"seconds-"+seconds);
+                    $("#days").text(days);
+                    $("#hours").text(hours);
+                    $("#minutes").text(minutes);
+                    $("#seconds").text(seconds);
+
+                 }
+                 }, 1000); 
+  }
 
   handleOpen = () => {
     this.setState({open: true});
@@ -46,22 +82,7 @@ class DisplayDetails extends Component{
 
                 <Row middle="xs">
                 <Col xs={12}>
-                <Row center="xs">
-                    <Col xs={8}>
-                      <SelectField
-                        floatingLabelText="Select Status"
-                        value={this.state.value}
-                        onChange={this.handleChange}
-                        style={{fontWeight:'bold',fontSize:'125%'}}
-                        floatingLabelStyle={{color:'#FDFEFE'}}
-                     >
-                         <MenuItem value={1} primaryText="Running" />
-                         <MenuItem value={2} primaryText="Closed" />
-                         <MenuItem value={3} primaryText="All Surveys" />
-
-                    </SelectField>
-                    </Col>
-                </Row>
+                
                 <Row>
                 <Col xs={12}>
                 <Paper>
@@ -73,7 +94,7 @@ class DisplayDetails extends Component{
                          <TableHeaderColumn style={{color:'#FDFEFE ',fontWeight:'bold'}}>END DATE</TableHeaderColumn>
                          <TableHeaderColumn style={{color:'#FDFEFE ',fontWeight:'bold'}}>RESPONSES</TableHeaderColumn>
                          <TableHeaderColumn style={{color:'#FDFEFE ',fontWeight:'bold'}}>ANALYZE</TableHeaderColumn>
-                         <TableHeaderColumn style={{color:'#FDFEFE ',fontWeight:'bold'}}>STATUS</TableHeaderColumn>
+                         <TableHeaderColumn style={{color:'#FDFEFE ',fontWeight:'bold'}}>TIME REMAIN<br/>(DD:HH:MM:SS)</TableHeaderColumn>
                          <TableHeaderColumn style={{color:'#FDFEFE ',fontWeight:'bold'}}></TableHeaderColumn>
                          <TableHeaderColumn style={{color:'#FDFEFE ',fontWeight:'bold'}}></TableHeaderColumn>
                      </TableRow>
@@ -85,7 +106,13 @@ class DisplayDetails extends Component{
                          <TableRowColumn>30 Mar</TableRowColumn>
                          <TableRowColumn>100</TableRowColumn>
                          <TableRowColumn><RaisedButton label="Statistics" backgroundColor='#616A6B' labelColor='#FDFEFE' icon={<Analyze />} onTouchTap={this.handleOpen}/></TableRowColumn>
-                         <TableRowColumn>Running</TableRowColumn>
+                         <TableRowColumn>
+                             
+                             <span id="days" style={{ fontSize:"110%",fontWeight:'bold'}}></span>:
+                             <span id="hours" style={{ fontSize:"110%",fontWeight:'bold'}}></span>:
+                             <span id="minutes" style={{fontSize:"110%",fontWeight:'bold'}}></span>:
+                             <span id="seconds" style={{ fontSize:"110%",fontWeight:'bold'}}></span>
+                         </TableRowColumn>
                          <TableRowColumn><RaisedButton label="Reminder" backgroundColor='#3498DB' labelColor='#FDFEFE' icon={<Reminder />} /></TableRowColumn>
                          <TableRowColumn><RaisedButton label="Cancel" backgroundColor='#EC7063' labelColor='#FDFEFE' icon={<Cancel />} /></TableRowColumn>
                      </TableRow>
