@@ -10,22 +10,24 @@ import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
 import {Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn} from 'material-ui/Table';
 import { Grid,Col,Row} from 'react-flexbox-grid';
-import GraphDisplay from './graphDisplay'; 
+import GraphDisplay from './graphDisplay';
 import Analyze from 'material-ui/svg-icons/action/assessment';
 import Reminder from 'material-ui/svg-icons/navigation/refresh';
 import Cancel from 'material-ui/svg-icons/navigation/cancel';
 import $ from 'jquery';
-
+import request from 'superagent';
 class DisplayDetails extends Component{
 
     state = {
     value: 1,
     open: false,
+    output:[],
+    name:''
   };
   componentWillMount() {
                var convertDate= new Date("2017-04-10 5:00 am");
                setInterval(function() {
-              
+
                 var now = new Date();
                 var difference = convertDate.getTime() - now.getTime();
 
@@ -34,10 +36,10 @@ class DisplayDetails extends Component{
                     // Timer done
                     //clearInterval(timer);
                     alert("It is done");
-                
-                } 
+
+                }
                 else {
-                    
+
                     var seconds = Math.floor(difference / 1000);
                     var minutes = Math.floor(seconds / 60);
                     var hours = Math.floor(minutes / 60);
@@ -54,11 +56,23 @@ class DisplayDetails extends Component{
                     $("#seconds").text(seconds);
 
                  }
-                 }, 1000); 
+                 }, 1000);
   }
 
-  handleOpen = () => {
-    this.setState({open: true});
+
+  componentWillMount(){
+    request
+    .get('http://10.201.174.234:9080/api/getDetails/')
+    .end((err,res) => {
+      this.setState({
+        output:res.body
+      });
+      console.log("result",res.body);
+    });
+  }
+  handleOpen(name){
+    console.log("name",name);
+    this.setState({open: true,name:name});
   };
 
   handleClose = () => {
@@ -77,12 +91,39 @@ class DisplayDetails extends Component{
                 />,
 
                  ];
+    var details=[];
+    details.push(this.state.output.map((obj)=>{
+      return (<TableRow>
+          <TableRowColumn>{obj.surveyname}</TableRowColumn>
+          <TableRowColumn>26 Feb 2017</TableRowColumn>
+          <TableRowColumn>30 Mar</TableRowColumn>
+          <TableRowColumn>100</TableRowColumn>
+          <TableRowColumn><RaisedButton label="Statistics" backgroundColor='#616A6B' labelColor='#FDFEFE' icon={<Analyze />} onTouchTap={this.handleOpen.bind(this,obj.surveyname)}/></TableRowColumn>
+          <TableRowColumn>Running</TableRowColumn>
+          <TableRowColumn><RaisedButton label="Reminder" backgroundColor='#3498DB' labelColor='#FDFEFE' icon={<Reminder />} /></TableRowColumn>
+          <TableRowColumn><RaisedButton label="Cancel" backgroundColor='#EC7063' labelColor='#FDFEFE' icon={<Cancel />} /></TableRowColumn>
+      </TableRow>)
+    }));
 
 		return(<Grid>
 
                 <Row middle="xs">
                 <Col xs={12}>
-                
+                <Row center="xs">
+                    <Col xs={8}>
+                      <SelectField
+                        floatingLabelText="Select Status"
+                        value={this.state.value}
+                        onChange={this.handleChange}
+                        style={{fontWeight:'bold',fontSize:'125%'}}
+                        floatingLabelStyle={{color:'#FDFEFE'}}
+                     >
+                         <MenuItem value={1} primaryText="Running" />
+                         <MenuItem value={2} primaryText="Closed" />
+                         <MenuItem value={3} primaryText="All Surveys" />
+                    </SelectField>
+                    </Col>
+                </Row>
                 <Row>
                 <Col xs={12}>
                 <Paper>
@@ -100,22 +141,8 @@ class DisplayDetails extends Component{
                      </TableRow>
                      </TableHeader>
                     <TableBody displayRowCheckbox={false}>
-                     <TableRow>
-                         <TableRowColumn>Feed Back</TableRowColumn>
-                         <TableRowColumn>26 Feb 2017</TableRowColumn>
-                         <TableRowColumn>30 Mar</TableRowColumn>
-                         <TableRowColumn>100</TableRowColumn>
-                         <TableRowColumn><RaisedButton label="Statistics" backgroundColor='#616A6B' labelColor='#FDFEFE' icon={<Analyze />} onTouchTap={this.handleOpen}/></TableRowColumn>
-                         <TableRowColumn>
-                             
-                             <span id="days" style={{ fontSize:"110%",fontWeight:'bold'}}></span>:
-                             <span id="hours" style={{ fontSize:"110%",fontWeight:'bold'}}></span>:
-                             <span id="minutes" style={{fontSize:"110%",fontWeight:'bold'}}></span>:
-                             <span id="seconds" style={{ fontSize:"110%",fontWeight:'bold'}}></span>
-                         </TableRowColumn>
-                         <TableRowColumn><RaisedButton label="Reminder" backgroundColor='#3498DB' labelColor='#FDFEFE' icon={<Reminder />} /></TableRowColumn>
-                         <TableRowColumn><RaisedButton label="Cancel" backgroundColor='#EC7063' labelColor='#FDFEFE' icon={<Cancel />} /></TableRowColumn>
-                     </TableRow>
+
+                  {details}
 
                   </TableBody>
                 </Table>
@@ -130,7 +157,7 @@ class DisplayDetails extends Component{
                  autoScrollBodyContent={true}
                  contentStyle={{height:'100%',width:'100%',maxHeight:'none',maxWidth: 'none'}}
                 >
-                 {<GraphDisplay />}
+                 {<GraphDisplay name={this.state.name}/>}
                </Dialog>
                 </Col>
                 </Row>

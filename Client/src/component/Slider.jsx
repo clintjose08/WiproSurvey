@@ -33,7 +33,7 @@ class Slider extends Component{
  }
 
 componentWillMount(){
-   
+
   }
 
 handleQuestion(e) {
@@ -73,7 +73,8 @@ handleScale(e) {
         }
 
     }
-    request.post('http://10.201.174.209:9080/api/updateSurvey/'+sName)
+
+    request.post('http://10.201.174.234:9080/api/updateSurvey/'+sName)
             .set('Content-Type', 'application/json')
             .send(questionScreen)
              .end((err,res)=>
@@ -82,6 +83,7 @@ handleScale(e) {
               })
   }
 	render(){
+    var url="Home/AddQuestion/"+localStorage.getItem("sName");
 		return(<div><Paper >
       <Card style={{background:'#E5E4E2'}}>
         <CardHeader title="Slider" style={cardheadstyle} titleStyle={cardTitleStyle}/>
@@ -125,10 +127,10 @@ handleScale(e) {
           </CardActions>
           <Divider style={{background:'#000000'}}/>
           <CardActions >
-            <Link to="Home/AddQuestion" activeClassName="active">
+            <Link to={url} activeClassName="active">
               <RaisedButton label="Cancel" labelStyle={{fontWeight:'bold'}} />
               </Link>
-             <Link to="Home/AddQuestion" activeClassName="active">
+             <Link to={url} activeClassName="active">
               <RaisedButton label="Submit" backgroundColor='#1C6D03' onClick={this.updateDb.bind(this)} labelStyle={{color:'#FFFFFF ',fontWeight:'bold'}} />
              </Link>
           </CardActions>

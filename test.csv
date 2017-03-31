@@ -5,11 +5,11 @@ ThanksMessage,Thanks For attend Training,,,
 Name,JECH,,,
 Contact,9988776655,,,
 Email,jech@testing.com,,,
-StarRating,Rate the,Excellent/Very Good/Good/Average/Bad,,5
+StarRatings,Rate the,Excellent/Very Good/Good/Average/Bad,,5
 Comments,Comments Questions?,,,
 MultiChoice,Mutichoice questions?,Option A/Option B/Option C/Option D/Option E,,
 Slider,Slide for values,,100,2
-DropDown,It is drop down?,1/2/3/4/5,,
+Dropdown,It is drop down?,1/2/3/4/5,,
 SingleText,This is single text?,,,
 Checkbox,this isCheckbox,check1/check2/check3/check3,,
 YesOrNo,Yes/No question,Yes/No,,

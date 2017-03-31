@@ -4,7 +4,6 @@ import ReactDOM from 'react-dom';
 import WelcomeEdit from './view/Welcome'
 import ThankyouEdit from './view/Thankyou'
 import CommentsEdit from './view/Comments';
-import SurveyDetails from './component/SurveyDetails';
 import Login from './component/Login';
 import CreateSurvey from './component/CreateSurvey';
 import DisplayDetails from './component/DisplayDetails';
@@ -35,20 +34,19 @@ ReactDOM.render(
      <Route path="/Home" component={App}>
        <Route path="CreateSurvey" component={CreateSurvey}/>
        <Route path='Preview/:sName' component={Preview}/>
-       <Route path="AddQuestion" component={AddQuestion}/>
-       <Route path="SurveyDetails" component={SurveyDetails}/>
-       <Route path="Welcome" component={WelcomeEdit}/>
-       <Route path="Details" component={DisplayDetails}/>
-       <Route path="Comments" component={CommentsEdit}/>
-       <Route path="Dropdown" component={DropdownEdit}/>
-       <Route path="Slider" component={SliderEdit}/>
-       <Route path="SingleText" component={SingleTextEdit}/>
-       <Route path="MultiChoice" component={MultiChoiceEdit}/>
-       <Route path="StarRatings" component={StarRatings}/>
-       <Route path="Qgroup" component={QgroupEdit}/>
-       <Route path="YesOrNo" component={YesOrNoEdit}/>
-       <Route path="CheckBox" component={CheckBoxEdit}/>
-       <Route path="Thankyou" component={ThankyouEdit}/>
+       <Route path='AddQuestion/:sName' component={AddQuestion}/>
+       <Route path='Welcome/:Wel' component={WelcomeEdit}/>
+       <Route path='Details' component={DisplayDetails}/>
+       <Route path='Comments/:sName' component={CommentsEdit}/>
+       <Route path='Dropdown/:sName' component={DropdownEdit}/>
+       <Route path='Slider/:sName' component={SliderEdit}/>
+       <Route path='SingleText/:sName' component={SingleTextEdit}/>
+       <Route path='MultiChoice/:sName' component={MultiChoiceEdit}/>
+       <Route path='StarRatings/:sName' component={StarRatings}/>
+       <Route path='Qgroup/:sName' component={QgroupEdit}/>
+       <Route path='YesOrNo/:sName' component={YesOrNoEdit}/>
+       <Route path='CheckBox/:sName' component={CheckBoxEdit}/>
+       <Route path='Thankyou/:sName' component={ThankyouEdit}/>
        <Route path="Timer" component={Timer}/>
        <Route path="DraftDisplay" component={DraftDisplay}/>
        <Route path="TakeSurvey" component={TakeSurvey}/>
