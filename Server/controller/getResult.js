@@ -3,7 +3,7 @@ const surveyResultModel=require('../models/ResultSchema');
 var data=[];
 module.exports=function (req, res) {
 	const surveyResult = new surveyResultModel();
-	surveyResultModel.find({surveyname:"New"},function (err, mySchema) {
+	surveyResultModel.find({surveyname:req.params.sName},function (err, mySchema) {
 		if (err) {
 			console.log("error in survey");
 		}

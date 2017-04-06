@@ -73,7 +73,9 @@ updateDb(){
       }
 
   }
-  request.post('http://localhost:9080/api/updateSurvey/'+sName)
+
+  request.post('http://10.201.174.234:9080/api/updateSurvey/'+sName)
+
           .set('Content-Type', 'application/json')
           .send(shortQuestionScreen)
            .end((err,res)=>
@@ -83,12 +85,13 @@ updateDb(){
 
 }
    render(){
+    var url="Home/AddQuestion/"+localStorage.getItem("sName");
        return(
 
     <Paper style={{height:'100%'}} >
 
     <Card style={{background:'#E5E4E2 ',height:'100%'}}>
-      <CardHeader title="Comments" style={cardheadstyle} titleStyle={cardTitleStyle}/>
+      <CardHeader title="Short Text" style={cardheadstyle} titleStyle={cardTitleStyle}/>
       <CardText style={{marginTop:0}}>
       <div>
       <Subheader style={{fontSize:'125%',color:'#1C6D03 '}}> Question Type </Subheader>
@@ -109,11 +112,11 @@ updateDb(){
        </CardActions>
        <Divider style={{background:'#000000 '}}/>
       <CardActions style={{marginTop:'0px',marginLeft:'1%'}}>
-      <Link to="Home/AddQuestion" activeClassName="active">
+      <Link to={url} activeClassName="active">
         <RaisedButton label="Cancel" labelStyle={{fontWeight:'bold'}} />
         </Link>
-       <Link to="Home/AddQuestion" activeClassName="active">
-        <RaisedButton type="submit" label="Submit" backgroundColor='#1C6D03 ' disabled={this.state.disable} onClick={this.updateDb.bind(this)} labelStyle={{color:'#FFFFFF ',fontWeight:'bold'}} />
+       <Link to={url} activeClassName="active">
+        <RaisedButton label="Submit" backgroundColor='#1C6D03 ' disabled={this.state.disable} onClick={this.updateDb.bind(this)} labelStyle={{color:'#FFFFFF ',fontWeight:'bold'}} />
        </Link>
       </CardActions>
     </Card>

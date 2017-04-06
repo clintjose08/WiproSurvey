@@ -112,7 +112,7 @@ constructor(props) {
 			"thanksMessage":this.state.thankyouMsg,
 			"createrContact":this.state.contact
 		}
-		request.post('http://localhost:9080/api/updateSurvey/'+sName)
+		request.post('http://10.201.174.234:9080/api/updateSurvey/'+sName)
 						.set('Content-Type', 'application/json')
 						.send(thankyouScreen)
 						 .end((err,res)=>
@@ -130,6 +130,7 @@ constructor(props) {
 	}
 	render()
 	{
+		var url="Home/AddQuestion/"+localStorage.getItem("sName");
 		return(
 				<div >
 
@@ -212,10 +213,10 @@ constructor(props) {
         					<Divider style={{background:'#000000'}}/>
 
         					<CardActions >
-										<Link to="Home/AddQuestion" activeClassName="active">
+										<Link to={url} activeClassName="active">
 											<RaisedButton label="Cancel" labelStyle={{fontWeight:'bold'}} />
 											</Link>
-										 <Link to="Home/AddQuestion" activeClassName="active">
+										 <Link to={url} activeClassName="active">
 											<RaisedButton label="Submit" backgroundColor='#1C6D03 ' disabled={this.state.disable} onClick={this.updateDb.bind(this)} labelStyle={{color:'#FFFFFF ',fontWeight:'bold'}} />
 										 </Link>
 									</CardActions>

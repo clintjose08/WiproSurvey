@@ -132,6 +132,7 @@ checkNo()
 
  };
     render(){
+    var url="Home/AddQuestion/"+localStorage.getItem("sName");
     let showNo = '';
     let showYes = '';
 
@@ -206,10 +207,10 @@ checkNo()
 
         <Divider style={{background:'#000000'}}/>
        <CardActions style={{marginTop:'0px',marginLeft:'1%'}}>
-       <Link to="Home/AddQuestion" activeClassName="active">
+       <Link to={url} activeClassName="active">
          <RaisedButton label="Cancel" labelStyle={{fontWeight:'bold'}} />
          </Link>
-        <Link to="Home/AddQuestion" activeClassName="active">
+        <Link to={url} activeClassName="active">
          <RaisedButton label="Submit" backgroundColor='#1C6D03 'disabled={this.state.submit} labelStyle={{color:'#FFFFFF ',fontWeight:'bold'}} />
         </Link>
        </CardActions>

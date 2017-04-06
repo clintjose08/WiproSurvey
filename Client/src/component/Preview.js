@@ -13,7 +13,7 @@ import IconButton from 'material-ui/IconButton';
 import Slider from 'material-ui/Slider';
 import Avatar from 'material-ui/Avatar';
 import StarRating from 'star-rating-react';
-import DropDownMenu from 'material-ui/DropDownMenu';
+import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
 import FlatButton from 'material-ui/FlatButton';
 import ExpandTransition from 'material-ui/internal/ExpandTransition';
@@ -40,7 +40,9 @@ class TakeSurvey extends React.Component {
     sliderChange:0,
     commentValue:[],
     checkboxValue:[],
-    disable:true
+    disable:true,
+    dropDown:'',
+    selectedValue:''
   };
   componentWillMount()
   {
@@ -48,8 +50,7 @@ class TakeSurvey extends React.Component {
    var sName=this.props.params.sName;
 
 
-
-    request.get('http://localhost:9080/api/getSurvey/'+sName).end((err,res)=>{
+    request.get('http://10.201.174.234:9080/api/getSurvey/'+sName).end((err,res)=>{
 
       this.setState({
         allData:res.body
@@ -63,13 +64,13 @@ class TakeSurvey extends React.Component {
   };
 
   handleNext = () => {
-
+var sName=this.props.params.sName;
     var options=this.state.commentValue;
     //options.push(this.state.commentValue);
-    var data={surveyName:localStorage.getItem('sName'),options:this.state.commentValue}
-        request.put('http://localhost:9080/api/answerSurvey')
+    var data1={surveyName:sName,options:this.state.commentValue}
+        request.put('http://10.201.174.234:9080/api/answerSurvey/'+sName)
                 .set('Content-Type', 'application/json')
-                .send(data)
+                .send(data1)
                  .then((err,res)=>
                  {
                    console.log("posted");
@@ -95,6 +96,7 @@ Welcome=()=>{
   }
 }
   handlePrev = () => {
+
     const {stepIndex} = this.state;
     if (!this.state.loading) {
       this.dummyAsync(() => this.setState({
@@ -105,7 +107,9 @@ Welcome=()=>{
   };
 
     valueChanged=(qstn,newValue) =>  {
-      console.log("star",newValue);
+      this.setState({commentValue:[]});
+      console.log(newValue);
+        this.setState({starRating:newValue})
       var a=this.state.commentValue;
       a.pop();
       a.pop();
@@ -115,15 +119,17 @@ Welcome=()=>{
 
     }
     dropValueChanged=(qstn,e,i,newValue) =>  {
+      this.setState({commentValue:[]});
       var a=this.state.commentValue;
       a.pop();
       a.pop();
       a.push(qstn);
       a.push(newValue);
-      this.setState({commentValue:a,disable:false});
+      this.setState({commentValue:a,disable:false,dropDown:newValue});
       console.log("comment value set",a)
     }
     singleTextValueChanged=(qstn,e,newValue) =>  {
+      this.setState({commentValue:[]});
       var a=this.state.commentValue;
       a.pop();
       a.pop();
@@ -133,24 +139,28 @@ Welcome=()=>{
       console.log("comment value set",a)
     }
 
-    commentsValueChanged=(qstn,e,newValue) =>  {
+    commentsValueChanged=(qstn,e,cmtValue) =>  {
+      this.setState({commentValue:[]});
       var a=this.state.commentValue;
       a.pop();
       a.pop();
       a.push(qstn);
-      a.push(newValue);
+      a.push(cmtValue);
       this.setState({commentValue:a,disable:false});
       console.log("comment value set",qstn, this.state.commentValue)
     }
     multiChoiceValueChange=(qstn,e,newValue)=>{
+      this.setState({commentValue:[]});
       var a=this.state.commentValue;
       a.pop();
       a.pop();
       a.push(qstn);
       a.push(newValue);
-      this.setState({commentValue:a,disable:false});
+      this.setState({commentValue:a,disable:false,selectedValue:newValue});
+
     }
     yesOrNoValueChange=(qstn,e,newValue)=>{
+      this.setState({commentValue:[]});
       var a=this.state.commentValue;
       a.pop();
       a.pop();
@@ -175,6 +185,7 @@ Welcome=()=>{
     }
 
       handleSlider = (quest,event, value) => {
+        this.setState({commentValue:[]});
         var a=this.state.commentValue;
         a.pop();
         a.pop();
@@ -275,7 +286,9 @@ Welcome=()=>{
 
               </Paper>
             </Row>
-          
+            <div style={{marginTop: 24, marginBottom: 12}}>
+              <p>You can close your window now</p>
+            </div>
           </Grid>
         </div>
       );
@@ -286,8 +299,9 @@ Welcome=()=>{
             if(obj.questionType=="Comments"){
 
         return(<Col xs={12}>
+
           <form
-     style={{marginTop:'5%',marginBottom:'2%',borderStyle:'solid',borderRadius:25,borderWidth:2,borderColor:'#212F3D', background:'#F4F6F6', opacity: 0.5}}>
+     style={{marginTop:'5%',marginBottom:'2%',borderStyle:'solid',borderRadius:25,borderWidth:2,borderColor:'#212F3D', background:'#F4F6F6'}}>
           <h3 style={{marginTop:'1%',marginLeft:'2%',marginBottom:0,color:'#000000',textAlign:'left'}}>{i+1}.{obj.questionQ}</h3>
 
 
@@ -299,6 +313,7 @@ Welcome=()=>{
           />
 
           </form>
+          <section style={{marginTop: 24, marginBottom: 12}}>
            <FlatButton
                 label="Back"
                 disabled={stepIndex === 0}
@@ -313,6 +328,7 @@ Welcome=()=>{
                 onTouchTap={this.handleNext}
                 style={{marginBottom:'2%'}}
               />
+              </section>
           </Col>);
       }
       else if(obj.questionType=="Checkbox"){
@@ -323,11 +339,13 @@ Welcome=()=>{
              </div>);
            });
          return(<Col xs={12}>
+
           <form
-     style={{marginTop:'5%',marginBottom:'2%',borderStyle:'solid',borderRadius:25,borderWidth:2,borderColor:'#212F3D', background:'#F4F6F6', opacity: 0.5}}>
+     style={{marginTop:'5%',marginBottom:'2%',borderStyle:'solid',borderRadius:25,borderWidth:2,borderColor:'#212F3D', background:'#F4F6F6'}}>
          <h3 style={{marginTop:0,marginLeft:'2%',marginBottom:0,color:'#000000',textAlign:'left'}}>{i+1}.{obj.questionQ} </h3>
          {options}
          </form>
+          <section style={{marginTop: 24, marginBottom: 12}}>
          <FlatButton
                 label="Back"
                 disabled={stepIndex === 0}
@@ -341,6 +359,7 @@ Welcome=()=>{
                 primary={true}
                 onTouchTap={this.handleNext}
               />
+              </section>
          </Col>);
        }
 else if(obj.questionType=="Dropdown"){
@@ -355,14 +374,15 @@ options.push(
 
 return(<Col xs={12}>
           <form
-     style={{marginTop:'5%',marginBottom:'2%',borderStyle:'solid',borderRadius:25,borderWidth:2,borderColor:'#212F3D', background:'#F4F6F6', opacity: 0.5}}>
+     style={{marginTop:'5%',marginBottom:'2%',borderStyle:'solid',borderRadius:25,borderWidth:2,borderColor:'#212F3D', background:'#F4F6F6'}}>
+
 <h3 style={{marginTop:0,marginLeft:'2%',marginBottom:0,color:'#000000',textAlign:'left'}}>{i+1}.{obj.questionQ} </h3>
 
-<DropDownMenu onChange={this.dropValueChanged.bind(this,obj.questionQ)} value={this.state.dropDown} labelStyle={{marginRight:'50%',color:'#000000',marginLeft:'2%'}}>
+<SelectField onChange={this.dropValueChanged.bind(this,obj.questionQ)} value={this.state.dropDown} floatingLabelText="--Select--"  floatingLabelStyle={{color:'#808b96'}} underlineStyle={{fill: '#000000'}} >
 {options}
-</DropDownMenu>
+</SelectField>
 </form>
-
+ <section style={{marginTop: 24, marginBottom: 12}}>
 <FlatButton
                 label="Back"
                 disabled={stepIndex === 0}
@@ -376,6 +396,7 @@ return(<Col xs={12}>
                 disabled={this.state.disable}
                 onTouchTap={this.handleNext}
               />
+  </section>
 </Col>);
 }
 else if(obj.questionType=="StarRatings"){
@@ -389,13 +410,16 @@ options.push(
 );
 
 return(<Col xs={12}>
+
+
           <form
-     style={{marginTop:'5%',marginBottom:'2%',borderStyle:'solid',borderRadius:25,borderWidth:2,borderColor:'#212F3D', background:'#F4F6F6', opacity: 0.5}}>
+     style={{marginTop:'5%',marginBottom:'2%',borderStyle:'solid',borderRadius:25,borderWidth:2,borderColor:'#212F3D', background:'#F4F6F6'}}>
+
 <h3 style={{marginTop:0,marginLeft:'2%',marginBottom:0,color:'#000000',textAlign:'left'}}>{i+1}.{obj.questionQ} </h3>
 
 {options}
 </form>
-
+  <section style={{marginTop: 24, marginBottom: 12}}>
 <FlatButton
                 label="Back"
                 disabled={stepIndex === 0}
@@ -410,13 +434,16 @@ return(<Col xs={12}>
                 onTouchTap={this.handleNext}
                 disabled={this.state.disable}
               />
+
+ </section>
 </Col>);
 }
 else if(obj.questionType=="SingleText"){
 
 return(<Col xs={12}>
           <form
-     style={{marginTop:'5%',marginBottom:'2%',borderStyle:'solid',borderRadius:25,borderWidth:2,borderColor:'#212F3D', background:'#F4F6F6', opacity: 0.5}}>
+     style={{marginTop:'5%',marginBottom:'2%',borderStyle:'solid',borderRadius:25,borderWidth:2,borderColor:'#212F3D', background:'#F4F6F6'}}>
+
 <h3 style={{marginTop:0,marginLeft:'2%',marginBottom:0,color:'#000000',textAlign:'left'}}>{i+1}.{obj.questionQ} </h3>
 
 <TextField
@@ -427,6 +454,7 @@ onChange={this.singleTextValueChanged.bind(this,obj.questionQ)}
 />
 </form>
 
+  <section style={{marginTop: 24, marginBottom: 12}}>
 <FlatButton
                 label="Back"
                 disabled={stepIndex === 0}
@@ -440,6 +468,7 @@ onChange={this.singleTextValueChanged.bind(this,obj.questionQ)}
                 disabled={this.state.disable}
                 onTouchTap={this.handleNext}
               />
+  </section>
 </Col>);
 }
 else if(obj.questionType=="MultiChoice"){
@@ -457,14 +486,15 @@ options.push(
 
 return(<Col xs={12}>
           <form
-     style={{marginTop:'5%',marginBottom:'2%',borderStyle:'solid',borderRadius:25,borderWidth:2,borderColor:'#212F3D', background:'#F4F6F6', opacity: 0.5}}>
+     style={{marginTop:'5%',marginBottom:'2%',borderStyle:'solid',borderRadius:25,borderWidth:2,borderColor:'#212F3D', background:'#F4F6F6'}}>
+
 <h3 style={{marginTop:0,marginLeft:'2%',marginBottom:0,color:'#000000',textAlign:'left'}}>{i+1}.{obj.questionQ} </h3>
 
-<RadioButtonGroup onChange={this.multiChoiceValueChange.bind(this,obj.questionQ)} name="YesOrNo" style={{textAlign:'left',marginLeft:'5%',marginTop:'2%'}} >
+<RadioButtonGroup onChange={this.multiChoiceValueChange.bind(this,obj.questionQ)} name="YesOrNo" style={{textAlign:'left',marginLeft:'5%',marginTop:'2%'}}  defaultSelected={this.state.selectedValue}>
 {options}
 </RadioButtonGroup>
 </form>
-
+  <section style={{marginTop: 24, marginBottom: 12}}>
 <FlatButton
                 label="Back"
                 disabled={stepIndex === 0}
@@ -478,6 +508,7 @@ return(<Col xs={12}>
                 primary={true}
                 onTouchTap={this.handleNext}
               />
+  </section>
 </Col>);
 }
 else if(obj.questionType=="Slider"){
@@ -485,7 +516,8 @@ else if(obj.questionType=="Slider"){
 
 return(<Col xs={12}>
           <form
-     style={{marginTop:'5%',marginBottom:'2%',borderStyle:'solid',borderRadius:25,borderWidth:2,borderColor:'#212F3D', background:'#F4F6F6', opacity: 0.5}}>
+     style={{marginTop:'5%',marginBottom:'2%',borderStyle:'solid',borderRadius:25,borderWidth:2,borderColor:'#212F3D', background:'#F4F6F6'}}>
+
 <h3 style={{marginTop:0,marginLeft:'2%',marginBottom:0,color:'#000000',textAlign:'left'}}>{i+1}.{obj.questionQ} </h3>
 
 <Slider
@@ -501,7 +533,7 @@ return(<Col xs={12}>
            <span style={{fontWeight:'bold'}}>{this.state.sliderChange}</span>
            <span style={{fontWeight:'bold'}}>{'/'}</span> <span style={{fontWeight:'bold'}}>{obj.maxValue}</span>
 </form>
-
+   <section style={{marginTop: 24, marginBottom: 12}}>
         <FlatButton
                 label="Back"
                 disabled={stepIndex === 0}
@@ -515,6 +547,7 @@ return(<Col xs={12}>
                            disabled={this.state.disable}
                            onTouchTap={this.handleNext}
                          />
+    </section>
 </Col>);
 }
 else if(obj.questionType=="YesOrNo"){
@@ -522,7 +555,8 @@ else if(obj.questionType=="YesOrNo"){
 
 return(<Col xs={12}>
           <form
-     style={{marginTop:'5%',marginBottom:'2%',borderStyle:'solid',borderRadius:25,borderWidth:2,borderColor:'#212F3D', background:'#F4F6F6', opacity: 0.5}}>
+     style={{marginTop:'5%',marginBottom:'2%',borderStyle:'solid',borderRadius:25,borderWidth:2,borderColor:'#212F3D', background:'#F4F6F6'}}>
+
 <h3 style={{marginTop:0,marginLeft:'2%',marginBottom:0,color:'#000000',textAlign:'left'}}>{i+1}.{obj.questionQ} </h3>
 
 <RadioButtonGroup name="YesOrNo" onChange={this.yesOrNoValueChange.bind(this,obj.questionQ)}style={{textAlign:'left',marginLeft:'5%',marginTop:'2%'}} >
@@ -541,6 +575,7 @@ labelStyle={{fontWeight:'bold'}}
 </RadioButtonGroup>
 </form>
 
+   <section style={{marginTop: 24, marginBottom: 12}}>
  <FlatButton
                 label="Back"
                 disabled={stepIndex === 0}
@@ -555,6 +590,7 @@ labelStyle={{fontWeight:'bold'}}
                 onTouchTap={this.handleNext}
                 disabled={this.state.disable}
               />
+  </section>
 </Col>);
 }
           }

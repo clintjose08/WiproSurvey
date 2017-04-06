@@ -165,7 +165,8 @@ class StarRatings extends Component
 
   }
 }
-  request.post('http://localhost:9080/api/updateSurvey/'+sName)
+
+  request.post('http://10.201.174.234:9080/api/updateSurvey/'+sName)
           .set('Content-Type', 'application/json')
           .send(questionScreen)
            .end((err,res)=>
@@ -176,6 +177,7 @@ class StarRatings extends Component
 
   render()
   {
+    var url="Home/AddQuestion/"+localStorage.getItem("sName");
     const items = [];
     for (let i = 3; i <= 10; i++ ) {
       items.push(<MenuItem value={i} key={i} primaryText={`${i}`} />);
@@ -217,11 +219,10 @@ class StarRatings extends Component
           </CardText>
           <Divider style={{background:blueGrey500}}/>
           <CardActions >
-            <Link to="Home/AddQuestion" activeClassName="active">
+            <Link to={url} activeClassName="active">
           <RaisedButton label="Cancel" labelStyle={{fontWeight:'bold'}} />
           </Link>
-
-            <Link to="Home/AddQuestion" activeClassName="active">
+            <Link to={url} activeClassName="active">
           <RaisedButton label="Submit" backgroundColor='#1C6D03 ' disabled={this.state.disable} onClick={this.updateDb.bind(this)} labelStyle={{color:'#FFFFFF ',fontWeight:'bold'}} />
             </Link>
 

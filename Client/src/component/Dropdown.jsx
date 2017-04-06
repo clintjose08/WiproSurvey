@@ -126,7 +126,7 @@ var dropdownScreen={
       }
 
   }
-  request.post('http://localhost:9080/api/updateSurvey/'+sName)
+  request.post('http://10.201.174.234:9080/api/updateSurvey/'+sName)
           .set('Content-Type', 'application/json')
           .send(dropdownScreen)
            .end((err,res)=>
@@ -135,6 +135,7 @@ var dropdownScreen={
             })
 }
  render() {
+   var url="Home/AddQuestion/"+localStorage.getItem("sName");
    const options=this.state.optionArr.map((value,index) => {
      return (
      <AddOptions addoptions={this.addOptions.bind(this)} index={index} value={value} removeoptions={this.removeOptions.bind(this)} changeoptions={this.changeOptions.bind(this)}/>
@@ -166,11 +167,12 @@ var dropdownScreen={
                   <Divider style={{background:blueGrey500}}/>
                 <CardActions>
 
-  	           <Link to="Home/AddQuestion" activeClassName="active">
+  	           <Link to={url} activeClassName="active">
   	             <RaisedButton label="Cancel" labelStyle={{fontWeight:'bold'}} />
   	           </Link>
-               <Link to="Home/AddQuestion" activeClassName="active">
+               <Link to={url} activeClassName="active">
                  <RaisedButton label="Submit" backgroundColor='#1C6D03' disabled={this.state.disable} onClick={this.onSubmit.bind(this)} labelStyle={{color:'#FFFFFF ',fontWeight:'bold'}}/>
+
                  </Link>
               </CardActions>
                </Card>

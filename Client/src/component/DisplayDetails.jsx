@@ -10,19 +10,69 @@ import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
 import {Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn} from 'material-ui/Table';
 import { Grid,Col,Row} from 'react-flexbox-grid';
-import GraphDisplay from './graphDisplay'; 
+import GraphDisplay from './graphDisplay';
 import Analyze from 'material-ui/svg-icons/action/assessment';
 import Reminder from 'material-ui/svg-icons/navigation/refresh';
 import Cancel from 'material-ui/svg-icons/navigation/cancel';
+import $ from 'jquery';
+import request from 'superagent';
 class DisplayDetails extends Component{
 
     state = {
     value: 1,
     open: false,
+    output:[],
+    name:''
   };
+  componentWillMount() {
+               var convertDate= new Date("2017-04-10 5:00 am");
+               setInterval(function() {
 
-  handleOpen = () => {
-    this.setState({open: true});
+                var now = new Date();
+                var difference = convertDate.getTime() - now.getTime();
+
+                if (difference <= 0) {
+
+                    // Timer done
+                    //clearInterval(timer);
+                    alert("It is done");
+
+                }
+                else {
+
+                    var seconds = Math.floor(difference / 1000);
+                    var minutes = Math.floor(seconds / 60);
+                    var hours = Math.floor(minutes / 60);
+                    var days = Math.floor(hours / 24);
+
+                    hours %= 24;
+                    minutes %= 60;
+                    seconds %= 60;
+
+                    console.log("days-"+days+"hours-"+hours+"minutes-"+minutes+"seconds-"+seconds);
+                    $("#days").text(days);
+                    $("#hours").text(hours);
+                    $("#minutes").text(minutes);
+                    $("#seconds").text(seconds);
+
+                 }
+                 }, 1000);
+  }
+
+
+  componentWillMount(){
+    request
+    .get('http://10.201.174.234:9080/api/getDetails/')
+    .end((err,res) => {
+      this.setState({
+        output:res.body
+      });
+      console.log("result",res.body);
+    });
+  }
+  handleOpen(name){
+    console.log("name",name);
+    this.setState({open: true,name:name});
   };
 
   handleClose = () => {
@@ -41,6 +91,19 @@ class DisplayDetails extends Component{
                 />,
 
                  ];
+    var details=[];
+    details.push(this.state.output.map((obj)=>{
+      return (<TableRow>
+          <TableRowColumn>{obj.surveyname}</TableRowColumn>
+          <TableRowColumn>26 Feb 2017</TableRowColumn>
+          <TableRowColumn>30 Mar</TableRowColumn>
+          <TableRowColumn>100</TableRowColumn>
+          <TableRowColumn><RaisedButton label="Statistics" backgroundColor='#616A6B' labelColor='#FDFEFE' icon={<Analyze />} onTouchTap={this.handleOpen.bind(this,obj.surveyname)}/></TableRowColumn>
+          <TableRowColumn>Running</TableRowColumn>
+          <TableRowColumn><RaisedButton label="Reminder" backgroundColor='#3498DB' labelColor='#FDFEFE' icon={<Reminder />} /></TableRowColumn>
+          <TableRowColumn><RaisedButton label="Cancel" backgroundColor='#EC7063' labelColor='#FDFEFE' icon={<Cancel />} /></TableRowColumn>
+      </TableRow>)
+    }));
 
 		return(<Grid>
 
@@ -58,7 +121,6 @@ class DisplayDetails extends Component{
                          <MenuItem value={1} primaryText="Running" />
                          <MenuItem value={2} primaryText="Closed" />
                          <MenuItem value={3} primaryText="All Surveys" />
-
                     </SelectField>
                     </Col>
                 </Row>
@@ -73,22 +135,14 @@ class DisplayDetails extends Component{
                          <TableHeaderColumn style={{color:'#FDFEFE ',fontWeight:'bold'}}>END DATE</TableHeaderColumn>
                          <TableHeaderColumn style={{color:'#FDFEFE ',fontWeight:'bold'}}>RESPONSES</TableHeaderColumn>
                          <TableHeaderColumn style={{color:'#FDFEFE ',fontWeight:'bold'}}>ANALYZE</TableHeaderColumn>
-                         <TableHeaderColumn style={{color:'#FDFEFE ',fontWeight:'bold'}}>STATUS</TableHeaderColumn>
+                         <TableHeaderColumn style={{color:'#FDFEFE ',fontWeight:'bold'}}>TIME REMAIN<br/>(DD:HH:MM:SS)</TableHeaderColumn>
                          <TableHeaderColumn style={{color:'#FDFEFE ',fontWeight:'bold'}}></TableHeaderColumn>
                          <TableHeaderColumn style={{color:'#FDFEFE ',fontWeight:'bold'}}></TableHeaderColumn>
                      </TableRow>
                      </TableHeader>
                     <TableBody displayRowCheckbox={false}>
-                     <TableRow>
-                         <TableRowColumn>Feed Back</TableRowColumn>
-                         <TableRowColumn>26 Feb 2017</TableRowColumn>
-                         <TableRowColumn>30 Mar</TableRowColumn>
-                         <TableRowColumn>100</TableRowColumn>
-                         <TableRowColumn><RaisedButton label="Statistics" backgroundColor='#616A6B' labelColor='#FDFEFE' icon={<Analyze />} onTouchTap={this.handleOpen}/></TableRowColumn>
-                         <TableRowColumn>Running</TableRowColumn>
-                         <TableRowColumn><RaisedButton label="Reminder" backgroundColor='#3498DB' labelColor='#FDFEFE' icon={<Reminder />} /></TableRowColumn>
-                         <TableRowColumn><RaisedButton label="Cancel" backgroundColor='#EC7063' labelColor='#FDFEFE' icon={<Cancel />} /></TableRowColumn>
-                     </TableRow>
+
+                  {details}
 
                   </TableBody>
                 </Table>
@@ -103,7 +157,7 @@ class DisplayDetails extends Component{
                  autoScrollBodyContent={true}
                  contentStyle={{height:'100%',width:'100%',maxHeight:'none',maxWidth: 'none'}}
                 >
-                 {<GraphDisplay />}
+                 {<GraphDisplay name={this.state.name}/>}
                </Dialog>
                 </Col>
                 </Row>
