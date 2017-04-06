@@ -8,6 +8,7 @@ module.exports=function (req, res) {
 			{"$set":	{"status":req.body.status}},
 		function(err,doc){
 			if(doc){
+				  res.send("created");
 		      console.log("not exist",doc);
 			}
 		});

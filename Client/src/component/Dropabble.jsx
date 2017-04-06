@@ -51,7 +51,6 @@ const iconStyles = {
 
 
 class Dropabble  extends Component {
-
   constructor() {
      super();
     this.state = {
@@ -75,7 +74,6 @@ class Dropabble  extends Component {
       console.log("next",res.body.welcomeMsg);
       // console.log("quest",res.body.questions[1].questionQ);
       });
-
     }
 
 handleChange(i)

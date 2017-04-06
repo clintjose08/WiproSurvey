@@ -23,6 +23,7 @@ import DraftDisplay from './component/draftDisplay'
 import Timer from './component/timer';
 import TakeSurvey from './view/TakeSurvey';
 import Preview from './component/Preview';
+import UploadCSV from './component/uploadCSV';
 
 injectTapEventPlugin();
 
@@ -49,6 +50,7 @@ ReactDOM.render(
        <Route path="Timer" component={Timer}/>
        <Route path="DraftDisplay" component={DraftDisplay}/>
        <Route path="TakeSurvey" component={TakeSurvey}/>
+       <Route path="UploadCSV" component={UploadCSV}/>
     </Route>
   </Router>
   </MuiThemeProvider>,

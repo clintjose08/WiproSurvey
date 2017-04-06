@@ -8,9 +8,10 @@ module.exports=function (req, res) {
   console.log("result",surveyResult);
     surveyResult.save(function (err) {
       if(!err){
-        res.send("created")
+        res.send("created");
       }
       else{
+				  res.send("created");
         console.log(err);
       }
     });

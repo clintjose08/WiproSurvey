@@ -6,6 +6,6 @@ const router = express.Router();
 
 console.log("inside add result route");
 router.post('/api/addResult',addResult);
-router.put('/api/answerSurvey/:sName',answerSurvey);
+router.post('/api/answerSurvey/:sName',answerSurvey);
 router.put('/api/publishSurvey/:sName',publishSurvey)
 module.exports=router;

@@ -47,7 +47,7 @@ class CreateSurvey extends Component {
   createDb(){
 
     console.log("name set Sucess", this.state.name);
-    console.log(localStorage.getItem('sName'));
+    localStorage.setItem("sName", this.state.name);
     var nameData={
       surveyname:this.state.name,
       status:'draft'

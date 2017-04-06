@@ -7,6 +7,7 @@ module.exports=function (req, res) {
 					res.send(mySchema);
 				}
 				else{
+					  res.send("created");
 					console.log("mySchema");
 				}
 		})

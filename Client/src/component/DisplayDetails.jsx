@@ -4,7 +4,7 @@ import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'mat
 import {IndexLink, Link} from 'react-router';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
-import Dialog from 'material-ui/Dialog';
+import FullscreenDialog from 'material-ui-fullscreen-dialog'
 import FlatButton from 'material-ui/FlatButton';
 import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
@@ -14,6 +14,7 @@ import GraphDisplay from './graphDisplay';
 import Analyze from 'material-ui/svg-icons/action/assessment';
 import Reminder from 'material-ui/svg-icons/navigation/refresh';
 import Cancel from 'material-ui/svg-icons/navigation/cancel';
+import $ from 'jquery';
 import request from 'superagent';
 class DisplayDetails extends Component{
 
@@ -23,6 +24,40 @@ class DisplayDetails extends Component{
     output:[],
     name:''
   };
+  componentWillMount() {
+               var convertDate= new Date("2017-04-10 5:00 am");
+               setInterval(function() {
+
+                var now = new Date();
+                var difference = convertDate.getTime() - now.getTime();
+
+                if (difference <= 0) {
+
+                    // Timer done
+                    //clearInterval(timer);
+                    alert("It is done");
+
+                }
+                else {
+
+                    var seconds = Math.floor(difference / 1000);
+                    var minutes = Math.floor(seconds / 60);
+                    var hours = Math.floor(minutes / 60);
+                    var days = Math.floor(hours / 24);
+
+                    hours %= 24;
+                    minutes %= 60;
+                    seconds %= 60;
+
+                    console.log("days-"+days+"hours-"+hours+"minutes-"+minutes+"seconds-"+seconds);
+                    $("#days").text(days);
+                    $("#hours").text(hours);
+                    $("#minutes").text(minutes);
+                    $("#seconds").text(seconds);
+
+                 }
+                 }, 1000);
+  }
 
 
   componentWillMount(){
@@ -100,19 +135,20 @@ class DisplayDetails extends Component{
                          <TableHeaderColumn style={{color:'#FDFEFE ',fontWeight:'bold'}}>END DATE</TableHeaderColumn>
                          <TableHeaderColumn style={{color:'#FDFEFE ',fontWeight:'bold'}}>RESPONSES</TableHeaderColumn>
                          <TableHeaderColumn style={{color:'#FDFEFE ',fontWeight:'bold'}}>ANALYZE</TableHeaderColumn>
-                         <TableHeaderColumn style={{color:'#FDFEFE ',fontWeight:'bold'}}>STATUS</TableHeaderColumn>
+                         <TableHeaderColumn style={{color:'#FDFEFE ',fontWeight:'bold'}}>TIME REMAIN<br/>(DD:HH:MM:SS)</TableHeaderColumn>
                          <TableHeaderColumn style={{color:'#FDFEFE ',fontWeight:'bold'}}></TableHeaderColumn>
                          <TableHeaderColumn style={{color:'#FDFEFE ',fontWeight:'bold'}}></TableHeaderColumn>
                      </TableRow>
                      </TableHeader>
                     <TableBody displayRowCheckbox={false}>
+
                   {details}
 
                   </TableBody>
                 </Table>
                 </Paper>
 
-                <Dialog
+                <FullscreenDialog
                  title="Results"
                  actions={actions}
                  modal={false}
@@ -122,7 +158,7 @@ class DisplayDetails extends Component{
                  contentStyle={{height:'100%',width:'100%',maxHeight:'none',maxWidth: 'none'}}
                 >
                  {<GraphDisplay name={this.state.name}/>}
-               </Dialog>
+               </FullscreenDialog>
                 </Col>
                 </Row>
                 </Col>
