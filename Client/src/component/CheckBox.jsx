@@ -22,16 +22,29 @@ class CheckBox extends Component {
    	super();
    this.state = {
      quest:' ',
+     disable:true,
      optionArr: [' '],
 		 value: 1
    }
  }
  componentWillMount(){
-   
+     this.props.type("Checkbox");
+
  }
 handleChange = (event, index, value) => this.setState({value});
  addOptions(e)
  {
+   if(this.state.quest.length<5||this.state.optionArr.length<2)
+   {
+     this.setState({
+       disable:true
+     })
+   }
+   else {
+     this.setState({
+       disable:false
+     })
+   }
   var arr=this.state.optionArr;
   arr.push(' ');
   this.setState({
@@ -40,7 +53,18 @@ handleChange = (event, index, value) => this.setState({value});
  }
  removeOptions=(index)=>
  {
-     var arr=this.state.optionArr;
+   if(this.state.quest.length<5||this.state.optionArr.length<2)
+   {
+     this.setState({
+       disable:true
+     })
+   }
+   else {
+     this.setState({
+       disable:false
+     })
+   }
+   var arr=this.state.optionArr;
    if(arr.length>1)
   {
       arr.splice(index,1);
@@ -61,11 +85,22 @@ changeOptions=(index,value)=>
 }
 questionChange(e)
 {
+  if(e.target.value.length<5||this.state.optionArr.length<2)
+  {
+    this.setState({
+      disable:true
+    })
+  }
+  else {
+    this.setState({
+      disable:false
+    })
+  }
   this.setState({
     quest:e.target.value
   })
   this.props.question(e.target.value);
-  this.props.type("Checkbox");
+
 }
 updateDb(){
   var sName=localStorage.getItem('sName');
@@ -78,7 +113,7 @@ updateDb(){
         questionQ:this.state.quest,
         options:this.state.optionArr
       }
-    
+
   }
   request.post('http://localhost:9080/api/updateSurvey/'+sName)
           .set('Content-Type', 'application/json')
@@ -124,7 +159,7 @@ updateDb(){
   	             <RaisedButton label="Cancel" labelStyle={{fontWeight:'bold'}} />
   	           </Link>
                <Link to="Home/AddQuestion" activeClassName="active">
-                 <RaisedButton label="Submit" backgroundColor='#1C6D03' onClick={this.updateDb.bind(this)} labelStyle={{color:'#FFFFFF ',fontWeight:'bold'}}/>
+                 <RaisedButton label="Submit" backgroundColor='#1C6D03' disabled={this.state.disable} onClick={this.updateDb.bind(this)} labelStyle={{color:'#FFFFFF ',fontWeight:'bold'}}/>
               </Link>
               </CardActions>
                </Card>

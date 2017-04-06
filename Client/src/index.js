@@ -24,6 +24,7 @@ import DraftDisplay from './component/draftDisplay'
 import Timer from './component/timer';
 import TakeSurvey from './view/TakeSurvey';
 import Preview from './component/Preview';
+import FullPreview from './component/FullPreview';
 
 injectTapEventPlugin();
 
@@ -34,6 +35,7 @@ ReactDOM.render(
      <Route path="/Home" component={App}>
        <Route path="CreateSurvey" component={CreateSurvey}/>
        <Route path='Preview/:sName' component={Preview}/>
+      <Route path='FullPreview/:sName' component={FullPreview}/>
        <Route path="AddQuestion" component={AddQuestion}/>
        <Route path="SurveyDetails" component={SurveyDetails}/>
        <Route path="Welcome" component={WelcomeEdit}/>

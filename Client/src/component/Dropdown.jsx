@@ -29,35 +29,64 @@ class Dropdown extends Component {
      quest:" ",
      optionArr: [' '],
 		 value: 1,
-     disabled:true
+     disable:true
    }
  }
  componentWillMount(){
-   
+    this.props.type("Dropdown");
  }
  questionChange(e)
  {
+   if(e.target.value.length<5||this.state.optionArr.length<2)
+   {
+     this.setState({
+       disable:true
+     })
+   }
+   else {
+     this.setState({
+       disable:false
+     })
+   }
    this.setState({
      quest:e.target.value,
    })
    this.props.question(e.target.value);
-   this.props.type("Dropdown");
+
  }
  addOptions(e)
  {
-  if(this.state.quest.length>=5)
-  {
+   if(this.state.quest.length<5||this.state.optionArr.length<2)
+   {
+     this.setState({
+       disable:true
+     })
+   }
+   else {
+     this.setState({
+       disable:false
+     })
+   }
     var arr=this.state.optionArr;
     arr.push(' ');
     this.setState({
       optionArr:arr
     })
-  }
+
 }
  removeOptions=(index)=>
  {
-  if(this.state.quest.length>=5)
-  {
+   if(this.state.quest.length<5||this.state.optionArr.length<2)
+   {
+     this.setState({
+       disable:true
+     })
+   }
+   else {
+     this.setState({
+       disable:false
+     })
+   }
     var arr=this.state.optionArr;
       if(arr.length>1)
     {
@@ -67,7 +96,7 @@ class Dropdown extends Component {
       })
     this.props.options(arr);
   }
-}
+
  }
 changeOptions=(index,value)=>
 {
@@ -95,7 +124,7 @@ var dropdownScreen={
         questionQ:this.state.quest,
         options:this.state.optionArr
       }
-    
+
   }
   request.post('http://localhost:9080/api/updateSurvey/'+sName)
           .set('Content-Type', 'application/json')
@@ -141,7 +170,7 @@ var dropdownScreen={
   	             <RaisedButton label="Cancel" labelStyle={{fontWeight:'bold'}} />
   	           </Link>
                <Link to="Home/AddQuestion" activeClassName="active">
-                 <RaisedButton label="Submit" backgroundColor='#1C6D03' onClick={this.onSubmit.bind(this)} labelStyle={{color:'#FFFFFF ',fontWeight:'bold'}}/>
+                 <RaisedButton label="Submit" backgroundColor='#1C6D03' disabled={this.state.disable} onClick={this.onSubmit.bind(this)} labelStyle={{color:'#FFFFFF ',fontWeight:'bold'}}/>
                  </Link>
               </CardActions>
                </Card>

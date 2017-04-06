@@ -14,10 +14,14 @@ import IconButton from 'material-ui/IconButton';
 import Slider from 'material-ui/Slider';
 import {IndexLink, Link} from 'react-router';
 import StarRating from 'star-rating-react';
+import SelectField from 'material-ui/SelectField';
+import MenuItem from 'material-ui/MenuItem';
+
 const welcomeStyle={
 background:'#649F4E',
 textAlign:'center',
-height:'20%'
+height:'20%',
+marginBottom:'5%'
 }
 
 const questionStyle={
@@ -35,12 +39,11 @@ background:'#649F4E',
 textAlign:'center',
 marginTop:'1%',
 height:'35%'
-
 }
 
 const style = {
 textAlign: 'center',
-height:'80%',
+marginBottom:'2%',
 width:'100%',
 };
 
@@ -127,7 +130,7 @@ window.location.reload()
     {
       this.setState({starComment:this.props.putOptions[newValue-1]});
     }
-    
+
     this.setState({starRating:newValue});
     console.log(newValue)
   }
@@ -144,7 +147,7 @@ window.location.reload()
    var questions=[];
    welcomeTitle.push(
   <Col xs={12}>
-      <h3 style={{marginTop:'2%',marginBottom:'2%',fontSize:'150%'}}> Survey Title</h3>
+      <h3 style={{marginTop:'2%',marginBottom:'2%',fontSize:'150%',paddingTop:10}}> Survey Title</h3>
       <Divider/>
       <h4 style={{marginTop:'1%',marginLeft:'1%',color:'#283747',textAlign:'left'}}>Description </h4>
 
@@ -167,9 +170,9 @@ window.location.reload()
         console.log("state", this.state.output.welcomeMsg);
         welcomeTitle.pop();
         welcomeTitle.push(<div>
-        <h3 style={{marginTop:'2%',marginBottom:'2%',color:'#FFFFFF',fontSize:'150%'}}>{this.state.output.welcomeMsg}</h3>
+        <h3 style={{marginTop:'2%',marginBottom:'2%',paddingTop:10,color:'#FFFFFF',fontSize:'150%'}}>{this.state.output.welcomeMsg}</h3>
          <Divider/>
-        <h4 style={{marginTop:'1%',marginLeft:'1%',color:'#DAF7A6  ',textAlign:'left'}}>{this.state.output.description}</h4>
+        <h4 style={{marginTop:'1%',marginLeft:'1%',color:'#DAF7A6',textAlign:'left'}}>{this.state.output.description}</h4>
        </div>);
       }
       if(this.state.output.thanksMessage)
@@ -189,7 +192,7 @@ window.location.reload()
 
         questions.pop();
         questions.push(this.state.output.questions.map((obj,i)=>{
-          if(obj.questionType=="Comments"){
+          if(obj.questionType==="Comments"){
             return(<Card>
               <CardText>
               <IconButton onTouchTap={this.handleChange.bind(this,obj.questionQ)} style={{marginRight:0}}><ActionInfo style={iconStyles}/></IconButton>
@@ -227,14 +230,13 @@ window.location.reload()
              </CardText>
              </Card>);
 }
-else if(obj.questionType=="Dropdown"){
+else if(obj.questionType==="Dropdown"){
   var options=[];
-   obj.options.map((option)=>{
-   options.push(<div>
-      <Checkbox label={option}  iconStyle={{marginLeft:'35%'}} labelStyle={{marginRight:'50%',color:'#000000',marginLeft:'2%'}}/>
-      </div>);
-
-    });
+   var index=1;
+    options.push(<MenuItem value={index} primaryText="Select an option"/>)
+    obj.options.map((option)=>{index++;
+       options.push(<MenuItem value={index} primaryText={option}/>);
+    })
 
   return(<Card expanded='false'>
     <CardText>
@@ -244,7 +246,7 @@ else if(obj.questionType=="Dropdown"){
   <h3 style={{marginTop:0,marginLeft:'2%',marginBottom:0,color:'#000000',textAlign:'left'}}>{i+1}.{obj.questionQ} </h3>
   </CardText>
   <CardText>
-  {options}
+  <SelectField value={1}>{options}</SelectField>
   </CardText>
   </Card>);
 }
@@ -384,15 +386,18 @@ var url='/Home/Preview/'+localStorage.getItem('sName');
     <div style={{height:'90%'}}>
      <Paper  style={style}>
        <Card style={welcomeStyle}>
+        <CardText style={{background:'#649F4E'}}>
          {welcomeTitle}
+         </CardText>
          </Card>
-
        {questions}
        <Link to={url}>
-       <RaisedButton label="Submit" onClick={this.updateUserSchema.bind(this)} backgroundColor='#1C6D03 'labelStyle={{color:'#FFFFFF ',fontWeight:'bold'}} />
+       <RaisedButton label="Submit" onClick={this.updateUserSchema.bind(this)} backgroundColor='#1C6D03' style={{marginTop:10}} labelStyle={{color:'#FFFFFF ',fontWeight:'bold'}} />
        </Link>
        <Card style={thanksStyle}>
+       <CardText style={{background:'#649F4E'}}>
            {thanksMessage}
+           </CardText>
        </Card>
 
      </Paper>

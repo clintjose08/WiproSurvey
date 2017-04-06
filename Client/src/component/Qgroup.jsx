@@ -67,8 +67,8 @@ class Qgroup extends Component{
           checked1: false,
         quest:'',
         status:true,
-        submit:true
-
+        submit:true,
+        disable:true
     }
     this.checkYes = this.checkYes.bind(this);
     this.checkNo = this.checkNo.bind(this);
@@ -90,6 +90,17 @@ getYesOrNovalue1(no){
   this.props.getYesOrNo1(no);
 }
   questionChange(e){
+    if(e.target.value.length>=5)
+    {
+      this.setState({
+        disable:false
+      })
+    }
+    else {
+      this.setState({
+        disable:true
+      })
+    }
     this.props.options([]);
     this.setState(
     {
