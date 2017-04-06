@@ -23,6 +23,7 @@ import DraftDisplay from './component/draftDisplay'
 import Timer from './component/timer';
 import TakeSurvey from './view/TakeSurvey';
 import Preview from './component/Preview';
+import FullPreview from './component/FullPreview';
 import UploadCSV from './component/uploadCSV';
 
 injectTapEventPlugin();
@@ -34,6 +35,7 @@ ReactDOM.render(
      <Route path="/Home" component={App}>
        <Route path="CreateSurvey" component={CreateSurvey}/>
        <Route path='Preview/:sName' component={Preview}/>
+      <Route path='FullPreview/:sName' component={FullPreview}/>
        <Route path='AddQuestion/:sName' component={AddQuestion}/>
        <Route path='Welcome/:Wel' component={WelcomeEdit}/>
        <Route path='Details' component={DisplayDetails}/>

@@ -35,7 +35,8 @@ constructor(props) {
 	 thankyouMsg:'',
 	 name:'',
 	 email:'',
-	 contact:''
+	 contact:'',
+	 disable:true
     };
   }
 
@@ -56,7 +57,17 @@ constructor(props) {
   }
 
    handleThanks(e) {
-
+		 if(e.target.value.length>=5)
+		 {
+			 this.setState({
+				 disable:false
+			 })
+		 }
+		 else {
+			 this.setState({
+ 				disable:true
+ 			})
+		 }
     this.props.getThanks(e.target.value);
 		this.setState({
 			thankyouMsg:e.target.value
@@ -206,7 +217,7 @@ constructor(props) {
 											<RaisedButton label="Cancel" labelStyle={{fontWeight:'bold'}} />
 											</Link>
 										 <Link to={url} activeClassName="active">
-											<RaisedButton label="Submit" backgroundColor='#1C6D03 ' onClick={this.updateDb.bind(this)} labelStyle={{color:'#FFFFFF ',fontWeight:'bold'}} />
+											<RaisedButton label="Submit" backgroundColor='#1C6D03 ' disabled={this.state.disable} onClick={this.updateDb.bind(this)} labelStyle={{color:'#FFFFFF ',fontWeight:'bold'}} />
 										 </Link>
 									</CardActions>
         					</Card>

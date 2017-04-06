@@ -39,6 +39,8 @@ class TakeSurvey extends React.Component {
     allData:'',
     sliderChangevalue:0,
     commentValue:[],
+    checkboxValue:[],
+    disable:true,
     dropDown:'',
     selectedValue:'',
     checkboxValue:[]
@@ -82,6 +84,9 @@ var sName=this.props.params.sName;
                    }
 
                  });
+                 this.setState({
+                   disable:true
+                 })
                  const {stepIndex} = this.state;
                  if (!this.state.loading) {
                    this.dummyAsync(() => this.setState({
@@ -120,7 +125,7 @@ Welcome=()=>{
       a.pop();
       a.push(qstn);
       a.push(newValue);
-      this.setState({commentValue:a});
+      this.setState({commentValue:a,disable:false,starRating:newValue});
     }
 
     dropValueChanged=(qstn,e,i,newValue) =>  {
@@ -130,8 +135,7 @@ Welcome=()=>{
       a.pop();
       a.push(qstn);
       a.push(newValue);
-      this.setState({commentValue:a});
-      this.setState({dropDown:newValue});
+      this.setState({commentValue:a,disable:false,dropDown:newValue});
       console.log("comment value set",a)
     }
 
@@ -142,8 +146,8 @@ Welcome=()=>{
       a.pop();
       a.push(qstn);
       a.push(newValue);
-      this.setState({commentValue:a});
-      console.log("SingleText set",a)
+      this.setState({commentValue:a,disable:false});
+      console.log("comment value set",a)
     }
 
     commentsValueChanged=(qstn,e,cmtValue) =>  {
@@ -153,7 +157,7 @@ Welcome=()=>{
       a.pop();
       a.push(qstn);
       a.push(cmtValue);
-      this.setState({commentValue:a});
+      this.setState({commentValue:a,disable:false});
       console.log("comment value set",qstn, this.state.commentValue)
     }
 
@@ -164,8 +168,8 @@ Welcome=()=>{
       a.pop();
       a.push(qstn);
       a.push(newValue);
-      this.setState({commentValue:a});
-      this.setState({selectedValue:newValue});
+      this.setState({commentValue:a,disable:false,selectedValue:newValue});
+
     }
 
     yesOrNoValueChange=(qstn,e,newValue)=>{
@@ -175,8 +179,7 @@ Welcome=()=>{
       a.pop();
       a.push(qstn);
       a.push(newValue);
-      this.setState({commentValue:a});
-      console.log("database",this.state.commentValue);
+      this.setState({commentValue:a,disable:false});
     }
 
     checkboxValueChange=(e,i,quest,a,value) =>  {
@@ -187,13 +190,13 @@ Welcome=()=>{
       console.log("question : ",quest);
       if(value){
       a.push(i)
-      this.setState({checkboxValue:a});
+      this.setState({checkboxValue:a,disable:false});
       console.log("checkbox value set", a)}
       else
       {
         var x= a.indexOf(i)
         a.splice(x,1);
-      this.setState({checkboxValue:a});
+      this.setState({checkboxValue:a,disable:false});
       console.log("checkbox value unsetset", a)}
       b.pop();
       b.pop();
@@ -210,7 +213,7 @@ Welcome=()=>{
         a.pop();
         a.push(quest);
         a.push(value);
-        this.setState({commentValue:a,sliderChangevalue:value});
+        this.setState({sliderChangevalue:value,disable:false,commentValue:a});
         console.log(value)
         console.log(this.state.sliderChangevalue);
       };
@@ -263,6 +266,7 @@ Welcome=()=>{
                 label={'Next'}
                 primary={true}
                 onTouchTap={this.Welcome}
+
               />
             </div>
           </Grid>
@@ -342,6 +346,7 @@ Welcome=()=>{
           <RaisedButton
                 label={'Next'}
                 primary={true}
+                disabled={this.state.disable}
                 onTouchTap={this.handleNext}
                 style={{marginBottom:'2%'}}
               />
@@ -359,7 +364,6 @@ Welcome=()=>{
 
           <form
      style={{marginTop:'5%',marginBottom:'2%',borderStyle:'solid',borderRadius:25,borderWidth:2,borderColor:'#212F3D', background:'#F4F6F6'}}>
-
          <h3 style={{marginTop:0,marginLeft:'2%',marginBottom:0,color:'#000000',textAlign:'left'}}>{i+1}.{obj.questionQ} </h3>
          {options}
          </form>
@@ -373,6 +377,7 @@ Welcome=()=>{
 
          <RaisedButton
                 label={'Next'}
+                disabled={this.state.disable}
                 primary={true}
                 onTouchTap={this.handleNext}
               />
@@ -410,6 +415,7 @@ return(<Col xs={12}>
 <RaisedButton
                 label={'Next'}
                 primary={true}
+                disabled={this.state.disable}
                 onTouchTap={this.handleNext}
               />
   </section>
@@ -426,6 +432,7 @@ options.push(
 );
 
 return(<Col xs={12}>
+
 
           <form
      style={{marginTop:'5%',marginBottom:'2%',borderStyle:'solid',borderRadius:25,borderWidth:2,borderColor:'#212F3D', background:'#F4F6F6'}}>
@@ -445,7 +452,9 @@ return(<Col xs={12}>
 <RaisedButton
                 label={'Next'}
                 primary={true}
+                disabled={this.state.disable}
                 onTouchTap={this.handleNext}
+                disabled={this.state.disable}
               />
 
  </section>
@@ -478,6 +487,7 @@ onChange={this.singleTextValueChanged.bind(this,obj.questionQ)}
 <RaisedButton
                 label={'Next'}
                 primary={true}
+                disabled={this.state.disable}
                 onTouchTap={this.handleNext}
               />
   </section>
@@ -516,6 +526,7 @@ return(<Col xs={12}>
 
 <RaisedButton
                 label={'Next'}
+                disabled={this.state.disable}
                 primary={true}
                 onTouchTap={this.handleNext}
               />
@@ -528,6 +539,7 @@ else if(obj.questionType=="Slider"){
 return(<Col xs={12}>
           <form
      style={{marginTop:'5%',marginBottom:'2%',borderStyle:'solid',borderRadius:25,borderWidth:2,borderColor:'#212F3D', background:'#F4F6F6'}}>
+
 <h3 style={{marginTop:0,marginLeft:'2%',marginBottom:0,color:'#000000',textAlign:'left'}}>{i+1}.{obj.questionQ} </h3>
 
 <Slider
@@ -542,7 +554,6 @@ return(<Col xs={12}>
 
            <span style={{fontWeight:'bold'}}>{this.state.sliderChangevalue}</span>
            <span style={{fontWeight:'bold'}}>{'/'}</span> <span style={{fontWeight:'bold'}}>{obj.maxValue}</span>
-
 </form>
    <section style={{marginTop: 24, marginBottom: 12}}>
         <FlatButton
@@ -555,6 +566,7 @@ return(<Col xs={12}>
            <RaisedButton
                            label={'Next'}
                            primary={true}
+                           disabled={this.state.disable}
                            onTouchTap={this.handleNext}
                          />
     </section>
@@ -596,7 +608,9 @@ labelStyle={{fontWeight:'bold'}}
 <RaisedButton
                 label={'Next'}
                 primary={true}
+
                 onTouchTap={this.handleNext}
+                disabled={this.state.disable}
               />
   </section>
 </Col>);

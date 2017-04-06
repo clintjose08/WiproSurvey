@@ -32,7 +32,8 @@ constructor(props,context:any) {
    this.state = {
    expanded: false,
    welcomeMsg:'',
-   discript:''
+   discript:'',
+	 disable:true
     };
   }
 	static get contextTypes() {
@@ -48,7 +49,17 @@ constructor(props,context:any) {
 componentDidMount(){
 }
   handleWelcome(e) {
-
+		if(e.target.value.length>=5)
+		{
+			this.setState({
+				disable:false
+			})
+		}
+		else {
+			this.setState({
+				disable:true
+			})
+		}
     this.props.getWelcome(e.target.value);
 
     this.setState({
@@ -130,7 +141,7 @@ componentDidMount(){
 											<RaisedButton label="Cancel" labelStyle={{fontWeight:'bold'}} />
 											</Link>
 											<Link to={url} activeClassName="active">
-											<RaisedButton label="Submit" onClick={this.updateDb.bind(this)} backgroundColor='#1C6D03 ' labelStyle={{color:'#FFFFFF ',fontWeight:'bold'}} />
+											<RaisedButton label="Submit" onClick={this.updateDb.bind(this)} disabled={this.state.disable} backgroundColor='#1C6D03 ' labelStyle={{color:'#FFFFFF ',fontWeight:'bold'}} />
 											</Link>
 								  </CardActions>
 						</Card>
