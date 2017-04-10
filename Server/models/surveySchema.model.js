@@ -17,8 +17,7 @@ const questSchema=new Schema({
 const SurveySchema = new Schema({
   surveyname:{type:String},
   status:{type:String},
-  publishtime:{type:String},
-  endTime:{type:String},
+
   welcomeMsg:{type:String},
   description:{type:String},
   thanksMessage:{type:String},

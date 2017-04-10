@@ -9,6 +9,7 @@ import Slider from 'material-ui/Slider';
 import Avatar from 'material-ui/Avatar';
 import StarRating from 'star-rating-react';
 import DropDownMenu from 'material-ui/DropDownMenu';
+import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
 import FlatButton from 'material-ui/FlatButton';
 import TextField from 'material-ui/TextField';
@@ -21,9 +22,7 @@ import Mail from 'material-ui/svg-icons/communication/contact-mail';
 import background from '../../images/Home.jpg';
 import finish  from '../../images/finish.jpg';
 import Request from 'superagent';
-
 class TakeSurvey extends React.Component {
-
   state = {
     answer:[],
     allData:'',
@@ -31,13 +30,11 @@ class TakeSurvey extends React.Component {
   };
   componentWillMount()
   {
-
    var sName=this.props.params.sName;
   request.get('http://localhost:9080/api/getSurvey/'+sName).end((err,res)=>{
       this.setState({
         allData:res.body
       })
-
     });
   }
 
@@ -104,7 +101,7 @@ class TakeSurvey extends React.Component {
       if(obj.questionType=="Comments"){
   getContent.push(<Col xs={12}>
     <form
-style={{marginTop:'5%',marginBottom:'2%',borderStyle:'solid',borderRadius:25,borderWidth:2,borderColor:'#212F3D', background:'#F4F6F6', opacity: 0.5}}>
+style={{marginTop:'5%',marginBottom:'2%',borderStyle:'solid',borderRadius:25,borderWidth:2,borderColor:'#212F3D', background:'#F4F6F6'}}>
     <h3 style={{marginTop:'1%',marginLeft:'2%',marginBottom:0,color:'#000000',textAlign:'left'}}>{i+1}.{obj.questionQ}</h3>
 
 
@@ -127,7 +124,7 @@ else if(obj.questionType=="Checkbox"){
      });
    getContent.push(<Col xs={12}>
     <form
-style={{marginTop:'5%',marginBottom:'2%',borderStyle:'solid',borderRadius:25,borderWidth:2,borderColor:'#212F3D', background:'#F4F6F6', opacity: 0.5}}>
+style={{marginTop:'5%',marginBottom:'2%',borderStyle:'solid',borderRadius:25,borderWidth:2,borderColor:'#212F3D', background:'#F4F6F6'}}>
    <h3 style={{marginTop:0,marginLeft:'2%',marginBottom:0,color:'#000000',textAlign:'left'}}>{i+1}.{obj.questionQ} </h3>
    {options}
    </form>
@@ -143,12 +140,12 @@ options.push(
 
 getContent.push(<Col xs={12}>
     <form
-style={{marginTop:'5%',marginBottom:'2%',borderStyle:'solid',borderRadius:25,borderWidth:2,borderColor:'#212F3D', background:'#F4F6F6', opacity: 0.5}}>
+style={{marginTop:'5%',marginBottom:'2%',borderStyle:'solid',borderRadius:25,borderWidth:2,borderColor:'#212F3D', background:'#F4F6F6'}}>
 <h3 style={{marginTop:0,marginLeft:'2%',marginBottom:0,color:'#000000',textAlign:'left'}}>{i+1}.{obj.questionQ} </h3>
 
-<DropDownMenu onChange={this.dropValueChanged.bind(this,i)} value={this.state.dropDown} labelStyle={{marginRight:'50%',color:'#000000',marginLeft:'2%'}}>
+<SelectField onChange={this.dropValueChanged.bind(this,i)} value={this.state.dropDown} floatingLabelText="--Select--" labelStyle={{marginRight:'50%',color:'#000000',marginLeft:'2%'}}>
 {options}
-</DropDownMenu>
+</SelectField>
 </form>
 </Col>);
 }
@@ -164,7 +161,7 @@ onChange={this.valueChanged.bind(this,i)}
 
 getContent.push(<Col xs={12}>
     <form
-style={{marginTop:'5%',marginBottom:'2%',borderStyle:'solid',borderRadius:25,borderWidth:2,borderColor:'#212F3D', background:'#F4F6F6', opacity: 0.5}}>
+style={{marginTop:'5%',marginBottom:'2%',borderStyle:'solid',borderRadius:25,borderWidth:2,borderColor:'#212F3D', background:'#F4F6F6'}}>
 <h3 style={{marginTop:0,marginLeft:'2%',marginBottom:0,color:'#000000',textAlign:'left'}}>{i+1}.{obj.questionQ} </h3>
 
 {options}
@@ -175,7 +172,7 @@ else if(obj.questionType=="SingleText"){
 
 getContent.push(<Col xs={12}>
     <form
-style={{marginTop:'5%',marginBottom:'2%',borderStyle:'solid',borderRadius:25,borderWidth:2,borderColor:'#212F3D', background:'#F4F6F6', opacity: 0.5}}>
+style={{marginTop:'5%',marginBottom:'2%',borderStyle:'solid',borderRadius:25,borderWidth:2,borderColor:'#212F3D', background:'#F4F6F6'}}>
 <h3 style={{marginTop:0,marginLeft:'2%',marginBottom:0,color:'#000000',textAlign:'left'}}>{i+1}.{obj.questionQ} </h3>
 
 <TextField
@@ -202,7 +199,7 @@ labelStyle={ {marginLeft:'0'}}/>);
 
 getContent.push(<Col xs={12}>
     <form
-style={{marginTop:'5%',marginBottom:'2%',borderStyle:'solid',borderRadius:25,borderWidth:2,borderColor:'#212F3D', background:'#F4F6F6', opacity: 0.5}}>
+style={{marginTop:'5%',marginBottom:'2%',borderStyle:'solid',borderRadius:25,borderWidth:2,borderColor:'#212F3D', background:'#F4F6F6'}}>
 <h3 style={{marginTop:0,marginLeft:'2%',marginBottom:0,color:'#000000',textAlign:'left'}}>{i+1}.{obj.questionQ} </h3>
 
 <RadioButtonGroup onChange={this.multiChoiceValueChange.bind(this,i)} name="YesOrNo" style={{textAlign:'left',marginLeft:'5%',marginTop:'2%'}} >
@@ -216,7 +213,7 @@ else if(obj.questionType=="Slider"){
 
 getContent.push(<Col xs={12}>
     <form
-style={{marginTop:'5%',marginBottom:'2%',borderStyle:'solid',borderRadius:25,borderWidth:2,borderColor:'#212F3D', background:'#F4F6F6', opacity: 0.5}}>
+style={{marginTop:'5%',marginBottom:'2%',borderStyle:'solid',borderRadius:25,borderWidth:2,borderColor:'#212F3D', background:'#F4F6F6'}}>
 <h3 style={{marginTop:0,marginLeft:'2%',marginBottom:0,color:'#000000',textAlign:'left'}}>{i+1}.{obj.questionQ} </h3>
 
 <Slider
@@ -239,7 +236,7 @@ else if(obj.questionType=="YesOrNo"){
 
 getContent.push(<Col xs={12}>
     <form
-style={{marginTop:'5%',marginBottom:'2%',borderStyle:'solid',borderRadius:25,borderWidth:2,borderColor:'#212F3D', background:'#F4F6F6', opacity: 0.5}}>
+style={{marginTop:'5%',marginBottom:'2%',borderStyle:'solid',borderRadius:25,borderWidth:2,borderColor:'#212F3D', background:'#F4F6F6'}}>
 <h3 style={{marginTop:0,marginLeft:'2%',marginBottom:0,color:'#000000',textAlign:'left'}}>{i+1}.{obj.questionQ} </h3>
 
 <RadioButtonGroup name="YesOrNo" onChange={this.yesOrNoValueChange.bind(this,i)}style={{textAlign:'left',marginLeft:'5%',marginTop:'2%'}} >
@@ -268,8 +265,6 @@ labelStyle={{fontWeight:'bold'}}
         <Row center="xs">
           <Paper style={{width:'100%',height:'100%'}} zDepth={1}>
           <Row middle="xs">
-          <Col xs={6}>
-            <Row>
             <Col xs={12}>
             <section style={{marginLeft:'2%',background:'#28B463',borderStyle:'solid',borderRadius:25,borderWidth:2,borderColor:'#F8F9F9'}}>
               <h2 style={{color:'#F8F9F9',fontSize:'150%',paddingTop:"2%",paddingBottom:'2%',fontFamily: 'Fenix'}}>Tell Us What You Think....</h2>
@@ -282,11 +277,6 @@ labelStyle={{fontWeight:'bold'}}
                 <p style={{textAlign:'left',fontSize:'125%',fontFamily:'Doppio One',marginLeft:'2%'}}>{this.state.allData.description}</p>
               </Col>
             </Row>
-            </Col>
-            <Col xs={5}>
-              <img src={background} style={{width:'auto',height:'20%'}} />
-            </Col>
-            </Row>
           </Paper>
         </Row>
         <Row center="xs">
@@ -297,12 +287,6 @@ labelStyle={{fontWeight:'bold'}}
         <Row center="xs">
           <Paper style={{width:'100%',height:'100%'}} zDepth={1}>
 
-            <Row >
-                <Col xs={12}>
-                    <img src={finish} style={{width:'auto',height:'70%'}} />
-                    <Divider/>
-                </Col>
-            </Row>
 
             <Row center="xs">
               <Col xs={6}>

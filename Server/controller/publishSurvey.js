@@ -1,4 +1,4 @@
-const surveyConfigModel=require('../models/ResultSchema');
+const surveyConfigModel=require('../models/surveySchema.model');
 module.exports=function (req, res) {
 	const surveyConfig = new surveyConfigModel();
 	// db.surveyresults.update({surveyname:"try","questions.question":"text your comments"},

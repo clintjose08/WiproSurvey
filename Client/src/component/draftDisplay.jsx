@@ -114,6 +114,7 @@ publishupdate(name){
            {
              console.log("posted");
            });
+
 }
 
   handleChange = (event, index, value) => this.setState({value});

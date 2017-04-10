@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{PropTypes} from 'react';
 import {
   Step,
   Stepper,
@@ -16,6 +16,7 @@ import StarRating from 'star-rating-react';
 import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
 import FlatButton from 'material-ui/FlatButton';
+import $ from 'jquery';
 import ExpandTransition from 'material-ui/internal/ExpandTransition';
 import TextField from 'material-ui/TextField';
 import Paper from 'material-ui/Paper';
@@ -31,7 +32,11 @@ import finish  from '../../images/finish.jpg';
 import Request from 'superagent';
 
 class TakeSurvey extends React.Component {
+  constructor(props) {
+       super(props);
 
+       this.onUnload = this.onUnload.bind(this);
+   }
   state = {
     loading: false,
     finished: false,
@@ -62,7 +67,19 @@ class TakeSurvey extends React.Component {
       this.asyncTimer = setTimeout(cb, 500);
     });
   };
+  onUnload(event) { // the method that will be used for both add and remove event
+       window.onbeforeunload=null;
+       console.log("dshgahj");
+       $(window).onUnload( function () { alert("Bye now!"); } );
+   }
 
+   componentDidMount() {
+      window.addEventListener("beforeunload", this.onUnload)
+   }
+
+   componentWillUnmount() {
+       window.removeEventListener("beforeunload", this.onUnload)
+   }
   handleNext = () => {
 var sName=this.props.params.sName;
     var options=this.state.commentValue;
@@ -256,14 +273,8 @@ Welcome=()=>{
             </Row>
 
             <div style={{marginTop: 24, marginBottom: 12}}>
-              <FlatButton
-                label="Back"
-                disabled={stepIndex === 0}
-                onTouchTap={this.handlePrev}
-                style={{marginRight: 12}}
-              />
               <RaisedButton
-                label={'Next'}
+                label={'Start'}
                 primary={true}
                 onTouchTap={this.Welcome}
 
@@ -304,6 +315,14 @@ Welcome=()=>{
                                                                                                                    backgroundColor={'#566573'}
                                                                                                                    style={{marginTop:'2%'}} />{this.state.allData.creterEmail}</p>
                   </Col>
+                  <RaisedButton
+                        label={'Finish'}
+                        primary={true}
+                        onClick={$(window).bind("beforeunload", function() {
+   return true || confirm("Do you really want to close?");
+})}
+                      />
+
                 </Row>
 
               </Paper>
