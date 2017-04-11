@@ -33,8 +33,8 @@ class TakeSurvey extends React.Component {
   componentWillMount()
   {
 
-    Request.get('http://localhost:9080/api/getDetails').end((err,res)=>{
 
+    Request.get('http://localhost:9080/api/getDetails').end((err,res)=>{
 
       this.setState({
         allData:res.body[0]
@@ -59,7 +59,9 @@ class TakeSurvey extends React.Component {
     //options.push(this.state.commentValue);
     var data={surveyName:localStorage.getItem('sName'),options:this.state.commentValue}
 
+
         request.put('http://localhost:9080/api/answerSurvey')
+
 
                 .set('Content-Type', 'application/json')
                 .send(data)

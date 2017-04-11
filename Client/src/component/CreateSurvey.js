@@ -49,7 +49,8 @@ class CreateSurvey extends Component {
     console.log("name set Sucess", this.state.name);
     localStorage.setItem("sName", this.state.name);
     var nameData={
-      surveyname:this.state.name
+      surveyname:this.state.name,
+      status:'draft'
     }
     request.post('http://localhost:9080/api/createSurvey')
             .set('Content-Type', 'application/json')
@@ -86,7 +87,7 @@ this.state.output.map((obj,i)=>{
   if(obj.status=="draft"){
     drafts++;
   }
-  else if (obj.status=="running") {
+  else if (obj.status=="Running") {
     running++;
   }
   else if (obj.status=="closed") {
@@ -244,7 +245,7 @@ this.state.output.map((obj,i)=>{
 
             style={{width:'100%' ,textAlign: 'center',fontWeight: 'bold',marginTop:'0px',marginBottom:'0px'}}
             label="Drafts"
-            labelStyle={{fontSize:'125%',color:'#FDFEFE',fontWeight:'bold'}}/> />
+            labelStyle={{fontSize:'125%',color:'#FDFEFE',fontWeight:'bold'}}/>
             </Link>
            </CardActions>
           </Col>

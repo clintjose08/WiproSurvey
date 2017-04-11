@@ -61,6 +61,36 @@ class GraphDisplay extends Component
                    legend_toggle
                  />);
             }
+            else if(data.questiontype=="Checkbox")
+            {
+              answer=[];
+              var count=0;
+              answer.push(["Options","Count"]);
+              data.options.map((opt)=>
+              {
+
+                count=0;
+                data.count.map((obj)=>{
+                  console.log("obj lenth ", obj.length);
+                  var len=obj.length;
+                  for( var i=0;i<len;i++){
+                  if(obj[i]===opt)
+                  ++count;
+                  console.log("count of : ",opt, count);
+                }});
+                answer.push([opt.toString(),count]);
+              });
+
+              chart=(<Chart
+                   chartType="PieChart"
+                   data={answer}
+                   options={{title:"Response Report",pieHole:0.4,is3D:true}}
+
+                   width="100%"
+                   height="400px"
+                   legend_toggle
+                 />);
+            }
             else if(data.questiontype=="StarRatings")
             {
               answer=[];

@@ -5,7 +5,7 @@ module.exports=function (req, res) {
 		surveyConfigModel.findOneAndUpdate({surveyname:req.body.sName},
 		{$set:{welcomeMsg:req.body.welcomeMsg,description:req.body.description}},
 		function(err,doc){
-
+				  res.send("created");
 		      console.log("not exist");
 
 		});
@@ -22,6 +22,7 @@ else if(req.body.type=='thanksMessage'){
 	function(err,doc){
 	console.log("thanks err",err);
 	console.log(req.body.thanksMessage);
+	  res.send("created");
 				console.log("not exist");
 
 	});
@@ -32,7 +33,7 @@ else if(req.body.type=='yesorno'){
 		questions:req.body.questions
 	}},
 	function(err,doc){
-
+  res.send("created");
 				console.log("not exist");
 
 	});
@@ -43,7 +44,7 @@ else if(req.body.type=='starrate'){
 		questions:req.body.questions
 	}},
 	function(err,doc){
-
+  res.send("created");
 				console.log("not exist");
 
 	});
@@ -54,7 +55,7 @@ else if(req.body.type=='slider'){
 		questions:req.body.questions
 	}},
 	function(err,doc){
-
+  res.send("created");
 				console.log("not exist");
 
 	});
@@ -65,7 +66,7 @@ else if(req.body.type=='singletext'){
 		questions:req.body.questions
 	}},
 	function(err,doc){
-
+  res.send("created");
 				console.log("not exist");
 
 	});
@@ -76,7 +77,7 @@ else if(req.body.type=='multichoice'){
 		questions:req.body.questions
 	}},
 	function(err,doc){
-
+  res.send("created");
 				console.log("not exist");
 
 	});
@@ -87,7 +88,7 @@ else if(req.body.type=='dropdown'){
 		questions:req.body.questions
 	}},
 	function(err,doc){
-
+  res.send("created");
 				console.log("not exist");
 
 	});
@@ -98,7 +99,7 @@ else if(req.body.type=='comments'){
 		questions:req.body.questions
 	}},
 	function(err,doc){
-
+  res.send("created");
 				console.log("not exist");
 
 	});
@@ -109,7 +110,7 @@ else if(req.body.type=='checkbox'){
 		questions:req.body.questions
 	}},
 	function(err,doc){
-
+  res.send("created");
 				console.log("not exist");
 
 	});

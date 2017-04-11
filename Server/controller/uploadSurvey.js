@@ -14,7 +14,7 @@ module.exports=function (req, res) {
     }
   },
   function(err,doc){
-
+  res.send("created");
         console.log("not exist");
 
   });

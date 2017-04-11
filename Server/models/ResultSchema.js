@@ -18,6 +18,9 @@ const QuestSchema = new Schema({
 const ResultSchema = new Schema({
 
   surveyname:{type:String,required:true},
+  publishtime:{type:String},
+  endTime:{type:String},
+  status:{type:String},
   questions:[QuestSchema]
 });
 

@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{PropTypes} from 'react';
 import {
   Step,
   Stepper,
@@ -16,6 +16,7 @@ import StarRating from 'star-rating-react';
 import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
 import FlatButton from 'material-ui/FlatButton';
+import $ from 'jquery';
 import ExpandTransition from 'material-ui/internal/ExpandTransition';
 import TextField from 'material-ui/TextField';
 import Paper from 'material-ui/Paper';
@@ -31,16 +32,23 @@ import finish  from '../../images/finish.jpg';
 import Request from 'superagent';
 
 class TakeSurvey extends React.Component {
+  constructor(props) {
+       super(props);
 
+       this.onUnload = this.onUnload.bind(this);
+   }
   state = {
     loading: false,
     finished: false,
     stepIndex: 0,
     allData:'',
-    sliderChange:0,
+    sliderChangevalue:0,
     commentValue:[],
+    checkboxValue:[],
+    disable:true,
     dropDown:'',
-    selectedValue:''
+    selectedValue:'',
+    checkboxValue:[]
   };
   componentWillMount()
   {
@@ -48,7 +56,9 @@ class TakeSurvey extends React.Component {
    var sName=this.props.params.sName;
 
 
+
     request.get('http://localhost:9080/api/getSurvey/'+sName).end((err,res)=>{
+
 
       this.setState({
         allData:res.body
@@ -60,19 +70,43 @@ class TakeSurvey extends React.Component {
       this.asyncTimer = setTimeout(cb, 500);
     });
   };
+  onUnload(event) { // the method that will be used for both add and remove event
+       window.onbeforeunload=null;
+       console.log("dshgahj");
+       $(window).onUnload( function () { alert("Bye now!"); } );
+   }
 
+   componentDidMount() {
+      window.addEventListener("beforeunload", this.onUnload)
+   }
+
+   componentWillUnmount() {
+       window.removeEventListener("beforeunload", this.onUnload)
+   }
   handleNext = () => {
 var sName=this.props.params.sName;
     var options=this.state.commentValue;
     //options.push(this.state.commentValue);
+
+var data1={};
     var data1={surveyName:sName,options:this.state.commentValue}
         request.put('http://localhost:9080/api/answerSurvey/'+sName)
+
                 .set('Content-Type', 'application/json')
                 .send(data1)
-                 .then((err,res)=>
+                 .end(function(err,res)
                  {
-                   console.log("posted");
+                   if(err){
+                     console.log("err",err);
+                   }
+                   if(res){
+                     console.log("posted",res);
+                   }
+
                  });
+                 this.setState({
+                   disable:true
+                 })
                  const {stepIndex} = this.state;
                  if (!this.state.loading) {
                    this.dummyAsync(() => this.setState({
@@ -81,6 +115,7 @@ var sName=this.props.params.sName;
                    }));
                  }
   };
+
 Welcome=()=>{
   const {stepIndex} = this.state;
   if (!this.state.loading) {
@@ -90,8 +125,8 @@ Welcome=()=>{
     }));
   }
 }
-  handlePrev = () => {
 
+  handlePrev = () => {
     const {stepIndex} = this.state;
     if (!this.state.loading) {
       this.dummyAsync(() => this.setState({
@@ -110,9 +145,9 @@ Welcome=()=>{
       a.pop();
       a.push(qstn);
       a.push(newValue);
-      this.setState({commentValue:a});
-
+      this.setState({commentValue:a,disable:false,starRating:newValue});
     }
+
     dropValueChanged=(qstn,e,i,newValue) =>  {
       this.setState({commentValue:[]});
       var a=this.state.commentValue;
@@ -120,11 +155,10 @@ Welcome=()=>{
       a.pop();
       a.push(qstn);
       a.push(newValue);
-      this.setState({commentValue:a});
-      this.setState({dropDown:newValue});
-
+      this.setState({commentValue:a,disable:false,dropDown:newValue});
       console.log("comment value set",a)
     }
+
     singleTextValueChanged=(qstn,e,newValue) =>  {
       this.setState({commentValue:[]});
       var a=this.state.commentValue;
@@ -132,9 +166,8 @@ Welcome=()=>{
       a.pop();
       a.push(qstn);
       a.push(newValue);
-      this.setState({commentValue:a});
-      console.log("SingleText set",a)
-
+      this.setState({commentValue:a,disable:false});
+      console.log("comment value set",a)
     }
 
     commentsValueChanged=(qstn,e,cmtValue) =>  {
@@ -144,9 +177,10 @@ Welcome=()=>{
       a.pop();
       a.push(qstn);
       a.push(cmtValue);
-      this.setState({commentValue:a});
+      this.setState({commentValue:a,disable:false});
       console.log("comment value set",qstn, this.state.commentValue)
     }
+
     multiChoiceValueChange=(qstn,e,newValue)=>{
       this.setState({commentValue:[]});
       var a=this.state.commentValue;
@@ -154,9 +188,10 @@ Welcome=()=>{
       a.pop();
       a.push(qstn);
       a.push(newValue);
-      this.setState({commentValue:a});
-      this.setState({selectedValue:newValue});
+      this.setState({commentValue:a,disable:false,selectedValue:newValue});
+
     }
+
     yesOrNoValueChange=(qstn,e,newValue)=>{
       this.setState({commentValue:[]});
       var a=this.state.commentValue;
@@ -164,23 +199,31 @@ Welcome=()=>{
       a.pop();
       a.push(qstn);
       a.push(newValue);
-      this.setState({commentValue:a});
-      console.log("database",this.state.commentValue);
+      this.setState({commentValue:a,disable:false});
     }
-    checkboxValueChange=(e,i,value) =>  {
-      var a=this.state.checkboxValue;
-      console.log("index value set", e)
-      if(value){
-      a.push(e)
-      this.setState({checkboxValue:a});
-      console.log("checkbox value set", a)}
 
+    checkboxValueChange=(e,i,quest,a,value) =>  {
+      this.setState({commentValue:[]});
+      var a=this.state.checkboxValue;
+      var b=this.state.commentValue;
+      console.log("index value set", e,i,a,value)
+      console.log("question : ",quest);
+      if(value){
+      a.push(i)
+      this.setState({checkboxValue:a,disable:false});
+      console.log("checkbox value set", a)}
       else
       {
-        var x= a.indexOf(e)
+        var x= a.indexOf(i)
         a.splice(x,1);
-      this.setState({checkboxValue:a});
+      this.setState({checkboxValue:a,disable:false});
       console.log("checkbox value unsetset", a)}
+      b.pop();
+      b.pop();
+      b.push(quest);
+      b.push(a);
+      this.setState({commentValue:b});
+      console.log("database",this.state.commentValue);
     }
 
       handleSlider = (quest,event, value) => {
@@ -190,19 +233,17 @@ Welcome=()=>{
         a.pop();
         a.push(quest);
         a.push(value);
-        this.setState({commentValue:a});
-        this.setState({sliderChange:value});
+        this.setState({sliderChangevalue:value,disable:false,commentValue:a});
         console.log(value)
-        console.log(this.state.sliderChange);
-
+        console.log(this.state.sliderChangevalue);
       };
-  getStepContent(stepIndex) {
 
+  getStepContent(stepIndex) {
     if(this.state.allData.questions)
     {
     var data=this.state.allData.questions;
     var length=data.length;
-    console.log("data",data);
+
     if(stepIndex==0)
     {
       return (
@@ -235,16 +276,11 @@ Welcome=()=>{
             </Row>
 
             <div style={{marginTop: 24, marginBottom: 12}}>
-              <FlatButton
-                label="Back"
-                disabled={stepIndex === 0}
-                onTouchTap={this.handlePrev}
-                style={{marginRight: 12}}
-              />
               <RaisedButton
-                label={'Next'}
+                label={'Start'}
                 primary={true}
                 onTouchTap={this.Welcome}
+
               />
             </div>
           </Grid>
@@ -282,6 +318,14 @@ Welcome=()=>{
                                                                                                                    backgroundColor={'#566573'}
                                                                                                                    style={{marginTop:'2%'}} />{this.state.allData.creterEmail}</p>
                   </Col>
+                  <RaisedButton
+                        label={'Finish'}
+                        primary={true}
+                        onClick={$(window).bind("beforeunload", function() {
+   return true || confirm("Do you really want to close?");
+})}
+                      />
+
                 </Row>
 
               </Paper>
@@ -324,6 +368,7 @@ Welcome=()=>{
           <RaisedButton
                 label={'Next'}
                 primary={true}
+                disabled={this.state.disable}
                 onTouchTap={this.handleNext}
                 style={{marginBottom:'2%'}}
               />
@@ -334,14 +379,13 @@ Welcome=()=>{
          var options=[];
           obj.options.map((option,i)=>{
           options.push(<div>
-             <Checkbox label={option} onCheck={this.checkboxValueChange.bind(this,i)} iconStyle={{marginLeft:'35%'}} labelStyle={{marginRight:'50%',color:'#000000',marginLeft:'2%'}}/>
+             <Checkbox label={option} onCheck={this.checkboxValueChange.bind(this,i,option,obj.questionQ)} iconStyle={{marginLeft:'35%'}} labelStyle={{marginRight:'50%',color:'#000000',marginLeft:'2%'}}/>
              </div>);
            });
          return(<Col xs={12}>
 
           <form
      style={{marginTop:'5%',marginBottom:'2%',borderStyle:'solid',borderRadius:25,borderWidth:2,borderColor:'#212F3D', background:'#F4F6F6'}}>
-
          <h3 style={{marginTop:0,marginLeft:'2%',marginBottom:0,color:'#000000',textAlign:'left'}}>{i+1}.{obj.questionQ} </h3>
          {options}
          </form>
@@ -355,6 +399,7 @@ Welcome=()=>{
 
          <RaisedButton
                 label={'Next'}
+                disabled={this.state.disable}
                 primary={true}
                 onTouchTap={this.handleNext}
               />
@@ -392,6 +437,7 @@ return(<Col xs={12}>
 <RaisedButton
                 label={'Next'}
                 primary={true}
+                disabled={this.state.disable}
                 onTouchTap={this.handleNext}
               />
   </section>
@@ -408,6 +454,7 @@ options.push(
 );
 
 return(<Col xs={12}>
+
 
           <form
      style={{marginTop:'5%',marginBottom:'2%',borderStyle:'solid',borderRadius:25,borderWidth:2,borderColor:'#212F3D', background:'#F4F6F6'}}>
@@ -427,7 +474,9 @@ return(<Col xs={12}>
 <RaisedButton
                 label={'Next'}
                 primary={true}
+                disabled={this.state.disable}
                 onTouchTap={this.handleNext}
+                disabled={this.state.disable}
               />
 
  </section>
@@ -460,6 +509,7 @@ onChange={this.singleTextValueChanged.bind(this,obj.questionQ)}
 <RaisedButton
                 label={'Next'}
                 primary={true}
+                disabled={this.state.disable}
                 onTouchTap={this.handleNext}
               />
   </section>
@@ -498,6 +548,7 @@ return(<Col xs={12}>
 
 <RaisedButton
                 label={'Next'}
+                disabled={this.state.disable}
                 primary={true}
                 onTouchTap={this.handleNext}
               />
@@ -510,6 +561,7 @@ else if(obj.questionType=="Slider"){
 return(<Col xs={12}>
           <form
      style={{marginTop:'5%',marginBottom:'2%',borderStyle:'solid',borderRadius:25,borderWidth:2,borderColor:'#212F3D', background:'#F4F6F6'}}>
+
 <h3 style={{marginTop:0,marginLeft:'2%',marginBottom:0,color:'#000000',textAlign:'left'}}>{i+1}.{obj.questionQ} </h3>
 
 <Slider
@@ -517,14 +569,13 @@ return(<Col xs={12}>
    max={obj.maxValue}
    step={obj.scale}
    defaultValue={0}
-   value={this.state.sliderChange}
+   value={this.state.sliderChangevalue}
    onChange={this.handleSlider.bind(this,obj.questionQ)}
    style={{marginLeft:'4%',marginRight:'4%'}}
  />
 
-           <span style={{fontWeight:'bold'}}>{this.state.sliderChange}</span>
+           <span style={{fontWeight:'bold'}}>{this.state.sliderChangevalue}</span>
            <span style={{fontWeight:'bold'}}>{'/'}</span> <span style={{fontWeight:'bold'}}>{obj.maxValue}</span>
-
 </form>
    <section style={{marginTop: 24, marginBottom: 12}}>
         <FlatButton
@@ -537,6 +588,7 @@ return(<Col xs={12}>
            <RaisedButton
                            label={'Next'}
                            primary={true}
+                           disabled={this.state.disable}
                            onTouchTap={this.handleNext}
                          />
     </section>
@@ -578,7 +630,9 @@ labelStyle={{fontWeight:'bold'}}
 <RaisedButton
                 label={'Next'}
                 primary={true}
+
                 onTouchTap={this.handleNext}
+                disabled={this.state.disable}
               />
   </section>
 </Col>);
@@ -603,7 +657,6 @@ labelStyle={{fontWeight:'bold'}}
 
   render() {
     const {loading, stepIndex} = this.state;
-
     return (
       <div style={{width: '100%', marginTop:'50'}}>
       <Paper>

@@ -6,7 +6,7 @@ module.exports=function (req, res) {
 		surveyConfigModel.findOneAndUpdate({surveyname:req.params.sName},
 		{$pull:{questions:{questionQ:req.params.surveyQuest}}},
 		function(err,doc){
-
+			  res.send("created");
 		      console.log("deleted");
 
 		});

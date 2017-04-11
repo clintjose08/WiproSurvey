@@ -24,7 +24,7 @@ componentWillMount(){
             <Col xs={12} style={{paddingTop:'5.5%'}} sm={4}>
               <Dragabble surveyName={this.props.params.sName}/>
             </Col>
-            <Col xs={12} sm={8}>
+            <Col xs={12} sm={8} style={{paddingTop:'5.5%'}}>
               <Dropabble />
             </Col>
           </Row>

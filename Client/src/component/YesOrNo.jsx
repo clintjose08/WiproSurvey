@@ -29,7 +29,8 @@ class YesOrNo extends Component{
  constructor(props) {
   super(props);
   this.state = {value: 5,
-  quest:' '};
+  quest:' ',
+  disable:true};
 }
 
 componentWillMount(){
@@ -37,6 +38,17 @@ componentWillMount(){
   }
 
 handleQuestion(e) {
+  if(e.target.value.length>=5)
+  {
+    this.setState({
+      disable:false
+    })
+  }
+  else {
+    this.setState({
+      disable:true
+    })
+  }
   this.setState({
     quest:e.target.value
   })
@@ -58,7 +70,9 @@ handleQuestion(e) {
 
     }
 
+
     request.post('http://localhost:9080/api/updateSurvey/'+sName)
+
             .set('Content-Type', 'application/json')
             .send(questionScreen)
              .end((err,res)=>
@@ -97,7 +111,8 @@ handleQuestion(e) {
          <RaisedButton label="Cancel" labelStyle={{fontWeight:'bold'}} />
          </Link>
         <Link to={url} activeClassName="active">
-         <RaisedButton label="Submit" backgroundColor='#1C6D03' onClick={this.updateDb.bind(this)} labelStyle={{color:'#FFFFFF ',fontWeight:'bold'}} />
+         <RaisedButton label="Submit" backgroundColor='#1C6D03' disabled={this.state.disable} onClick={this.updateDb.bind(this)} labelStyle={{color:'#FFFFFF ',fontWeight:'bold'}} />
+
         </Link>
        </CardActions>
 

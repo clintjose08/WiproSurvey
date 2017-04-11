@@ -29,23 +29,47 @@ class Slider extends Component{
    this.state = {value: 4,
    maximum:0,
     scale:0,
+    disable:true,
   quest:' '};
  }
 
 componentWillMount(){
-
+  this.props.type("Slider");
   }
 
 handleQuestion(e) {
+    if(e.target.value.length>=5&&(Number(this.state.maximum >= 5))&&(this.state.scale>0&&this.state.scale<this.state.maximum))
+    {
+      this.setState({
+        disable:false
+      })
+    }
+    else {
+      this.setState({
+        disable:true
+      })
+    }
     this.setState({
       quest:e.target.value
     })
     this.props.getQuestion(e.target.value);
-    this.props.type("Slider");
+
     console.log("Sucess");
   }
 
 handleMaxValue(e) {
+
+  if(this.state.quest.length>=5&&(e.target.value >= 5 )&&(this.state.scale>0&&this.state.scale<e.target.value))
+  {
+    this.setState({
+      disable:false
+    })
+  }
+  else {
+    this.setState({
+      disable:true
+    })
+  }
   this.setState({
     maximum:e.target.value
   })
@@ -53,6 +77,17 @@ handleMaxValue(e) {
     console.log("Sucess");
   }
 handleScale(e) {
+  if((this.state.quest.length>=5)&&(Number(this.state.maximum) >= 5)&&(e.target.value>0&&e.target.value<this.state.maximum))
+  {
+    this.setState({
+      disable:false
+    })
+  }
+  else {
+    this.setState({
+      disable:true
+    })
+  }
   this.setState({
     scale:e.target.value
   })
@@ -74,7 +109,9 @@ handleScale(e) {
 
     }
 
+
     request.post('http://localhost:9080/api/updateSurvey/'+sName)
+
             .set('Content-Type', 'application/json')
             .send(questionScreen)
              .end((err,res)=>
@@ -131,7 +168,8 @@ handleScale(e) {
               <RaisedButton label="Cancel" labelStyle={{fontWeight:'bold'}} />
               </Link>
              <Link to={url} activeClassName="active">
-              <RaisedButton label="Submit" backgroundColor='#1C6D03' onClick={this.updateDb.bind(this)} labelStyle={{color:'#FFFFFF ',fontWeight:'bold'}} />
+              <RaisedButton label="Submit" backgroundColor='#1C6D03' disabled={this.state.disable} onClick={this.updateDb.bind(this)} labelStyle={{color:'#FFFFFF ',fontWeight:'bold'}} />
+
              </Link>
           </CardActions>
 

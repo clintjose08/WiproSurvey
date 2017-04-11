@@ -1,7 +1,7 @@
-const surveyConfigModel=require('../models/surveySchema.model');
+const surveyConfigModel=require('../models/ResultSchema');
 module.exports=function (req, res) {
 	const surveyConfig = new surveyConfigModel();
-		surveyConfigModel.findOne({surveyname:req.params.sName}, function( err, mySchema) {
+		surveyConfigModel.find(function(err,mySchema) {
 				if(mySchema){
 					// console.log(JSON.stringify(mySchema));
 					res.send(mySchema);
