@@ -7,13 +7,21 @@ import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'mat
 import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
 import {RadioButton, RadioButtonGroup} from 'material-ui/RadioButton';
-import request from 'superagent';
-import ActionInfo from 'material-ui/svg-icons/navigation/close';
 import Checkbox from 'material-ui/Checkbox';
 import IconButton from 'material-ui/IconButton';
-import Slider from 'material-ui/Slider';
+import request from 'superagent';
+
+
+import CloseButton from 'material-ui/svg-icons/navigation/close';
+import DuplicateButton from 'material-ui/svg-icons/content/content-copy';
+import EditButton from 'material-ui/svg-icons/image/edit';
+
 import {IndexLink, Link} from 'react-router';
-import StarRating from 'star-rating-react';
+
+import ReactStars from 'react-stars';
+import Slider from 'react-rangeslider';
+import 'react-rangeslider/lib/index.css';
+
 const welcomeStyle={
 background:'#649F4E',
 textAlign:'center',
@@ -47,8 +55,9 @@ width:'100%',
 const iconStyles = {
  textAlign:'left',
 };
-
-
+const ratingChanged = (newRating) => {
+  console.log(newRating)
+}
 class Dropabble  extends Component {
 
   constructor() {
@@ -57,7 +66,8 @@ class Dropabble  extends Component {
        output:[],
        sliderChange:0,
        starRating: 1,
-       starComment:''
+       starComment:'',
+       volume: 0
     }
   }
 
@@ -65,7 +75,7 @@ class Dropabble  extends Component {
 
     var sName=localStorage.getItem('sName');
       request
-      .get('http://10.201.174.234:9080/api/getSurvey/'+sName)
+      .get('http://localhost:9080/api/getSurvey/'+sName)
       .end((err,res) => {
         this.setState({
           output:res.body
@@ -80,7 +90,7 @@ handleChange(i)
 {
   var sName=localStorage.getItem('sName');
     request
-    .put('http://10.201.174.234:9080/api/deleteQuest/'+sName+'/'+i)
+    .put('http://localhost:9080/api/deleteQuest/'+sName+'/'+i)
     .end((err,res) => {
 
     console.log("next");
@@ -111,7 +121,7 @@ window.location.reload()
               }
         })
 
-     request.post('http://10.201.174.234:9080/api/addResult')
+     request.post('http://localhost:9080/api/addResult')
             .set('Content-Type', 'application/json')
             .send(data)
              .then((err,res)=>
@@ -133,12 +143,29 @@ window.location.reload()
   }
 
 
-  handleSlider = (event, value) => {
+  handleOnChange = (value) => {
+    this.setState({
+      volume: value
+    })
+    console.log(value);
+  }
 
-    this.setState({sliderChange: value});
-  };
- render() {
+  handleSliderChange(value,e) {
+      console.log(typeof(value));
+       console.log("Convert"+typeof(Number(value))+" value "+value);
+    if(e.target.value <= (Number(value)) )
+    {
+      this.setState({volume:e.target.value});
+      this.setState({errorText:''});
+    }
+    else
+    {
+      this.setState({errorText:'Max '+value});
+      this.setState({volume:0});
+    }
+  }
 
+render() {
    var welcomeTitle=[];
    var thanksMessage=[];
    var questions=[];
@@ -192,7 +219,15 @@ window.location.reload()
           if(obj.questionType=="Comments"){
             return(<Card>
               <CardText>
-              <IconButton onTouchTap={this.handleChange.bind(this,obj.questionQ)} style={{marginRight:0}}><ActionInfo style={iconStyles}/></IconButton>
+                  <IconButton tooltip="Duplicate" touch={true} tooltipPosition="bottom-right" style={{marginRight:'4%'}}>
+                     <DuplicateButton style={iconStyles}/>
+                  </IconButton>
+                  <IconButton tooltip="Edit Question" touch={true} tooltipPosition="bottom-right" style={{marginRight:'4%'}}>
+                        <EditButton style={iconStyles}/>
+                  </IconButton>
+                  <IconButton onTouchTap={this.handleChange.bind(this,obj.questionQ)} tooltip="Delete" touch={true} tooltipPosition="bottom-right"style={{marginRight:'4%'}}>
+                        <CloseButton style={iconStyles}/>
+                  </IconButton>
               </CardText>
               <CardText>
               <h3 style={{marginTop:0,marginLeft:'2%',marginBottom:0,color:'#000000',textAlign:'left'}}>{i+1}.{obj.questionQ}</h3>
@@ -217,7 +252,15 @@ window.location.reload()
 
              return(<Card expanded='false'>
                <CardText>
-               <IconButton onTouchTap={this.handleChange.bind(this,obj.questionQ)} style={{marginRight:0}}><ActionInfo style={iconStyles}/></IconButton>
+                  <IconButton tooltip="Duplicate" touch={true} tooltipPosition="bottom-right" style={{marginRight:'4%'}}>
+                       <DuplicateButton style={iconStyles}/>
+                  </IconButton>
+                  <IconButton tooltip="Edit Question" touch={true} tooltipPosition="bottom-right" style={{marginRight:'4%'}}>
+                        <EditButton style={iconStyles}/>
+                  </IconButton>
+                  <IconButton onTouchTap={this.handleChange.bind(this,obj.questionQ)} tooltip="Delete" touch={true} tooltipPosition="bottom-right"style={{marginRight:'4%'}}>
+                        <CloseButton style={iconStyles}/>
+                  </IconButton>
                </CardText>
                <CardText>
              <h3 style={{marginTop:0,marginLeft:'2%',marginBottom:0,color:'#000000',textAlign:'left'}}>{i+1}.{obj.questionQ} </h3>
@@ -238,7 +281,15 @@ else if(obj.questionType=="Dropdown"){
 
   return(<Card expanded='false'>
     <CardText>
-    <IconButton onTouchTap={this.handleChange.bind(this,obj.questionQ)} style={{marginRight:0}}><ActionInfo style={iconStyles}/></IconButton>
+      <IconButton tooltip="Duplicate" touch={true} tooltipPosition="bottom-right" style={{marginRight:'4%'}}>
+             <DuplicateButton style={iconStyles}/>
+      </IconButton>
+      <IconButton tooltip="Edit Question" touch={true} tooltipPosition="bottom-right" style={{marginRight:'4%'}}>
+             <EditButton style={iconStyles}/>
+      </IconButton>
+      <IconButton onTouchTap={this.handleChange.bind(this,obj.questionQ)} tooltip="Delete" touch={true} tooltipPosition="bottom-right"style={{marginRight:'4%'}}>
+             <CloseButton style={iconStyles}/>
+      </IconButton>
     </CardText>
     <CardText>
   <h3 style={{marginTop:0,marginLeft:'2%',marginBottom:0,color:'#000000',textAlign:'left'}}>{i+1}.{obj.questionQ} </h3>
@@ -248,19 +299,33 @@ else if(obj.questionType=="Dropdown"){
   </CardText>
   </Card>);
 }
-else if(obj.questionType=="StarRatings"){
+else if(obj.questionType=="StarRatings" ){
   var options=[];
    options.push(
-     <StarRating
-      size={obj.options.length}
-      value={this.state.starRating}
-      onChange={this.valueChanged.bind(this)}
-      />
-    );
+     // <StarRating
+     //  size={obj.options.length}
+     //  value={this.state.starRating}
+     //  onChange={this.valueChanged.bind(this)}
+     //  />
+     
+      <ReactStars
+        count={obj.options.length}
+        onChange={ratingChanged}
+        size={35}
+        color2={'#ffd700'} />
+          );
 
   return(<Card expanded='false'>
     <CardText>
-    <IconButton onTouchTap={this.handleChange.bind(this,obj.questionQ)} style={{marginRight:0}}><ActionInfo style={iconStyles}/></IconButton>
+          <IconButton tooltip="Duplicate" touch={true} tooltipPosition="bottom-right" style={{marginRight:'4%'}}>
+                <DuplicateButton style={iconStyles}/>
+          </IconButton>
+          <IconButton tooltip="Edit Question" touch={true} tooltipPosition="bottom-right" style={{marginRight:'4%'}}>
+                <EditButton style={iconStyles}/>
+          </IconButton>
+          <IconButton onTouchTap={this.handleChange.bind(this,obj.questionQ)} tooltip="Delete" touch={true} tooltipPosition="bottom-right"style={{marginRight:'4%'}}>
+                <CloseButton style={iconStyles}/>
+          </IconButton>
     </CardText>
     <CardText>
   <h3 style={{marginTop:0,marginLeft:'2%',marginBottom:0,color:'#000000',textAlign:'left'}}>{i+1}.{obj.questionQ} </h3>
@@ -281,7 +346,16 @@ else if(obj.questionType=="SingleText"){
 
   return(<Card expanded='false'>
     <CardText>
-    <IconButton onTouchTap={this.handleChange.bind(this,obj.questionQ)} style={{marginRight:0}}><ActionInfo style={iconStyles}/></IconButton>
+        
+        <IconButton tooltip="Duplicate" touch={true} tooltipPosition="bottom-right" style={{marginRight:'4%'}}>
+                <DuplicateButton style={iconStyles}/>
+        </IconButton>
+        <IconButton tooltip="Edit Question" touch={true} tooltipPosition="bottom-right" style={{marginRight:'4%'}}>
+                <EditButton style={iconStyles}/>
+        </IconButton>
+        <IconButton onTouchTap={this.handleChange.bind(this,obj.questionQ)} tooltip="Delete" touch={true} tooltipPosition="bottom-right"style={{marginRight:'4%'}}>
+                <CloseButton style={iconStyles}/>
+        </IconButton>
     </CardText>
     <CardText>
   <h3 style={{marginTop:0,marginLeft:'2%',marginBottom:0,color:'#000000',textAlign:'left'}}>{i+1}.{obj.questionQ} </h3>
@@ -305,7 +379,15 @@ else if(obj.questionType=="MultiChoice"){
 
   return(<Card expanded='false'>
     <CardText>
-    <IconButton onTouchTap={this.handleChange.bind(this,obj.questionQ)} style={{marginRight:0}}><ActionInfo style={iconStyles}/></IconButton>
+          <IconButton tooltip="Duplicate" touch={true} tooltipPosition="bottom-right" style={{marginRight:'4%'}}>
+                <DuplicateButton style={iconStyles}/>
+          </IconButton>
+          <IconButton tooltip="Edit Question" touch={true} tooltipPosition="bottom-right" style={{marginRight:'4%'}}>
+                  <EditButton style={iconStyles}/>
+          </IconButton>
+          <IconButton onTouchTap={this.handleChange.bind(this,obj.questionQ)} tooltip="Delete" touch={true} tooltipPosition="bottom-right"style={{marginRight:'4%'}}>
+                  <CloseButton style={iconStyles}/>
+          </IconButton>
     </CardText>
     <CardText>
   <h3 style={{marginTop:0,marginLeft:'2%',marginBottom:0,color:'#000000',textAlign:'left'}}>{i+1}.{obj.questionQ} </h3>
@@ -322,24 +404,56 @@ else if(obj.questionType=="Slider"){
 
   return(<Card expanded='false'>
     <CardText>
-    <IconButton onTouchTap={this.handleChange.bind(this,obj.questionQ)} style={{marginRight:0}}><ActionInfo style={iconStyles}/></IconButton>
+          
+          <IconButton tooltip="Duplicate" touch={true} tooltipPosition="bottom-right" style={{marginRight:'4%'}}>
+                <DuplicateButton style={iconStyles}/>
+          </IconButton>
+          <IconButton tooltip="Edit Question" touch={true} tooltipPosition="bottom-right" style={{marginRight:'4%'}}>
+                <EditButton style={iconStyles}/>
+          </IconButton>
+          <IconButton onTouchTap={this.handleChange.bind(this,obj.questionQ)} tooltip="Delete" touch={true} tooltipPosition="bottom-right"style={{marginRight:'4%'}}>
+                <CloseButton style={iconStyles}/>
+          </IconButton>
+
     </CardText>
     <CardText>
   <h3 style={{marginTop:0,marginLeft:'2%',marginBottom:0,color:'#000000',textAlign:'left'}}>{i+1}.{obj.questionQ} </h3>
   </CardText>
   <CardText>
-  <Slider
-       min={0}
-       max={obj.maxValue}
-       step={obj.scale}
-       defaultValue={0}
-       value={this.state.sliderChange}
-       onChange={this.handleSlider}
-       style={{marginLeft:'4%',marginRight:'4%'}}
-     />
+      
+    <Slider
+          min={0}
+          max={obj.maxValue}
+          step={obj.scale}
+          tooltip={true}
+          value={this.state.volume}
+          orientation="horizontal"
+          
+          onChange={this.handleOnChange}
+            />
 
-               <span style={{fontWeight:'bold'}}>{this.state.sliderChange}</span>
-               <span style={{fontWeight:'bold'}}>{'/'}</span> <span style={{fontWeight:'bold'}}>{obj.maxValue}</span>
+
+          
+          <span style={{fontWeight:'bold'}}>Your Score : </span>
+          <span style={{fontWeight:'bold'}}> 
+          <TextField
+
+            value={this.state.volume}
+            onChange={this.handleSliderChange.bind(this,obj.maxValue)}
+            style={{width:"20%"}}
+            inputStyle={{textAlign:'center'}}
+            type = 'number'
+            min={0} max={100}
+            errorText= {this.state.errorText}
+          />
+          </span>
+          <span style={{fontWeight:'bold',marginLeft:'2%'}}>{'/'}</span> 
+          <span style={{fontWeight:'bold',marginLeft:'2%'}}>
+                {obj.maxValue}
+          </span>
+
+
+     
 
   </CardText>
   </Card>);
@@ -349,7 +463,15 @@ else if(obj.questionType=="YesOrNo"){
 
   return(<Card expanded='false'>
     <CardText>
-    <IconButton onTouchTap={this.handleChange.bind(this,obj.questionQ)} style={{marginRight:0}}><ActionInfo style={iconStyles}/></IconButton>
+        <IconButton tooltip="Duplicate" touch={true} tooltipPosition="bottom-right" style={{marginRight:'4%'}}>
+                <DuplicateButton style={iconStyles}/>
+        </IconButton>
+        <IconButton tooltip="Edit Question" touch={true} tooltipPosition="bottom-right" style={{marginRight:'4%'}}>
+                <EditButton style={iconStyles}/>
+        </IconButton>
+        <IconButton onTouchTap={this.handleChange.bind(this,obj.questionQ)} tooltip="Delete" touch={true} tooltipPosition="bottom-right"style={{marginRight:'4%'}}>
+                <CloseButton style={iconStyles}/>
+        </IconButton>
     </CardText>
     <CardText>
   <h3 style={{marginTop:0,marginLeft:'2%',marginBottom:0,color:'#000000',textAlign:'left'}}>{i+1}.{obj.questionQ} </h3>

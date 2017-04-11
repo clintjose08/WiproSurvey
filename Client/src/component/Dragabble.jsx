@@ -16,6 +16,8 @@ import Group from 'material-ui/svg-icons/action/assignment';
 import True from 'material-ui/svg-icons/maps/layers-clear';
 import Thank from 'material-ui/svg-icons/action/thumb-up';
 import Upload from 'material-ui/svg-icons/file/file-upload';
+import DatePicker from 'material-ui/svg-icons/action/today';
+import DateRange from 'material-ui/svg-icons/action/date-range';
 
 import {IndexLink, Link} from 'react-router';
 
@@ -52,6 +54,8 @@ class Dragabble extends Component{
       var SliderUrl="Home/Slider/"+this.props.surveyName;
       var YesOrNoUrl="Home/YesOrNo/"+this.props.surveyName;
       var CommentsUrl="Home/Comments/"+this.props.surveyName;
+      var DatePickerUrl="Home/DatePicker/"+this.props.surveyName;
+      var DateRangeUrl="Home/DateRange/"+this.props.surveyName;
       var ThankyouUrl="Home/Thankyou/"+this.props.surveyName;
       var QgroupUrl="Home/Qgroup/"+this.props.surveyName;
 		return(
@@ -121,7 +125,22 @@ class Dragabble extends Component{
                   <RaisedButton label="Comments" backgroundColor='#BDBDBD' labelStyle={{fontWeight:'bold',textTransform:'capitalize'}} buttonStyle={{textAlign:'left'}} style={buttonStyle} icon={<Comment />}/>
                 </Link>
               </Col>
+              <Col xs={12} md={6} >
+                <Link to={DatePickerUrl} activeClassName="active">
+                  <RaisedButton label="Date Picker" backgroundColor='#BDBDBD' labelStyle={{fontWeight:'bold',textTransform:'capitalize'}} buttonStyle={{textAlign:'left'}} style={buttonStyle} icon={<DatePicker />}/>
+                </Link>
+              </Col>
             </Row>
+
+            <Row style={{marginLeft:'1%',marginRight:'1%'}}>
+
+              <Col xs={12} md={6} >
+                <Link to={DateRangeUrl} activeClassName="active">
+                  <RaisedButton label="Date Range" backgroundColor='#BDBDBD' labelStyle={{fontWeight:'bold',textTransform:'capitalize'}} buttonStyle={{textAlign:'left'}} style={buttonStyle} icon={<DateRange />}/>
+                </Link>
+              </Col>
+            </Row>
+
             <Row style={{marginLeft:'1%',marginRight:'1%'}}>
 
               <Col xs={12} style={{marginBottom:'10%'}}>
@@ -130,6 +149,8 @@ class Dragabble extends Component{
                 </Link>
               </Col>
             </Row>
+
+           
 
           <Row style={{marginLeft:'1%',marginRight:'1%'}}>
           <p style={{textAlign:'center',fontWeight:'bold',marginLeft:'50%'}}>OR</p>

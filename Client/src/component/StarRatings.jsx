@@ -43,6 +43,8 @@ class StarRatings extends Component
     for(let i=0;i<value;){
       defaultValue.push(++i);
     }
+    this.setState({value:null});
+    this.props.scale(value);
     this.setState({defaultValue:defaultValue});
     this.setState({value:value,starValues:starValue});
     this.props.options(starValue);
@@ -60,6 +62,7 @@ class StarRatings extends Component
         listOptions:list
       })
     }
+    this.props.scale(value);
   }
   onChangeCheck=(e)=>
   {
@@ -101,6 +104,7 @@ class StarRatings extends Component
     this.setState({
       starValues:starValue
     })
+    this.props.scale()
     this.props.options(starValue);
   }
   questionChange(e)
@@ -142,7 +146,7 @@ class StarRatings extends Component
   }
 }
 
-  request.post('http://10.201.174.234:9080/api/updateSurvey/'+sName)
+  request.post('http://localhost:9080/api/updateSurvey/'+sName)
           .set('Content-Type', 'application/json')
           .send(questionScreen)
            .end((err,res)=>

@@ -31,6 +31,13 @@ class StarRatingsEdit extends Component {
       options:options
     })
   }
+
+  onChangeScale(value)
+  {
+    this.setState({
+      scale:value
+    })
+  }
  render() {
 
    return (
@@ -38,10 +45,10 @@ class StarRatingsEdit extends Component {
             <Grid>
               <Row>
                 <Col xs={12} sm={4}>
-                  <StarRatings getQuestion={this.onChangeQuest.bind(this)} options={this.onChangeOptions.bind(this)} type={this.getType.bind(this)}/>
+                  <StarRatings getQuestion={this.onChangeQuest.bind(this)} scale={this.onChangeScale.bind(this)} options={this.onChangeOptions.bind(this)} type={this.getType.bind(this)}/>
                 </Col>
                 <Col xs={12} sm={8}>
-                  <TempDisplay putQuestion={this.state.quest} putOptions={this.state.options} putType={this.state.type}/>
+                  <TempDisplay putQuestion={this.state.quest} putOptions={this.state.options} putScale={this.state.scale} putType={this.state.type}/>
                 </Col>
               </Row>
             </Grid>

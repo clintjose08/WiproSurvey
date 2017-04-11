@@ -9,10 +9,24 @@ import IconButton from 'material-ui/IconButton';
 import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
 import {RadioButton, RadioButtonGroup} from 'material-ui/RadioButton';
-import Slider from 'material-ui/Slider';
+
 import { Tooltip } from 'reactstrap';
 import { Grid,Row,Col } from 'react-flexbox-grid';
-import StarRating from 'star-rating-react';
+
+import StarRating from 'react-star-rating'
+
+import ReactStars from 'react-stars';
+import Slider from 'react-rangeslider';
+import 'react-rangeslider/lib/index.css';
+
+import moment from 'moment';
+import DayPicker,{ DateUtils } from "react-day-picker";
+import "react-day-picker/lib/style.css";
+
+ var val=0;
+ var starComment='';
+ var starValue=0;
+ var starColor='#ffd700';
 
 const welcomeStyle={
 background:'#2F3A30',
@@ -41,20 +55,76 @@ textAlign: 'center',
 width:'100%',
 };
 
+const overlayStyle = {
+  position: 'absolute',
+  background: 'white',
+  boxShadow: '0 2px 5px rgba(0, 0, 0, .15)',
+  
+};
+
+const initialState = {
+  from: null,
+  to: null,
+  enteredTo: null, // Keep track of the last day for mouseEnter.
+};
+
+function isSelectingFirstDay(from, to, day) {
+  const firstDayIsNotSelected = !from;
+  const selectedDayIsBeforeFirstDay = day < from;
+  const rangeIsSelected = from && to;
+  return firstDayIsNotSelected || selectedDayIsBeforeFirstDay || rangeIsSelected;
+}
+
+
 class TempDisplay  extends Component {
 
 constructor(){
   super();
+
+    this.handleDayClick = this.handleDayClick.bind(this);
+    this.handleInputChange = this.handleInputChange.bind(this);
+    this.handleInputFocus = this.handleInputFocus.bind(this);
+    this.handleInputBlur = this.handleInputBlur.bind(this);
+    this.handleContainerMouseDown = this.handleContainerMouseDown.bind(this);
+
+    this.reset = this.reset.bind(this);
+    this.handleRangeClick = this.handleRangeClick.bind(this);
+    this.handleDayMouseEnter = this.handleDayMouseEnter.bind(this);
+
   this.state={
     checked:'',
     showYes:false,
     sliderChange: 0,
+
     starRating: 1,
     starComment:'',
+    starNum:0,
+    volume: 0,
+    errorText: '',
+    scoreCheck:0,
+
+    showOverlay: false,
+    value: '',
+    selectedDay: null,
+
+    from: null,
+    to: null,
+    enteredTo: null, // Keep track of the last day for mouseEnter.
 
   };
 }
 
+
+
+
+   componentWillReceiveProps(newProps)  {
+   
+      this.setState({scoreCheck:newProps.putMaxValue});
+      // console.log(newProps.putScale);
+   }
+   componentWillUnmount() {
+    clearTimeout(this.clickTimeout);
+  }
 
 
 handleOptionChangeYes (e) {
@@ -75,17 +145,146 @@ valueChanged = (event) =>  {
   valueChanged = (newValue) =>  {
     this.setState({starRating:newValue});
 
-    for(let i=0;i<this.props.putOptions.length;i++)
+    
+    
+  }
+
+  
+
+
+ handleOnChange = (value) => {
+    this.setState({
+      volume: value
+    })
+    console.log(value);
+  }
+handleSliderChange(e) {
+      console.log(typeof(this.props.putMaxValue));
+       console.log("Convert"+typeof(Number(this.props.putMaxValue))+" value "+this.props.putMaxValue);
+    if(e.target.value <= (Number(this.props.putMaxValue)) )
     {
-      this.setState({starComment:this.props.putOptions[newValue-1]});
+      this.setState({volume:e.target.value});
+      this.setState({errorText:''});
     }
-    console.log(newValue)
+    else
+    {
+      this.setState({errorText:'Max '+this.props.putMaxValue});
+      this.setState({volume:0});
+    }
+  }
+updateStar = (value) =>{
+  console.log("got Here"+value)
+}
+
+ratingChanged = (newRating) => {
+  console.log(newRating)
+  starValue = newRating;
+  console.log("starRating"+starValue);
+  
+  
+}
+
+//Date Picker
+
+ input = null;
+  daypicker = null;
+  clickedInside = false;
+  clickTimeout = null;
+
+  handleContainerMouseDown() {
+    this.clickedInside = true;
+    // The input's onBlur method is called from a queue right after onMouseDown event.
+    // setTimeout adds another callback in the queue, but is called later than onBlur event
+    this.clickTimeout = setTimeout(() => {
+      this.clickedInside = false;
+    }, 0);
+  }
+
+  handleInputFocus() {
+    this.setState({
+      showOverlay: true,
+    });
+  }
+
+  handleInputBlur() {
+    const showOverlay = this.clickedInside;
+
+    this.setState({
+      showOverlay,
+    });
+
+    // Force input's focus if blur event was caused by clicking on the calendar
+    if (showOverlay) {
+      this.input.focus();
+    }
+  }
+
+  handleInputChange(e) {
+    const { value } = e.target;
+    const momentDay = moment(value, 'L', true);
+    if (momentDay.isValid()) {
+      this.setState({
+        selectedDay: momentDay.toDate(),
+        value,
+      }, () => {
+        this.daypicker.showMonth(this.state.selectedDay);
+      });
+    } else {
+      this.setState({ value, selectedDay: null });
+    }
   }
 
 
+  handleDayClick(day) {
+    this.setState({
+      value: moment(day).format('L'),
+      selectedDay: day,
+      showOverlay: false,
+    });
+    this.input.blur();
+  }
+  //date RAnge
+  handleRangeClick(day) {
+    const { from, to } = this.state;
 
+    if (DateUtils.isSameDay(day, from)) {
+      this.reset();
+      return;
+    }
+
+    if (isSelectingFirstDay(from, to, day)) {
+      this.setState({
+        from: day,
+        to: null,
+        enteredTo: null,
+      });
+    } else {
+      this.setState({
+        to: day,
+        enteredTo: day,
+      });
+    }
+  }
+
+  handleDayMouseEnter(day) {
+    const { from, to } = this.state;
+
+    if (!isSelectingFirstDay(from, to, day)) {
+      this.setState({
+        enteredTo: day,
+      });
+    }
+  }
+
+  reset() {
+     this.setState({from : null,to : null,enteredTo : null}); // Keep track of the last day for mouseEnter.
+  }
 
  render() {
+     const selectedDay = moment(this.state.value, 'L', true).toDate();
+     const  from = this.state.from;
+     const to = this.state.to;
+     const enteredTo  = this.state.enteredTo;
    var dispQuest =[];
    var yesComments=[];
    if(this.props.putComments){
@@ -174,7 +373,7 @@ valueChanged = (event) =>  {
    var thanks=[];
    var options=[];
    var selOpt=[];
-
+  
 
 
      components.push(
@@ -242,29 +441,73 @@ valueChanged = (event) =>  {
     </Col>);
 
    }
-   else if(this.props.putQuestion && this.props.putType=="StarRatings")
+
+   else if(this.props.putQuestion && this.props.putType=="StarRatings" )
 
   {
-
+    
+      
       components.pop();
 
 
+
       components.push( <Col xs={12} >
-
-
-
+     
      <h3 style={{marginTop:'10%',marginBottom:'5%',marginLeft:'2%',color:'#000000 ',textAlign:'left'}}>{this.props.putQuestion}</h3>
-
-                  <StarRating
-                   size={this.props.putOptions.length}
-                   value={this.state.starRating}
-                   onChange={this.valueChanged.bind(this)}
-
-                   /> <span style={{fontWeight:'bold'}}>{this.state.starComment}</span>
-
                    </Col> ) ;
 
+     
+      if(this.props.putOptions.length)
+      {
+                     
+              val=val+1;
+            console.log("here val"+val);
+              if(val>=2)
+                {
+                  components.pop();
+                  val=0;
+                  
+                  
+      components.push( <Col xs={12} >
+     
+     <h3 style={{marginTop:'10%',marginBottom:'5%',marginLeft:'2%',color:'#000000 ',textAlign:'left'}}>{this.props.putQuestion}</h3>
+                  
+        
+                      <ReactStars
+                          count={this.props.putOptions.length}
+                          onChange={this.ratingChanged}
+                          size={35}
+                          color2={starColor} 
+
+                            />
+                            
+
+                 </Col> );
+      
+
+                }
+                else{
+                  components.push( <Col xs={12} >
+        
+                      <ReactStars
+                          count={this.props.putOptions.length}
+                          onChange={this.ratingChanged}
+                          size={35}
+                          color2={starColor} 
+
+                            />
+                            <span>{starComment}</span>
+
+                 </Col> );
+                  
+                }
+                
+
+      } 
+
   }
+ 
+
    else if (this.props.putQuestion && this.props.putType=="Dropdown") {
 
        components.pop();
@@ -332,6 +575,70 @@ valueChanged = (event) =>  {
 
    }
 
+else if(this.props.putQuestion && this.props.putType=="DatePicker"){
+       components.pop();
+       components.push(<Col xs={12}>
+      <h3 style={{marginTop:0,marginLeft:'2%',marginBottom:0,color:'#000000',textAlign:'left'}}>{this.props.putQuestion}</h3>
+      <section onMouseDown={ this.handleContainerMouseDown } style={{paddingBottom:'70%'}} >
+        <input
+          type="text"
+          ref={ (el) => { this.input = el; } }
+          placeholder="DD/MM/YYYY"
+          value={ this.state.value }
+          onChange={ this.handleInputChange }
+          onFocus={ this.handleInputFocus }
+          onBlur={ this.handleInputBlur }
+
+          
+        />
+        { this.state.showOverlay &&
+          <section style={ { position: 'relative' } }>
+            <section style={ overlayStyle }>
+              <DayPicker
+                ref={ (el) => { this.daypicker = el; } }
+                initialMonth={ this.state.selectedDay || undefined }
+                onDayClick={ this.handleDayClick }
+                selectedDays={ this.state.selectedDay }
+              />
+            </section>
+          </section>
+        }
+      </section>
+    </Col>);
+
+   }
+
+   else if(this.props.putQuestion && this.props.putType=="DateRange"){
+       components.pop();
+       components.push(<Col xs={12}>
+      <h3 style={{marginTop:0,marginLeft:'2%',marginBottom:0,color:'#000000',textAlign:'left'}}>{this.props.putQuestion}</h3>
+      <section >
+        { !from && !to &&
+          <p>Please select the <strong>first day</strong>.</p>
+        }
+        { from && !to &&
+          <p>Please select the <strong>last day</strong>.</p>
+        }
+        { from && to &&
+          <p>
+            You chose from { moment(from).format('L') } to { moment(enteredTo).format('L') }.
+            { ' ' }
+            <a onClick={ this.reset }>Reset</a>
+          </p>
+        }
+        <DayPicker
+          className="Range"
+          numberOfMonths={ 2 }
+          selectedDays={ [from, { from, to: enteredTo }] }
+          disabledDays={ { before: this.state.from } }
+          modifiers={ { start: from, end: enteredTo } }
+          onDayClick={ this.handleRangeClick }
+          onDayMouseEnter={ this.handleDayMouseEnter }
+        />
+      </section>
+    </Col>);
+
+   }
 
 
 
@@ -359,22 +666,41 @@ valueChanged = (event) =>  {
 
    else if(this.props.putQuestion && this.props.putType=="Slider"){
        components.pop();
-       components.push(<div>
+       components.push(<Col xs={12}>
       <h3 style={{marginTop:'3%',marginLeft:'2%',marginBottom:0,color:'#000000',textAlign:'left'}}>{this.props.putQuestion}</h3>
-     <Slider
+     
+      
+      <Slider
           min={0}
           max={this.props.putMaxValue}
           step={this.props.putScaleValue}
-          defaultValue={0}
-          value={this.state.sliderChange}
-          onChange={this.handleSlider}
-          style={{marginLeft:'4%',marginRight:'4%'}}
-        />
+          tooltip={true}
+          value={this.state.volume}
+          orientation="horizontal"
+          onChange={this.handleOnChange}
+            />
 
 
-          <span style={{fontWeight:'bold'}}>{this.state.sliderChange}</span>
-          <span style={{fontWeight:'bold'}}>{'/'}</span> <span style={{fontWeight:'bold'}}>{this.props.putMaxValue}</span>
-    </div>);
+          <span style={{fontWeight:'bold'}}>Your Score : </span>
+          <span style={{fontWeight:'bold'}}> 
+          <TextField
+
+            value={this.state.volume}
+            onChange={this.handleSliderChange.bind(this)}
+            style={{width:"20%"}}
+            inputStyle={{textAlign:'center'}}
+            type = 'number'
+            min={0} max={100}
+            errorText= {this.state.errorText}
+          />
+          </span>
+          <span style={{fontWeight:'bold',marginLeft:'2%'}}>{'/'}</span> 
+          <span style={{fontWeight:'bold',marginLeft:'2%'}}>
+                {this.props.putMaxValue}
+          </span>
+
+               </Col>);
+        
    }
 
   else if(this.props.putThanks && this.props.putType=="Thanks")

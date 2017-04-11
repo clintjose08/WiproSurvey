@@ -28,7 +28,7 @@ marginLeft:30,
 
 
 
-class SingleText extends Component{
+class DatePicker extends Component{
 constructor(props) {
  super(props);
  this.state = {
@@ -39,7 +39,7 @@ constructor(props) {
 }
 
 componentWillMount(){
-    this.props.type("Textbox");
+    
   }
 
 handleQuestion(e) {
@@ -51,6 +51,7 @@ handleQuestion(e) {
 
 
     this.props.getQuestion(e.target.value);
+    this.props.type("DatePicker");
   }
 
 validateSubmit(e)
@@ -66,10 +67,10 @@ updateDb(){
       var sName=localStorage.getItem('sName');
   var shortQuestionScreen={
     sName:localStorage.getItem('sName'),
-    type:'singletext',
+    type:'datePicker',
     questions:
       {
-        questionType:'SingleText',
+        questionType:'datePicker',
         questionQ:this.state.question,
       }
 
@@ -91,7 +92,7 @@ updateDb(){
          <form onSubmit={this.validateSubmit.bind(this)}>
     <Paper style={{height:'100%'}} >
     <Card style={{background:'#E5E4E2 ',height:'100%'}}>
-      <CardHeader title="Short Text" style={cardheadstyle} titleStyle={cardTitleStyle}/>
+      <CardHeader title="Date Picker" style={cardheadstyle} titleStyle={cardTitleStyle}/>
       <CardText style={{marginTop:0}}>
       <div>
       <Subheader style={{fontSize:'125%',color:'#1C6D03 '}}> Question Type </Subheader>
@@ -130,4 +131,4 @@ updateDb(){
        );
    }
 }
-export default SingleText;
+export default DatePicker;
