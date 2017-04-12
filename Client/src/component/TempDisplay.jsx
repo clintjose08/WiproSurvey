@@ -26,7 +26,7 @@ import "react-day-picker/lib/style.css";
  var val=0;
  var starComment='';
  var starValue=0;
- var starColor='#ffd700';
+ 
 
 const welcomeStyle={
 background:'#2F3A30',
@@ -96,8 +96,10 @@ constructor(){
     showYes:false,
     sliderChange: 0,
 
-    starRating: 1,
+    starVal: 0,
     starComment:'',
+    starColor:'#ffd700',
+
     starNum:0,
     volume: 0,
     errorText: '',
@@ -179,8 +181,24 @@ updateStar = (value) =>{
 ratingChanged = (newRating) => {
   console.log(newRating)
   starValue = newRating;
+  this.setState({starVal:newRating})
   console.log("starRating"+starValue);
-  
+  if(((newRating/(this.props.putOptions.length))*100)<=20){
+    this.setState({starColor:'#cb4335',starComment:'Bad' })
+    
+  }
+  else if(((newRating/(this.props.putOptions.length))*100)>20 && ((newRating/(this.props.putOptions.length))*100)<=40 ){
+    this.setState({starColor:'#e67e22',starComment:'Not Bad'})
+  }
+  else if(((newRating/(this.props.putOptions.length))*100)>40 && ((newRating/(this.props.putOptions.length))*100)<=60 ){
+    this.setState({starColor:'#f1c40f',starComment:'Average'})
+  }
+  else if(((newRating/(this.props.putOptions.length))*100)>60 && ((newRating/(this.props.putOptions.length))*100)<=80 ){
+    this.setState({starColor:'#28b463',starComment:'Very Good'}) 
+  }
+  else if(((newRating/(this.props.putOptions.length))*100)>80 && ((newRating/(this.props.putOptions.length))*100)<=100 ){
+    this.setState({starColor:' #229954',starComment:'Excellent'})
+  }
   
 }
 
@@ -472,32 +490,42 @@ ratingChanged = (newRating) => {
      
      <h3 style={{marginTop:'10%',marginBottom:'5%',marginLeft:'2%',color:'#000000 ',textAlign:'left'}}>{this.props.putQuestion}</h3>
                   
-        
+                  <Col xs={8}>
                       <ReactStars
                           count={this.props.putOptions.length}
                           onChange={this.ratingChanged}
+                          value={this.state.starVal}
                           size={35}
-                          color2={starColor} 
+                          color2={this.state.starColor} 
+                          
 
                             />
-                            
-
+                    </Col>  
+                    
+                    <Col xs={4}>      
+                            <span style={{fontWeight:'bold',textAlign:'left',fontSize:'125%'}}>{this.state.starComment}</span>
+                    </Col >
                  </Col> );
       
 
                 }
                 else{
                   components.push( <Col xs={12} >
-        
+                    
+                    <Col xs={8}>
                       <ReactStars
                           count={this.props.putOptions.length}
                           onChange={this.ratingChanged}
+                          value={this.state.starVal}
                           size={35}
-                          color2={starColor} 
+                          color2={this.state.starColor} 
 
                             />
-                            <span>{starComment}</span>
-
+                    </Col>  
+                    <Col xs={4}>       
+                            <span style={{fontWeight:'bold',textAlign:'left',fontSize:'125%'}}>{this.state.starComment}</span>
+                    </Col >
+                    
                  </Col> );
                   
                 }

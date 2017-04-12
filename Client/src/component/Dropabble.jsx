@@ -25,7 +25,7 @@ import 'react-rangeslider/lib/index.css';
 import Dialog from 'material-ui/Dialog';
 import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
-
+var arr;
 const welcomeStyle={
 background:'#649F4E',
 textAlign:'center',
@@ -62,6 +62,7 @@ const iconStyles = {
 const ratingChanged = (newRating) => {
   console.log(newRating)
 }
+
 class Dropabble  extends Component {
   constructor() {
      super();
@@ -71,7 +72,8 @@ class Dropabble  extends Component {
        starRating: 1,
        starComment:'',
        volume: 0,
-       open:false
+       open:false,
+       dataChange:[]
 
     }
   }
@@ -154,19 +156,27 @@ window.location.reload()
   }
 
 
-  handleOnChange = (value) => {
+  handleOnChange (i,value,event){
+   var a=this.state.dataChange;
+   a[i]=value
     this.setState({
-      volume: value
+      volume: value,
+      dataChange:a
+      
     })
     console.log(value);
+    console.log(this.state.dataChange);
   }
 
-  handleSliderChange(value,e) {
+  handleSliderChange(i,value,e) {
       console.log(typeof(value));
+      var a=this.state.dataChange;
+      a[i]=value
+        console.log(this.state.dataChange);
        console.log("Convert"+typeof(Number(value))+" value "+value);
     if(e.target.value <= (Number(value)) )
     {
-      this.setState({volume:e.target.value});
+      this.setState({volume:e.target.value,dataChange:a});
       this.setState({errorText:''});
     }
     else
@@ -311,6 +321,7 @@ else if(obj.questionType==="Dropdown"){
 }
 else if(obj.questionType=="StarRatings" ){
   var options=[];
+  arr=this.state.dataChange;
    options.push(
      // <StarRating
      //  size={obj.options.length}
@@ -322,6 +333,7 @@ else if(obj.questionType=="StarRatings" ){
         count={obj.options.length}
         onChange={ratingChanged}
         size={35}
+        value={4}
         color2={'#ffd700'} />
           );
 
@@ -411,7 +423,7 @@ else if(obj.questionType=="MultiChoice"){
 }
 else if(obj.questionType=="Slider"){
 
-
+arr=this.state.dataChange;
   return(<Card expanded='false'>
     <CardText>
           
@@ -431,15 +443,16 @@ else if(obj.questionType=="Slider"){
   </CardText>
   <CardText>
       
+  
     <Slider
+          
           min={0}
           max={obj.maxValue}
           step={obj.scale}
           tooltip={true}
-          value={this.state.volume}
+          value={arr[i]}
           orientation="horizontal"
-          
-          onChange={this.handleOnChange}
+          onChange={this.handleOnChange.bind(this,i)}
             />
 
 
@@ -447,9 +460,9 @@ else if(obj.questionType=="Slider"){
           <span style={{fontWeight:'bold'}}>Your Score : </span>
           <span style={{fontWeight:'bold'}}> 
           <TextField
-
-            value={this.state.volume}
-            onChange={this.handleSliderChange.bind(this,obj.maxValue)}
+            ref="slider"
+            value={arr[i]}
+            onChange={this.handleSliderChange.bind(this,i,obj.maxValue)}
             style={{width:"20%"}}
             inputStyle={{textAlign:'center'}}
             type = 'number'
