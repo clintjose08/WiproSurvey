@@ -28,7 +28,7 @@ class DisplayDetails extends Component{
   componentWillMount(){
     request
 
-    .get('http://localhost:9080/api/getDetails/')
+    .get('http://localhost:9080/api/getResultDetails/')
 
     .end((err,res) => {
       this.setState({

@@ -59,7 +59,7 @@ const overlayStyle = {
   position: 'absolute',
   background: 'white',
   boxShadow: '0 2px 5px rgba(0, 0, 0, .15)',
-  
+
 };
 
 const initialState = {
@@ -118,7 +118,7 @@ constructor(){
 
 
    componentWillReceiveProps(newProps)  {
-   
+
       this.setState({scoreCheck:newProps.putMaxValue});
       // console.log(newProps.putScale);
    }
@@ -145,11 +145,11 @@ valueChanged = (event) =>  {
   valueChanged = (newValue) =>  {
     this.setState({starRating:newValue});
 
-    
-    
+
+
   }
 
-  
+
 
 
  handleOnChange = (value) => {
@@ -180,8 +180,8 @@ ratingChanged = (newRating) => {
   console.log(newRating)
   starValue = newRating;
   console.log("starRating"+starValue);
-  
-  
+
+
 }
 
 //Date Picker
@@ -373,7 +373,7 @@ ratingChanged = (newRating) => {
    var thanks=[];
    var options=[];
    var selOpt=[];
-  
+
 
 
      components.push(
@@ -445,50 +445,50 @@ ratingChanged = (newRating) => {
    else if(this.props.putQuestion && this.props.putType=="StarRatings" )
 
   {
-    
-      
+
+
       components.pop();
 
 
 
       components.push( <Col xs={12} >
-     
+
      <h3 style={{marginTop:'10%',marginBottom:'5%',marginLeft:'2%',color:'#000000 ',textAlign:'left'}}>{this.props.putQuestion}</h3>
                    </Col> ) ;
 
-     
+
       if(this.props.putOptions.length)
       {
-                     
+
               val=val+1;
             console.log("here val"+val);
               if(val>=2)
                 {
                   components.pop();
                   val=0;
-                  
-                  
+
+
       components.push( <Col xs={12} >
-     
+
      <h3 style={{marginTop:'10%',marginBottom:'5%',marginLeft:'2%',color:'#000000 ',textAlign:'left'}}>{this.props.putQuestion}</h3>
-                  
-        
+
+
                       <ReactStars
                           count={this.props.putOptions.length}
                           onChange={this.ratingChanged}
                           size={35}
-                          color2={starColor} 
+                          color2={starColor}
 
                             />
-                            
+
 
                  </Col> );
-      
+
 
                 }
                 else{
                   components.push( <Col xs={12} >
-        
+
                       <ReactStars
                           count={this.props.putOptions.length}
                           onChange={this.ratingChanged}
@@ -499,14 +499,14 @@ ratingChanged = (newRating) => {
                             <span>{starComment}</span>
 
                  </Col> );
-                  
-                }
-                
 
-      } 
+                }
+
+
+      }
 
   }
- 
+
 
    else if (this.props.putQuestion && this.props.putType=="Dropdown") {
 
@@ -589,7 +589,7 @@ else if(this.props.putQuestion && this.props.putType=="DatePicker"){
           onFocus={ this.handleInputFocus }
           onBlur={ this.handleInputBlur }
 
-          
+
         />
         { this.state.showOverlay &&
           <section style={ { position: 'relative' } }>
@@ -668,8 +668,8 @@ else if(this.props.putQuestion && this.props.putType=="DatePicker"){
        components.pop();
        components.push(<Col xs={12}>
       <h3 style={{marginTop:'3%',marginLeft:'2%',marginBottom:0,color:'#000000',textAlign:'left'}}>{this.props.putQuestion}</h3>
-     
-      
+
+
       <Slider
           min={0}
           max={this.props.putMaxValue}
@@ -682,7 +682,7 @@ else if(this.props.putQuestion && this.props.putType=="DatePicker"){
 
 
           <span style={{fontWeight:'bold'}}>Your Score : </span>
-          <span style={{fontWeight:'bold'}}> 
+          <span style={{fontWeight:'bold'}}>
           <TextField
 
             value={this.state.volume}
@@ -694,13 +694,13 @@ else if(this.props.putQuestion && this.props.putType=="DatePicker"){
             errorText= {this.state.errorText}
           />
           </span>
-          <span style={{fontWeight:'bold',marginLeft:'2%'}}>{'/'}</span> 
+          <span style={{fontWeight:'bold',marginLeft:'2%'}}>{'/'}</span>
           <span style={{fontWeight:'bold',marginLeft:'2%'}}>
                 {this.props.putMaxValue}
           </span>
 
                </Col>);
-        
+
    }
 
   else if(this.props.putThanks && this.props.putType=="Thanks")

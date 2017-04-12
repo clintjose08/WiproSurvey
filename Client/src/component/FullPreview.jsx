@@ -11,11 +11,13 @@ import request from 'superagent';
 import ActionInfo from 'material-ui/svg-icons/navigation/close';
 import Checkbox from 'material-ui/Checkbox';
 import IconButton from 'material-ui/IconButton';
-import Slider from 'material-ui/Slider';
+import Slider from 'react-rangeslider';
+import 'react-rangeslider/lib/index.css';
 import {IndexLink, Link} from 'react-router';
-import StarRating from 'star-rating-react';
+import ReactStars from 'react-stars';
 import DropDownMenu from 'material-ui/DropDownMenu';
 import MenuItem from 'material-ui/MenuItem';
+var starArray=[];
 const welcomeStyle={
 background:'#649F4E',
 textAlign:'center',
@@ -31,7 +33,8 @@ marginLeft:0,
 marginRight:0,
 height:'25%'
 }
-
+var starColor='#ffd700';
+var starChange=0;
 const thanksStyle={
 background:'#649F4E',
 textAlign:'center',
@@ -57,7 +60,7 @@ class Dropabble  extends Component {
     this.state = {
        output:[],
        sliderChange:0,
-       starRating: 1,
+       starRating: .5,
        dropDown:'null',
        singleTextValue:'',
        commentValue:[],
@@ -65,7 +68,8 @@ class Dropabble  extends Component {
        multiChoiceValue:'',
        yesOrNoValue:'',
        sliderValue:'',
-       i:0
+       i:0,
+       starval:0
     }
   }
   componentWillMount() {
@@ -83,13 +87,26 @@ class Dropabble  extends Component {
 
     }
 
+update(quest,i){
+  var a=this.state.commentValue;
+  a[i]={"quest":quest,"answer":starChange};
+  console.log("starChange"+a);
+  this.setState({commentValue:a});
 
-  valueChanged=(quest,i,newValue) =>  {
+}
+  valueChanged=(quest,i,newRating) =>  {
+    starChange=newRating;
+    starColor='#ffd700';
     var a=this.state.commentValue;
-    a[i]={"quest":quest,"answer":newValue};
-    this.setState({starRating:newValue,commentValue:a});
-      console.log("comment value set",this.state.commentValue)
-    console.log(quest,i,newValue)
+    a[i]={"quest":quest,"answer":starChange};
+    console.log("starChange"+a);
+    this.setState({commentValue:a});
+
+    starArray.push({"quest":quest,"answer":newRating,"index":i})
+    newRating=starChange;
+    this.setState({starval:newRating});
+      console.log("comment value set",starArray)
+
   }
   dropValueChanged=(quest,i,e,opt,newValue) =>  {
     var a=this.state.commentValue;
@@ -147,7 +164,16 @@ class Dropabble  extends Component {
     console.log("comment value set",this.state.commentValue)
   }
   saveData = () => {
+if(starArray.length!=0){
+  for(let i=0;i<starArray.length;i++){
+    var a=this.state.commentValue;
+    a[starArray[i].index]={"quest":starArray[i].quest,"answer":starArray[i].answer};
+    console.log("starChange"+a);
+    this.setState({commentValue:a});
+    console.log(starArray[i].index,starArray[i].quest,starArray[i].answer);
+  }
 
+}
     var sName1=this.props.params.sName;
         var options=this.state.commentValue;
         //options.push(this.state.commentValue);
@@ -264,10 +290,12 @@ else if(obj.questionType=="Dropdown"){
 else if(obj.questionType=="StarRatings"){
    var options=[];
     options.push(
-      <StarRating
-       size={obj.options.length}
-       value={this.state.starRating}
+      <ReactStars
+       count={obj.options.length}
        onChange={this.valueChanged.bind(this,obj.questionQ,i)}
+       value={this.state.starval}
+       size={35}
+       color2={starColor}
        />
      );
 
@@ -324,26 +352,48 @@ else if(obj.questionType=="MultiChoice"){
    </Card>);
 }
 else if(obj.questionType=="Slider"){
-
-
+  arr=this.state.dataChange;
    return(<Card expanded='false'>
 
      <CardText>
-   <h3 style={{marginTop:0,marginLeft:'2%',marginBottom:0,color:'#000000',textAlign:'left'}}>{i+1}.{obj.questionQ} </h3>
+   <h3 style={{marginTop:0,marginLeft:'2%',marginBottom:0,color:'#000000 ',textAlign:'left'}}>{i+1}.{obj.questionQ} </h3>
    </CardText>
    <CardText>
-   <Slider
-        min={0}
-        max={obj.maxValue}
-        step={obj.scale}
-        defaultValue={0}
-        value={this.state.sliderChange}
-        onChange={this.handleSlider}
-        style={{marginLeft:'4%',marginRight:'4%'}}
-      />
 
-                <span style={{fontWeight:'bold'}}>{this.state.sliderChange}</span>
-                <span style={{fontWeight:'bold'}}>{'/'}</span> <span style={{fontWeight:'bold'}}>{obj.maxValue}</span>
+
+     <Slider
+
+           min={0}
+           max={obj.maxValue}
+           step={obj.scale}
+           tooltip={true}
+           value={arr[i]}
+           orientation="horizontal"
+           onChange={this.handleOnChange.bind(this,i)}
+             />
+
+
+
+           <span style={{fontWeight:'bold'}}>Your Score : </span>
+           <span style={{fontWeight:'bold'}}>
+           <TextField
+             ref="slider"
+             value={arr[i]}
+             onChange={this.handleSliderChange.bind(this,i,obj.maxValue)}
+             style={{width:"20%"}}
+             inputStyle={{textAlign:'center'}}
+             type = 'number'
+             min={0} max={100}
+             errorText= {this.state.errorText}
+           />
+           </span>
+           <span style={{fontWeight:'bold',marginLeft:'2%'}}>{'/'}</span>
+           <span style={{fontWeight:'bold',marginLeft:'2%'}}>
+                 {obj.maxValue}
+           </span>
+
+
+
 
    </CardText>
    </Card>);
