@@ -18,6 +18,7 @@ import ReactStars from 'react-stars';
 import DropDownMenu from 'material-ui/DropDownMenu';
 import MenuItem from 'material-ui/MenuItem';
 var starArray=[];
+var arr=[];
 const welcomeStyle={
 background:'#649F4E',
 textAlign:'center',
@@ -200,7 +201,7 @@ if(starArray.length!=0){
     console.log("sliderChange",value);
   };
   handleSliderChange=()=>{
-    
+
   }
  render() {
 
