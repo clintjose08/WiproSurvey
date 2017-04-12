@@ -199,6 +199,9 @@ if(starArray.length!=0){
     this.setState({sliderChange:value});
     console.log("sliderChange",value);
   };
+  handleSliderChange=()=>{
+    
+  }
  render() {
 
    var welcomeTitle=[];
