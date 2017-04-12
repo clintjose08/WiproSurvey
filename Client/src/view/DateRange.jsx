@@ -1,36 +1,26 @@
 import React, { Component } from 'react';
-import Welcome from '../component/Welcome';
+import DateRange from '../component/DateRange';
 import TempDisplay from '../component/TempDisplay';
 import { Grid,Row,Col } from 'react-flexbox-grid';
 import Dialog from 'material-ui/Dialog';
-class WelcomeEdit extends Component {
+class SingleTextEdit extends Component {
   constructor(props) {
    super(props);
    this.state = {open: true};
   }
-
-   onChangeWelcome(msg)
+   onChangeQuest(quest)
   {
     this.setState({
-      msg:msg
+      quest:quest
     })
   }
-  onChangeWelDes(desMsg)
-  {
-
-    this.setState({
-      desMsg:desMsg
-    })
-
-  }
-   getType(type)
+  getType(type)
   {
 
     this.setState({
       type:type
     })
   }
-
  render() {
 
    return (<div >
@@ -38,10 +28,10 @@ class WelcomeEdit extends Component {
             <Grid>
               <Row style={{height:'40%'}}>
                 <Col xs={12} sm={4.5}>
-                  <Welcome getWelcome={this.onChangeWelcome.bind(this)} getWelDes={this.onChangeWelDes.bind(this)}  type={this.getType.bind(this)} />
+                  <DateRange getQuestion={this.onChangeQuest.bind(this)}  type={this.getType.bind(this)} />
                 </Col>
                 <Col xs={12} sm={7.5}>
-                  <TempDisplay putWelMsg={this.state.msg} putWelDes={this.state.desMsg} putType={this.state.type}/>
+                  <TempDisplay putQuestion={this.state.quest} putType={this.state.type} />
                 </Col>
               </Row>
             </Grid>
@@ -51,4 +41,4 @@ class WelcomeEdit extends Component {
  }
 }
 
-export default WelcomeEdit;
+export default SingleTextEdit;

@@ -23,7 +23,12 @@ import DraftDisplay from './component/draftDisplay'
 import Timer from './component/timer';
 import TakeSurvey from './view/TakeSurvey';
 import Preview from './component/Preview';
+
+import DatePicker from './view/DatePicker';
+import DateRange from './view/DateRange';
+
 import FullPreview from './component/FullPreview';
+
 import UploadCSV from './component/uploadCSV';
 
 injectTapEventPlugin();
@@ -48,6 +53,8 @@ ReactDOM.render(
        <Route path='Qgroup/:sName' component={QgroupEdit}/>
        <Route path='YesOrNo/:sName' component={YesOrNoEdit}/>
        <Route path='CheckBox/:sName' component={CheckBoxEdit}/>
+       <Route path='DatePicker/:sName' component={DatePicker}/>
+       <Route path='DateRange/:sName' component={DateRange}/>
        <Route path='Thankyou/:sName' component={ThankyouEdit}/>
        <Route path="Timer" component={Timer}/>
        <Route path="DraftDisplay" component={DraftDisplay}/>

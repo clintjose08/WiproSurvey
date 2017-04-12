@@ -22,7 +22,7 @@ class GraphDisplay extends Component
   componentWillMount()
   {
 
-      Request.get('http://10.201.174.234:9080/api/getResult/'+this.props.name).end((err,res)=>{
+      Request.get('http://localhost:9080/api/getResult/'+this.props.name).end((err,res)=>{
 
         console.log(res.body[0]);
         this.setState({

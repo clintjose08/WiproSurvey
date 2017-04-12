@@ -28,55 +28,55 @@ marginLeft:30,
 
 
 
-class SingleText extends Component{
+class DatePicker extends Component{
 constructor(props) {
  super(props);
  this.state = {
    quest:' ',
      value: 1,
-     question:"",
-     disable:true
+     question:""
  };
 }
 
 componentWillMount(){
-    this.props.type("Textbox");
+    
   }
 
 handleQuestion(e) {
-  if(e.target.value.length>5)
-  {
-    this.setState({
-      disable:false
-    })
-  }
-  else {
-    this.setState({
-      disable:true
-    })
-  }
+
   this.setState({
     question:e.target.value
   })
+
+
+
     this.props.getQuestion(e.target.value);
+    this.props.type("DatePicker");
   }
 
+validateSubmit(e)
+{
+
+    this.setState({
+    quest:e.target.value
+  })
+    this.props.getQuestion(e.target.value);
+    console.log("Sucess");
+  }
 updateDb(){
       var sName=localStorage.getItem('sName');
   var shortQuestionScreen={
     sName:localStorage.getItem('sName'),
-    type:'singletext',
+    type:'datePicker',
     questions:
       {
-        questionType:'SingleText',
+        questionType:'datePicker',
         questionQ:this.state.question,
       }
 
   }
 
-
   request.post('http://localhost:9080/api/updateSurvey/'+sName)
-
 
           .set('Content-Type', 'application/json')
           .send(shortQuestionScreen)
@@ -89,11 +89,10 @@ updateDb(){
    render(){
     var url="Home/AddQuestion/"+localStorage.getItem("sName");
        return(
-
+         <form onSubmit={this.validateSubmit.bind(this)}>
     <Paper style={{height:'100%'}} >
-
     <Card style={{background:'#E5E4E2 ',height:'100%'}}>
-      <CardHeader title="Short Text" style={cardheadstyle} titleStyle={cardTitleStyle}/>
+      <CardHeader title="Date Picker" style={cardheadstyle} titleStyle={cardTitleStyle}/>
       <CardText style={{marginTop:0}}>
       <div>
       <Subheader style={{fontSize:'125%',color:'#1C6D03 '}}> Question Type </Subheader>
@@ -104,13 +103,16 @@ updateDb(){
         <CardActions style={{marginTop:'0px',marginLeft:'1%'}}>
          <Subheader style={{fontSize:'125%',color:'#1C6D03 ',marginTop:'3%'}}>Question</Subheader>
         <TextField
-          type="text"
           hintText="Enter your Question here."
           hintStyle={{fontWeight:'bold'}}
           underlineStyle={{borderColor:'#37861E '}}
           fullWidth={true}
           onChange={this.handleQuestion.bind(this)}
-          />
+
+          required
+
+        />
+
        </CardActions>
        <Divider style={{background:'#000000 '}}/>
       <CardActions style={{marginTop:'0px',marginLeft:'1%'}}>
@@ -118,14 +120,15 @@ updateDb(){
         <RaisedButton label="Cancel" labelStyle={{fontWeight:'bold'}} />
         </Link>
        <Link to={url} activeClassName="active">
-        <RaisedButton label="Submit" backgroundColor='#1C6D03 ' disabled={this.state.disable} onClick={this.updateDb.bind(this)} labelStyle={{color:'#FFFFFF ',fontWeight:'bold'}} />
+        <RaisedButton label="Submit" backgroundColor='#1C6D03 ' onClick={this.updateDb.bind(this)} labelStyle={{color:'#FFFFFF ',fontWeight:'bold'}} />
        </Link>
       </CardActions>
+
+
     </Card>
-
     </Paper>
-
+    </form>
        );
    }
 }
-export default SingleText;
+export default DatePicker;

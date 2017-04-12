@@ -27,7 +27,9 @@ class DisplayDetails extends Component{
 
   componentWillMount(){
     request
-    .get('http://10.201.174.234:9080/api/getResultDetails/')
+
+    .get('http://localhost:9080/api/getDetails/')
+
     .end((err,res) => {
       this.setState({
         output:res.body

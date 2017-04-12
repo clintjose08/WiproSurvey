@@ -38,7 +38,7 @@ componentWillMount(){
   }
 
 handleQuestion(e) {
-    if(e.target.value.length>=5&&(this.state.maximum>0&&this.state.maximum<=10)&&(this.state.scale>0&&this.state.scale<this.state.maximum))
+    if(e.target.value.length>=5&&(Number(this.state.maximum >= 5))&&(this.state.scale>0&&this.state.scale<this.state.maximum))
     {
       this.setState({
         disable:false
@@ -59,7 +59,7 @@ handleQuestion(e) {
 
 handleMaxValue(e) {
 
-  if(this.state.quest.length>=5&&(e.target.value>0&&e.target.value<=10)&&(this.state.scale>0&&this.state.scale<e.target.value))
+  if(this.state.quest.length>=5&&(e.target.value >= 5 )&&(this.state.scale>0&&this.state.scale<e.target.value))
   {
     this.setState({
       disable:false
@@ -77,7 +77,7 @@ handleMaxValue(e) {
     console.log("Sucess");
   }
 handleScale(e) {
-  if(this.state.quest.length>=5&&(this.state.maximum>0&&this.state.maximum<=10)&&(e.target.value>0&&e.target.value<this.state.maximum))
+  if((this.state.quest.length>=5)&&(Number(this.state.maximum) >= 5)&&(e.target.value>0&&e.target.value<this.state.maximum))
   {
     this.setState({
       disable:false
@@ -108,7 +108,10 @@ handleScale(e) {
         }
 
     }
-    request.post('http://10.201.174.234:9080/api/updateSurvey/'+sName)
+
+
+    request.post('http://localhost:9080/api/updateSurvey/'+sName)
+
             .set('Content-Type', 'application/json')
             .send(questionScreen)
              .end((err,res)=>

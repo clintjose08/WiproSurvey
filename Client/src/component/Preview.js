@@ -55,7 +55,10 @@ class TakeSurvey extends React.Component {
 
    var sName=this.props.params.sName;
 
-    request.get('http://10.201.174.234:9080/api/getSurvey/'+sName).end((err,res)=>{
+
+
+    request.get('http://localhost:9080/api/getSurvey/'+sName).end((err,res)=>{
+
 
       this.setState({
         allData:res.body
@@ -85,10 +88,10 @@ var sName=this.props.params.sName;
     var options=this.state.commentValue;
     //options.push(this.state.commentValue);
 
-    var data1={};
-      data1={surveyName:sName,options:this.state.commentValue}
-    //  console.log("posted",data1);
-        request.post('http://10.201.174.234:9080/api/answerSurvey/'+sName)
+var data1={};
+    var data1={surveyName:sName,options:this.state.commentValue}
+        request.put('http://localhost:9080/api/answerSurvey/'+sName)
+
                 .set('Content-Type', 'application/json')
                 .send(data1)
                  .end(function(err,res)

@@ -38,7 +38,10 @@ class SurveyDetails extends Component{
     var nameData={
       surveyname:this.state.name
     }
-    request.post('http://10.201.174.234:9080/api/createSurvey')
+
+
+    request.post('http://localhost:9080/api/createSurvey')
+
             .set('Content-Type', 'application/json')
             .send(nameData)
              .end((err,res)=>

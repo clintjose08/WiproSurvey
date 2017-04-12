@@ -34,7 +34,7 @@ class CheckBox extends Component {
 handleChange = (event, index, value) => this.setState({value});
  addOptions(e)
  {
-   if(this.state.quest.length<5||this.state.optionArr.length<2)
+   if(this.state.quest.length<5||this.state.optionArr.length<1)
    {
      this.setState({
        disable:true
@@ -53,7 +53,7 @@ handleChange = (event, index, value) => this.setState({value});
  }
  removeOptions=(index)=>
  {
-   if(this.state.quest.length<5||this.state.optionArr.length<2)
+   if(this.state.quest.length<5||this.state.optionArr.length<1)
    {
      this.setState({
        disable:true
@@ -115,7 +115,7 @@ updateDb(){
       }
 
   }
-  request.post('http://10.201.174.234:9080/api/updateSurvey/'+sName)
+  request.post('http://localhost:9080/api/updateSurvey/'+sName)
           .set('Content-Type', 'application/json')
           .send(questionScreen)
            .end((err,res)=>
