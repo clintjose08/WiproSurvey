@@ -46,6 +46,7 @@ class TakeSurvey extends React.Component {
     commentValue:[],
     checkboxValue:[],
     disable:true,
+    startDisable:true,
     dropDown:'',
     selectedValue:'',
     checkboxValue:[],
@@ -53,8 +54,8 @@ class TakeSurvey extends React.Component {
     id:'',
     role:"",
     selectedValues:[],
-    checkboxdisable:[false,false,false,false,false]
-
+    checkboxdisable:[false,false,false,false,false],
+    checkedValue:[false,false,false,false,false]
   };
   componentWillMount()
   {
@@ -243,45 +244,45 @@ Welcome=()=>{
       a.pop();
       a.push(qstn);
       a.push(newValue);
-      this.setState({commentValue:a,disable:false});
+      this.setState({commentValue:a,startDisable:false});
     }
     nameDetails(e){
       console.log(e.target.value);
-      this.setState({name:e.target.value,disable:true});
+      this.setState({name:e.target.value,startDisable:true});
 
       if(this.state.name != ''   && this.state.id != '' && this.state.role != '' )
       {
-        this.setState({disable:false})
+        this.setState({startDisable:false})
       }
     }
     idDetails(e){
       console.log(e.target.value);
-      this.setState({id:e.target.value,disable:true});
+      this.setState({id:e.target.value,startDisable:true});
 
     if(this.state.name != ''   && this.state.id != '' && this.state.role != '' )
       {
-        this.setState({disable:false})
+        this.setState({startDisable:false})
       }
     }
 
     roleDetails(e){
       console.log(e.target.value);
-      this.setState({role:e.target.value,disable:true});
+      this.setState({role:e.target.value,startDisable:true});
 
        if(this.state.name != ''   && this.state.id != '' && this.state.role != '' )
       {
-        this.setState({disable:false})
+        this.setState({startDisable:false})
       }
     }
 
 
     checkboxValueChange=(e,i,quest,a,value) =>  {
       this.setState({commentValue:[]});
-      console.log("i ano"+i+"a ano"+a+e+quest+value);
       var c=this.state.selectedValues;
       var a=this.state.checkboxValue;
       var b=this.state.commentValue;
       var d=this.state.checkboxdisable;
+      var check=this.state.checkedValue;
       console.log("index value set", e,i,a,value)
       console.log("question : ",quest);
       if(value){
@@ -289,55 +290,53 @@ Welcome=()=>{
       if(e==0||e==1||e==2){
         d[3]=true;
         d[4]=true;
-        this.setState({checkboxdisable:d});
+        check[e]=true;
+        this.setState({checkboxdisable:d,checkedValue:check});
       }
       if(e==3){
+        check[3]=true;
         d[0]=true;
         d[1]=true;
         d[2]=true;
         d[4]=true;
-        this.setState({checkboxdisable:d});
+        this.setState({checkboxdisable:d,checkedValue:check});
       }
       if(e==4){
+        check[4]=true;
         d[0]=true;
         d[1]=true;
         d[2]=true;
         d[3]=true;
-        this.setState({checkboxdisable:d});
+        this.setState({checkboxdisable:d,checkedValue:check});
       }
       a.push(i)
       this.setState({checkboxValue:a,selectedValues:c,disable:false});
       console.log("checkbox value set", this.state.selectedValues)}
       else
       {
-        if(e==0){
+        if(e==0||e==1||e==2){
+          check[e]=false;
+        if(this.state.checkedValue[0]!=true && this.state.checkedValue[1]!=true && this.state.checkedValue[2]!=true){
           d[3]=false;
-          d[4]=false;
-          this.setState({checkboxdisable:d});
-        }
-        else if(e==1){
-          d[3]=false;
-          d[4]=false;
-          this.setState({checkboxdisable:d});
-        }
-        else if(e==2){
-          d[3]=false;
-          d[4]=false;
-          this.setState({checkboxdisable:d});
+          d[4]=false;}
+
+          this.setState({checkboxdisable:d,checkedValue:check});
         }
         else if(e==3){
           d[0]=false;
           d[1]=false;
           d[2]=false;
           d[4]=false;
-          this.setState({checkboxdisable:d});
+          check[e]=false;
+          this.setState({checkboxdisable:d,checkedValue:check});
         }
         else if(e==4){
           d[0]=false;
           d[1]=false;
           d[2]=false;
           d[3]=false;
-          this.setState({checkboxdisable:d});
+          check[e]=false;
+          this.setState({checkboxdisable:d,checkedValue:check});
         }
         var x= a.indexOf(i)
         a.splice(x,1);
@@ -435,7 +434,7 @@ Welcome=()=>{
               <RaisedButton
                 label={'Start'}
                 primary={true}
-                disabled={this.state.disable}
+                disabled={this.state.startDisable}
                 onTouchTap={this.Welcome}
 
               />
@@ -524,7 +523,7 @@ Welcome=()=>{
          var options=[];
           obj.options.map((option,i)=>{
           options.push(<div>
-             <Checkbox label={option} disabled={this.state.checkboxdisable[i]} onCheck={this.checkboxValueChange.bind(this,i,option,obj.questionQ)} labelStyle={{textAlign:'left',color:'#000000',marginLeft:'2%',marginBottom:'1%'}}/>
+             <Checkbox label={option} checked={this.state.checkedValue[i]} disabled={this.state.checkboxdisable[i]} onCheck={this.checkboxValueChange.bind(this,i,option,obj.questionQ)} labelStyle={{textAlign:'left',color:'#000000',marginLeft:'2%',marginBottom:'1%'}}/>
 
              </div>);
            });
