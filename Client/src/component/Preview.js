@@ -502,6 +502,8 @@ Welcome=()=>{
           hintText="Your Option Here"
           hintStyle={{fontWeight:'bold'}}
           underlineStyle={{borderColor:'#37861E '}}
+          style={{width:'90%'}}
+          multiLine={true}
           onChange={this.commentsValueChanged.bind(this,obj.questionQ)}
           />
 
@@ -624,6 +626,7 @@ return(<Col xs={12}>
 hintText="Your Answer Here"
 hintStyle={{fontWeight:'bold'}}
 underlineStyle={{borderColor:'#37861E '}}
+style={{width:'80%'}}
 onChange={this.singleTextValueChanged.bind(this,obj.questionQ)}
 />
 </form>
