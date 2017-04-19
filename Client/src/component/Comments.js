@@ -70,7 +70,7 @@ handleQuestion(e) {
         }
 
     }
-    request.post('http://localhost:9080/api/updateSurvey/'+sName)
+    request.post('http://10.201.174.205:9080/api/updateSurvey/'+sName)
             .set('Content-Type', 'application/json')
             .send(questionScreen)
              .end((err,res)=>

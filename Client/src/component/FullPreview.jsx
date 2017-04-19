@@ -76,7 +76,7 @@ class Dropabble  extends Component {
 
     var sName=this.props.params.sName;
       request
-      .get('http://localhost:9080/api/getSurvey/'+sName)
+      .get('http://10.201.174.205:9080/api/getSurvey/'+sName)
       .end((err,res) => {
         this.setState({
           output:res.body
@@ -180,7 +180,7 @@ if(starArray.length!=0){
 
         var data1={};
           data1={surveyName:sName1,options:this.state.commentValue}
-          request.post('http://localhost:9080/api/fullAnswers/'+sName1)
+          request.post('http://10.201.174.205:9080/api/fullAnswers/'+sName1)
                   .set('Content-Type', 'application/json')
                   .send(options)
                    .end(function(err,res)

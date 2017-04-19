@@ -70,7 +70,7 @@ class TakeSurvey extends React.Component {
   //
   //
   //
-  //   request.get('http://localhost:9080/api/getSurvey/'+sName).end((err,res)=>{
+  //   request.get('http://10.201.174.205:9080/api/getSurvey/'+sName).end((err,res)=>{
   //
   //
   //     this.setState({
@@ -103,7 +103,7 @@ var sName=this.props.params.sName;
 
 var data1={};
     var data1={surveyName:sName,options:this.state.commentValue}
-        request.put('http://localhost:9080/api/answerSurvey/'+sName)
+        request.put('http://10.201.174.205:9080/api/answerSurvey/'+sName)
 
                 .set('Content-Type', 'application/json')
                 .send(data1)
@@ -153,7 +153,7 @@ Welcome=()=>{
 
     var sName=this.props.params.sName;
       request
-      .get('http://localhost:9080/api/getSurvey/'+sName)
+      .get('http://10.201.174.205:9080/api/getSurvey/'+sName)
       .end((err,res) => {
         this.setState({
           output:res.body
@@ -257,7 +257,7 @@ Welcome=()=>{
 
         var data1={};
           data1={surveyName:sName1,options:this.state.commentValue}
-          request.post('http://localhost:9080/api/fullAnswers/'+sName1)
+          request.post('http://10.201.174.205:9080/api/fullAnswers/'+sName1)
                   .set('Content-Type', 'application/json')
                   .send(options)
                    .end(function(err,res)

@@ -63,7 +63,7 @@ class TakeSurvey extends React.Component {
 
 
 
-    request.get('http://localhost:9080/api/getSurvey/'+sName).end((err,res)=>{
+    request.get('http://10.201.174.205:9080/api/getSurvey/'+sName).end((err,res)=>{
 
 
       this.setState({
@@ -97,7 +97,7 @@ name=this.state.name;
 
 var data1={};
     var data1={surveyName:sName,name:name,options:this.state.commentValue}
-        request.put('http://localhost:9080/api/answerSurvey/'+sName)
+        request.put('http://10.201.174.205:9080/api/answerSurvey/'+sName)
 
                 .set('Content-Type', 'application/json')
                 .send(data1)
@@ -154,7 +154,7 @@ Welcome=()=>{
   var sName=this.props.params.sName;
   var dataDetails={};
       dataDetails={surveyName:sName,name:this.state.name,id:this.state.id,role:this.state.role}
-          request.put('http://localhost:9080/api/userDetails/'+sName)
+          request.put('http://10.201.174.205:9080/api/userDetails/'+sName)
 
                   .set('Content-Type', 'application/json')
                   .send(dataDetails)
@@ -380,7 +380,7 @@ Welcome=()=>{
               <Col xs={6}>
                 <Row>
                 <Col xs={12}>
-                <section style={{marginLeft:'2%',background:'#28B463',borderStyle:'solid',borderRadius:25,borderWidth:2,borderColor:'#F8F9F9'}}>
+                <section style={{marginLeft:'2%',marginTop:'2%',background:'#28B463',borderStyle:'solid',borderRadius:25,borderWidth:2,borderColor:'#F8F9F9'}}>
                   <h2 style={{color:'#F8F9F9',fontSize:'150%',paddingTop:"2%",paddingBottom:'2%',fontFamily: 'Fenix'}}>Tell Us What You Think....</h2>
                 </section>
                 </Col>
@@ -396,9 +396,13 @@ Welcome=()=>{
                   <img src={background} style={{width:'auto',height:'20%'}} />
                 </Col>
                 </Row>
-                <Col xsOffset={6} xs={6}>
+                <Col xsOffset={4} xs={8}>
                 <Row>
-                <h3>Your Name : </h3>  <TextField
+                <Col xs={4}>
+                <h3>Your Name : </h3>
+                </Col>
+                <Col xs={8}>
+                <TextField
                   hintText="Your Name Here"
                   hintStyle={{fontWeight:'bold'}}
                   underlineStyle={{borderColor:'#37861E '}}
@@ -406,9 +410,14 @@ Welcome=()=>{
                   type="text"
                   required
                   />
+                  </Col>
                   </Row>
                   <Row>
-                <h3>Emp ID : </h3>  <TextField
+                  <Col xs={4}>
+                <h3>Emp ID : </h3>
+                  </Col>
+                <Col xs={8}>
+                 <TextField
                   hintText="Your Emp ID Here"
                   hintStyle={{fontWeight:'bold'}}
                   underlineStyle={{borderColor:'#37861E '}}
@@ -416,9 +425,14 @@ Welcome=()=>{
                     type="text"
                     required
                   />
+                  </Col>
                   </Row>
                   <Row>
-                <h3>Your Current role : </h3>  <TextField
+                  <Col xs={4}>
+                <h3>Your Current role : </h3>
+                </Col>
+              <Col xs={8}>
+                 <TextField
                   hintText="Your Role Here"
                   hintStyle={{fontWeight:'bold'}}
                   underlineStyle={{borderColor:'#37861E '}}
@@ -426,6 +440,7 @@ Welcome=()=>{
                   type="text"
                   required
                   />
+                  </Col>
                 </Row>
                 </Col>
               </Paper>
@@ -502,7 +517,9 @@ Welcome=()=>{
           <TextField
           hintText="Your Option Here"
           hintStyle={{fontWeight:'bold'}}
-          underlineStyle={{borderColor:'#37861E '}}
+          underlineStyle={{borderColor:'#37861E ',marginLeft:'2%',marginRight:'2%'}}
+          fullWidth={true}
+
           onChange={this.commentsValueChanged.bind(this,obj.questionQ)}
           />
 
@@ -623,8 +640,10 @@ return(<Col xs={12}>
 
 <TextField
 hintText="Your Answer Here"
-hintStyle={{fontWeight:'bold'}}
-underlineStyle={{borderColor:'#37861E '}}
+hintStyle={{fontWeight:'bold'  }}
+inputStyle={{marginRight:'10%'}}
+underlineStyle={{borderColor:'#37861E ', marginLeft:'2%',marginRight:'10%'}}
+fullWidth={true}
 onChange={this.singleTextValueChanged.bind(this,obj.questionQ)}
 />
 </form>

@@ -82,7 +82,7 @@ class Dropabble  extends Component {
 
     var sName=localStorage.getItem('sName');
       request
-      .get('http://localhost:9080/api/getSurvey/'+sName)
+      .get('http://10.201.174.205:9080/api/getSurvey/'+sName)
       .end((err,res) => {
         this.setState({
           output:res.body
@@ -96,7 +96,7 @@ handleChange(i)
 {
   var sName=localStorage.getItem('sName');
     request
-    .put('http://localhost:9080/api/deleteQuest/'+sName+'/'+i)
+    .put('http://10.201.174.205:9080/api/deleteQuest/'+sName+'/'+i)
     .end((err,res) => {
 
     console.log("next");
@@ -134,7 +134,7 @@ window.location.reload()
               }
         })
 
-     request.post('http://localhost:9080/api/addResult')
+     request.post('http://10.201.174.205:9080/api/addResult')
             .set('Content-Type', 'application/json')
             .send(data)
              .then((err,res)=>
