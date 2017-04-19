@@ -23,7 +23,7 @@ const SurveySchema = new Schema({
   thanksMessage:{type:String},
   createrName:{type:String},
   createrContact:{type:Number},
-  creterEmail:{type:String},
+  createrEmail:{type:String},
   questions:[questSchema]
 });
 module.exports = mongoose.model('Survey',SurveySchema);

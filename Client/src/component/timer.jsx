@@ -41,7 +41,7 @@ const onChange = (dateString, { dateMoment, timestamp }) => {
 
  }
  var time={endTime:convertDate,publishtime:new Date(),status:'Running'}
- Request.put('http://10.201.174.234:9080/api/updateDate/'+localStorage.getItem('sName'))
+ Request.put('http://localhost:9080/api/updateDate/'+localStorage.getItem('sName'))
          .set('Content-Type', 'application/json')
          .send(time)
           .then((err,res)=>

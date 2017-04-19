@@ -48,7 +48,13 @@ class TakeSurvey extends React.Component {
     disable:true,
     dropDown:'',
     selectedValue:'',
-    checkboxValue:[]
+    checkboxValue:[],
+    name:'',
+    id:'',
+    role:"",
+    selectedValues:[],
+    checkboxdisable:[false,false,false,false,false]
+
   };
   componentWillMount()
   {
@@ -85,11 +91,12 @@ class TakeSurvey extends React.Component {
    }
   handleNext = () => {
 var sName=this.props.params.sName;
+name=this.state.name;
     var options=this.state.commentValue;
     //options.push(this.state.commentValue);
 
 var data1={};
-    var data1={surveyName:sName,options:this.state.commentValue}
+    var data1={surveyName:sName,name:name,options:this.state.commentValue}
         request.put('http://localhost:9080/api/answerSurvey/'+sName)
 
                 .set('Content-Type', 'application/json')
@@ -107,11 +114,30 @@ var data1={};
                  this.setState({
                    disable:true
                  })
-                 const {stepIndex} = this.state;
+                  const {stepIndex} = this.state;
+                  var sindex=1;
+                 this.state.selectedValues.map((value)=>{
+
+                   if(value==0||value==1||value==2){
+                     sindex=1;
+                     if(stepIndex==4){
+                       sindex=2;
+                     }
+                   }
+                   else if(value==3){
+                     sindex=5;
+                   }
+                   else if(value==4){
+                     sindex=4;
+                   }
+
+
+                 });
+
                  if (!this.state.loading) {
                    this.dummyAsync(() => this.setState({
                      loading: false,
-                     stepIndex: stepIndex + 1
+                     stepIndex: stepIndex + sindex
                    }));
                  }
   };
@@ -124,6 +150,24 @@ Welcome=()=>{
       stepIndex: stepIndex + 1,
     }));
   }
+
+  var sName=this.props.params.sName;
+  var dataDetails={};
+      dataDetails={surveyName:sName,name:this.state.name,id:this.state.id,role:this.state.role}
+          request.put('http://localhost:9080/api/userDetails/'+sName)
+
+                  .set('Content-Type', 'application/json')
+                  .send(dataDetails)
+                   .end(function(err,res)
+                   {
+                     if(err){
+                       console.log("err",err);
+                     }
+                     if(res){
+                       console.log("posted",res);
+                     }
+
+                   });
 }
 
   handlePrev = () => {
@@ -201,19 +245,100 @@ Welcome=()=>{
       a.push(newValue);
       this.setState({commentValue:a,disable:false});
     }
+    nameDetails(e){
+      console.log(e.target.value);
+      this.setState({name:e.target.value,disable:true});
+
+      if(this.state.name != ''   && this.state.id != '' && this.state.role != '' )
+      {
+        this.setState({disable:false})
+      }
+    }
+    idDetails(e){
+      console.log(e.target.value);
+      this.setState({id:e.target.value,disable:true});
+
+    if(this.state.name != ''   && this.state.id != '' && this.state.role != '' )
+      {
+        this.setState({disable:false})
+      }
+    }
+
+    roleDetails(e){
+      console.log(e.target.value);
+      this.setState({role:e.target.value,disable:true});
+
+       if(this.state.name != ''   && this.state.id != '' && this.state.role != '' )
+      {
+        this.setState({disable:false})
+      }
+    }
+
 
     checkboxValueChange=(e,i,quest,a,value) =>  {
       this.setState({commentValue:[]});
+      console.log("i ano"+i+"a ano"+a+e+quest+value);
+      var c=this.state.selectedValues;
       var a=this.state.checkboxValue;
       var b=this.state.commentValue;
+      var d=this.state.checkboxdisable;
       console.log("index value set", e,i,a,value)
       console.log("question : ",quest);
       if(value){
+      c.push(e)
+      if(e==0||e==1||e==2){
+        d[3]=true;
+        d[4]=true;
+        this.setState({checkboxdisable:d});
+      }
+      if(e==3){
+        d[0]=true;
+        d[1]=true;
+        d[2]=true;
+        d[4]=true;
+        this.setState({checkboxdisable:d});
+      }
+      if(e==4){
+        d[0]=true;
+        d[1]=true;
+        d[2]=true;
+        d[3]=true;
+        this.setState({checkboxdisable:d});
+      }
       a.push(i)
-      this.setState({checkboxValue:a,disable:false});
-      console.log("checkbox value set", a)}
+      this.setState({checkboxValue:a,selectedValues:c,disable:false});
+      console.log("checkbox value set", this.state.selectedValues)}
       else
       {
+        if(e==0){
+          d[3]=false;
+          d[4]=false;
+          this.setState({checkboxdisable:d});
+        }
+        else if(e==1){
+          d[3]=false;
+          d[4]=false;
+          this.setState({checkboxdisable:d});
+        }
+        else if(e==2){
+          d[3]=false;
+          d[4]=false;
+          this.setState({checkboxdisable:d});
+        }
+        else if(e==3){
+          d[0]=false;
+          d[1]=false;
+          d[2]=false;
+          d[4]=false;
+          this.setState({checkboxdisable:d});
+        }
+        else if(e==4){
+          d[0]=false;
+          d[1]=false;
+          d[2]=false;
+          d[3]=false;
+          this.setState({checkboxdisable:d});
+        }
         var x= a.indexOf(i)
         a.splice(x,1);
       this.setState({checkboxValue:a,disable:false});
@@ -271,7 +396,38 @@ Welcome=()=>{
                   <img src={background} style={{width:'auto',height:'20%'}} />
                 </Col>
                 </Row>
-
+                <Col xsOffset={6} xs={6}>
+                <Row>
+                <h3>Your Name : </h3>  <TextField
+                  hintText="Your Name Here"
+                  hintStyle={{fontWeight:'bold'}}
+                  underlineStyle={{borderColor:'#37861E '}}
+                  onChange={this.nameDetails.bind(this)}
+                  type="text"
+                  required
+                  />
+                  </Row>
+                  <Row>
+                <h3>Emp ID : </h3>  <TextField
+                  hintText="Your Emp ID Here"
+                  hintStyle={{fontWeight:'bold'}}
+                  underlineStyle={{borderColor:'#37861E '}}
+                    onChange={this.idDetails.bind(this)}
+                    type="text"
+                    required
+                  />
+                  </Row>
+                  <Row>
+                <h3>Your Current role : </h3>  <TextField
+                  hintText="Your Role Here"
+                  hintStyle={{fontWeight:'bold'}}
+                  underlineStyle={{borderColor:'#37861E '}}
+                  onChange={this.roleDetails.bind(this)}
+                  type="text"
+                  required
+                  />
+                </Row>
+                </Col>
               </Paper>
             </Row>
 
@@ -279,6 +435,7 @@ Welcome=()=>{
               <RaisedButton
                 label={'Start'}
                 primary={true}
+                disabled={this.state.disable}
                 onTouchTap={this.Welcome}
 
               />
@@ -318,13 +475,6 @@ Welcome=()=>{
                                                                                                                    backgroundColor={'#566573'}
                                                                                                                    style={{marginTop:'2%'}} />{this.state.allData.creterEmail}</p>
                   </Col>
-                  <RaisedButton
-                        label={'Finish'}
-                        primary={true}
-                        onClick={$(window).bind("beforeunload", function() {
-   return true || confirm("Do you really want to close?");
-})}
-                      />
 
                 </Row>
 
@@ -358,12 +508,7 @@ Welcome=()=>{
 
           </form>
           <section style={{marginTop: 24, marginBottom: 12}}>
-           <FlatButton
-                label="Back"
-                disabled={stepIndex === 0}
-                onTouchTap={this.handlePrev}
-                style={{marginRight: 12}}
-              />
+
 
           <RaisedButton
                 label={'Next'}
@@ -379,23 +524,19 @@ Welcome=()=>{
          var options=[];
           obj.options.map((option,i)=>{
           options.push(<div>
-             <Checkbox label={option} onCheck={this.checkboxValueChange.bind(this,i,option,obj.questionQ)} iconStyle={{marginLeft:'35%'}} labelStyle={{marginRight:'50%',color:'#000000',marginLeft:'2%'}}/>
+             <Checkbox label={option} disabled={this.state.checkboxdisable[i]} onCheck={this.checkboxValueChange.bind(this,i,option,obj.questionQ)} labelStyle={{textAlign:'left',color:'#000000',marginLeft:'2%',marginBottom:'1%'}}/>
+
              </div>);
            });
          return(<Col xs={12}>
 
           <form
      style={{marginTop:'5%',marginBottom:'2%',borderStyle:'solid',borderRadius:25,borderWidth:2,borderColor:'#212F3D', background:'#F4F6F6'}}>
-         <h3 style={{marginTop:0,marginLeft:'2%',marginBottom:0,color:'#000000',textAlign:'left'}}>{i+1}.{obj.questionQ} </h3>
+         <h3 style={{marginTop:'2%',marginLeft:'2%',marginBottom:'2%',color:'#000000',textAlign:'left'}}>{i+1}.{obj.questionQ} </h3>
          {options}
          </form>
           <section style={{marginTop: 24, marginBottom: 12}}>
-         <FlatButton
-                label="Back"
-                disabled={stepIndex === 0}
-                onTouchTap={this.handlePrev}
-                style={{marginRight: 12}}
-              />
+
 
          <RaisedButton
                 label={'Next'}
@@ -427,12 +568,7 @@ return(<Col xs={12}>
 </SelectField>
 </form>
  <section style={{marginTop: 24, marginBottom: 12}}>
-<FlatButton
-                label="Back"
-                disabled={stepIndex === 0}
-                onTouchTap={this.handlePrev}
-                style={{marginRight: 12}}
-              />
+
 
 <RaisedButton
                 label={'Next'}
@@ -464,12 +600,7 @@ return(<Col xs={12}>
 {options}
 </form>
   <section style={{marginTop: 24, marginBottom: 12}}>
-<FlatButton
-                label="Back"
-                disabled={stepIndex === 0}
-                onTouchTap={this.handlePrev}
-                style={{marginRight: 12}}
-              />
+
 
 <RaisedButton
                 label={'Next'}
@@ -499,12 +630,7 @@ onChange={this.singleTextValueChanged.bind(this,obj.questionQ)}
 </form>
 
   <section style={{marginTop: 24, marginBottom: 12}}>
-<FlatButton
-                label="Back"
-                disabled={stepIndex === 0}
-                onTouchTap={this.handlePrev}
-                style={{marginRight: 12}}
-              />
+
 
 <RaisedButton
                 label={'Next'}
@@ -539,12 +665,7 @@ return(<Col xs={12}>
 </RadioButtonGroup>
 </form>
   <section style={{marginTop: 24, marginBottom: 12}}>
-<FlatButton
-                label="Back"
-                disabled={stepIndex === 0}
-                onTouchTap={this.handlePrev}
-                style={{marginRight: 12}}
-              />
+
 
 <RaisedButton
                 label={'Next'}
@@ -578,12 +699,7 @@ return(<Col xs={12}>
            <span style={{fontWeight:'bold'}}>{'/'}</span> <span style={{fontWeight:'bold'}}>{obj.maxValue}</span>
 </form>
    <section style={{marginTop: 24, marginBottom: 12}}>
-        <FlatButton
-                label="Back"
-                disabled={stepIndex === 0}
-                onTouchTap={this.handlePrev}
-                style={{marginRight: 12}}
-              />
+
 
            <RaisedButton
                            label={'Next'}
@@ -620,12 +736,7 @@ labelStyle={{fontWeight:'bold'}}
 </form>
 
    <section style={{marginTop: 24, marginBottom: 12}}>
- <FlatButton
-                label="Back"
-                disabled={stepIndex === 0}
-                onTouchTap={this.handlePrev}
-                style={{marginRight: 12}}
-              />
+
 
 <RaisedButton
                 label={'Next'}

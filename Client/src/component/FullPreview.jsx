@@ -24,7 +24,6 @@ background:'#649F4E',
 textAlign:'center',
 height:'20%'
 }
-
 const questionStyle={
 background:'#FFFFFF',
 textAlign:'center',
@@ -181,7 +180,7 @@ if(starArray.length!=0){
 
         var data1={};
           data1={surveyName:sName1,options:this.state.commentValue}
-          request.post('http://10.201.174.234:9080/api/fullAnswers/'+sName1)
+          request.post('http://localhost:9080/api/fullAnswers/'+sName1)
                   .set('Content-Type', 'application/json')
                   .send(options)
                    .end(function(err,res)
@@ -217,7 +216,34 @@ if(starArray.length!=0){
          <h3 style={{marginTop:'2%',marginBottom:'2%',color:'#FFFFFF',fontSize:'150%'}}>{this.state.output.welcomeMsg}</h3>
           <Divider/>
          <h4 style={{marginTop:'1%',marginLeft:'1%',color:'#DAF7A6  ',textAlign:'left'}}>{this.state.output.description}</h4>
+         <Col xsOffset={6} xs={6}>
+         <Row>
+         <h3>Your Name : </h3>  <TextField
+           hintText="Your Name Here"
+           hintStyle={{fontWeight:'bold'}}
+           underlineStyle={{borderColor:'#37861E '}}
+
+           />
+           </Row>
+           <Row>
+         <h3>Emp ID : </h3>  <TextField
+           hintText="Your Emp ID Here"
+           hintStyle={{fontWeight:'bold'}}
+           underlineStyle={{borderColor:'#37861E '}}
+
+           />
+           </Row>
+           <Row>
+         <h3>Your Current role : </h3>  <TextField
+           hintText="Your Role Here"
+           hintStyle={{fontWeight:'bold'}}
+           underlineStyle={{borderColor:'#37861E '}}
+
+           />
+         </Row>
+         </Col>
         </div>);
+
        }
        if(this.state.output.thanksMessage)
        {
@@ -395,10 +421,6 @@ else if(obj.questionType=="Slider"){
            <span style={{fontWeight:'bold',marginLeft:'2%'}}>
                  {obj.maxValue}
            </span>
-
-
-
-
    </CardText>
    </Card>);
 }

@@ -14,7 +14,7 @@ else if(req.body.type=='thanksMessage'){
 	console.log("inside thanks");
 	surveyConfigModel.findOneAndUpdate({surveyname:req.body.sName},
 	{$set:{
-		creterEmail:req.body.creterEmail,
+		createrEmail:req.body.creterEmail,
 		createrName:req.body.createrName,
 		thanksMessage:req.body.thanksMessage,
 		createrContact:req.body.createrContact

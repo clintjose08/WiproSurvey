@@ -107,7 +107,7 @@ constructor(props) {
 		var thankyouScreen={
 			sName:localStorage.getItem('sName'),
 			"type":'thanksMessage',
-			"creterEmail":this.state.email,
+			"createrEmail":this.state.email,
 			"createrName":this.state.name,
 			"thanksMessage":this.state.thankyouMsg,
 			"createrContact":this.state.contact

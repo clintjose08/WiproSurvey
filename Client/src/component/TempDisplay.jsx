@@ -446,7 +446,6 @@ ratingChanged = (newRating) => {
        </div>);
 
      })
-
    }
    else if(this.props.putQuestion && this.props.putType=="Textbox"){
        components.pop();
@@ -505,7 +504,7 @@ ratingChanged = (newRating) => {
 
                     <Col xs={4}>
                             <span style={{fontWeight:'bold',textAlign:'left',fontSize:'125%'}}>{this.state.starComment}</span>
-                    </Col >
+                    </Col>
                  </Col> );
 
 
@@ -524,7 +523,7 @@ ratingChanged = (newRating) => {
                     </Col>
                     <Col xs={4}>
                             <span style={{fontWeight:'bold',textAlign:'left',fontSize:'125%'}}>{this.state.starComment}</span>
-                    </Col >
+                    </Col>
 
                  </Col> );
 
