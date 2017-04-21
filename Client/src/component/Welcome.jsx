@@ -97,17 +97,17 @@ handleToggleParticipants = (event, toggle) => {
   }
   onIdCheck(event,checked){
   	console.log(checked);
-  	this.setState({idCheck:checked}
+  	this.setState({idCheck:checked})
 
   }
   onEmailCheck(event,checked){
   	console.log(checked);
-  	this.setState({emailCheck:checked}
+  	this.setState({emailCheck:checked})
 
   }
   onContactCheck(event,checked){
   	console.log(checked);
-  	this.setState({contactCheck:checked}
+  	this.setState({contactCheck:checked})
 
   }
 	updateDb(e){

@@ -28,7 +28,7 @@ class DisplayDetails extends Component{
   componentWillMount(){
     request
 
-    .get('http://localhost:9080/api/getDetails/')
+    .get('http://localhost:9080/api/getResultDetails/')
 
     .end((err,res) => {
       this.setState({
@@ -47,21 +47,22 @@ class DisplayDetails extends Component{
   };
 
   handleChange = (event, index, value) => this.setState({value});
-  getTimeRemain(time,name){
+  getTimeRemain(time,name,i){
     console.log("deefkjkj",time);
   var convertDate= new Date(time);
   console.log("deefkjkj",convertDate);
   setInterval(function() {
 
    var now = new Date();
-   var difference = convertDate.getTime()- now.getTime();
-   if (difference <= 0) {
+   var difference = [];
+   difference[i]=convertDate.getTime()- now.getTime();
+   if (difference[i] <= 0) {
 
        // Timer done
        //clearInterval(timer);
        console.log("It is done");
        var status={status:'closed'}
-     request.put('http://10.201.174.234:9080/api/publishSurvey/'+name)
+     request.put('http://localhost:9080/api/publishSurvey/'+name)
              .set('Content-Type', 'application/json')
              .send(status)
               .then((err,res)=>
@@ -72,16 +73,21 @@ class DisplayDetails extends Component{
    }
    else {
 
-       var seconds = Math.floor(difference / 1000);
-       var minutes = Math.floor(seconds / 60);
-       var hours = Math.floor(minutes / 60);
-       var days = Math.floor(hours / 24);
+       var seconds=[];
+       var minutes=[];
+       var hours=[];
+       var days=[];
+       var remain=[];
+       seconds[i] = Math.floor(difference[i] / 1000);
+        minutes[i] = Math.floor(seconds[i] / 60);
+      hours[i] = Math.floor(minutes[i] / 60);
+       days[i] = Math.floor(hours[i] / 24);
 
-       hours %= 24;
-       minutes %= 60;
-       seconds %= 60;
-       var remain=days+":"+hours+":"+minutes+":"+seconds;
-       $("#days").text(remain);
+       hours[i] %= 24;
+       minutes[i] %= 60;
+       seconds[i] %= 60;
+       remain[i]=days[i]+":"+hours[i]+":"+minutes[i]+":"+seconds[i];
+       $("#"+i).text(remain[i]);
       //  $("#hours").text(hours);
       //  $("#minutes").text(minutes);
       //  $("#seconds").text(seconds);
@@ -101,7 +107,7 @@ class DisplayDetails extends Component{
                  ];
     var details=[];
 
-    details.push(this.state.output.map((obj)=>{
+    details.push(this.state.output.map((obj,i)=>{
       if(obj.status=='Running'){
         return (<TableRow>
             <TableRowColumn>{obj.surveyname}</TableRowColumn>
@@ -110,7 +116,7 @@ class DisplayDetails extends Component{
             <TableRowColumn>{obj.questions[0].count.length}</TableRowColumn>
             <TableRowColumn><RaisedButton label="Statistics" backgroundColor='#616A6B' labelColor='#FDFEFE' icon={<Analyze />} onTouchTap={this.handleOpen.bind(this,obj.surveyname)}/></TableRowColumn>
             <TableRowColumn ><Col xs={12}>
-           <span id="days" style={{fontSize:'150%'}}></span>{this.getTimeRemain(obj.endTime,obj.surveyname)}
+           <span id={i} style={{fontSize:'150%'}}>{this.getTimeRemain(obj.endTime,obj.surveyname,i)}</span>
 
         </Col></TableRowColumn>
             <TableRowColumn><RaisedButton label="Reminder" backgroundColor='#3498DB' labelColor='#FDFEFE' icon={<Reminder />} /></TableRowColumn>

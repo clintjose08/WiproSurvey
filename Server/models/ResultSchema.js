@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const QuestSchema = new Schema({
+
   options: { type: Array},
   count: { type: Array },
   questiontype:{type:String},
@@ -21,6 +22,9 @@ const ResultSchema = new Schema({
   publishtime:{type:String},
   endTime:{type:String},
   status:{type:String},
+  name:{type:Array},
+  id:{type:Array},
+  role:{type:Array},
   questions:[QuestSchema]
 });
 
