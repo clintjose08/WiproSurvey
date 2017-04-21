@@ -503,7 +503,7 @@ ratingChanged = (newRating) => {
                     </Col>  
                     
                     <Col xs={4}>      
-                            <span style={{fontWeight:'bold',textAlign:'left',fontSize:'125%'}}>{this.state.starComment}</span>
+                            <span style={{fontWeight:'bold',textAlign:'left',fontSize:'100%'}}>{this.state.starComment}</span>
                     </Col >
                  </Col> );
       
