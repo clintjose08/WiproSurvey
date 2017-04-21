@@ -40,7 +40,6 @@ background:'#649F4E',
 textAlign:'center',
 marginTop:'1%',
 height:'35%'
-
 }
 
 const style = {
@@ -52,7 +51,6 @@ width:'100%',
 const iconStyles = {
   textAlign:'left',
 };
-
 
 class Dropabble  extends Component {
   constructor() {
@@ -84,7 +82,6 @@ class Dropabble  extends Component {
       console.log("next",res.body.welcomeMsg);
       // console.log("quest",res.body.questions[1].questionQ);
       });
-
     }
 
 update(quest,i){

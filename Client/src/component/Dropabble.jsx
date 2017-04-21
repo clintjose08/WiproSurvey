@@ -162,7 +162,7 @@ window.location.reload()
     this.setState({
       volume: value,
       dataChange:a
-      
+
     })
     console.log(value);
     console.log(this.state.dataChange);
@@ -229,7 +229,7 @@ render() {
           <Divider/>
           <h4 style={{marginTop:'1%',marginLeft:'1%',color:'',textAlign:'left',color:'#283747'}}>{this.state.output.createrName}</h4>
           <h4 style={{marginTop:0,marginLeft:'1%',color:'#283747',textAlign:'left'}}>{this.state.output.createrContact}</h4>
-          <h4 style={{marginTop:0,marginLeft:'1%',color:'#283747',textAlign:'left'}}>{this.state.output.creterEmail} </h4>
+          <h4 style={{marginTop:0,marginLeft:'1%',color:'#283747',textAlign:'left'}}>{this.state.output.createrEmail} </h4>
                 </div>);
       }
       if(this.state.output.questions)
@@ -328,7 +328,7 @@ else if(obj.questionType=="StarRatings" ){
      //  value={this.state.starRating}
      //  onChange={this.valueChanged.bind(this)}
      //  />
-     
+
       <ReactStars
         count={obj.options.length}
         onChange={ratingChanged}
@@ -368,7 +368,7 @@ else if(obj.questionType=="SingleText"){
 
   return(<Card expanded='false'>
     <CardText>
-        
+
         <IconButton tooltip="Duplicate" touch={true} tooltipPosition="bottom-right" style={{marginRight:'4%'}}>
                 <DuplicateButton style={iconStyles}/>
         </IconButton>
@@ -426,7 +426,7 @@ else if(obj.questionType=="Slider"){
 arr=this.state.dataChange;
   return(<Card expanded='false'>
     <CardText>
-          
+
           <IconButton tooltip="Duplicate" touch={true} tooltipPosition="bottom-right" style={{marginRight:'4%'}}>
                 <DuplicateButton style={iconStyles}/>
           </IconButton>
@@ -442,10 +442,10 @@ arr=this.state.dataChange;
   <h3 style={{marginTop:0,marginLeft:'2%',marginBottom:0,color:'#000000',textAlign:'left'}}>{i+1}.{obj.questionQ} </h3>
   </CardText>
   <CardText>
-      
-  
+
+
     <Slider
-          
+
           min={0}
           max={obj.maxValue}
           step={obj.scale}
@@ -456,9 +456,9 @@ arr=this.state.dataChange;
             />
 
 
-          
+
           <span style={{fontWeight:'bold'}}>Your Score : </span>
-          <span style={{fontWeight:'bold'}}> 
+          <span style={{fontWeight:'bold'}}>
           <TextField
             ref="slider"
             value={arr[i]}
@@ -470,13 +470,13 @@ arr=this.state.dataChange;
             errorText= {this.state.errorText}
           />
           </span>
-          <span style={{fontWeight:'bold',marginLeft:'2%'}}>{'/'}</span> 
+          <span style={{fontWeight:'bold',marginLeft:'2%'}}>{'/'}</span>
           <span style={{fontWeight:'bold',marginLeft:'2%'}}>
                 {obj.maxValue}
           </span>
 
 
-     
+
 
   </CardText>
   </Card>);

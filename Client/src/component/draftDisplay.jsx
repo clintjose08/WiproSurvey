@@ -17,8 +17,6 @@ import Publish from 'material-ui/svg-icons/editor/publish';
 import Preview from 'material-ui/svg-icons/action/pageview';
 import Cancel from 'material-ui/svg-icons/navigation/cancel';
 import $ from 'jquery';
-
-
 var todayDate = new Date();
   var curDay=todayDate.getDate();
   var curMonth = todayDate.getMonth();
@@ -98,14 +96,6 @@ class DraftDisplay extends Component{
      });
    }
   handleOpen(name){
-    this.setState({open: true,name:name});
-  };
-
-  handleClose = () => {
-    this.setState({open: false});
-  };
-
-publishupdate(name){
     var status={status:'Running'}
   request.put('http://localhost:9080/api/publishSurvey/'+name)
           .set('Content-Type', 'application/json')
@@ -114,8 +104,13 @@ publishupdate(name){
            {
              console.log("posted");
            });
+    this.setState({open: true,name:name});
+  };
 
-}
+  handleClose = () => {
+    this.setState({open: false});
+  };
+
 
   handleChange = (event, index, value) => this.setState({value});
 
@@ -127,7 +122,7 @@ details.push(this.state.output.map((obj)=>{
       <TableRow>
           <TableRowColumn>{obj.surveyname}</TableRowColumn>
           <TableRowColumn>26 Feb 2017</TableRowColumn>
-          <TableRowColumn><RaisedButton label="Publish" onClick={this.publishupdate.bind(this,obj.surveyname)} backgroundColor='#1E8449' labelColor='#FDFEFE' icon={<Publish />} onTouchTap={this.handleOpen.bind(this,obj.surveyname)}/></TableRowColumn>
+          <TableRowColumn><RaisedButton label="Publish" backgroundColor='#1E8449' labelColor='#FDFEFE' icon={<Publish />} onTouchTap={this.handleOpen.bind(this,obj.surveyname)}/></TableRowColumn>
           <TableRowColumn><RaisedButton label="Preview" backgroundColor='#3498DB' labelColor='#FDFEFE' icon={<Preview />} /></TableRowColumn>
           <TableRowColumn><RaisedButton label="Delete" backgroundColor='#EC7063' labelColor='#FDFEFE' icon={<Cancel />} /></TableRowColumn>
       </TableRow>

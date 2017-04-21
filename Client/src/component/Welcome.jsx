@@ -10,7 +10,6 @@ import {IndexLink, Link} from 'react-router';
 import request from 'superagent';
 
 const paperStyle={
-
 	height:'100%'
 };
 const cardHeaderStyle={

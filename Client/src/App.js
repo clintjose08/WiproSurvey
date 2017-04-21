@@ -6,7 +6,7 @@ class App extends Component{
   render() {
     return (
       <div className="App">
-    
+      <SurveyBar/>
       <Grid className="main" >
             {this.props.children}
         </Grid>
