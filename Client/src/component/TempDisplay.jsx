@@ -261,6 +261,7 @@ ratingChanged = (newRating) => {
       showOverlay: false,
     });
     this.input.blur();
+    console.log("day",day);
   }
   //date RAnge
   handleRangeClick(day) {
@@ -500,13 +501,11 @@ ratingChanged = (newRating) => {
 
 
                             />
+                    </Col>
 
-                    </Col>  
-                    
-                    <Col xs={4}>      
-                            <span style={{fontWeight:'bold',textAlign:'left',fontSize:'100%'}}>{this.state.starComment}</span>
-                    </Col >
-
+                    <Col xs={4}>
+                            <span style={{fontWeight:'bold',textAlign:'left',fontSize:'125%'}}>{this.state.starComment}</span>
+                    </Col>
                  </Col> );
 
 

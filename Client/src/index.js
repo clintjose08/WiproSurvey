@@ -22,8 +22,8 @@ import StarRatings from './view/StarRatings';
 import DraftDisplay from './component/draftDisplay'
 import Timer from './component/timer';
 import TakeSurvey from './view/TakeSurvey';
-import Preview from './component/Preview';
-
+import Preview from './component/SamplePreview';
+import OutLink from './component/outLink'
 import DatePicker from './view/DatePicker';
 import DateRange from './view/DateRange';
 
@@ -60,6 +60,7 @@ ReactDOM.render(
        <Route path="DraftDisplay" component={DraftDisplay}/>
        <Route path="TakeSurvey" component={TakeSurvey}/>
        <Route path="UploadCSV" component={UploadCSV}/>
+       <Route path="OutLink" component={OutLink}/>
     </Route>
   </Router>
   </MuiThemeProvider>,
