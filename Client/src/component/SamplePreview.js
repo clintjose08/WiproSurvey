@@ -6,6 +6,7 @@ import FlatButton from 'material-ui/FlatButton';
 import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
 import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
+import Textarea from 'react-textarea-autosize';
 import {RadioButton, RadioButtonGroup} from 'material-ui/RadioButton';
 import request from 'superagent';
 import ActionInfo from 'material-ui/svg-icons/navigation/close';
@@ -112,7 +113,7 @@ class TakeSurvey extends React.Component {
           starRating: .5,
           dropDown:'null',
           singleTextValue:'',
-          commentValue:[],
+          commentValue:["na","na","na","na","na"],
           checkboxValue:[],
           multiChoiceValue:[],
           yesOrNoValue:'',
@@ -141,6 +142,11 @@ class TakeSurvey extends React.Component {
           from: null,
           to: null,
           enteredTo: null, // Keep track of the last day for mouseEnter.
+          textDisable:[true,true,true,true],
+          selectedValues:[],
+          checkboxdisable:[false,false,false,false,false],
+          checkedValue:[false,false,false,false,false],
+          textAreaValue:['','','','','']
 
 
     }
@@ -152,7 +158,7 @@ class TakeSurvey extends React.Component {
   //
   //
   //
-  //   request.get('http://10.201.174.176:9080/api/getSurvey/'+sName).end((err,res)=>{
+  //   request.get('http://localhost:9080/api/getSurvey/'+sName).end((err,res)=>{
   //
   //
   //     this.setState({
@@ -193,7 +199,7 @@ Welcome=()=>{
 
       var sName=this.props.params.sName;
         request
-        .get('http://10.201.174.176:9080/api/getSurvey/'+sName)
+        .get('http://localhost:9080/api/getSurvey/'+sName)
         .end((err,res) => {
           this.setState({
             output:res.body
@@ -284,11 +290,27 @@ Welcome=()=>{
 
     commentsValueChanged=(quest,i,e,newValue) =>  {
     var a=this.state.commentValue;
+    var tempValidation=this.state.textAreaValue;
+    tempValidation[i]=e.target.value;
     a[i]={"type":"question","quest":quest,"answer":newValue};
       // this.state.commentValue.push(newValue);
-      this.setState({commentValue:a,cmntvaltemp:a});
+
+      this.setState({commentValue:a,cmntvaltemp:a,textAreaValue:tempValidation});
       console.log("comment value set",this.state.commentValue)
-      if(this.state.multiChoiceValue[1]!=undefined && this.state.multiChoiceValue[0] !=undefined && this.state.multiChoiceValue[2]!=undefined && e.target.value !=''){
+      console.log("selectedValues",this.state.selectedValues);
+      console.log("CommentValue",this.state.commentValue[2].answer);
+
+
+
+
+
+      if((this.state.commentValue[1]!='na'&&this.state.commentValue[2]!='na'&&this.state.commentValue[3]!='na')&&(this.state.commentValue[1].answer!=''&&this.state.commentValue[2].answer!=''&&this.state.commentValue[3].answer!='')&&(e.target.value!=""))
+      {
+        this.setState({
+          nextdisable:false
+        });
+      }
+      else if((this.state.selectedValues[0]==4)&& (e.target.value !='')&&(this.state.commentValue[1]=='na'&&this.state.commentValue[2]=='na'&&this.state.commentValue[3]=='na')){
 
       this.setState({
         nextdisable:false
@@ -296,9 +318,25 @@ Welcome=()=>{
 
       }
       else{
+
         this.setState({
           nextdisable:true
-        });console.log("thanks",this.state.commentValue,this.state.multiChoiceValue[0],this.state.multiChoiceValue.length);}
+        });
+      }
+      {/*if(((this.state.selectedValues[0]==0)||(this.state.selectedValues[0]==1)||(this.state.selectedValues[0]==2))||(this.state.commentValue[1]!='na'&&this.state.commentValue[2]!='na'&&this.state.commentValue[3]!='na')&&(e.target.value!="")){
+        this.setState({
+          nextdisable:false
+        });
+      }
+      else{
+        if((this.state.commentValue[1]=='na'||this.state.commentValue[2]=='na'||this.state.commentValue[3]=='na')||(e.target.value=="" )){
+        this.setState({
+          nextdisable:true
+        });
+      }
+    }*/}
+
+
     }
     multiChoiceValueChange=(quest,i,e,value)=>{
       var a=this.state.commentValue;
@@ -306,8 +344,9 @@ Welcome=()=>{
       b[i]=value;
       a[i]={"type":"question","quest":quest,"answer":value};
       this.setState({multiChoiceValue:b,commentValue:a});
-        console.log("comment value set",this.state.commentValue)
+      console.log("comment value set",this.state.commentValue)
       console.log("multiChoiceValue",value,quest,i);
+      console.log("b value"+b);
       if(value!=undefined &&this.state.multiChoiceValue[1]!=undefined && this.state.multiChoiceValue[0] !=undefined && this.state.multiChoiceValue[2]!=undefined&& this.state.cmntvaltemp!=''){
 
       this.setState({
@@ -327,30 +366,136 @@ Welcome=()=>{
         console.log("comment value set",this.state.commentValue)
       console.log("yesOrNoValue",value);
     }
-    checkboxValueChange=(value,quest,index,ansindex,e,status) =>  {
-      var ans=this.state.commentValue;
-      var a=this.state.checkboxValue;
-      console.log("index value set", value)
-      if(status){
-      a.push(value)
-      this.setState({checkboxValue:a});
-      console.log("checkbox value set",value,quest,index,ansindex,e,status)}
+    // checkboxValueChange=(value,quest,index,ansindex,e,status) =>  {
+    //   var ans=this.state.commentValue;
+    //   var a=this.state.checkboxValue;
+    //   console.log("index value set", value)
+    //   if(status){
+    //   a.push(value)
+    //   this.setState({checkboxValue:a});
+    //   console.log("checkbox value set",value,quest,index,ansindex,e,status)}
+    //
+    //   else
+    //   {
+    //     var x= a.indexOf(value)
+    //     a.splice(x,1);
+    //   this.setState({checkboxValue:a});
+    //   console.log("checkbox value unsetset", a)}
+    //   ans[index]={"type":"question","quest":quest,"answer":a};
+    //   this.setState({commentValue:ans});
+    //   console.log("comment value set",this.state.commentValue)
+    // }
 
+    checkboxValueChange=(e,i,quest,indexofcheck,a,value) =>  {
+      console.log("indexchckfkfd",indexofcheck);
+      this.setState({commentValue:[]});
+       var ans=this.state.commentValue;
+      var c=this.state.selectedValues;
+      var a=this.state.checkboxValue;
+
+      var d=this.state.checkboxdisable;
+      var check=this.state.checkedValue;
+      var textEnable=this.state.textDisable;
+      console.log("index value set", e,i,a,value,check)
+      console.log("question : ",quest);
+      if(value){
+      c.push(e)
+      if(e==0||e==1||e==2){
+        d[3]=true;
+        d[4]=true;
+        check[e]=true;
+        textEnable[0]=false;
+        textEnable[1]=false;
+        textEnable[2]=false;
+        this.setState({checkboxdisable:d,checkedValue:check,textDisable:textEnable});
+      }
+      if(e==3){
+        check[3]=true;
+        d[0]=true;
+        d[1]=true;
+        d[2]=true;
+        d[4]=true;
+        this.setState({checkboxdisable:d,checkedValue:check,nextdisable:false});
+      }
+      if(e==4){
+        check[4]=true;
+        d[0]=true;
+        d[1]=true;
+        d[2]=true;
+        d[3]=true;
+        textEnable[3]=false;
+        this.setState({checkboxdisable:d,checkedValue:check,textDisable:textEnable});
+      }
+      a.push(i)
+      this.setState({checkboxValue:a,selectedValues:c,disable:false});
+      console.log("checkbox value set", this.state.selectedValues)}
       else
       {
-        var x= a.indexOf(value)
+
+
+        var tempValidation=this.state.textAreaValue;
+        tempValidation[1]='';tempValidation[2]='';tempValidation[3]='';tempValidation[0]='';tempValidation[4]='';
+
+        if(e==0||e==1||e==2){
+          check[e]=false;
+        if(this.state.checkedValue[0]!=true && this.state.checkedValue[1]!=true && this.state.checkedValue[2]!=true){
+          d[3]=false;
+          d[4]=false;
+          textEnable[0]=true;
+          textEnable[1]=true;
+          textEnable[2]=true;
+          ans[0]="na";ans[2]="na";ans[3]="na";ans[1]="na";
+        }
+
+          this.setState({checkboxdisable:d,checkedValue:check,textDisable:textEnable,commentValue:ans});
+        }
+        else if(e==3){
+          d[0]=false;
+          d[1]=false;
+          d[2]=false;
+          d[4]=false;
+          check[e]=false;
+
+          this.setState({checkboxdisable:d,checkedValue:check,nextdisable:true});
+        }
+        else if(e==4){
+          d[0]=false;
+          d[1]=false;
+          d[2]=false;
+          d[3]=false;
+          check[e]=false;
+          textEnable[3]=true;
+          ans[4]="na";
+          this.setState({checkboxdisable:d,checkedValue:check,textDisable:textEnable,commentValue:ans});
+        }
+
+        var x= a.indexOf(i)
         a.splice(x,1);
-      this.setState({checkboxValue:a});
+        c.splice(x,1);
+      this.setState({checkboxValue:a,selectedValues:c,disable:false,textAreaValue:tempValidation});
+
+        if(this.state.checkboxValue.length<=0){
+          this.setState({nextdisable:true})
+        }
       console.log("checkbox value unsetset", a)}
-      ans[index]={"type":"question","quest":quest,"answer":a};
+       ans[indexofcheck]={"type":"question","quest":quest,"answer":a};
       this.setState({commentValue:ans});
-      console.log("comment value set",this.state.commentValue)
+      console.log("database",this.state.commentValue);
     }
+
     saveData = () => {
-
+var nullArray=this.state.commentValue;
       //single page validation
+for(var index=0;index<5;index++){
 
+  if(this.state.commentValue[index]=='na'){
 
+    nullArray[index]={"type":"question","quest":this.state.output.questions[index].questionQ,"answer":"na"}
+  }
+}
+console.log("nullArray",nullArray);
+this.setState({commentValue:nullArray});
+console.log("newvalues",this.state.commentValue);
     var a=this.state.commentValue;
     var ans=this.state.commentValue;
     a[ans.length]={"type":"userDetails","name":this.state.userName,"id":this.state.userId,"role":this.state.userRole};
@@ -371,7 +516,7 @@ Welcome=()=>{
   console.log("lenth",options.length,options);
           var data1={};
             data1={surveyName:sName1,options:this.state.commentValue}
-            request.post('http://10.201.174.176:9080/api/fullAnswers/'+sName1)
+            request.post('http://localhost:9080/api/fullAnswers/'+sName1)
                     .set('Content-Type', 'application/json')
                     .send(options)
                      .end(function(err,res)
@@ -656,13 +801,16 @@ Welcome=()=>{
                 <h3 style={{marginTop:0,marginLeft:'2%',marginBottom:0,color:'#000000',textAlign:'left'}}>{i+1}.{obj.questionQ}</h3>
                 </CardText>
                 <CardText>
-                <TextField
-                hintText="Your Option Here"
+                <Textarea
+                placeholder="Your Comments Here in less than 500 words"
                 hintStyle={{fontWeight:'bold'}}
                 underlineStyle={{borderColor:'#37861E '}}
+                minRows={4}
                 style={{width:'80%',marginLeft:'4%'}}
                 multiLine={true}
+                value={this.state.textAreaValue[i]}
                 onChange={this.commentsValueChanged.bind(this,obj.questionQ,i)}
+                disabled={this.state.textDisable[i-1]}
                 />
                 </CardText>
               </Card>);
@@ -738,7 +886,7 @@ Welcome=()=>{
                var options=[];
                 obj.options.map((option,j)=>{
                 options.push(<div>
-                   <Checkbox label={option} onCheck={this.checkboxValueChange.bind(this,option,obj.questionQ,i,j)} iconStyle={{marginLeft:'35%'}} labelStyle={{marginRight:'50%',color:'#000000',marginLeft:'2%'}}/>
+                   <Checkbox label={option} checked={this.state.checkedValue[j]} disabled={this.state.checkboxdisable[j]} onCheck={this.checkboxValueChange.bind(this,j,option,obj.questionQ,i)} iconStyle={{marginLeft:'2%'}} labelStyle={{textAlign:"left",marginRight:'50%',color:'#000000',marginLeft:'2%'}}/>
                    </div>);
 
                  });
@@ -749,6 +897,9 @@ Welcome=()=>{
                </CardText>
                <CardText>
                {options}
+               </CardText>
+               <CardText>
+                  <p style={{color:'#1880ef'}}>*Provide the input based on the selection only</p>
                </CardText>
                </Card>);
           }
@@ -808,7 +959,9 @@ Welcome=()=>{
           hintText="Your Answer Here"
           hintStyle={{fontWeight:'bold'}}
           underlineStyle={{borderColor:'#37861E '}}
+          value={this.state.textAreaValue[i]}
           onChange={this.commentsValueChanged.bind(this,obj.questionQ,i)}
+          disabled={this.state.textDisable[i-1]}
           />
           </CardText>
           </Card>);
@@ -957,10 +1110,11 @@ Welcome=()=>{
     {
       but.push(<div style={{marginTop: 24, marginBottom: 12}}>
         <RaisedButton
-        disabled={this.state.nextdisable}
+
           label={'Next'}
           primary={true}
           onTouchTap={this.saveData}
+          disabled={this.state.nextdisable}
 
         />
       </div>);

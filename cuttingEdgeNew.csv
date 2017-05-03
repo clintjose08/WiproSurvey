@@ -1,0 +1,12 @@
+type,data,options,maxValue,scale
+Welcome,Cutting Edge,,,
+Description,Architect Academy,,,
+ThanksMessage,Thanks For Attend ,,,
+Name,Architect Academy,,,
+Contact,0,,,
+Email,architectacademy@wipro.com,,,
+Checkbox,You underwent Cutting Edge training Jul’16 or before. Post training we are confident that you got an opportunity to do one or more of following. Please select appropriate box (es):,Contributed to New Proposals/Got a New Project/Added Value to Existing Project/Still looking for avenues to contribute/Added other values that are not listed above,,
+SingleText,Name of the Client,,,
+SingleText,Name of the Project / Proposal: ,,,
+Comments,Share your value-adds post training,,,
+Comments,Share more details on your selection,,,

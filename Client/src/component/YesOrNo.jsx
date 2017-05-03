@@ -71,7 +71,7 @@ handleQuestion(e) {
     }
 
 
-    request.post('http://10.201.174.176:9080/api/updateSurvey/'+sName)
+    request.post('http://localhost:9080/api/updateSurvey/'+sName)
 
             .set('Content-Type', 'application/json')
             .send(questionScreen)

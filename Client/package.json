@@ -94,6 +94,7 @@
     "react-stars-ie": "^2.2.2",
     "react-svg-piechart": "^1.2.0",
     "react-tap-event-plugin": "^2.0.1",
+    "react-textarea": "^1.0.4",
     "react-timer": "^1.0.2",
     "react-tooltip": "^3.2.9",
     "reactstrap": "^4.3.0",
