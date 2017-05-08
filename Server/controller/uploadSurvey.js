@@ -9,7 +9,7 @@ module.exports=function (req, res) {
       thanksMessage:req.body.thanksMessage,
       createrContact:req.body.createrContact,
       createrName:req.body.createrName,
-      creterEmail:req.body.creterEmail,
+      createrEmail:req.body.createrEmail,
       questions:req.body.questions
     }
   },

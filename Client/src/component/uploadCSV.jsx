@@ -80,7 +80,7 @@ covertForInsert(data) {
 	     if(singleData[0]=="ThanksMessage"){tempObj["thanksMessage"]=singleData[1]}
 	     if(singleData[0]=="Name"){tempObj["createrName"]=singleData[1]}
 	     if(singleData[0]=="Contact"){tempObj["createrContact"]=singleData[1]}
-	     if(singleData[0]=="Email"){tempObj["creterEmail"]=singleData[1]}
+	     if(singleData[0]=="Email"){tempObj["createrEmail"]=singleData[1]}
 
 	    if(singleData[0]=="StarRatings")	{
          questions.push({"questionType":singleData[0],"questionQ":singleData[1],"scale":singleData[4],"options":singleData[2].split('/')});
