@@ -25,6 +25,11 @@ import 'react-rangeslider/lib/index.css';
 import Dialog from 'material-ui/Dialog';
 import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
+
+import moment from 'moment';
+import DayPicker,{ DateUtils } from "react-day-picker";
+import "react-day-picker/lib/style.css";
+
 var arr;
 const welcomeStyle={
 background:'#649F4E',
@@ -32,7 +37,12 @@ textAlign:'center',
 height:'20%',
 marginBottom:'5%'
 }
+const overlayStyle = {
+  position: 'absolute',
+  background: 'white',
+  boxShadow: '0 2px 5px rgba(0, 0, 0, .15)',
 
+};
 const questionStyle={
 background:'#FFFFFF',
 textAlign:'center',
@@ -62,10 +72,25 @@ const iconStyles = {
 const ratingChanged = (newRating) => {
   console.log(newRating)
 }
-
+function isSelectingFirstDay(from, to, day) {
+  const firstDayIsNotSelected = !from;
+  const selectedDayIsBeforeFirstDay = day < from;
+  const rangeIsSelected = from && to;
+  return firstDayIsNotSelected || selectedDayIsBeforeFirstDay || rangeIsSelected;
+}
 class Dropabble  extends Component {
   constructor() {
      super();
+     this.handleDayClick = this.handleDayClick.bind(this);
+     this.handleInputChange = this.handleInputChange.bind(this);
+     this.handleInputFocus = this.handleInputFocus.bind(this);
+     this.handleInputBlur = this.handleInputBlur.bind(this);
+     this.handleContainerMouseDown = this.handleContainerMouseDown.bind(this);
+
+     this.reset = this.reset.bind(this);
+     this.handleRangeClick = this.handleRangeClick.bind(this);
+     this.handleDayMouseEnter = this.handleDayMouseEnter.bind(this);
+
     this.state = {
        output:[],
        sliderChange:0,
@@ -91,7 +116,20 @@ class Dropabble  extends Component {
       // console.log("quest",res.body.questions[1].questionQ);
       });
     }
-
+    handleInputChange(e) {
+      const { value } = e.target;
+      const momentDay = moment(value, 'L', true);
+      if (momentDay.isValid()) {
+        this.setState({
+          selectedDay: momentDay.toDate(),
+          value,
+        }, () => {
+          this.daypicker.showMonth(this.state.selectedDay);
+        });
+      } else {
+        this.setState({ value, selectedDay: null });
+      }
+    }
 handleChange(i)
 {
   var sName=localStorage.getItem('sName');
@@ -107,6 +145,57 @@ window.location.reload()
  handleClose = () => {
    this.setState({open: false});
  };
+ handleInputFocus() {
+   this.setState({
+     showOverlay: true,
+   });
+ }
+ handleInputBlur() {
+   const showOverlay = this.clickedInside;
+
+   this.setState({
+     showOverlay,
+   });
+
+   // Force input's focus if blur event was caused by clicking on the calendar
+   if (showOverlay) {
+     this.input.focus();
+   }
+ }
+ handleRangeClick(day) {
+   const { from, to } = this.state;
+
+   if (DateUtils.isSameDay(day, from)) {
+     this.reset();
+     return;
+   }
+
+   if (isSelectingFirstDay(from, to, day)) {
+     this.setState({
+       from: day,
+       to: null,
+       enteredTo: null,
+     });
+   } else {
+     this.setState({
+       to: day,
+       enteredTo: day,
+     });
+   }
+   console.log("from",moment(this.state.from).format('L'),"to",moment(this.state.enteredTo).format('L'));
+ }
+ handleDayMouseEnter(day) {
+   const { from, to } = this.state;
+
+   if (!isSelectingFirstDay(from, to, day)) {
+     this.setState({
+       enteredTo: day,
+     });
+   }
+ }
+ reset() {
+    this.setState({from : null,to : null,enteredTo : null}); // Keep track of the last day for mouseEnter.
+ }
   updateUserSchema(){
     var qstn=[];
 
@@ -168,6 +257,15 @@ window.location.reload()
     console.log(this.state.dataChange);
   }
 
+    handleDayClick(day) {
+      this.setState({
+        value: moment(day).format('L'),
+        selectedDay: day,
+        showOverlay: false,
+      });
+      this.input.blur();
+        console.log("day",day);
+    }
   handleSliderChange(i,value,e) {
       console.log(typeof(value));
       var a=this.state.dataChange;
@@ -185,8 +283,19 @@ window.location.reload()
       this.setState({volume:0});
     }
   }
-
+  handleContainerMouseDown() {
+    this.clickedInside = true;
+    // The input's onBlur method is called from a queue right after onMouseDown event.
+    // setTimeout adds another callback in the queue, but is called later than onBlur event
+    this.clickTimeout = setTimeout(() => {
+      this.clickedInside = false;
+    }, 0);
+  }
 render() {
+  const selectedDay = moment(this.state.value, 'L', true).toDate();
+  const  from = this.state.from;
+  const to = this.state.to;
+  const enteredTo  = this.state.enteredTo;
    var welcomeTitle=[];
    var thanksMessage=[];
    var questions=[];
@@ -290,6 +399,111 @@ render() {
              {options}
              </CardText>
              </Card>);
+}
+else if(obj.questionType=="dateRange"){
+  //  var options=[];
+  //   obj.options.map((option)=>{
+  //   options.push(<div>
+  //      <Checkbox label={option}  iconStyle={{marginLeft:'35%'}} labelStyle={{marginRight:'50%',color:'#000000',marginLeft:'2%'}}/>
+  //      </div>);
+   //
+  //    });
+
+   return(<Card expanded='false'>
+     <CardText>
+        <IconButton tooltip="Duplicate" touch={true} tooltipPosition="bottom-right" style={{marginRight:'4%'}}>
+             <DuplicateButton style={iconStyles}/>
+        </IconButton>
+        <IconButton tooltip="Edit Question" touch={true} tooltipPosition="bottom-right" style={{marginRight:'4%'}}>
+              <EditButton style={iconStyles}/>
+        </IconButton>
+        <IconButton onTouchTap={this.handleChange.bind(this,obj.questionQ)} tooltip="Delete" touch={true} tooltipPosition="bottom-right"style={{marginRight:'4%'}}>
+              <CloseButton style={iconStyles}/>
+        </IconButton>
+     </CardText>
+     <CardText>
+   <h3 style={{marginTop:0,marginLeft:'2%',marginBottom:0,color:'#000000',textAlign:'left'}}>{i+1}.{obj.questionQ} </h3>
+   </CardText>
+   <CardText>
+  <section >
+    { !from && !to &&
+      <p>Please select the <strong>first day</strong>.</p>
+    }
+    { from && !to &&
+      <p>Please select the <strong>last day</strong>.</p>
+    }
+    { from && to &&
+      <p>
+        You chose from { moment(from).format('L') } to { moment(enteredTo).format('L') }.
+        { ' ' }
+        <a onClick={ this.reset }>Reset</a>
+      </p>
+    }
+    <DayPicker
+      className="Range"
+      numberOfMonths={ 2 }
+      selectedDays={ [from, { from, to: enteredTo }] }
+      disabledDays={ { before: this.state.from } }
+      modifiers={ { start: from, end: enteredTo } }
+      onDayClick={ this.handleRangeClick }
+      onDayMouseEnter={ this.handleDayMouseEnter }
+    />
+  </section>
+   </CardText>
+   </Card>);
+}
+else if(obj.questionType=="datePicker"){
+  //  var options=[];
+  //   obj.options.map((option)=>{
+  //   options.push(<div>
+  //      <Checkbox label={option}  iconStyle={{marginLeft:'35%'}} labelStyle={{marginRight:'50%',color:'#000000',marginLeft:'2%'}}/>
+  //      </div>);
+   //
+  //    });
+
+   return(<Card expanded='false'>
+     <CardText>
+        <IconButton tooltip="Duplicate" touch={true} tooltipPosition="bottom-right" style={{marginRight:'4%'}}>
+             <DuplicateButton style={iconStyles}/>
+        </IconButton>
+        <IconButton tooltip="Edit Question" touch={true} tooltipPosition="bottom-right" style={{marginRight:'4%'}}>
+              <EditButton style={iconStyles}/>
+        </IconButton>
+        <IconButton onTouchTap={this.handleChange.bind(this,obj.questionQ)} tooltip="Delete" touch={true} tooltipPosition="bottom-right"style={{marginRight:'4%'}}>
+              <CloseButton style={iconStyles}/>
+        </IconButton>
+     </CardText>
+     <CardText>
+   <h3 style={{marginTop:0,marginLeft:'2%',marginBottom:0,color:'#000000',textAlign:'left'}}>{i+1}.{obj.questionQ} </h3>
+   </CardText>
+   <CardText>
+   <section onMouseDown={ this.handleContainerMouseDown } style={{paddingBottom:'70%'}} >
+     <input
+       type="text"
+       ref={ (el) => { this.input = el; } }
+       placeholder="DD/MM/YYYY"
+       value={ this.state.value }
+       onChange={ this.handleInputChange }
+       onFocus={ this.handleInputFocus }
+       onBlur={ this.handleInputBlur }
+
+
+     />
+     { this.state.showOverlay &&
+       <section style={ { position: 'relative' } }>
+         <section style={ overlayStyle }>
+           <DayPicker
+             ref={ (el) => { this.daypicker = el; } }
+             initialMonth={ this.state.selectedDay || undefined }
+             onDayClick={ this.handleDayClick }
+             selectedDays={ this.state.selectedDay }
+           />
+         </section>
+       </section>
+     }
+   </section>
+   </CardText>
+   </Card>);
 }
 else if(obj.questionType==="Dropdown"){
   var options=[];

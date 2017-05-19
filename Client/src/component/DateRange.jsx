@@ -39,7 +39,7 @@ constructor(props) {
 }
 
 componentWillMount(){
-    
+
   }
 
 handleQuestion(e) {

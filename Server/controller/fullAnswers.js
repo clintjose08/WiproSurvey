@@ -21,7 +21,9 @@ for(i=0;i<req.body.length;i++){
 
 	else if(req.body[i].type=='userDetails'){
 		surveyConfigModel.findOneAndUpdate({surveyname:req.params.sName},
+
 			{"$push":	{"name":req.body[i].name,"id":req.body[i].id}},
+
 		function(err,doc){
 			if(doc){
 

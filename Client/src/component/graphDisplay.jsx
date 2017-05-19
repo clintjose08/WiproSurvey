@@ -21,13 +21,16 @@ class GraphDisplay extends Component
       }
   componentWillMount()
   {
-
+var details=[];
       Request.get('http://localhost:9080/api/getResult/'+this.props.name).end((err,res)=>{
 
         console.log(res.body[0]);
         this.setState({
           allData:res.body[0]
         })
+      });
+      this.state.allData.map((data,i)=>{
+      details[i]={"name":name[i]}
       });
   }
   render()

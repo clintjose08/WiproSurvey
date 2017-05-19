@@ -118,7 +118,16 @@ covertForInsert(data) {
 					.send(tempObj)
 					 .end((err,res)=>
 					 {
-						 console.log("posted");
+					 	if(err)
+					 	{
+
+						 console.log(err);
+
+					 	}
+					 	else
+					 	{
+					 		console.log("Posted");
+					 	}
 
 						})
 	}

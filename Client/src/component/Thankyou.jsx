@@ -221,18 +221,9 @@ constructor(props) {
 										 </Link>
 									</CardActions>
         					</Card>
-
-
 					</Paper>
-
-				</div>
-
-
-
-
-
-
-			);
+					</div>
+	);
 	}
 }
 export default Thankyou;

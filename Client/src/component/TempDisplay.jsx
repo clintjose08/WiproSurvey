@@ -261,6 +261,7 @@ ratingChanged = (newRating) => {
       showOverlay: false,
     });
     this.input.blur();
+    console.log("day",day);
   }
   //date RAnge
   handleRangeClick(day) {

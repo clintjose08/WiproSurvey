@@ -1,5 +1,4 @@
 
-
 import React, { Component } from 'react';
 import Paper from 'material-ui/Paper';
 import Divider from 'material-ui/Divider';
@@ -203,6 +202,7 @@ Welcome=()=>{
       console.log(sName);
         request
         .get('http://10.201.174.205:9080/api/getSurvey/'+sName)
+
         .end((err,res) => {
           this.setState({
             output:res.body
@@ -248,7 +248,9 @@ Welcome=()=>{
       console.log("singletext value set", newValue)
     }
     userNameChanged(e,data){
+
       this.setState({userName:e.target.value});
+
 
       if(e.target.value !='' && this.state.userId != ''){
 
@@ -305,7 +307,6 @@ Welcome=()=>{
     }
 
     commentsValueChanged=(quest,i,e,newValue) =>  {
-
     var a=this.state.commentValue;
     var tempValidation=this.state.textAreaValue;
     tempValidation[i]=e.target.value;
@@ -516,6 +517,7 @@ console.log("newvalues",this.state.commentValue);
     var a=this.state.commentValue;
     var ans=this.state.commentValue;
     a[ans.length]={"type":"userDetails","name":this.state.userName,"id":this.state.userId};
+
     this.setState({commentValue:a});
   if(starArray.length!=0){
     for(let i=0;i<starArray.length;i++){
@@ -525,7 +527,6 @@ console.log("newvalues",this.state.commentValue);
       this.setState({commentValue:a});
       console.log(starArray[i].index,starArray[i].quest,starArray[i].answer);
     }
-
   }
       var sName1=this.props.params.sName;
           var options=this.state.commentValue;
@@ -576,7 +577,6 @@ console.log("newvalues",this.state.commentValue);
         this.setState({ value, selectedDay: null });
       }
     }
-
     handleDayClick(quest,index,day) {
       console.log("SDf",day,quest,index);
       var a=this.state.commentValue;

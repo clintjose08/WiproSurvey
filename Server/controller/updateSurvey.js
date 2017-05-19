@@ -115,6 +115,28 @@ else if(req.body.type=='checkbox'){
 
 	});
 }
+else if(req.body.type=='datePicker'){
+	surveyConfigModel.findOneAndUpdate({surveyname:req.body.sName},
+	{$push:{
+		questions:req.body.questions
+	}},
+	function(err,doc){
+  res.send("created");
+				console.log("not exist");
+
+	});
+}
+else if(req.body.type=='dateRange'){
+	surveyConfigModel.findOneAndUpdate({surveyname:req.body.sName},
+	{$push:{
+		questions:req.body.questions
+	}},
+	function(err,doc){
+  res.send("created");
+				console.log("not exist");
+
+	});
+}
 else{
 
 }
