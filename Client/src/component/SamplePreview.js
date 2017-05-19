@@ -201,7 +201,7 @@ Welcome=()=>{
       var sName=this.props.params.sName;
       console.log(sName);
         request
-        .get('http://10.201.174.205:9080/api/getSurvey/'+sName)
+        .get('http://localhost:9080/api/getSurvey/'+sName)
 
         .end((err,res) => {
           this.setState({
@@ -534,7 +534,7 @@ console.log("newvalues",this.state.commentValue);
   console.log("lenth",options.length,options);
           var data1={};
             data1={surveyName:sName1,options:this.state.commentValue}
-            request.post('http://10.201.174.205:9080/api/fullAnswers/'+sName1)
+            request.post('http://localhost:9080/api/fullAnswers/'+sName1)
                     .set('Content-Type', 'application/json')
                     .send(options)
                      .end(function(err,res)

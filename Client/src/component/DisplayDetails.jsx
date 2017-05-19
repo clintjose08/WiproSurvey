@@ -28,7 +28,7 @@ class DisplayDetails extends Component{
   componentWillMount(){
     request
 
-    .get('http://10.201.174.205:9080/api/getResultDetails/')
+    .get('http://localhost:9080/api/getResultDetails/')
 
     .end((err,res) => {
       this.setState({
@@ -62,7 +62,7 @@ class DisplayDetails extends Component{
        //clearInterval(timer);
        console.log("It is done");
        var status={status:'closed'}
-     request.put('http://10.201.174.205:9080/api/publishSurvey/'+name)
+     request.put('http://localhost:9080/api/publishSurvey/'+name)
              .set('Content-Type', 'application/json')
              .send(status)
               .then((err,res)=>
