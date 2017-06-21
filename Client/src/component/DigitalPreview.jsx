@@ -561,12 +561,12 @@ Welcome=()=>{
                 </Row>
                 <Col xsOffset={3} xs={5}>
 
-                <Card style={{paddingLeft:'20%',paddingRight:'20%',paddingTop:'0',paddingBottom:'0'}} zDepth={5}>
+                <Card style={{paddingLeft:'20%',paddingRight:'20%',paddingBottom:'3%',marginBottom:'8%',marginTop:'5%'}} zDepth={3}>
 
                 <CardHeader
-                    title = "User Details"
-                    subtitle = "Fill Details"
-                    style = {{background:'#34495E'}}
+                    title = "Fill Details.."
+                    titleStyle = {{fontWeight:'bold',fontSize:'140%'}}
+
                 />
 
                 <Row>
