@@ -26,6 +26,8 @@ import Preview from './component/SamplePreview';
 import OutLink from './component/outLink'
 import DatePicker from './view/DatePicker';
 import DateRange from './view/DateRange';
+import FourOptions from './component/FourOptions';
+import DigitalPreview from './component/DigitalPreview';
 
 import FullPreview from './component/FullPreview';
 
@@ -41,6 +43,7 @@ ReactDOM.render(
        <Route path="CreateSurvey" component={CreateSurvey}/>
        <Route path='Preview/:sName' component={Preview}/>
       <Route path='FullPreview/:sName' component={FullPreview}/>
+      <Route path='DigitalPreview/:sName' component={DigitalPreview}/>
        <Route path='AddQuestion/:sName' component={AddQuestion}/>
        <Route path='Welcome/:Wel' component={WelcomeEdit}/>
        <Route path='Details' component={DisplayDetails}/>
