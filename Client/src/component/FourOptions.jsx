@@ -21,7 +21,7 @@ render(){
         <Form.Field>
         <Input label='Digital Skill 4' placeholder='Enter your skill....' />
         </Form.Field>
-    
+
 
     </Form>
   </Grid.Column>

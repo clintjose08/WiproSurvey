@@ -29,6 +29,8 @@ import moment from 'moment';
 import DayPicker,{ DateUtils } from "react-day-picker";
 import "react-day-picker/lib/style.css";
 
+import {Segment, Input, Button, Header, Image, Form, Message } from 'semantic-ui-react';
+
  var val=0;
  var starComment='';
  var starValue=0;
@@ -701,15 +703,34 @@ Welcome=()=>{
                 <h3 style={{marginTop:0,marginLeft:'2%',marginBottom:0,color:'#000000',textAlign:'left'}}>{i+1}.{obj.questionQ}</h3>
                 </CardText>
                 <CardText>
-                <TextField
-                hintText="Your Option Here"
-                hintStyle={{fontWeight:'bold'}}
-                underlineStyle={{borderColor:'#37861E '}}
-                disabled={this.state.textboxDisable[i]}
-                style={{width:'80%',marginLeft:'4%'}}
-                multiLine={true}
-                onChange={this.commentsValueChanged.bind(this,obj.questionQ,i)}
-                />
+                {i==1 ? (
+                  <section>
+                  <Form.Field>
+                  <Input label='Digital Skill 1' placeholder='Enter your skill....' />
+                  </Form.Field>
+                  <Form.Field>
+                  <Input label='Digital Skill 2' placeholder='Enter your skill....' />
+                  </Form.Field>
+                  <Form.Field>
+                  <Input label='Digital Skill 3' placeholder='Enter your skill....' />
+                  </Form.Field>
+                  <Form.Field>
+                  <Input label='Digital Skill 4' placeholder='Enter your skill....' />
+                  </Form.Field>
+                  </section>
+                  ) : (
+                    <TextField
+                    hintText="Your Option Here"
+                    hintStyle={{fontWeight:'bold'}}
+                    underlineStyle={{borderColor:'#37861E '}}
+                    disabled={this.state.textboxDisable[i]}
+                    style={{width:'80%',marginLeft:'4%'}}
+                    multiLine={true}
+                    onChange={this.commentsValueChanged.bind(this,obj.questionQ,i)}
+                    />
+                  )}
+
+
                 </CardText>
               </Card>);
             }

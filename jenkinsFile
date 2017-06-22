@@ -1,0 +1,65 @@
+
+//Jenkins File pipeline exicution
+node {
+   try{
+   stage('Initialize') {
+        echo 'Initializing...'
+        def node = tool name: 'nodeJs', type: 'jenkins.plugins.nodejs.tools.NodeJSInstallation'
+        env.PATH = "${node}/bin:${env.PATH}"
+    }
+    stage('Checkout'){
+        echo 'Checkout Branch'
+        checkout([$class: 'GitSCM', branches: [[name: 'dev']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[url: 'https://github.com/ebin011/Survey-2.0.git']]])
+
+    }
+   stage('CheckNPMVersion') {
+
+      sh 'npm --version'
+      sh 'node --version'
+   }
+//   stage("Dependancies"){
+//       echo 'Dependancies on root'
+//       sh 'npm install'
+//       echo 'Dependancies on Client'
+//       sh 'npm --prefix ./Client install ./Client'
+//   }
+   stage('Testing') {
+            echo "Client Side Testing"
+            sh 'npm test '
+
+      echo 'Result will get later'
+   }
+   stage('Coverage'){
+       echo 'This will done code coverage'
+       sh 'npm run coverage'
+   }
+   stage('createCoverageFile'){
+       echo 'Code coverage details will get from HTML Report of dashboard'
+       publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: true, reportDir: 'coverage/lcov-report', reportFiles: 'index.html', reportName: 'HTML Report', reportTitles: 'Try'])
+   }
+   stage('Start Project'){
+
+                echo "starting development server"
+                sh 'npm --prefix ./Client start &'
+            }
+
+    stage('Selenium UI Testing'){
+                echo "UI testing with firefox and chrome"
+                sh 'node example/googleSearch.js'
+        }
+
+
+
+//   stage('Selenium UI Testing'){
+//       echo 'UI test with firefox and chrome'
+//       sh 'node example/googleSearch.js'
+//   }
+//   stage('Docker'){
+
+//       sh 'docker-compose up'
+//   }
+}
+catch(Exception e){
+    echo "Error occur"
+}
+}
