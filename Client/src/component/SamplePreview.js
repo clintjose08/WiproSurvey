@@ -559,21 +559,30 @@ Welcome=()=>{
                   <img src={background} style={{width:'auto',height:'20%'}} />
                 </Col>
                 </Row>
-                <Col xsOffset={6} xs={6}>
+                <Col xsOffset={3} xs={5}>
+
+                <Card style={{paddingLeft:'20%',paddingRight:'20%',paddingBottom:'3%',marginBottom:'8%',marginTop:'5%'}} zDepth={3}>
+
+                <CardHeader
+                    title = "Fill Details.."
+                    titleStyle = {{fontWeight:'bold',fontSize:'140%'}}
+
+                />
+
                 <Row>
-                <h3>Your Name : </h3>
+
                 <TextField
-                  hintText="Your Name Here"
-                  hintStyle={{fontWeight:'bold'}}
+                  hintText="Enter Your Name Here"
+                  hintStyle={{fontWRoweight:'bold'}}
                   underlineStyle={{borderColor:'#37861E '}}
                   onChange={this.userNameChanged.bind(this)}
                   errorText={this.state.errorTextUser}
                   />
                   </Row>
                   <Row>
-                <h3>Emp ID : </h3>
+
                  <TextField
-                  hintText="Your Emp ID Here"
+                  hintText="Enter Your Emp ID Here"
                   hintStyle={{fontWeight:'bold'}}
                   type="number"
                   underlineStyle={{borderColor:'#37861E '}}
@@ -582,6 +591,32 @@ Welcome=()=>{
 
                   />
                   </Row>
+                  <Row>
+
+                 <TextField
+                  hintText="Enter Your DU/SL"
+                  hintStyle={{fontWeight:'bold'}}
+                  type="number"
+                  underlineStyle={{borderColor:'#37861E '}}
+                  onChange={this.idChanged.bind(this)}
+                  errorText={this.state.errorTextId}
+
+                  />
+                  </Row>
+                  <Row>
+
+                 <TextField
+                  hintText="Enter Your Current project"
+                  hintStyle={{fontWeight:'bold'}}
+                  type="number"
+                  underlineStyle={{borderColor:'#37861E '}}
+                  onChange={this.idChanged.bind(this)}
+                  errorText={this.state.errorTextId}
+
+                  />
+                  </Row>
+                  </Card>
+
                 </Col>
               </Paper>
             </Row>

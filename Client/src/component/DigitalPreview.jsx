@@ -141,7 +141,7 @@ class TakeSurvey extends React.Component {
           from: null,
           to: null,
           enteredTo: null, // Keep track of the last day for mouseEnter.
-
+          textboxDisable:[true,true,true,true],
 
     }
   }
@@ -323,6 +323,16 @@ Welcome=()=>{
     yesOrNoValueChange=(quest,i,e,value)=>{
       var a=this.state.commentValue;
       a[i]={"type":"question","quest":quest,"answer":value};
+      if(value=='Yes'){
+        this.state.textboxDisable[1]=false;
+        this.state.textboxDisable[2]=false;
+          this.state.textboxDisable[3]=true;
+      }
+      else{
+        this.state.textboxDisable[1]=true;
+        this.state.textboxDisable[2]=true;
+        this.state.textboxDisable[3]=false;
+      }
       this.setState({yesOrNoValue:value,commentValue:a});
         console.log("comment value set",this.state.commentValue)
       console.log("yesOrNoValue",value);
@@ -695,6 +705,7 @@ Welcome=()=>{
                 hintText="Your Option Here"
                 hintStyle={{fontWeight:'bold'}}
                 underlineStyle={{borderColor:'#37861E '}}
+                disabled={this.state.textboxDisable[i]}
                 style={{width:'80%',marginLeft:'4%'}}
                 multiLine={true}
                 onChange={this.commentsValueChanged.bind(this,obj.questionQ,i)}
